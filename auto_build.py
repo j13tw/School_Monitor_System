@@ -28,11 +28,15 @@ def create_librenms(docker_librenms_name, docker_mysql_name, docker_mysql_ip, db
     if (os.path.isdir("./librenms/rrd") == 0): os.mkdir("./librenms/rrd")
     librenms_volume = str(subprocess.Popen("pwd", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0]
     print(librenms_volume)
-    docker_librenms_config = "docker run -d -h " + docker_librenms_name + " -p 80:80 -e APP_KEY=" + librenms_product_key
-#   + " -e DB_HOST=" + docker_mysql_ip + " -e DB_NAME=" + db_name + " -e DB_USER=" + db_user_name + " -e DB_PASS=" + db_user_pwd
-#   + " -e BASE_URL=127.0.0.1" + " --link " + docker_librenms_name + ":db -v " + librenms_volume + "/librenms/logs:/opt/librenms/logs -v " + librenms_volume + "/librenms/rrd:/opt/librenms/rrd --name " + docker_librenms_name + " jarischaefer/docker-librenms"
-    print(docker_librenms_config)
-    os.system(docker_librenms_config)
+    docker_librenms_config_A = "docker run -d -h " + docker_librenms_name + " -p 80:80 -e APP_KEY=" + librenms_product_key
+    docker_librenms_config_B = " -e DB_HOST=" + docker_mysql_ip + " -e DB_NAME=" + db_name + " -e DB_USER=" + db_user_name + " -e DB_PASS=" + db_user_pwd + " -e BASE_URL=127.0.0.1" + " --link " + docker_mysql_name + ":db -v "
+    docker_librenms_config_C = librenms_volume + "/librenms/logs:/opt/librenms/logs -v " + librenms_volume + "/librenms/rrd:/opt/librenms/rrd --name "
+    docker_librenms_config_D = docker_librenms_name + " jarischaefer/docker-librenms"
+    print(docker_librenms_config_A)
+    print(docker_librenms_config_B)
+    print(docker_librenms_config_C)
+    print(docker_librenms_config_D)
+    os.system(docker_librenms_config_A + docker_librenms_config_B + docker_librenms_config_C + docker_librenms_config_D)
 
 def create_mysql(docker_mysql_name, db_root_pwd, db_name, db_user_name, db_user_pwd):
     print("Create mysql")
