@@ -17,19 +17,41 @@ def delete_service():
         print(x, container_name.split("\n")[x])
     print("delete")
 
+def create_librenms(docker_librenms_name, docker_mysql_name, docker_mysql_ip, db_name, db_user_name, db_user_pwd):
+    print("Create librenms")
+    print("Generate product key")
+    docker_librenms_config = "docker run --rm jarischaefer/docker-librenms generate_key"
+    librenms_product_key = str(subprocess.Popen(docker_librenms_config, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0]
+#    print(librenms_product_key)
+    if (os.path.isdir("./librenms") == 0): os.mkdir("./librenms")
+    if (os.path.isdir("./librenms/logs") == 0): os.mkdir("./librenms/logs")
+    if (os.path.isdir("./librenms/rrd") == 0): os.mkdir("./librenms/rrd")
+    librenms_volume = str(subprocess.Popen("pwd", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0]
+    print(librenms_volume)
+    docker_librenms_config = "docker run -d -h " + docker_librenms_name + " -p 80:80 -e APP_KEY=" + librenms_product_key
+#   + " -e DB_HOST=" + docker_mysql_ip + " -e DB_NAME=" + db_name + " -e DB_USER=" + db_user_name + " -e DB_PASS=" + db_user_pwd
+#   + " -e BASE_URL=127.0.0.1" + " --link " + docker_librenms_name + ":db -v " + librenms_volume + "/librenms/logs:/opt/librenms/logs -v " + librenms_volume + "/librenms/rrd:/opt/librenms/rrd --name " + docker_librenms_name + " jarischaefer/docker-librenms"
+    print(docker_librenms_config)
+    os.system(docker_librenms_config)
+
 def create_mysql(docker_mysql_name, db_root_pwd, db_name, db_user_name, db_user_pwd):
     print("Create mysql")
     if (os.path.isdir("./School_Monitor") == 0): os.mkdir("./School_Monitor")
     if (os.path.isdir("./School_Monitor/mysql") == 0): os.mkdir("./School_Monitor/mysql")
-    os.chdir("./School_Monitor/mysql")
+    os.chdir("./School_Monitor")
     mysql_volume = str(subprocess.Popen("pwd", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0]
 #    print(mysql_volume)
-    docker_mysql_config = 'docker run --name ' + docker_mysql_name + " -d -e MYSQL_ROOT_PASSWORD=" + db_root_pwd + " -e MYSQL_USER=" + db_user_name + " -e MYSQL_PASSWORD=" + db_user_pwd + " -e MYSQL_DATABASE=" + db_name + " -p 127.0.0.1:3307:3306 -v " + mysql_volume + ':/var/lib/mysql mysql:5.6 --sql-mode=""'
-    print(docker_mysql_config)
+    docker_mysql_config = 'docker run --name ' + docker_mysql_name + " -d -e MYSQL_ROOT_PASSWORD=" + db_root_pwd + " -e MYSQL_USER=" + db_user_name + " -e MYSQL_PASSWORD=" + db_user_pwd + " -e MYSQL_DATABASE=" + db_name + " -p 127.0.0.1:3306:3306 -v " + mysql_volume + '/mysql:/var/lib/mysql mysql:5.6 --sql-mode=""'
+#    print(docker_mysql_config)
     os.system(docker_mysql_config + "2&>1")
     docker_mysql_config = 'docker exec -ti ' + docker_mysql_name + " service mysql start"
-    print(docker_mysql_config)
+#    print(docker_mysql_config)
     os.system(docker_mysql_config + "2&>1")
+    docker_mysql_config = 'docker exec -ti ' + docker_mysql_name + " sh -c " + '"hostname -I"'
+#    print(docker_mysql_config)
+    docker_mysql_ip = str(subprocess.Popen(docker_mysql_config, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0]
+#    print("docker_mysql_ip", docker_mysql_ip)
+    return docker_mysql_ip
 
 def create_service():
     school_name = input("請輸入學校代碼：")
@@ -47,7 +69,11 @@ def create_service():
     print("librenms_mysql_user_pwd ", librenms_mysql_user_pwd)
     print("資料庫服務名稱：", librenms_mysql_docker_name)
     print("資料庫總管密碼：", librenms_mysql_root_pwd)
-    create_mysql(librenms_mysql_docker_name, librenms_mysql_root_pwd, librenms_mysql_user_db, librenms_mysql_user_name, librenms_mysql_user_pwd)
+    librenms_mysql_ip = create_mysql(librenms_mysql_docker_name, librenms_mysql_root_pwd, librenms_mysql_user_db, librenms_mysql_user_name, librenms_mysql_user_pwd)
+#    librenms_mysql_ip = "172,17,0,2"
+    print(librenms_mysql_ip)
+    create_librenms(librenms_docker_name, librenms_mysql_docker_name, librenms_mysql_ip, librenms_mysql_user_db, librenms_mysql_user_name, librenms_mysql_user_pwd)
+
     user_name = input("請輸入使用者帳號：")
     user_pwd = input("請輸入使用者密碼：")
 
