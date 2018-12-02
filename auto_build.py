@@ -9,17 +9,22 @@ control_id = 0
 error_id = 1
 
 def delete_service():
-    os.system('docker ps -f "name=librenms" --format "{{.Names}}" > container.txt')
-    container = open("container.txt", "r")
-    container_name = container.read()
+    print("刪除服務模式")
+    container_name = str(subprocess.Popen('docker ps -a -f "name=librenms" --format "{{.Names}}"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8'))
     print(container_name)
     for x in range(0, len(container_name.split("\n"))-1):
-        print(x, container_name.split("\n")[x])
-    print("delete")
+        print("刪除服務 --> ", container_name.split("\n")[x])
+        delete_container_command = "docker stop " + container_name.split("\n")[x]
+        os.system(delete_container_command + " >/dev/null 2>&1")
+        delete_container_command = "docker rm " + container_name.split("\n")[x]
+        os.system(delete_container_command + " >/dev/null 2>&1")
+    print("正在刪除監控系統資料")
+    os.system("rm -r School_Monitor/ ")
+    print("服務已解除安裝")
 
 def create_librenms(docker_librenms_name, docker_mysql_name, docker_mysql_ip, db_name, db_user_name, db_user_pwd):
     print("建立監控系統總服務")
-    print("生成系統認證金鑰")
+    print("生成系統認證金鑰碼")
     docker_librenms_config = "docker run --rm jarischaefer/docker-librenms generate_key"
     librenms_product_key = str(subprocess.Popen(docker_librenms_config, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0]
 #    print(librenms_product_key)
@@ -77,8 +82,8 @@ def create_service():
 #    print("librenms_mysql_user_db ", librenms_mysql_user_db)
 #    print("librenms_mysql_user_name ", librenms_mysql_user_name)
 #    print("librenms_mysql_user_pwd ", librenms_mysql_user_pwd)
-    print("資料庫服務名稱：", librenms_mysql_docker_name)
-    print("資料庫總管密碼：", librenms_mysql_root_pwd)
+    print("資料庫服務名稱：" + librenms_mysql_docker_name)
+    print("資料庫總管密碼：" + librenms_mysql_root_pwd)
     librenms_mysql_ip = create_mysql(librenms_mysql_docker_name, librenms_mysql_root_pwd, librenms_mysql_user_db, librenms_mysql_user_name, librenms_mysql_user_pwd)
 #    print(librenms_mysql_ip)
     create_librenms(librenms_docker_name, librenms_mysql_docker_name, librenms_mysql_ip, librenms_mysql_user_db, librenms_mysql_user_name, librenms_mysql_user_pwd)
@@ -88,10 +93,8 @@ def create_service():
     print("密碼 : admin")
     print("感謝您的安裝與使用~")
 
-
 #    user_name = input("請輸入使用者帳號：")
 #    user_pwd = input("請輸入使用者密碼：")
-
 
 while(error_id == 1):
     control_id = input("請輸入管理動作(1->新建服務/2->刪除服務): ")
