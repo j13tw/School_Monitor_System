@@ -48,6 +48,9 @@ def create_librenms(docker_librenms_name, docker_mysql_name, docker_mysql_ip, db
     docker_librenms_config = "docker exec " + docker_librenms_name + " create_admin"
 #    print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
+    print("重新啟動資料庫系統")
+    docker_librenms_config = "docker start " + docker_mysql_name
+    os.system(docker_librenms_config + " >/dev/null 2>&1")
 
 def create_mysql(docker_mysql_name, db_root_pwd, db_name, db_user_name, db_user_pwd):
     print("建立監控系統資料庫")
