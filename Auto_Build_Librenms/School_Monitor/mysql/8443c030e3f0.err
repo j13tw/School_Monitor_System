@@ -1,0 +1,45 @@
+181213 09:19:12 mysqld_safe Logging to '/var/lib/mysql/8443c030e3f0.err'.
+181213 09:19:12 mysqld_safe Starting mysqld daemon with databases from /var/lib/mysql
+2018-12-13 09:19:12 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2018-12-13 09:19:12 0 [Note] /usr/sbin/mysqld (mysqld 5.6.42) starting as process 313 ...
+2018-12-13 09:19:12 313 [Note] Plugin 'FEDERATED' is disabled.
+/usr/sbin/mysqld: Table 'mysql.plugin' doesn't exist
+2018-12-13 09:19:12 313 [ERROR] Can't open the mysql.plugin table. Please run mysql_upgrade to create it.
+2018-12-13 09:19:12 313 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2018-12-13 09:19:12 313 [Note] InnoDB: The InnoDB memory heap is disabled
+2018-12-13 09:19:12 313 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2018-12-13 09:19:12 313 [Note] InnoDB: Memory barrier is not used
+2018-12-13 09:19:12 313 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2018-12-13 09:19:12 313 [Note] InnoDB: Using Linux native AIO
+2018-12-13 09:19:12 313 [Note] InnoDB: Using CPU crc32 instructions
+2018-12-13 09:19:12 313 [Note] InnoDB: Initializing buffer pool, size = 128.0M
+2018-12-13 09:19:12 313 [Note] InnoDB: Completed initialization of buffer pool
+2018-12-13 09:19:12 313 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-13 09:19:12 313 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-13 09:19:12 313 [Note] InnoDB: Retrying to lock the first data file
+2018-12-13 09:19:13 313 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-13 09:19:13 313 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-13 09:19:14 313 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-13 09:19:14 313 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-13 09:19:15 313 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-13 09:19:15 313 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-13 09:19:16 313 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-13 09:19:16 313 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-13 09:19:17 313 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-13 09:19:17 313 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-13 09:19:18 313 [Note] InnoDB: Highest supported file format is Barracuda.
+2018-12-13 09:19:18 313 [Note] InnoDB: 128 rollback segment(s) are active.
+2018-12-13 09:19:18 313 [Note] InnoDB: Waiting for purge to start
+2018-12-13 09:19:18 313 [Note] InnoDB: 5.6.42 started; log sequence number 1625977
+2018-12-13 09:19:18 313 [Warning] No existing UUID has been found, so we assume that this is the first time that this server has been started. Generating a new UUID: 2b5abf9c-feb8-11e8-9a81-0242ac030002.
+2018-12-13 09:19:18 313 [Note] Server hostname (bind-address): '*'; port: 3306
+2018-12-13 09:19:18 313 [Note] IPv6 is available.
+2018-12-13 09:19:18 313 [Note]   - '::' resolves to '::';
+2018-12-13 09:19:18 313 [Note] Server socket created on IP: '::'.
+2018-12-13 09:19:18 313 [Warning] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2018-12-13 09:19:18 313 [Warning] 'user' entry 'root@8443c030e3f0' ignored in --skip-name-resolve mode.
+2018-12-13 09:19:18 313 [Warning] 'user' entry '@8443c030e3f0' ignored in --skip-name-resolve mode.
+2018-12-13 09:19:18 313 [Warning] 'proxies_priv' entry '@ root@8443c030e3f0' ignored in --skip-name-resolve mode.
+2018-12-13 09:19:18 313 [Note] Event Scheduler: Loaded 0 events
+2018-12-13 09:19:18 313 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.6.42'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server (GPL)
