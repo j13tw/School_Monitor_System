@@ -19,9 +19,7 @@ def delete_service():
         delete_container_command = "docker rm " + container_name.split("\n")[x]
         os.system(delete_container_command + " >/dev/null 2>&1")
     print("正在刪除監控系統資料")
-    os.system("sudo rm -rf School_Monitor/ ")
-    print("刪除網路架構")
-#    os.system("docker network rm " + librenms_network )
+    os.system("rm -r School_Monitor/ ")
     print("服務已解除安裝")
 
 def create_docker_network(network_name):

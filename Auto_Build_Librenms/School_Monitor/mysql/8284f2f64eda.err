@@ -1,0 +1,134 @@
+181214 07:35:30 mysqld_safe Logging to '/var/lib/mysql/8284f2f64eda.err'.
+181214 07:35:30 mysqld_safe Starting mysqld daemon with databases from /var/lib/mysql
+2018-12-14 07:35:30 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2018-12-14 07:35:30 0 [Note] /usr/sbin/mysqld (mysqld 5.6.42) starting as process 305 ...
+2018-12-14 07:35:30 305 [Note] Plugin 'FEDERATED' is disabled.
+2018-12-14 07:35:30 305 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2018-12-14 07:35:30 305 [Note] InnoDB: The InnoDB memory heap is disabled
+2018-12-14 07:35:30 305 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2018-12-14 07:35:30 305 [Note] InnoDB: Memory barrier is not used
+2018-12-14 07:35:30 305 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2018-12-14 07:35:30 305 [Note] InnoDB: Using Linux native AIO
+2018-12-14 07:35:30 305 [Note] InnoDB: Using CPU crc32 instructions
+2018-12-14 07:35:30 305 [Note] InnoDB: Initializing buffer pool, size = 128.0M
+2018-12-14 07:35:30 305 [Note] InnoDB: Completed initialization of buffer pool
+2018-12-14 07:35:30 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:30 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:30 305 [Note] InnoDB: Retrying to lock the first data file
+2018-12-14 07:35:31 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:31 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:32 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:32 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:33 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:33 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:34 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:34 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:36 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:36 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:37 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:37 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:38 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:38 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:39 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:39 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:40 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:40 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:41 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:41 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:42 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:42 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:43 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:43 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:44 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:44 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:45 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:45 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:46 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:46 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:47 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:47 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:48 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:48 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:49 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:49 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:50 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:50 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:51 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:51 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:52 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:52 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:53 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:53 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:54 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:54 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:55 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:55 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:56 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:56 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:57 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:57 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:58 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:58 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:35:59 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:35:59 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:00 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:00 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:01 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:01 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:02 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:02 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:03 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:03 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:04 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:04 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:05 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:05 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:06 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:06 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:07 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:07 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:08 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:08 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:09 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:09 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:10 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:10 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:11 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:11 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:12 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:12 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:13 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:13 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:14 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:14 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:15 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:15 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:16 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:16 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:17 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:17 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:18 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:18 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:19 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:19 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:20 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:20 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:21 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:21 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:22 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:22 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:23 305 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 11
+2018-12-14 07:36:23 305 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2018-12-14 07:36:24 305 [Note] InnoDB: Highest supported file format is Barracuda.
+2018-12-14 07:36:24 305 [Note] InnoDB: 128 rollback segment(s) are active.
+2018-12-14 07:36:24 305 [Note] InnoDB: Waiting for purge to start
+2018-12-14 07:36:24 305 [Note] InnoDB: 5.6.42 started; log sequence number 13896769
+2018-12-14 07:36:24 305 [Note] Server hostname (bind-address): '*'; port: 3306
+2018-12-14 07:36:24 305 [Note] IPv6 is available.
+2018-12-14 07:36:24 305 [Note]   - '::' resolves to '::';
+2018-12-14 07:36:24 305 [Note] Server socket created on IP: '::'.
+2018-12-14 07:36:24 305 [Warning] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2018-12-14 07:36:24 305 [Warning] 'proxies_priv' entry '@ root@074164c3fa30' ignored in --skip-name-resolve mode.
+2018-12-14 07:36:24 305 [Note] Event Scheduler: Loaded 0 events
+2018-12-14 07:36:24 305 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.6.42'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server (GPL)
