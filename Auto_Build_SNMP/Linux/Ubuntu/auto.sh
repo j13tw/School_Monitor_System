@@ -1,7 +1,6 @@
 #!/bin/bash 
 
 sudo apt update -y 
-sudo apt upgrade -y
 sudo apt install net-tools -y
 sudo apt install snmpd snmp-mibs-downloader -y
 sudo sed -i '5c #export MIBS=' /etc/default/snmpd
