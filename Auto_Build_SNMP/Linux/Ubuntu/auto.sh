@@ -21,7 +21,7 @@ sudo sed -i '11c SNMPDOPTS="'"-Lsd -Lf /dev/null -u snmp -g snmp -I -smux, -p /r
 #IP=$(ifconfig  | grep 'inet addr:'| grep -v '127.0.0.1' |cut -d: -f2 | awk '{ print $1}')
 #echo $MY_IP
 
-sudo sed -i '15c agentAddress  udp:1.0.0.0:161' /etc/snmp/snmpd.conf
+sudo sed -i '15c agentAddress  udp:0.0.0.0:161' /etc/snmp/snmpd.conf
 sudo sed -i '49c rocommunity public  localhost ' /etc/snmp/snmpd.conf
 
                                      #librenmsIP
