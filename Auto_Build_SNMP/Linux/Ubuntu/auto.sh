@@ -87,7 +87,7 @@ sed -i '49c rocommunity public  localhost ' /etc/snmp/snmpd.conf
 # config snmp listen IP
 sed -i '50c rocommunity '$str' '$IP'' /etc/snmp/snmpd.conf
 # config device location
-sed -i '79c sysLocation '$loc'' /etc/snmp/snmpd.conf
+sed -i '79c sysLocation '$loc', [24.1494806,120.6838636]' /etc/snmp/snmpd.conf
 # config device owner && group
 sed -i '80c sysContact '$owner'<'$group'-team>' /etc/snmp/snmpd.conf
 # reboot snmp service
