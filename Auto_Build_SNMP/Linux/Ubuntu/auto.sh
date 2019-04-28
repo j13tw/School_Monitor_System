@@ -80,9 +80,11 @@ sed -i '11c SNMPDOPTS="'"-Lsd -Lf /dev/null -u snmp -g snmp -I -smux, -p /run/sn
 #IP=$(ifconfig  | grep 'inet addr:'| grep -v '127.0.0.1' |cut -d: -f2 | awk '{ print $1}')
 #echo $MY_IP
 
-#
+# change snmp.conf configure
 sed -i '15c agentAddress  udp:0.0.0.0:161' /etc/snmp/snmpd.conf
-sed -i '49c rocommunity public  localhost ' /etc/snmp/snmpd.conf
+sed -i '49c #rocommunity public  localhost' /etc/snmp/snmpd.conf
+sed -i '51c #rocommunity public  localhost    -V systemonly' /etc/snmp/snmpd.conf
+sed -i '53c #rocommunity6 public  localhost   -V systemonly' /etc/snmp/snmpd.conf
 
 # config snmp listen IP
 sed -i '50c rocommunity '$str' '$IP'' /etc/snmp/snmpd.conf
