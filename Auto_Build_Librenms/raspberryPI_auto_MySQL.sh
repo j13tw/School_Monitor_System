@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# please excute by bash
 #go into root
 #sudo -i
 
@@ -32,10 +32,17 @@ apt install mariadb-client mariadb-server -y
 read -p "Please input username:"username;
 read -p "Please input librenms IP:"IP;
 read -p "Please input password:"password;
+
                                      #DBname                                                                                                                             DBname
-mysql -uroot -p  <<< 'CREATE DATABASE librenms CHARACTER SET utf8 COLLATE utf8_unicode_ci;CREATE USER '$username'@'$IP'IDENTIFIED BY '$password';GRANT ALL PRIVILEGES ON librenms.* TO '$username'@'$IP';FLUSH PRIVILEGES;exit'
+mysql -uroot -pandy90174  <<< "CREATE DATABASE librenms CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
+mysql -uroot -pandy90174  <<< "CREATE USER '$username'@'$IP'IDENTIFIED BY '$password';"
+mysql -uroot -pandy90174  <<< "GRANT ALL PRIVILEGES ON librenms.* TO '$username'@'$IP' IDENTIFIED BY '$password';"
+mysql -uroot -pandy90174  <<< 'FLUSH PRIVILEGES;'
+mysql -uroot -pandy90174  <<< 'exit'
+
 
 echo >> "innodb_file_per_table=1" /etc/mysql/mariadb.conf.d/50-server.cnf
 echo >> "lower_case_table_names=0" /etc/mysql/mariadb.conf.d/50-server.cnf
+sed -i "29c ind-address            = 0.0.0.0" /etc/mysql/mariadb.conf.d/50-server.cnf
 systemctl restart mysql
 

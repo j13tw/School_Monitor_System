@@ -35,8 +35,8 @@ cd /opt
 composer create-project --no-dev --keep-vcs librenms/librenms librenms 1.48
 
 #change php.ini timezome
-sed -i '924c date.timezone = Asia/Taipei' vim /etc/php/7.0/fpm/php.ini
-sed -i '924c date.timezone = Asia/Taipei' vim /etc/php/7.0/cli/php.ini
+sed -i '924c date.timezone = Asia/Taipei' /etc/php/7.0/fpm/php.ini
+sed -i '924c date.timezone = Asia/Taipei' /etc/php/7.0/cli/php.ini
 
 phpenmod mcrypt
 systemctl restart php7.0-fpm
@@ -51,3 +51,18 @@ systemctl restart nginx
 
 cd /opt/librenms
 ./scripts/composer_wrapper.php install --no-dev
+
+read -p "input DB_HOST:" DB_HOST;
+read -p "input DB_DATABASE:" DB_DATABASE;
+read -p "input DB_USERNAME:" DB_USERNAME;
+read -p "input DB_PASSWORD:" DB_PASSWORD;
+cd
+sed -i '3c DB_HOST='$DB_HOST''  /opt/librenms/.env
+sed -i '4c DB_DATABASE='$DB_DATABASE'' /opt/librenms/.env
+sed -i '5c DB_USERNAME='$DB_USERNAME'' /opt/librenms/.env
+sed -i '6c DB_PASSWORD='$DB_PASSWORD'' /opt/librenms/.env
+
+
+
+
+
