@@ -46,12 +46,6 @@ systemctl restart php7.0-fpm
 cd
 cp School_Monitor_System/Auto_Build_Librenms/Configure_NGINX.txt /etc/nginx/conf.d/librenms.conf
 
-rm /etc/nginx/sites-enabled/default
-systemctl restart nginx
-
-cd /opt/librenms
-./scripts/composer_wrapper.php install --no-dev
-
 read -p "input DB_HOST:" DB_HOST;
 read -p "input DB_DATABASE:" DB_DATABASE;
 read -p "input DB_USERNAME:" DB_USERNAME;
@@ -62,7 +56,21 @@ sed -i '4c DB_DATABASE='$DB_DATABASE'' /opt/librenms/.env
 sed -i '5c DB_USERNAME='$DB_USERNAME'' /opt/librenms/.env
 sed -i '6c DB_PASSWORD='$DB_PASSWORD'' /opt/librenms/.env
 
+cd
+sed -i "6c "'$config['"'db_host'""] =""'$DB_HOST';" /opt/librenms/config.php.default
+sed -i "7c "'$config['"'db_user'""] =""'$DB_USERNAME';" /opt/librenms/config.php.default
+sed -i "8c "'$config['"'db_pass'""] =""'$DB_PASSWORD';" /opt/librenms/config.php.default
+sed -i "9c "'$config['"'db_name'""] =""'$DB_DATABASE';" /opt/librenms/config.php.default
+cp /opt/librenms/config.php.default /opt/librenms/config.php
 
+chown -R librenms:librenms /opt/librenms
+setfacl -d -m g::rwx /opt/librenms/bootstrap/cache /opt/librenms/storage /opt/librenms/logs /opt/librenms/rrd
+chmod -R ug=rwX /opt/librenms/bootstrap/cache /opt/librenms/storage /opt/librenms/logs /opt/librenms/rrd
+usermod -a -G librenms www-data
 
+rm /etc/nginx/sites-enabled/default
+systemctl restart nginx
 
+cd /opt/librenms
+./scripts/composer_wrapper.php install --no-dev
 
