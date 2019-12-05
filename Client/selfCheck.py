@@ -1,25 +1,35 @@
 #! /usr/bin/python3
+from ipgetter2 import ipgetter1 as ipgetter
 import os, sys
 import time, datetime
 import requests
+import getmac
 
 # [Cloud Setup]
 cloudServerProtocol = "http"
 cloudServerIp = "127.0.0.1"
-cloudServerPort = 80
-cloudServerParmeter = "/" + sys.argv[1] + "/status"
-metaData = {"school": sys.argv[1], "status":""}
+cloudServerPort = 5000
+edgeNodeRegistUrl = "/edgeNodeRegist"
+edgeServiceCheckUrl = "/" + sys.argv[1] + "/status"
+edgeDatabaseFlashUrl = "/" + sys.argv[1] + "/dbFlash"
+
+registData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(),"port": sys.argv[1]}
+healthData = {"school": sys.argv[1], "status":""}
+
+print(registData)
+print(healthData)
 
 # [Edge Setup]
 edgeInitState = 0
 edgePreState = 200
 edgeNowState = 404
-edgeStatusCodeArray = ["Run", "Fail"]
+edgeStatusCodeArray = ["running", "stop"]
 edgeStatusCode = ""
-checkInterval = 1 # 秒數
+checkInterval = 10 # 鑑測輪詢秒數
 
 # [Edge Init]
 print("argv = "+sys.argv[1])
+
 while edgeInitState != 1:
     try:
         if (requests.get("http://127.0.0.1/login").status_code == requests.codes.ok): edgeStatusCode = edgeStatusCodeArray[0]
@@ -27,7 +37,7 @@ while edgeInitState != 1:
     except:
         edgeStatusCodeArray[1]
     try:
-        requests.post(cloudServerProtocol + "://" + cloudServerIp + cloudServerParmeter)
+        r = requests.post(cloudServerProtocol + "://" + cloudServerIp + cloudServerPort + edgeNodeRegistUrl, data=registData)
         print(str(datetime.datetime.now()) + " Edge Init Network to Cloud : OK !")
         edgeInitState = 1
     except:
@@ -59,7 +69,8 @@ while edgeInitState:
         print("LibreNMS is Fail !")
     if (edgeStatusCode != ""):
         try:
-            requests.post(cloudServerProtocol + "://" + cloudServerIp + cloudServerParmeter)
+            healthData.status = edgeStatusCode
+            requests.post(cloudServerProtocol + "://" + cloudServerIp + cloudServerPort + edgeServiceCheckUrl, data=healthData)
             print("Response to Cloud  !")
         except:
             print("Network to Cloud Error !")
