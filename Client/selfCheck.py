@@ -37,11 +37,11 @@ while edgeInitState != 1:
     except:
         edgeStatusCodeArray[1]
     try:
-        r = requests.post(cloudServerProtocol + "://" + cloudServerIp + cloudServerPort + edgeNodeRegistUrl, data=registData)
+        #r = requests.post(cloudServerProtocol + "://" + cloudServerIp + cloudServerPort + edgeNodeRegistUrl, data=registData)
         print(str(datetime.datetime.now()) + " Edge Init Network to Cloud : OK !")
         edgeInitState = 1
     except:
-        print(str(datetime.datetime.now()) + "Edge Init Network to Cloud : Error !")
+        print(str(datetime.datetime.now()) + " Edge Init Network to Cloud : Error !")
     time.sleep(checkInterval)
 
 # [Edge selfCheck]
@@ -51,28 +51,29 @@ while edgeInitState:
         edgeNowState = requests.get("http://127.0.0.1/login").status_code
     except:
         edgeNowState = 404
-    if (edgeNowState == 200 and edgePreState == 200): print("LibreNMS is Running")
+    if (edgeNowState == 200 and edgePreState == 200): print(str(datetime.datetime.now()) + " LibreNMS is Running")
     elif (edgeNowState == 404 and edgePreState == 200):
+        print(str(datetime.datetime.now()) + " Service Fail, Retry Secure Service")
         os.system("service mysql restart")
         os.system("service apach2 restart")
         try:
             edgeNowState = requests.get("http://127.0.0.1/login").status_code
-            print("LibreNMS is Running")
+            print(str(datetime.datetime.now()) + " LibreNMS is Running")
         except:
             edgeNowState = 404
-            print("LibreNMS is Down")
+            print(str(datetime.datetime.now()) + " LibreNMS is Down")
             edgeStatusCode = edgeStatusCodeArray[1]
     elif (edgeNowState == 404 and edgePreState == 200):
-        print("LibreNMS is Up")
+        print(str(datetime.datetime.now()) + " LibreNMS is Up")
         edgeStatusCode = edgeStatusCodeArray[0]
     else:
-        print("LibreNMS is Fail !")
+        print(str(datetime.datetime.now()) + " LibreNMS is Fail !")
     if (edgeStatusCode != ""):
         try:
             healthData.status = edgeStatusCode
-            requests.post(cloudServerProtocol + "://" + cloudServerIp + cloudServerPort + edgeServiceCheckUrl, data=healthData)
-            print("Response to Cloud  !")
+            #requests.post(cloudServerProtocol + "://" + cloudServerIp + cloudServerPort + edgeServiceCheckUrl, data=healthData)
+            print(str(datetime.datetime.now()) + " Response to Cloud  !")
         except:
-            print("Network to Cloud Error !")
+            print(str(datetime.datetime.now()) + " Network to Cloud Error !")
     edgePreState = edgeNowState
     time.sleep(checkInterval)
