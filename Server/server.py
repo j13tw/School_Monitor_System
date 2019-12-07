@@ -6,11 +6,11 @@ import docker
 import json
 
 # define Mysql status
-mysql_host = "172.20.10.2"
+mysql_host = "127.0.0.1"
 mysql_port = 3306
 mysql_db = ""
-mysql_user = "imac"
-mysql_passwd = "imacuser"
+mysql_user = "root"
+mysql_passwd = "root"
 mysql_error = 0
 mysql_output = ""
 mysql_status = 0
@@ -48,14 +48,30 @@ def mysql_connect():
     except:
         return 0
 '''
+
+# 上傳檔案檢查
+def is_allowed_file(file):
+    if '.' in file.filename:
+        ext = file.filename.rsplit('.', 1)[1].lower()
+    else:
+        return False
+    mime_type = magic.from_buffer(file.stream.read(), mime=True)
+    if (
+        mime_type in ALLOWED_MIME_TYPES and
+        ext in ALLOWED_EXTENSIONS
+    ):
+        return True    
+    return False 
+
 # 切換資料庫
-#mysql_connection.select_db('edge-regist')
+#conn.select_db('edge-regist')
 
 # docker container 啟動
 docker_client = docker.from_env()
 #docker_create = docker_client.containers.run(image='grafana/grafana', name=1234, ports={'3000/tcp': 1234}, detach=True).id
 #docker_delete = client.containers.get(edge_school_container_id).remove(force=True)
 app = Flask(__name__)
+app.config['MAX_CONTENT_LENGTH'] = 128 * 1024 * 1024  # 128MB
 
 @app.route('/listContainer', methods=['GET'])
 def listContainer():
@@ -65,8 +81,27 @@ def listContainer():
         print(y.id, y.name, y.status, y.image.tags[0])
         container_list[x] = {"id": y.short_id, "name": y.name, "status": y.status, "image": y.image.tags[0]}
         x += 1
-    print(container_list)
+    # print(container_list)
     return str(container_list)
+
+@app.route('/edgeNodeHealthCheck', methods=['POST'])
+def edgeNodeHealthCheck():
+    if request.method == 'POST':
+        try:
+            edgedata = json.loads(str(request.json).replace("'", '"'))
+            edge_school_id = int(edgedata["school"])
+            edge_school_ip = str(edgedata["ip"])
+            edge_school_mac = str(edgedata["mac"])
+            edge_school_status = str(edgedata["status"])
+            print("healthCheck = ", edge_school_id, edge_school_ip, edge_school_mac, edge_school_status)   
+        except:
+            return {"check": "fail"}
+        if (edge_school_status == "running"):
+            print("running")
+        else:
+            print("stop")
+        return {"check": "ok"}
+
 
 @app.route('/edgeNodeRegist', methods=['POST'])
 def edgeNodeRegist():
@@ -77,20 +112,33 @@ def edgeNodeRegist():
             edge_school_ip = str(edgedata["ip"])
             edge_school_mac = str(edgedata["mac"])
             edge_school_port = 30000 + int(edgedata["school"])
+
             edge_school_container_id = docker_client.containers.run(image='grafana/grafana', name=str(edge_school_id), ports={'3000/tcp': edge_school_port}, detach=True).short_id
-        
             print("School_Id = "+ str(edge_school_id))
             print("School_Ip = "+ edge_school_ip)
             print("School_Port = "+ str(edge_school_port))
             print("School_MAC = "+ edge_school_mac)
             print("School_ContainerId = "+ edge_school_container_id)
-            # mysql_connection.select_db('edge-regist')
-
-            # try:
-            #    mysql_connection.excute('Insert INTO School (School_Id, School_Ip, School_MAC, School_Port, School_ContainerId) VALUE ' + edge_school_id + ", " + edge_school_ip + ", " + edge_school_mac + ", " + edge_school_port + ", " + edge_school_container_id)
+            if mysql_connect() == 1:
+                conn.select_db('edge-regist')
+                mysql_connection = conn.cursor()
+                mysql_find_school = mysql_connection.execute('Select * from school where School_Id==' + edge_school_id)
+                # if (mysql_find_school)
+                # try:
+                #    mysql_connection.excute('Insert INTO School (School_Id, School_Ip, School_MAC, School_Port, School_ContainerId) VALUE ' + edge_school_id + ", " + edge_school_ip + ", " + edge_school_mac + ", " + edge_school_port + ", " + edge_school_container_id)
             return {"regist": "ok"}
         except:
             return {"regist": "fail"}
+
+@app.route('/edgeNodeSqlUpload', methods=['POST'])
+def edgeNodeSqlUpload():
+    if request.method == 'POST':
+        file = request.files['file']
+    if file and is_allowed_file(file):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join('/tmp', filename))
+        return {"upload": "ok"}
+    return {"upload": "fail"}
 
 if __name__ == '__main__':
 	app.run(debug = True)
