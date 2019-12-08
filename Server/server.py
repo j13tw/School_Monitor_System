@@ -57,36 +57,33 @@ mysql_create_status_table = "CREATE TABLE librenms (\
 mysql_push_edge_data = ""
 
 def mysql_connect():
-    global mysql_conn, mysql_connection
+    global mysql_conn
     try:
         mysql_conn = MySQLdb.connect(host = mysql_host, \
             port=mysql_port, \
             user=mysql_user, \
-            passwd=mysql_passwd, \
-            charset="utf8")
-        mysql_connection = mysql_conn.cursor()
+            passwd=mysql_passwd)
         return True
     except:
         return False
 
 # mysql 檢查指定 db 是否存
 def mysql_check_db(dbName):
-    global mysql_conn, mysql_connection
-    if mysql_connect() == True:
-        mysql_connection.execute("show databases;")
-        for x in mysql_connection:
-            if x[0] == dbName:
-                return True
-        else:
-            return False
-    else:
-        False
+    global mysql_conn
+    try:
+        mysql_conn = MySQLdb.connect(host = mysql_host, \
+            port=mysql_port, \
+            user=mysql_user, \
+            passwd=mysql_passwd, \
+            db=dbName)
+        return True
+    except:
+        return False
 
 # mysql 檢查指定 db 中 table 是否存
 def mysql_check_table(dbName, tableName):
     global mysql_conn, mysql_connection
     if mysql_check_db(dbName) == True:
-        mysql_conn.select_db(dbName)
         mysql_connection = mysql_conn.cursor()
         mysql_connection.execute("show tables;")
         for x in mysql_connection:
@@ -95,7 +92,7 @@ def mysql_check_table(dbName, tableName):
         else: 
             return False
     else:
-        False
+        return False
 
 # 上傳檔案檢查
 def is_allowed_file(file):
@@ -126,7 +123,13 @@ app.config['MAX_CONTENT_LENGTH'] = 128 * 1024 * 1024  # 128MB
 
 # mysql server db 準備
 os.system("service mysql start")
-mysql_connect()
+try:
+    mysql_conn = MySQLdb.connect(host = mysql_host, \
+        port=mysql_port, \
+        user=mysql_user, \
+        passwd=mysql_passwd)
+except:
+    exit
 mysql_connection = mysql_conn.cursor()
 if (not mysql_check_db(mysql_service_db)):
     print("create regist database")
@@ -183,18 +186,18 @@ def edgeNodeRegist():
             print("School_Port = "+ str(edge_school_port))
             print("School_MAC = "+ edge_school_mac)
             print("School_ContainerId = "+ edge_school_container_id)
-            if mysql_connect() == 1:
-                conn.select_db(mysql_service_db))
+            if mysql_connect() == True:
+                conn.select_db(mysql_service_db)
                 mysql_connection = conn.cursor()
                 mysql_find_school = mysql_connection.execute("Select school_Id from " + mysql_service_table + " where school_Id = " + str(edge_school_id))
                 if (mysql_find_school == 0):
                     try:
-                        mysql_connection.excute('Insert INTO ' + mysql_service_table + ' (School_Id, School_Ip, School_MAC, School_Port, School_ContainerId, School_LastCheck) VALUE ' + str(edge_school_id) + ", " + edge_school_ip + ", " + edge_school_mac + ", " + edge_school_port + ", " + edge_school_container_id + ", " + str(datetime.datetime.now()))
+                        mysql_connection.excute("Insert INTO " + mysql_service_table + " (School_Id, School_Ip, School_MAC, School_Port, School_ContainerId, School_LastCheck) VALUE " + str(edge_school_id) + ", " + edge_school_ip + ", " + edge_school_mac + ", " + edge_school_port + ", " + edge_school_container_id + ", " + str(datetime.datetime.now()))
                     except: 
                         return {"regist": "fail"}
                 else:
                     try:
-                        mysql_connection.excute('UPDATE ' + mysql_service_table + ' SET School_Ip=' + edge_school_ip + ", School_MAC = " + edge_school_mac +", School_Port" + edge_school_port + ", School_LastCheck" + str(datetime.datetime.now() + ' WHERE School_Id = ' + edge_school_id)
+                        mysql_connection.excute("UPDATE " + mysql_service_table + " SET School_Ip=" + edge_school_ip + ", School_MAC = " + edge_school_mac + ", School_Port" + edge_school_port + ", School_LastCheck" + str(datetime.datetime.now()) + ' WHERE School_Id = ' + edge_school_id)
                     except: 
                         return {"regist": "fail"}
             return {"regist": "ok"}
