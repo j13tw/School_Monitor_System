@@ -6,6 +6,7 @@ import docker
 import json
 
 # define Mysql status
+mysql_conn = ""
 mysql_host = "127.0.0.1"
 mysql_port = 3306
 mysql_db = ""
@@ -24,30 +25,74 @@ edge_school_port = 0
 edge_school_container_id = ""
 
 # define mysql command
-mysql_create_service_db = "create database edge-regist"
-mysql_create_edge_db = "create database "
-mysql_create_service_table = "CREATE TABLE school (\
+# cloud system
+mysql_service_db = "school-monitor-system"
+mysql_create_service_db = "create database " + mysql_service_db
+mysql_service_table = "edge-regist"
+
+mysql_create_regist_table = "CREATE TABLE " + mysql_service_table + " (\
     School_Id           int AUTO_INCREMENT, \
     School_Ip           varchar(17) NOT NULL, \
     School_MAC          varchar(17) NOT NULL, \
     School_Port         int NOT NULL, \
     School_ContainerId  varchar(64) NOT NULL, \
     PRIMARY KEY(School_Id));')"
+
+# edge system
+mysql_edge_db = ""
+mysql_create_edge_db = "create database " + mysql_edge_db
+mysql_edge_table = "librenms"
+
+mysql_create_status_table = "CREATE TABLE librenms (\
+    School_Id           int AUTO_INCREMENT, \
+    School_Ip           varchar(17) NOT NULL, \
+    School_MAC          varchar(17) NOT NULL, \
+    School_Port         int NOT NULL, \
+    School_ContainerId  varchar(64) NOT NULL, \
+    PRIMARY KEY(School_Id));')"
+
 mysql_push_edge_data = ""
 '''
 def mysql_connect():
-    global mysql_connection
+    global mysql_conn, mysql_connection
     try:
-        conn = MySQLdb.connect(host = mysql_host, \
+        mysql_conn = MySQLdb.connect(host = mysql_host, \
             port=mysql_port, \
             user=mysql_user, \
-            passwd=mysql_passwd, \
+            passwd=mysql_passwd, \_
             charset="utf8")
-        mysql_connection = conn.cursor()
-        return 1
+        mysql_connection = mysql_conn.cursor()
+        return True
     except:
-        return 0
+        return False
 '''
+
+# mysql 檢查指定 db 是否存
+def mysql_check_db(dbName):
+    global mysql_conn, mysql_connection
+    if mysql_connect() == True:
+        mysql_connection.execute("show databases;")
+        for x in mysql_connection:
+            if x == dbName:
+                return False
+            else: 
+                return True
+    else:
+        False
+
+# mysql 檢查指定 db 中 table 是否存
+def mysql_check_table(dbName, tableName):
+    global mysql_conn, mysql_connection
+    if mysql_check_db(dbName) == True:
+        mysql_connection = mysql_conn.select_db(dbName)
+        mysql_connection.execute("show tables;")
+        for x in mysql_connection:
+            if x == tableName:
+                return False
+            else: 
+                return True
+    else:
+        False
 
 # 上傳檔案檢查
 def is_allowed_file(file):
@@ -64,14 +109,31 @@ def is_allowed_file(file):
     return False 
 
 # 切換資料庫
-#conn.select_db('edge-regist')
+# conn.select_db('edge-regist')
+# 新增資料庫
+# mysql_school_dbName = "school_" + str(edge_school_id)
+# mysql_connection.execute("create database " + str(mysql_school_dbName))
 
 # docker container 啟動
 docker_client = docker.from_env()
-#docker_create = docker_client.containers.run(image='grafana/grafana', name=1234, ports={'3000/tcp': 1234}, detach=True).id
-#docker_delete = client.containers.get(edge_school_container_id).remove(force=True)
+# docker_create = docker_client.containers.run(image='grafana/grafana', name=1234, ports={'3000/tcp': 1234}, detach=True).id
+# docker_delete = client.containers.get(edge_school_container_id).remove(force=True)
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 128 * 1024 * 1024  # 128MB
+
+# mysql server db 準備
+os.system("service mysql start")
+mysql_connect()
+mysql_connection = mysql_conn.cursor()
+if (not mysql_check_db(mysql_service_db)):
+    print("create regist database")
+    mysql_connection.execute(mysql_create_service_db)
+mysql_conn.select_db(mysql_service_db)
+mysql_connection = mysql_conn.cursor()
+if (not mysql_check_table(mysql_service_db, "regist"))
+    print("create regist database")
+    mysql_connection.execute(mysql_create_regist_table)
+
 
 @app.route('/listContainer', methods=['GET'])
 def listContainer():
