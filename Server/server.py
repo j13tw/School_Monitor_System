@@ -204,8 +204,8 @@ def edgeNodeRegist():
             print("School_MAC = "+ edge_school_mac)
             print("School_ContainerId = "+ edge_school_container_id)
             if mysql_connect() == True:
-                conn.select_db(mysql_service_db)
-                mysql_connection = conn.cursor()
+                mysql_conn.select_db(mysql_service_db)
+                mysql_connection = mysql_conn.cursor()
                 mysql_find_school = mysql_connection.execute("Select school_Id from " + mysql_service_table + " where school_Id = " + str(edge_school_id))
                 if (mysql_find_school == 0):
                     try:
