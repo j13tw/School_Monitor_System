@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 from flask import Flask, request
-# import MySQLdb
+import MySQLdb
 import os, sys
 import docker
 import json
@@ -45,7 +45,7 @@ mysql_edge_db = ""
 mysql_create_edge_db = "create database " + mysql_edge_db
 mysql_edge_table = "librenms"
 
-mysql_create_status_table = "CREATE TABLE librenms (\
+mysql_create_status_table = "CREATE TABLE " + mysql_edge_table + " (\
     school_Id           int AUTO_INCREMENT, \
     school_Ip           varchar(17) NOT NULL, \
     school_MAC          varchar(17) NOT NULL, \
@@ -63,6 +63,22 @@ def mysql_connect():
             port=mysql_port, \
             user=mysql_user, \
             passwd=mysql_passwd)
+        return True
+    except:
+        return False
+
+def mysql_creat_edge_db(edge_school_id):
+    dbName = "school_" + str(edge_school_id)
+    try:
+        mysql_conn = MySQLdb.connect(host = mysql_host, \
+            port=mysql_port, \
+            user=mysql_user, \
+            passwd=mysql_passwd)
+        mysql_connection = mysql_conn.cursor()
+        mysql_connection.execute("create database " + dbName)
+        mysql_conn.select_db(dbName)
+        mysql_connection = mysql_conn.cursor()
+        mysql_connection.execute(mysql_create_status_table)
         return True
     except:
         return False
@@ -129,7 +145,8 @@ try:
         user=mysql_user, \
         passwd=mysql_passwd)
 except:
-    exit
+    print("Connect MySQL Error !")
+    exit()
 mysql_connection = mysql_conn.cursor()
 if (not mysql_check_db(mysql_service_db)):
     print("create regist database")
@@ -199,6 +216,9 @@ def edgeNodeRegist():
                     try:
                         mysql_connection.excute("UPDATE " + mysql_service_table + " SET School_Ip=" + edge_school_ip + ", School_MAC = " + edge_school_mac + ", School_Port" + edge_school_port + ", School_LastCheck" + str(datetime.datetime.now()) + ' WHERE School_Id = ' + edge_school_id)
                     except: 
+                        return {"regist": "fail"}
+                if (mysql_check_db("school_" + str(edge_school_id)) == False):
+                    if (mysql_creat_edge_db("school_" + str(edge_school_id)) == False):
                         return {"regist": "fail"}
             return {"regist": "ok"}
         except:
