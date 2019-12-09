@@ -77,7 +77,6 @@ def mysql_creat_edge_db(dbName):
         mysql_conn.select_db(dbName)
         mysql_connection = mysql_conn.cursor()
         mysql_connection.execute(mysql_create_status_table)
-        mysql_conn.commit()
         return True
     except:
         return False
