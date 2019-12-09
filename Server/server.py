@@ -70,27 +70,29 @@ def mysql_connect():
         return False
 
 def mysql_creat_edge_db(edge_school_id):
-    global mysql_conn
+    mysql_connect()
     dbName = "school_" + str(edge_school_id)
     try:
         mysql_connection = mysql_conn.cursor()
+        print("1")
         mysql_connection.execute("create database " + dbName)
+        print("2")
         mysql_conn.select_db(dbName)
+        print("3")
         mysql_connection = mysql_conn.cursor()
+        print("4")
         mysql_connection.execute(mysql_create_status_table)
+        print("5")
+        mysql_conn.commit()
         return True
     except:
         return False
 
 # mysql 檢查指定 db 是否存
 def mysql_check_db(dbName):
-    global mysql_conn
+    mysql_connect()
     try:
-        mysql_conn = MySQLdb.connect(host = mysql_host, \
-            port=mysql_port, \
-            user=mysql_user, \
-            passwd=mysql_passwd, \
-            db=dbName)
+        mysql_conn.select_db(dbName)
         return True
     except:
         return False
@@ -150,11 +152,13 @@ mysql_connection = mysql_conn.cursor()
 if (not mysql_check_db(mysql_service_db)):
     print("create regist database")
     mysql_connection.execute(mysql_create_service_db)
+    mysql_conn.commit()
 mysql_conn.select_db(mysql_service_db)
 mysql_connection = mysql_conn.cursor()
 if (not mysql_check_table(mysql_service_db, mysql_service_table)):
     print("create regist table")
     mysql_connection.execute(mysql_create_regist_table)
+    mysql_conn.commit()
 
 @app.route('/listContainer', methods=['GET'])
 def listContainer():
@@ -204,7 +208,7 @@ def edgeNodeRegist():
         try:
             edge_school_container_id = docker_client.containers.run(image='grafana/grafana', name=str(edge_school_id), ports={'3000/tcp': edge_school_port}, detach=True).short_id    
         except:
-            edge_school_container_id = docker_client.containers.get(name=edge_school_id)
+            edge_school_container_id = docker_client.containers.get(str(dge_school_id)).short_id
         print("School_ContainerId = "+ edge_school_container_id)
         if mysql_connect() == True:
             mysql_conn.select_db(mysql_service_db)
@@ -212,12 +216,14 @@ def edgeNodeRegist():
             mysql_find_school = mysql_connection.execute("Select school_Id from " + mysql_service_table + " where school_Id = " + str(edge_school_id))
             if (mysql_find_school == 0):
                 try:
-                    mysql_connection.excute("Insert INTO " + mysql_service_table + " (School_Id, School_Ip, School_MAC, School_Port, School_ContainerId, School_LastCheck) VALUE (" + str(edge_school_id) + ", '" + edge_school_ip + "', '" + edge_school_mac + "', " + str(edge_school_port) + ", '" + edge_school_container_id + "', '" + str(datetime.datetime.now()) + "')")
+                    mysql_connection.execute("Insert INTO " + mysql_service_table + " (School_Id, School_Ip, School_MAC, School_Port, School_ContainerId, School_LastCheck) VALUE (" + str(edge_school_id) + ", '" + edge_school_ip + "', '" + edge_school_mac + "', " + str(edge_school_port) + ", '" + edge_school_container_id + "', '" + str(datetime.datetime.now()) + "')")
+                    print("db_Insert :" + str(School_Id))
                 except: 
                     return {"regist": "fail", "info": "db_Insert_Error"}
             else:
                 try:
-                    mysql_connection.excute("UPDATE " + mysql_service_table + " SET School_Ip='" + edge_school_ip + "', School_MAC = '" + edge_school_mac + "', School_Port = " + str(edge_school_port) + ", School_LastCheck = '" + str(datetime.datetime.now()) + "' WHERE School_Id = " + str(edge_school_id))
+                    mysql_connection.execute("UPDATE " + mysql_service_table + " SET School_Ip='" + edge_school_ip + "', School_MAC = '" + edge_school_mac + "', School_Port = " + str(edge_school_port) + ", School_LastCheck = '" + str(datetime.datetime.now()) + "' WHERE School_Id = " + str(edge_school_id))
+                    print("db_Update :" + str(School_Id))
                 except: 
                     return {"regist": "fail", "info": "db_Update_Error"}
             mysql_conn.commit()
