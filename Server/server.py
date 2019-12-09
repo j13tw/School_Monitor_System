@@ -74,13 +74,10 @@ def mysql_creat_edge_db(edge_school_id):
     dbName = "school_" + str(edge_school_id)
     try:
         mysql_connection = mysql_conn.cursor()
-        print("1")
         mysql_connection.execute("create database " + dbName)
-        print("2")
         mysql_conn.select_db(dbName)
-        print("3")
         mysql_connection = mysql_conn.cursor()
-        print("4")
+        print(mysql_create_status_table)
         mysql_connection.execute(mysql_create_status_table)
         print("5")
         mysql_conn.commit()
@@ -217,7 +214,7 @@ def edgeNodeRegist():
             if (mysql_find_school == 0):
                 try:
                     mysql_connection.execute("Insert INTO " + mysql_service_table + " (School_Id, School_Ip, School_MAC, School_Port, School_ContainerId, School_LastCheck) VALUE (" + str(edge_school_id) + ", '" + edge_school_ip + "', '" + edge_school_mac + "', " + str(edge_school_port) + ", '" + edge_school_container_id + "', '" + str(datetime.datetime.now()) + "')")
-                    print("db_Insert :" + str(School_Id))
+                    print("db_Insert :" + str(edge_school_id))
                 except: 
                     return {"regist": "fail", "info": "db_Insert_Error"}
             else:
