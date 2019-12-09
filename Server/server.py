@@ -35,7 +35,7 @@ mysql_service_table = "edge_regist"
 
 mysql_create_regist_table = "CREATE TABLE " + mysql_service_table + " (\
     School_Id           int AUTO_INCREMENT, \
-    School_Ip           varchar(17) NOT NULL, \
+    School_Ip           varchar(15) NOT NULL, \
     School_MAC          varchar(17) NOT NULL, \
     School_Port         int NOT NULL, \
     School_ContainerId  varchar(64) NOT NULL, \
@@ -49,12 +49,12 @@ mysql_edge_table = "librenms"
 
 mysql_create_status_table = "CREATE TABLE " + mysql_edge_table + " (\
     School_Id           int AUTO_INCREMENT, \
-    School_Ip           varchar(17) NOT NULL, \
+    School_Ip           varchar(15) NOT NULL, \
     School_MAC          varchar(17) NOT NULL, \
     School_Port         int NOT NULL, \
     School_ContainerId  varchar(64) NOT NULL, \
-    School_LastCheck    datatime NOT NULL, \
-    PRIMARY KEY(school_Id));')"
+    School_LastCheck    datetime NOT NULL, \
+    PRIMARY KEY(School_Id));')"
 
 mysql_push_edge_data = ""
 
@@ -76,9 +76,7 @@ def mysql_creat_edge_db(dbName):
         mysql_connection.execute("create database " + dbName)
         mysql_conn.select_db(dbName)
         mysql_connection = mysql_conn.cursor()
-        print(mysql_create_status_table)
         mysql_connection.execute(mysql_create_status_table)
-        print("5")
         mysql_conn.commit()
         return True
     except:
@@ -204,7 +202,7 @@ def edgeNodeRegist():
         try:
             edge_school_container_id = docker_client.containers.run(image='grafana/grafana', name=str(edge_school_id), ports={'3000/tcp': edge_school_port}, detach=True).short_id    
         except:
-            edge_school_container_id = docker_client.containers.get(str(dge_school_id)).short_id
+            edge_school_container_id = docker_client.containers.get(str(edge_school_id)).short_id
         print("School_ContainerId = "+ edge_school_container_id)
         if mysql_connect() == True:
             mysql_conn.select_db(mysql_service_db)
@@ -213,13 +211,13 @@ def edgeNodeRegist():
             if (mysql_find_school == 0):
                 try:
                     mysql_connection.execute("Insert INTO " + mysql_service_table + " (School_Id, School_Ip, School_MAC, School_Port, School_ContainerId, School_LastCheck) VALUE (" + str(edge_school_id) + ", '" + edge_school_ip + "', '" + edge_school_mac + "', " + str(edge_school_port) + ", '" + edge_school_container_id + "', '" + str(datetime.datetime.now()) + "')")
-                    print("db_Insert :" + str(edge_school_id))
+                    print("db_Insert : " + "school_" + str(edge_school_id))
                 except: 
                     return {"regist": "fail", "info": "db_Insert_Error"}
             else:
                 try:
                     mysql_connection.execute("UPDATE " + mysql_service_table + " SET School_Ip='" + edge_school_ip + "', School_MAC = '" + edge_school_mac + "', School_Port = " + str(edge_school_port) + ", School_LastCheck = '" + str(datetime.datetime.now()) + "' WHERE School_Id = " + str(edge_school_id))
-                    print("db_Update :" + str(School_Id))
+                    print("db_Update : " + "school_" + str(dge_school_id))
                 except: 
                     return {"regist": "fail", "info": "db_Update_Error"}
             mysql_conn.commit()
