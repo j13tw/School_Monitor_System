@@ -211,7 +211,7 @@ def edgeNodeRegist():
                 mysql_find_school = mysql_connection.execute("Select school_Id from " + mysql_service_table + " where school_Id = " + str(edge_school_id))
                 if (mysql_find_school == 0):
                     try:
-                        mysql_connection.excute("Insert INTO " + mysql_service_table + " (School_Id, School_Ip, School_MAC, School_Port, School_ContainerId, School_LastCheck) VALUE " + str(edge_school_id) + ", " + edge_school_ip + ", " + edge_school_mac + ", " + str(edge_school_port) + ", " + edge_school_container_id + ", " + str(datetime.datetime.now()))
+                        mysql_connection.excute("Insert INTO " + mysql_service_table + " (School_Id, School_Ip, School_MAC, School_Port, School_ContainerId, School_LastCheck) VALUE (" + str(edge_school_id) + ", " + edge_school_ip + ", " + edge_school_mac + ", " + str(edge_school_port) + ", " + edge_school_container_id + ", " + str(datetime.datetime.now()) + ")")
                     except: 
                         return {"regist": "fail"}
                 else:
