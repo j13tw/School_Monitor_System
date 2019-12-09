@@ -69,9 +69,8 @@ def mysql_connect():
     except:
         return False
 
-def mysql_creat_edge_db(edge_school_id):
+def mysql_creat_edge_db(dbName):
     mysql_connect()
-    dbName = "school_" + str(edge_school_id)
     try:
         mysql_connection = mysql_conn.cursor()
         mysql_connection.execute("create database " + dbName)
