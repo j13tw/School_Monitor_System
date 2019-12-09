@@ -70,12 +70,9 @@ def mysql_connect():
         return False
 
 def mysql_creat_edge_db(edge_school_id):
+    global mysql_conn
     dbName = "school_" + str(edge_school_id)
     try:
-        mysql_conn = MySQLdb.connect(host = mysql_host, \
-            port=mysql_port, \
-            user=mysql_user, \
-            passwd=mysql_passwd)
         mysql_connection = mysql_conn.cursor()
         mysql_connection.execute("create database " + dbName)
         mysql_conn.select_db(dbName)
@@ -100,7 +97,7 @@ def mysql_check_db(dbName):
 
 # mysql 檢查指定 db 中 table 是否存
 def mysql_check_table(dbName, tableName):
-    global mysql_conn, mysql_connection
+    global mysql_conn
     if mysql_check_db(dbName) == True:
         mysql_connection = mysql_conn.cursor()
         mysql_connection.execute("show tables;")
@@ -198,12 +195,14 @@ def edgeNodeRegist():
             edge_school_ip = str(edgedata["ip"])
             edge_school_mac = str(edgedata["mac"])
             edge_school_port = 30000 + int(edgedata["school"])
-
-            edge_school_container_id = docker_client.containers.run(image='grafana/grafana', name=str(edge_school_id), ports={'3000/tcp': edge_school_port}, detach=True).short_id
             print("School_Id = "+ str(edge_school_id))
             print("School_Ip = "+ edge_school_ip)
             print("School_Port = "+ str(edge_school_port))
             print("School_MAC = "+ edge_school_mac)
+            try:
+                edge_school_container_id = docker_client.containers.run(image='grafana/grafana', name=str(edge_school_id), ports={'3000/tcp': edge_school_port}, detach=True).short_id    
+            except:
+                edge_school_container_id = docker_client.containers.get(name=edge_school_id)
             print("School_ContainerId = "+ edge_school_container_id)
             if mysql_connect() == True:
                 mysql_conn.select_db(mysql_service_db)
@@ -211,20 +210,21 @@ def edgeNodeRegist():
                 mysql_find_school = mysql_connection.execute("Select school_Id from " + mysql_service_table + " where school_Id = " + str(edge_school_id))
                 if (mysql_find_school == 0):
                     try:
-                        mysql_connection.excute("Insert INTO " + mysql_service_table + " (School_Id, School_Ip, School_MAC, School_Port, School_ContainerId, School_LastCheck) VALUE (" + str(edge_school_id) + ", " + edge_school_ip + ", " + edge_school_mac + ", " + str(edge_school_port) + ", " + edge_school_container_id + ", " + str(datetime.datetime.now()) + ")")
+                        mysql_connection.excute("Insert INTO " + mysql_service_table + " (School_Id, School_Ip, School_MAC, School_Port, School_ContainerId, School_LastCheck) VALUE (" + str(edge_school_id) + ", '" + edge_school_ip + "', '" + edge_school_mac + "', " + str(edge_school_port) + ", '" + edge_school_container_id + "', '" + str(datetime.datetime.now()) + "')")
                     except: 
-                        return {"regist": "fail"}
+                        return {"regist": "fail", "info": "db_Insert_Error"}
                 else:
                     try:
-                        mysql_connection.excute("UPDATE " + mysql_service_table + " SET School_Ip=" + edge_school_ip + ", School_MAC = " + edge_school_mac + ", School_Port" + edge_school_port + ", School_LastCheck" + str(datetime.datetime.now()) + ' WHERE School_Id = ' + edge_school_id)
+                        mysql_connection.excute("UPDATE " + mysql_service_table + " SET School_Ip='" + edge_school_ip + "', School_MAC = '" + edge_school_mac + "', School_Port = " + str(edge_school_port) + ", School_LastCheck = '" + str(datetime.datetime.now()) + "' WHERE School_Id = " + str(edge_school_id))
                     except: 
-                        return {"regist": "fail"}
+                        return {"regist": "fail", "info": "db_Update_Error"}
+                mysql_conn.commit()
                 if (mysql_check_db("school_" + str(edge_school_id)) == False):
                     if (mysql_creat_edge_db("school_" + str(edge_school_id)) == False):
-                        return {"regist": "fail"}
+                        return {"regist": "fail", "info": "db_Use_Error"}
             return {"regist": "ok"}
         except:
-            return {"regist": "fail"}
+            return {"regist": "fail", "info": "post_Error"}
 
 @app.route('/edgeNodeSqlUpload', methods=['POST'])
 def edgeNodeSqlUpload():
