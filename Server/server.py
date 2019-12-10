@@ -307,7 +307,7 @@ def edgeNodeRegist():
                 if (mysql_creat_edge_table("school_" + str(edge_school_id, "device_perf")) == False):
                     return {"regist": "fail", "info": "db_edgeTable_device_perf_Error"}
             if (mysql_check_table("school_" + str(edge_school_id), "alert_log") == False):
-                if (mysql_creat_edge_table("school_" + str(edge_school_id, "alert_log")) == False)
+                if (mysql_creat_edge_table("school_" + str(edge_school_id, "alert_log")) == False):
                     return {"regist": "fail", "info": "db_edgeTable_Error"}
             return {"regist": "ok"}
         else:
