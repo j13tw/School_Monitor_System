@@ -26,6 +26,7 @@ edge_school_ip = ""
 edge_school_mac = ""
 edge_school_port = 0
 edge_school_container_id = ""
+edge_school_status = ""
 
 # define mysql command
 # cloud system
@@ -47,14 +48,78 @@ mysql_edge_db = ""
 mysql_create_edge_db = "create database " + mysql_edge_db
 mysql_edge_table = "librenms"
 
-mysql_create_status_table = "CREATE TABLE " + mysql_edge_table + " (\
-    School_Id           int AUTO_INCREMENT, \
-    School_Ip           varchar(15) NOT NULL, \
-    School_MAC          varchar(17) NOT NULL, \
-    School_Port         int NOT NULL, \
-    School_ContainerId  varchar(64) NOT NULL, \
-    School_LastCheck    datetime NOT NULL, \
-    PRIMARY KEY(School_Id));')"
+mysql_create_edge_devices_table = "CREATE TABLE devices (\
+    device_id                   int(10) unsigned                             NOT NULL, \
+    hostname                    varchar(128)                                 NOT NULL, \
+    sysName                     varchar(128)                                 NULL, \
+    ip                          varbinary(16)                                NULL, \
+    community                   varchar(255),                                NULL, \
+    authlevel                   enum('noAuthNoPriv','authNoPriv','authPriv') NULL, \
+    authname                    varchar(64)                                  NULL, \
+    authpass                    varchar(64)                                  NULL, \
+    authalgo                    enum('MD5','SHA')                            NULL, \
+    cryptopass                  varchar(64)                                  NULL, \
+    cryptoalgo                  enum('AES','DES','')                         NULL, \
+    snmpver                     varchar(4)                                   NOT NULL, \
+    port                        smallint(5) unsigned                         NOT NULL, \
+    transport                   varchar(16)                                  NOT NULL,\
+    timeout                     int(11)                                      NULL, \
+    retries                     int(11)                                      NULL, \
+    snmp_disable                tinyint(1)                                   NOT NULL, \
+    bgpLocalAs                  int(10) unsigned                             NULL, \
+    sysObjectID                 varchar(128)                                 NULL, \
+    sysDescr                    text                                         NULL, \
+    sysContact                  text                                         NULL, \
+    version                     text                                         NULL, \
+    hardware                    text                                         NULL, \
+    features                    text                                         NULL, \
+    location_id                 int(10) unsigned                             NULL, \
+    os                          varchar(32)                                  NULL, \
+    status                      tinyint(1)                                   NOT NULL, \
+    status_reason               varchar(50)                                  NOT NULL, \
+    ignore                      tinyint(1)                                   NOT NULL, \
+    disabled                    tinyint(1)                                   NOT NULL, \
+    uptime                      bigint(20)                                   NULL, \
+    agent_uptime                int(10) unsigned                             NOT NULL, \
+    last_polled                 timestamp                                    NULL, \
+    last_poll_attempted         timestamp                                    NULL, \
+    last_polled_timetaken       double(5,2)                                  NULL, \
+    last_discovered_timetaken   double(5,2)                                  NULL, \
+    last_discovered             timestamp                                    NULL, \
+    last_ping                   timestamp                                    NULL, \
+    last_ping_timetaken         double(8,2)                                  NULL, \
+    purpose                     text                                         NULL, \
+    type                        varchar(20)                                  NOT NULL, \
+    serial                      text                                         NULL, \
+    icon                        varchar(255)                                 NULL, \
+    poller_group                int(11)                                      NOT NULL, \
+    override_sysLocation        tinyint(1)                                   NULL, \
+    notes                       text                                         NULL, \
+    port_association_mode       int(11)                                      NULL, \
+    max_depth                   int(11)                                      NOT NULL, \
+    PRIMARY KEY(device_id));')"
+
+mysql_create_edge_device_perf_table = "CREATE TABLE device_perf (\
+    id          int(10) unsigned  NOT NULL, \
+    device_id   int(10) unsigned  NOT NULL, \
+    timestamp   datetime          NOT NULL, \
+    xmt         int(11)           NOT NULL, \
+    rcv         int(11)           NOT NULL, \
+    loss        int(11)           NOT NULL, \
+    min         double(8,2)       NOT NULL, \
+    max         double(8,2)       NOT NULL, \
+    avg         double(8,2)       NOT NULL, \
+    debug       text              NULL,\
+    PRIMARY KEY(id));')"
+
+mysql_create_edge_alert_log_table = "CREATE TABLE alert_log (\
+    id          int(10) unsigned    NOT NULL, \
+    rule_id     int(10) unsigned    NOT NULL, \
+    device_id   int(10) unsigned    NOT NULL, \
+    state       int(11)             NOT NULL, \
+    details     longblob            NULL , \
+    time_logged timestamp           NOT NULL, \
+    PRIMARY KEY(id));')"
 
 mysql_push_edge_data = ""
 
@@ -76,7 +141,9 @@ def mysql_creat_edge_db(dbName):
         mysql_connection.execute("create database " + dbName)
         mysql_conn.select_db(dbName)
         mysql_connection = mysql_conn.cursor()
-        mysql_connection.execute(mysql_create_status_table)
+        mysql_connection.execute(mysql_create_edge_devices_table)
+        mysql_connection.execute(mysql_create_edge_device_perf_table)
+        mysql_connection.execute(mysql_create_edge_alert_log_table)
         return True
     except:
         return False
@@ -170,10 +237,8 @@ def edgeNodeHealthCheck():
         try:
             edgedata = json.loads(str(request.json).replace("'", '"'))
             edge_school_id = int(edgedata["school"])
-            edge_school_ip = str(edgedata["ip"])
-            edge_school_mac = str(edgedata["mac"])
             edge_school_status = str(edgedata["status"])
-            print("healthCheck = ", edge_school_id, edge_school_ip, edge_school_mac, edge_school_status)   
+            print("healthCheck = ", edge_school_id, edge_school_status)   
         except:
             return {"check": "fail"}
         if (edge_school_status == "running"):
@@ -239,5 +304,5 @@ def edgeNodeSqlUpload():
     return {"upload": "fail"}
 
 if __name__ == '__main__':
-	app.run(debug = True)
+#	app.run(debug = True)
 	app.run(host = '0.0.0.0', port=5000)
