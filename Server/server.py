@@ -250,7 +250,13 @@ def edgeNodeHealthCheck():
             edgedata = json.loads(str(request.json).replace("'", '"'))
             edge_school_id = int(edgedata["school"])
             edge_school_status = str(edgedata["status"])
-            print("healthCheck = ", edge_school_id, edge_school_status)   
+            edge_school_devices_table = str(edgedata["devices"])
+            edge_school_device_perf_table = str(edgedata["devices_perf"])
+            edge_school_alert_log_table = str(edgedata["alert_log"])
+            print("healthCheck = ", edge_school_id, edge_school_status)  
+            print("devices", edge_school_devices_table)
+            print("device_perf", edge_school_device_perf_table)
+            print("alert_log", edge_school_alert_log_table) 
         except:
             return {"check": "fail"}
         if (edge_school_status == "running"):
