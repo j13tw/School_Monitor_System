@@ -134,19 +134,23 @@ def mysql_connect():
     except:
         return False
 
-def mysql_creat_edge_table(dbName):
+# 建立 edge 所使用的 DB 的 Table
+def mysql_creat_edge_table(dbName, tableName):
     mysql_connect()
+    if tableName = "devices": tableInfo = mysql_create_edge_devices_table
+    elif tableName = "device_perf": tableInfo = mysql_create_edge_device_perf_table
+    elif tableName = "alert_log": tableInfo = mysql_create_edge_alert_log_table
+    print(tableName, tableInfo)
     try:
         mysql_connection = mysql_conn.cursor()
         mysql_conn.select_db(dbName)
         mysql_connection = mysql_conn.cursor()
-        mysql_connection.execute(mysql_create_edge_devices_table)
-        mysql_connection.execute(mysql_create_edge_device_perf_table)
-        mysql_connection.execute(mysql_create_edge_alert_log_table)
+        mysql_connection.execute(tableInfo)
         return True
     except:
         return False
 
+# 建立 edge 所使用的 DB
 def mysql_creat_edge_db(dbName):
     mysql_connect()
     try:
@@ -295,9 +299,16 @@ def edgeNodeRegist():
             mysql_conn.commit()
             if (mysql_check_db("school_" + str(edge_school_id)) == False):
                 if (mysql_creat_edge_db("school_" + str(edge_school_id)) == False):
-                    if (mysql_creat_edge_table("school_" + str(edge_school_id)) == False):
-                        return {"regist": "fail", "info": "db_edgeTable_Error"}
-                return {"regist": "fail", "info": "db_edgeDb_Error"}
+                    return {"regist": "fail", "info": "db_edgeDb_Error"}
+            if (mysql_check_table("school_" + str(edge_school_id), "devices") == False):
+                if (mysql_creat_edge_table("school_" + str(edge_school_id, "devices") == False):
+                    return {"regist": "fail", "info": "db_edgeTable_devices_Error"}
+            if (mysql_check_table("school_" + str(edge_school_id), "device_perf") == False):
+                if (mysql_creat_edge_table("school_" + str(edge_school_id, "device_perf") == False):
+                    return {"regist": "fail", "info": "db_edgeTable_device_perf_Error"}
+            if (mysql_check_table("school_" + str(edge_school_id), "alert_log") == False):
+                if (mysql_creat_edge_table("school_" + str(edge_school_id, "alert_log") == False)
+                    return {"regist": "fail", "info": "db_edgeTable_Error"}
             return {"regist": "ok"}
         else:
             return {"regist": "fail", "info": "db_Connect_Error"}
