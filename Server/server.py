@@ -41,7 +41,7 @@ mysql_create_regist_table = "CREATE TABLE " + mysql_service_table + " (\
     School_Port         int NOT NULL, \
     School_ContainerId  varchar(64) NOT NULL, \
     School_LastCheck    datetime NOT NULL, \
-    PRIMARY KEY(School_Id));')"
+    PRIMARY KEY(School_Id));"
 
 # edge system
 mysql_edge_db = ""
@@ -53,7 +53,7 @@ mysql_create_edge_devices_table = "CREATE TABLE devices (\
     hostname                    varchar(128)                                 NOT NULL, \
     sysName                     varchar(128)                                 NULL, \
     ip                          varbinary(16)                                NULL, \
-    community                   varchar(255),                                NULL, \
+    community                   varchar(255)                                 NULL, \
     authlevel                   enum('noAuthNoPriv','authNoPriv','authPriv') NULL, \
     authname                    varchar(64)                                  NULL, \
     authpass                    varchar(64)                                  NULL, \
@@ -77,7 +77,7 @@ mysql_create_edge_devices_table = "CREATE TABLE devices (\
     os                          varchar(32)                                  NULL, \
     status                      tinyint(1)                                   NOT NULL, \
     status_reason               varchar(50)                                  NOT NULL, \
-    ignore                      tinyint(1)                                   NOT NULL, \
+    ignores                     tinyint(1)                                   NOT NULL, \
     disabled                    tinyint(1)                                   NOT NULL, \
     uptime                      bigint(20)                                   NULL, \
     agent_uptime                int(10) unsigned                             NOT NULL, \
@@ -97,7 +97,7 @@ mysql_create_edge_devices_table = "CREATE TABLE devices (\
     notes                       text                                         NULL, \
     port_association_mode       int(11)                                      NULL, \
     max_depth                   int(11)                                      NOT NULL, \
-    PRIMARY KEY(device_id));')"
+    PRIMARY KEY(device_id));"
 
 mysql_create_edge_device_perf_table = "CREATE TABLE device_perf (\
     id          int(10) unsigned  NOT NULL, \
@@ -110,7 +110,7 @@ mysql_create_edge_device_perf_table = "CREATE TABLE device_perf (\
     max         double(8,2)       NOT NULL, \
     avg         double(8,2)       NOT NULL, \
     debug       text              NULL,\
-    PRIMARY KEY(id));')"
+    PRIMARY KEY(id));"
 
 mysql_create_edge_alert_log_table = "CREATE TABLE alert_log (\
     id          int(10) unsigned    NOT NULL, \
@@ -119,7 +119,7 @@ mysql_create_edge_alert_log_table = "CREATE TABLE alert_log (\
     state       int(11)             NOT NULL, \
     details     longblob            NULL , \
     time_logged timestamp           NOT NULL, \
-    PRIMARY KEY(id));')"
+    PRIMARY KEY(id));"
 
 mysql_push_edge_data = ""
 
@@ -134,16 +134,24 @@ def mysql_connect():
     except:
         return False
 
-def mysql_creat_edge_db(dbName):
-    mysql_connect()
+def mysql_creat_edge_table(dbName):
+        mysql_connect()
     try:
         mysql_connection = mysql_conn.cursor()
-        mysql_connection.execute("create database " + dbName)
         mysql_conn.select_db(dbName)
         mysql_connection = mysql_conn.cursor()
         mysql_connection.execute(mysql_create_edge_devices_table)
         mysql_connection.execute(mysql_create_edge_device_perf_table)
         mysql_connection.execute(mysql_create_edge_alert_log_table)
+        return True
+    except:
+        return False
+
+def mysql_creat_edge_db(dbName):
+    mysql_connect()
+    try:
+        mysql_connection = mysql_conn.cursor()
+        mysql_connection.execute("create database " + dbName)
         return True
     except:
         return False
@@ -287,7 +295,9 @@ def edgeNodeRegist():
             mysql_conn.commit()
             if (mysql_check_db("school_" + str(edge_school_id)) == False):
                 if (mysql_creat_edge_db("school_" + str(edge_school_id)) == False):
-                    return {"regist": "fail", "info": "db_Use_Error"}
+                    if (mysql_creat_edge_table("school_" + str(edge_school_id)) == False):
+                        return {"regist": "fail", "info": "db_edgeTable_Error"}
+                return {"regist": "fail", "info": "db_edgeDb_Error"}
             return {"regist": "ok"}
         else:
             return {"regist": "fail", "info": "db_Connect_Error"}
