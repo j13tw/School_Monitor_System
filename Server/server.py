@@ -137,9 +137,9 @@ def mysql_connect():
 # 建立 edge 所使用的 DB 的 Table
 def mysql_creat_edge_table(dbName, tableName):
     mysql_connect()
-    if tableName = "devices": tableInfo = mysql_create_edge_devices_table
-    elif tableName = "device_perf": tableInfo = mysql_create_edge_device_perf_table
-    elif tableName = "alert_log": tableInfo = mysql_create_edge_alert_log_table
+    if tableName == "devices": tableInfo = mysql_create_edge_devices_table
+    elif tableName == "device_perf": tableInfo = mysql_create_edge_device_perf_table
+    elif tableName == "alert_log": tableInfo = mysql_create_edge_alert_log_table
     print(tableName, tableInfo)
     try:
         mysql_connection = mysql_conn.cursor()
