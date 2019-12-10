@@ -135,7 +135,7 @@ def mysql_connect():
         return False
 
 def mysql_creat_edge_table(dbName):
-        mysql_connect()
+    mysql_connect()
     try:
         mysql_connection = mysql_conn.cursor()
         mysql_conn.select_db(dbName)
