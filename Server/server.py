@@ -49,76 +49,76 @@ mysql_create_edge_db = "create database " + mysql_edge_db
 mysql_edge_table = "librenms"
 
 mysql_create_edge_devices_table = "CREATE TABLE devices (\
-    device_id                   int(10) unsigned                             NOT NULL   default 'NULL', \
-    hostname                    varchar(128)                                 NOT NULL   default 'NULL', \
-    sysName                     varchar(128)                                 NULL       default 'NULL', \
-    ip                          varbinary(16)                                NULL       default 'NULL', \
-    community                   varchar(255)                                 NULL       default 'NULL', \
-    authlevel                   enum('noAuthNoPriv','authNoPriv','authPriv') NULL       default 'NULL', \
-    authname                    varchar(64)                                  NULL       default 'NULL', \
-    authpass                    varchar(64)                                  NULL       default 'NULL', \
-    authalgo                    enum('MD5','SHA')                            NULL       default 'NULL', \
-    cryptopass                  varchar(64)                                  NULL       default 'NULL', \
-    cryptoalgo                  enum('AES','DES','')                         NULL       default 'NULL', \
+    device_id                   int(10) unsigned                             NOT NULL, \
+    hostname                    varchar(128)                                 NOT NULL, \
+    sysName                     varchar(128)                                 NULL, \
+    ip                          varbinary(16)                                NULL, \
+    community                   varchar(255)                                 NULL, \
+    authlevel                   enum('noAuthNoPriv','authNoPriv','authPriv') NULL, \
+    authname                    varchar(64)                                  NULL, \
+    authpass                    varchar(64)                                  NULL, \
+    authalgo                    enum('MD5','SHA')                            NULL, \
+    cryptopass                  varchar(64)                                  NULL, \
+    cryptoalgo                  enum('AES','DES','')                         NULL, \
     snmpver                     varchar(4)                                   NOT NULL   default 'v2c', \
     port                        smallint(5) unsigned                         NOT NULL   default '161', \
     transport                   varchar(16)                                  NOT NULL   default 'udp',\
-    timeout                     int(11)                                      NULL       default 'NULL', \
-    retries                     int(11)                                      NULL       default 'NULL', \
+    timeout                     int(11)                                      NULL, \
+    retries                     int(11)                                      NULL, \
     snmp_disable                tinyint(1)                                   NOT NULL   default '0', \
-    bgpLocalAs                  int(10) unsigned                             NULL       default 'NULL', \
-    sysObjectID                 varchar(128)                                 NULL       default 'NULL', \
-    sysDescr                    text                                         NULL       default 'NULL', \
-    sysContact                  text                                         NULL       default 'NULL', \
-    version                     text                                         NULL       default 'NULL', \
-    hardware                    text                                         NULL       default 'NULL', \
-    features                    text                                         NULL       default 'NULL', \
-    location_id                 int(10) unsigned                             NULL       default 'NULL', \
-    os                          varchar(32)                                  NULL       default 'NULL', \
+    bgpLocalAs                  int(10) unsigned                             NULL, \
+    sysObjectID                 varchar(128)                                 NULL, \
+    sysDescr                    text                                         NULL, \
+    sysContact                  text                                         NULL, \
+    version                     text                                         NULL, \
+    hardware                    text                                         NULL, \
+    features                    text                                         NULL, \
+    location_id                 int(10) unsigned                             NULL, \
+    os                          varchar(32)                                  NULL, \
     status                      tinyint(1)                                   NOT NULL   default '0', \
-    status_reason               varchar(50)                                  NOT NULL   default 'NULL', \
+    status_reason               varchar(50)                                  NOT NULL, \
     ignores                     tinyint(1)                                   NOT NULL   default '0', \
     disabled                    tinyint(1)                                   NOT NULL   default '0', \
-    uptime                      bigint(20)                                   NULL       default 'NULL', \
+    uptime                      bigint(20)                                   NULL, \
     agent_uptime                int(10) unsigned                             NOT NULL   default '0', \
-    last_polled                 timestamp                                    NULL       default 'NULL', \
-    last_poll_attempted         timestamp                                    NULL       default 'NULL', \
-    last_polled_timetaken       double(5,2)                                  NULL       default 'NULL', \
-    last_discovered_timetaken   double(5,2)                                  NULL       default 'NULL', \
-    last_discovered             timestamp                                    NULL       default 'NULL', \
-    last_ping                   timestamp                                    NULL       default 'NULL', \
-    last_ping_timetaken         double(8,2)                                  NULL       default 'NULL', \
-    purpose                     text                                         NULL       default 'NULL', \
+    last_polled                 timestamp                                    NULL, \
+    last_poll_attempted         timestamp                                    NULL, \
+    last_polled_timetaken       double(5,2)                                  NULL, \
+    last_discovered_timetaken   double(5,2)                                  NULL, \
+    last_discovered             timestamp                                    NULL, \
+    last_ping                   timestamp                                    NULL, \
+    last_ping_timetaken         double(8,2)                                  NULL, \
+    purpose                     text                                         NULL, \
     type                        varchar(20)                                  NOT NULL   default '', \
-    serial                      text                                         NULL       default 'NULL', \
-    icon                        varchar(255)                                 NULL       default 'NULL', \
+    serial                      text                                         NULL, \
+    icon                        varchar(255)                                 NULL, \
     poller_group                int(11)                                      NOT NULL   default '0', \
     override_sysLocation        tinyint(1)                                   NULL       default '0', \
-    notes                       text                                         NULL       default 'NULL', \
+    notes                       text                                         NULL, \
     port_association_mode       int(11)                                      NULL       default '1', \
     max_depth                   int(11)                                      NOT NULL   default '0', \
     PRIMARY KEY(device_id));"
 
 mysql_create_edge_device_perf_table = "CREATE TABLE device_perf (\
-    id          int(10) unsigned  NOT NULL  default 'NULL', \
-    device_id   int(10) unsigned  NOT NULL  default 'NULL', \
-    timestamp   datetime          NOT NULL  default 'NULL', \
-    xmt         int(11)           NOT NULL  default 'NULL', \
-    rcv         int(11)           NOT NULL  default 'NULL', \
-    loss        int(11)           NOT NULL  default 'NULL', \
-    min         double(8,2)       NOT NULL  default 'NULL', \
-    max         double(8,2)       NOT NULL  default 'NULL', \
-    avg         double(8,2)       NOT NULL  default 'NULL', \
-    debug       text              NULL      default 'NULL',\
+    id          int(10) unsigned  NOT NULL, \
+    device_id   int(10) unsigned  NOT NULL, \
+    timestamp   datetime          NOT NULL, \
+    xmt         int(11)           NOT NULL, \
+    rcv         int(11)           NOT NULL, \
+    loss        int(11)           NOT NULL, \
+    min         double(8,2)       NOT NULL, \
+    max         double(8,2)       NOT NULL, \
+    avg         double(8,2)       NOT NULL, \
+    debug       text              NULL,\
     PRIMARY KEY(id));"
 
 mysql_create_edge_alert_log_table = "CREATE TABLE alert_log (\
-    id          int(10) unsigned    NOT NULL    default 'NULL', \
-    rule_id     int(10) unsigned    NOT NULL    default 'NULL', \
-    device_id   int(10) unsigned    NOT NULL    default 'NULL', \
-    state       int(11)             NOT NULL    default 'NULL', \
-    details     longblob            NULL        default 'NULL', \
-    time_logged timestamp           NOT NULL    default 'CURRENT_TIMESTAMP', \
+    id          int(10) unsigned    NOT NULL, \
+    rule_id     int(10) unsigned    NOT NULL, \
+    device_id   int(10) unsigned    NOT NULL, \
+    state       int(11)             NOT NULL, \
+    details     longblob            NULL, \
+    time_logged timestamp           NOT NULL, \
     PRIMARY KEY(id));"
 
 mysql_push_edge_data = ""
