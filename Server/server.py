@@ -142,7 +142,6 @@ def mysql_creat_edge_table(dbName, tableName):
     elif tableName == "alert_log": tableInfo = mysql_create_edge_alert_log_table
     print(tableName, tableInfo)
     try:
-        mysql_connection = mysql_conn.cursor()
         mysql_conn.select_db(dbName)
         mysql_connection = mysql_conn.cursor()
         mysql_connection.execute(tableInfo)
@@ -171,8 +170,8 @@ def mysql_check_db(dbName):
 
 # mysql 檢查指定 db 中 table 是否存
 def mysql_check_table(dbName, tableName):
-    global mysql_conn
     if mysql_check_db(dbName) == True:
+        mysql_conn.select_db(dbName)
         mysql_connection = mysql_conn.cursor()
         mysql_connection.execute("show tables;")
         for x in mysql_connection:
