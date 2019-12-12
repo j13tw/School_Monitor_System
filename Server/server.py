@@ -311,13 +311,14 @@ def edgeNodeRegist():
 @app.route('/edgeNodeSqlUpload', methods=['POST'])
 def edgeNodeSqlUpload():
     if request.method == 'POST':
+        print(request.json)
         edgeData = json.loads(str(request.json).replace("'", '"'))
         edge_school_id = int(edgeData["school"])
         edge_school_devices = edgeData["devices"]
         edge_school_device_perf = edgeData["device_perf"]
         edge_school_alert_log = edgeData["alert_log"]
         mysql_connect()
-        mysql_conn.select_db("school_" + edge_school_id)
+        mysql_conn.select_db("school_" + str(edge_school_id))
         mysql_connection = mysql_conn.cursor()
         for x in range(0, len(edge_school_devices)):
             mysql_connection.execute

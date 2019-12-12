@@ -73,6 +73,8 @@ def mysql_search_devices_tables():
     mysql_connection = mysql_conn.cursor()
     deviceCount = mysql_connection.execute("select * from devices")
     for x in mysql_connection:
+        for y in range(0, len(x)):
+            if x[y] == None: x[y] == "None"
         devices_data.append({ \
             "device_id": x[0], \
             "hostname": x[1], \
@@ -138,7 +140,6 @@ def mysql_search_device_perf_tables():
     for x in mysql_connection:
         devices_list.append(x[0])
     for x in range(0, len(devices_list)):
-        print(devices_list[x])
         mysql_connection.execute("select * from device_perf where device_id = " + str(devices_list[x]) + " group by timestamp limit 1")
         for y in mysql_connection:
             device_perf_data.append({ \
@@ -243,7 +244,7 @@ while edgeInitState:
     if (edgeStatusCode != ""):
         try:
             healthData["status"] = edgeStatusCode
-            # requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeServiceCheckUrl, data=healthData)
+            requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeServiceCheckUrl, data=healthData)
             print(str(datetime.datetime.now()) + " Health Response to Cloud ok !")
         except:
             print(str(datetime.datetime.now()) + " Health Response to Cloud Error !")
@@ -257,7 +258,7 @@ while edgeInitState:
         searchSqlData["alert_log"] = mysql_search_alert_log_tables()
         print(searchSqlData)
         try:
-            requests.post(cloudServerProtocol + "://" + cloudServerIp + cloudServerPort + edgeDatabaseFlashUrl, data=searchSqlData)
+            requests.post(cloudServerProtocol + "://" + cloudServerIp + cloudServerPort + ":" +  edgeDatabaseFlashUrl, data=searchSqlData)
             print(str(datetime.datetime.now()) + " Upload Sql to Cloud ok !")
         except:
             print(str(datetime.datetime.now()) + " Upload Sql to Cloud fail !")
