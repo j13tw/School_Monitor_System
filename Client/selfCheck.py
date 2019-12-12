@@ -15,7 +15,7 @@ edgeNodeRegistUrl = "/edgeNodeRegist"
 edgeServiceCheckUrl = "/edgeNodeHealthCheck"
 edgeDatabaseFlashUrl = "/edgeNodeSqlUpload"
 
-registData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(),"port": sys.argv[1]}
+registData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(),"port": sys.argv[1], "status" = ""}
 healthData = {"school": sys.argv[1], "status":""}
 searchSqlData = {"school": sys.argv[1], "devices": [], "device_perf": [], "alert_log": []}
 
@@ -122,6 +122,7 @@ def mysql_search_devices_tables():
             "notes": x[45], \
             "port_association_mode": x[46], \
             "max_depth": x[47]})
+        print(devices[y])
     if (len(devices_data) == deviceCount):
         return devices_data
     else:
@@ -137,7 +138,7 @@ def mysql_search_device_perf_tables():
     for x in mysql_connection:
         devices_list.append(x[0])
     for x in range(0, len(devices_list)):
-        mysql_connection.execute("select * from device_perf where device_id = " + devices_list[x] + " group by timestamp limit 1")
+        mysql_connection.execute("select * from device_perf where device_id = " + str(devices_list[x]) + " group by timestamp limit 1")
         for y in mysql_connection:
             device_perf_data.append({ \
                 "id": y[0], \
@@ -150,6 +151,7 @@ def mysql_search_device_perf_tables():
                 "max": y[7], \
                 "avg": y[8], \
                 "debug": y[9]})
+            print(device_perf_data[y])
     if (deviceCount == len(device_perf_data)): 
         return device_perf_data
     else:
@@ -165,7 +167,7 @@ def mysql_search_alert_log_tables():
     for x in mysql_connection:
         devices_list.append(x[0])
     for x in range(0, len(devices_list)):
-        mysql_connection.execute("select * from alert_log where device_id = " + devices_list[x] + " group by timestamp limit 3")
+        mysql_connection.execute("select * from alert_log where device_id = " + str(devices_list[x]) + " group by timestamp limit 3")
         for y in mysql_connection:
             device_alert_log.append({ \
                 "id": y[0], \
@@ -174,6 +176,7 @@ def mysql_search_alert_log_tables():
                 "state": y[3], \
                 "details": y[4], \
                 "time_logged": y[5]})
+            print(device_alert_log[y])
     if (deviceCount == len(device_alert_log)): 
         return device_alert_log
     else:
@@ -200,6 +203,7 @@ while edgeInitState != 1:
         except:
             edgeStatusCode = edgeStatusCodeArray[1]
         if (edgeStatusCode == edgeStatusCodeArray[0]):
+            registData["status"] = edgeStatusCode
             try:
                 requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeNodeRegistUrl, data=registData)
                 print(str(datetime.datetime.now()) + " Edge Init Network to Cloud : OK !")
