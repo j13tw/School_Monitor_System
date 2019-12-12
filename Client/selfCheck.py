@@ -262,7 +262,7 @@ while edgeInitState:
         searchSqlData["alert_log"] = mysql_search_alert_log_tables()
         print(searchSqlData)
         try:
-            requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + cloudServerPort +  edgeDatabaseFlashUrl, json=searchSqlData)
+            requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + cloudServerPort + edgeDatabaseFlashUrl, json=searchSqlData)
             print(str(datetime.datetime.now()) + " Upload Sql to Cloud ok !")
         except:
             print(str(datetime.datetime.now()) + " Upload Sql to Cloud fail !")

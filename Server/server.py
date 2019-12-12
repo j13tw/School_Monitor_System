@@ -311,7 +311,6 @@ def edgeNodeRegist():
 @app.route('/edgeNodeSqlUpload', methods=['POST'])
 def edgeNodeSqlUpload():
     if request.method == 'POST':
-        print(request.json)
         edgeData = json.loads(str(request.json).replace("'", '"'))
         edge_school_id = int(edgeData["school"])
         edge_school_devices = edgeData["devices"]
@@ -320,6 +319,7 @@ def edgeNodeSqlUpload():
         mysql_connect()
         mysql_conn.select_db("school_" + str(edge_school_id))
         mysql_connection = mysql_conn.cursor()
+        print("XXXXX")
         for x in range(0, len(edge_school_devices)):
             y = json.loads(str(edge_school_devices[x]).replace("'", '"'))
             if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
@@ -370,8 +370,9 @@ def edgeNodeSqlUpload():
             if (y["notes"] != "NULL"): y["notes"] = "'" + y["notes"] + "'"
             if (y["port_association_mode"] != "NULL"): y["port_association_mode"] = str(y["port_association_mode"])
             if (y["max_depth"] != "NULL"): y["max_depth"] = str(y["max_depth"])
-
+            print("OOOO")
             if (mysql_connection.execute("select * from devices where device_id = " + y["device_id"]) == 1):
+                print("OOXX")
                 try:
                     # mysql_connection.execute
                     print("UPDATE devices SET \
@@ -387,6 +388,7 @@ def edgeNodeSqlUpload():
                 except:
                      return {"uploadSql": "devices_table_update_Error"} 
             else:
+                print("XXOO")
                 try:
                     mysql_connection.execute("INSERT INTO devices ( \
                         device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo, \
