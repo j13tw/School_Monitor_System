@@ -122,7 +122,7 @@ def mysql_search_devices_tables():
             "notes": x[45], \
             "port_association_mode": x[46], \
             "max_depth": x[47]})
-        print(devices_data[y])
+    print(devices_data)
     if (len(devices_data) == deviceCount):
         return devices_data
     else:
@@ -151,7 +151,7 @@ def mysql_search_device_perf_tables():
                 "max": y[7], \
                 "avg": y[8], \
                 "debug": y[9]})
-            print(device_perf_data[y])
+        print(device_perf_data)
     if (deviceCount == len(device_perf_data)): 
         return device_perf_data
     else:
@@ -176,7 +176,7 @@ def mysql_search_alert_log_tables():
                 "state": y[3], \
                 "details": y[4], \
                 "time_logged": y[5]})
-            print(alert_log_data[y])
+        print(alert_log_data)
     if (deviceCount == len(alert_log_data)): 
         return alert_log_data
     else:

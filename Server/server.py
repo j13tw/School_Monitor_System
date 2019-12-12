@@ -265,6 +265,7 @@ def edgeNodeRegist():
             print("School_Id = "+ str(edge_school_id))
             print("School_Ip = "+ edge_school_ip)
             print("School_Port = "+ str(edge_school_port))
+            print("School_Status = "+ str(edge_school_status))
             print("School_MAC = "+ edge_school_mac)
         except:
             return {"regist": "fail", "info": "post_Error"}
@@ -285,7 +286,7 @@ def edgeNodeRegist():
                     return {"regist": "fail", "info": "db_Insert_Error"}
             else:
                 try:
-                    mysql_connection.execute("UPDATE " + mysql_service_table + " SET School_Ip='" + edge_school_ip + "', School_MAC = '" + edge_school_mac + "', School_Port = " + str(edge_school_port) + ", School_Status = =" + edge_school_status + "', School_LastCheck = '" + str(datetime.datetime.now()) + "' WHERE School_Id = " + str(edge_school_id))
+                    mysql_connection.execute("UPDATE " + mysql_service_table + " SET School_Ip='" + edge_school_ip + "', School_MAC = '" + edge_school_mac + "', School_Port = " + str(edge_school_port) + ", School_Status = " + edge_school_status + "', School_LastCheck = '" + str(datetime.datetime.now()) + "' WHERE School_Id = " + str(edge_school_id))
                     print("db_Update : " + "school_" + str(edge_school_id))
                 except: 
                     return {"regist": "fail", "info": "db_Update_Error"}
