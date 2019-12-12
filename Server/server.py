@@ -390,7 +390,7 @@ def edgeNodeSqlUpload():
             else:
                 print("XXOO")
                 #try:
-                mysql_command = "INSERT INTO devices (device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo VALUES (\
+                mysql_command = "INSERT INTO devices (device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo) VALUES (\
                 " + y["device_id"] + ", " + y["hostname"] + ", " + y["sysName"] + ", " + y["ip"] + ", " + y["community"] + ", " + y["authlevel"] + ", " + y["authname"] + ", " + y["authpass"] + ", \
                 " + y["authalgo"] + ", " + y["cryptopass"] + ", " + y["cryptoalgo"] + ")"
                     
