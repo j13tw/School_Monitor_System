@@ -122,7 +122,7 @@ def mysql_search_devices_tables():
             "notes": x[45], \
             "port_association_mode": x[46], \
             "max_depth": x[47]})
-        print(devices[y])
+        print(devices_data[y])
     if (len(devices_data) == deviceCount):
         return devices_data
     else:
@@ -169,16 +169,16 @@ def mysql_search_alert_log_tables():
     for x in range(0, len(devices_list)):
         mysql_connection.execute("select * from alert_log where device_id = " + str(devices_list[x]) + " group by timestamp limit 3")
         for y in mysql_connection:
-            device_alert_log.append({ \
+            alert_log_data.append({ \
                 "id": y[0], \
                 "rule_id": y[1], \
-                "device_id": y[2], \
+                "id": y[2]_dataalert_log_data, \
                 "state": y[3], \
                 "details": y[4], \
                 "time_logged": y[5]})
-            print(device_alert_log[y])
-    if (deviceCount == len(device_alert_log)): 
-        return device_alert_log
+            print(alert_log_data[y])
+    if (deviceCount == len(alert_log_data)): 
+        return alert_log_data
     else:
         return []
 
@@ -248,7 +248,7 @@ while edgeInitState:
             print(str(datetime.datetime.now()) + " Health Response to Cloud Error !")
             cloudState = 0
     else:
-        pushSqlCount = pushSqlCount - 1
+        pushSqlCount = pushSqlCount - checkInterval
     # Mysql Data Flash API
     if (pushSqlCount == 0):
         searchSqlData["devices"] = mysql_search_devices_tables()
