@@ -371,7 +371,7 @@ def edgeNodeSqlUpload():
             if (y["port_association_mode"] != "NULL"): y["port_association_mode"] = str(y["port_association_mode"])
             if (y["max_depth"] != "NULL"): y["max_depth"] = str(y["max_depth"])
 
-            if (mysql_connection.execute("select * from devices where device = " + y["device_id"]) == 1):
+            if (mysql_connection.execute("select * from devices where devices = " + y["device_id"]) == 1):
                 try:
                     mysql_connection.execute("UPDATE devices SET \
                         device_id = " + y["device_id"] + ", hostname = " + y["hostname"] + ", sysName = " + y["sysName"] + ", ip = " + y["ip"] + ", community = " + y["community"] + ", \
