@@ -354,12 +354,12 @@ def edgeNodeSqlUpload():
             if (y["disabled"] != "NULL"): y["disabled"] = str(y["disabled"])
             if (y["uptime"] != "NULL"): y["uptime"] = str(y["uptime"])
             if (y["agent_uptime"] != "NULL"): y["agent_uptime"] = str(y["agent_uptime"])
-            if (y["last_polled"] != "NULL"): y["last_polled"] = "'" + y["last_polled"] + "'"
-            if (y["last_poll_attempted"] != "NULL"): y["last_poll_attempted"] = "'" + y["last_poll_attempted"] + "'"
+            if (y["last_polled"] != "NULL"): y["last_polled"] = "'" + str(y["last_polled"]) + "'"
+            if (y["last_poll_attempted"] != "NULL"): y["last_poll_attempted"] = "'" + str(y["last_poll_attempted"]) + "'"
             if (y["last_polled_timetaken"] != "NULL"): y["last_polled_timetaken"] = str(y["last_polled_timetaken"])
             if (y["last_discovered_timetaken"] != "NULL"): y["last_discovered_timetaken"] = str(y["last_discovered_timetaken"])
-            if (y["last_discovered"] != "NULL"): y["last_discovered"] = "'" + y["last_discovered"] + "'"
-            if (y["last_ping"] != "NULL"): y["last_ping"] = "'" + y["last_ping"] + "'"
+            if (y["last_discovered"] != "NULL"): y["last_discovered"] = "'" + str(y["last_discovered"]) + "'"
+            if (y["last_ping"] != "NULL"): y["last_ping"] = "'" + str(y["last_ping"]) + "'"
             if (y["last_ping_timetaken"] != "NULL"): y["last_ping_timetaken"] = str(y["last_ping_timetaken"])
             if (y["purpose"] != "NULL"): y["purpose"] = "'" + y["purpose"] + "'"
             if (y["type"] != "NULL"): y["type"] = "'" + y["type"] + "'"
