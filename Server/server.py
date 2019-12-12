@@ -340,7 +340,7 @@ def edgeNodeSqlUpload():
             " + y["last_discovered"] + ", " + y["last_ping"] + ", " + str(y["last_ping_timetaken"]) + ", " + y["purpose"] + ", " + y["type"] + ", " + y["serial"] + ", " + y["icon"] + ", \
             " + str(y["poller_group"]) + ", " + str(y["override_sysLocation"]) + ", " + y["notes"] + ", " + str(y["port_association_mode"]) + ", " + str(y["max_depth"]) + ")") 
             mysql_conn.commit()
-            
+    return {"uploadSql": "ok"}     
 if __name__ == '__main__':
 #	app.run(debug = True)
 	app.run(host = '10.0.0.194', port=5000)
