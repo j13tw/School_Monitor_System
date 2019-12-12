@@ -15,7 +15,7 @@ edgeNodeRegistUrl = "/edgeNodeRegist"
 edgeServiceCheckUrl = "/edgeNodeHealthCheck"
 edgeDatabaseFlashUrl = "/edgeNodeSqlUpload"
 
-registData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(),"port": sys.argv[1], "status": ""}
+registData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "status": ""}
 healthData = {"school": sys.argv[1], "status":""}
 searchSqlData = {"school": sys.argv[1], "devices": [], "device_perf": [], "alert_log": []}
 
@@ -210,6 +210,8 @@ while edgeInitState != 1:
         if (edgeStatusCode == edgeStatusCodeArray[0]):
             registData["status"] = edgeStatusCode
             try:
+                print(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeNodeRegistUrl)
+                print(registData)
                 requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeNodeRegistUrl, data=registData)
                 print(str(datetime.datetime.now()) + " Edge Init Network to Cloud : OK !")
                 edgeInitState = 1
