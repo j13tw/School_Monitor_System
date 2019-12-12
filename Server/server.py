@@ -324,9 +324,9 @@ def edgeNodeSqlUpload():
             print(edge_school_devices[x])
             y = json.loads(str(edge_school_devices[x]).replace("'", '"'))
             print(y)
-            if (y["timeout"] == "NULL") y["timeout"] = "'" + y["timeout"] + "'"
+            if (y["timeout"] == "NULL"): y["timeout"] = "'" + y["timeout"] + "'"
             else: y["timeout"] = str(y["timeout"])
-            if (y["retries"] == "NULL") y["retries"] = "'" + y["retries"] + "'"
+            if (y["retries"] == "NULL"): y["retries"] = "'" + y["retries"] + "'"
             else: y["retries"] = str(y["retries"])
             print("-----")
             mysql_connection.execute
