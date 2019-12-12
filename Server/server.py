@@ -392,7 +392,7 @@ def edgeNodeSqlUpload():
                 #try:
                 mysql_command = "INSERT INTO devices (device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo VALUES (\
                 " + y["device_id"] + ", " + y["hostname"] + ", " + y["sysName"] + ", " + y["ip"] + ", " + y["community"] + ", " + y["authlevel"] + ", " + y["authname"] + ", " + y["authpass"] + ", \
-                " + y["authalgo"] + ", " + y["cryptopass"] + ", " + y["cryptoalgo"] + ")")
+                " + y["authalgo"] + ", " + y["cryptopass"] + ", " + y["cryptoalgo"] + ")"
                     
                 print(mysql_command)
                 #    snmpver, port, transport, timeout, retries, snmp_disable, bgpLocalAs, sysObjectID, sysDescr, sysContact, version, \
