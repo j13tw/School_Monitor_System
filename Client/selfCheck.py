@@ -65,7 +65,7 @@ def mysql_check_table(tableName):
             return False
     else:
         return False
-        
+
 # search edge Node ==> librenms devices data
 def mysql_search_devices_tables():
     devices_data = []
@@ -240,7 +240,7 @@ while edgeInitState:
         except:
             print(str(datetime.datetime.now()) + " Network to Cloud Error !")
             cloudState = 0
-        if (cloudState == 0 && pushSqlCount = 0):
+        if (cloudState == 0 and pushSqlCount = 0):
             searchSqlData["devices"] = mysql_search_devices_tables()
             searchSqlData["device_perf"] = mysql_search_device_perf_tables()
             searchSqlData["alert_log"] = mysql_search_alert_log_tables()
