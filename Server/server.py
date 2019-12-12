@@ -141,7 +141,7 @@ def mysql_creat_edge_table(dbName, tableName):
     if tableName == "devices": tableInfo = mysql_create_edge_devices_table
     elif tableName == "device_perf": tableInfo = mysql_create_edge_device_perf_table
     elif tableName == "alert_log": tableInfo = mysql_create_edge_alert_log_table
-    print(tableName, tableInfo)
+    # print(tableName, tableInfo)
     try:
         mysql_conn.select_db(dbName)
         mysql_connection = mysql_conn.cursor()
