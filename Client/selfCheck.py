@@ -17,7 +17,7 @@ edgeDatabaseFlashUrl = "/edgeNodeSqlUpload"
 
 registData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(),"port": sys.argv[1]}
 healthData = {"school": sys.argv[1], "status":""}
-searchSqlData = {"school": sys.argv[1], "devices": [], "device_perf": "", "alert_log": []}
+searchSqlData = {"school": sys.argv[1], "devices": [], "device_perf": [], "alert_log": []}
 
 
 print("argv = "+sys.argv[1])

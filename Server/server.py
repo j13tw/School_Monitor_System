@@ -281,9 +281,9 @@ def edgeNodeRegist():
         except:
             return {"regist": "fail", "info": "post_Error"}
         try:
-            edge_school_container_id = docker_client.containers.run(image='grafana/grafana', name=str(edge_school_id), ports={'3000/tcp': edge_school_port}, detach=True).short_id    
+            edge_school_container_id = docker_client.containers.run(image='grafana/grafana', name=str("school_" + str(edge_school_id)), ports={'3000/tcp': edge_school_port}, detach=True).short_id    
         except:
-            edge_school_container_id = docker_client.containers.get(str(edge_school_id)).short_id
+            edge_school_container_id = docker_client.containers.get("school_" + str(edge_school_id)).short_id
         print("School_ContainerId = "+ edge_school_container_id)
         if mysql_connect() == True:
             mysql_conn.select_db(mysql_service_db)
