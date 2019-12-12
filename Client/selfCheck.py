@@ -15,7 +15,7 @@ edgeNodeRegistUrl = "/edgeNodeRegist"
 edgeServiceCheckUrl = "/edgeNodeHealthCheck"
 edgeDatabaseFlashUrl = "/edgeNodeSqlUpload"
 
-registData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(),"port": sys.argv[1], "status" = ""}
+registData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(),"port": sys.argv[1], "status": ""}
 healthData = {"school": sys.argv[1], "status":""}
 searchSqlData = {"school": sys.argv[1], "devices": [], "device_perf": [], "alert_log": []}
 
