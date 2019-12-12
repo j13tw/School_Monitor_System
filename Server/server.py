@@ -182,20 +182,6 @@ def mysql_check_table(dbName, tableName):
     else:
         return False
 
-# 上傳檔案檢查
-def is_allowed_file(file):
-    if '.' in file.filename:
-        ext = file.filename.rsplit('.', 1)[1].lower()
-    else:
-        return False
-    mime_type = magic.from_buffer(file.stream.read(), mime=True)
-    if (
-        mime_type in ALLOWED_MIME_TYPES and
-        ext in ALLOWED_EXTENSIONS
-    ):
-        return True    
-    return False 
-
 # 切換資料庫
 # conn.select_db('edge-regist')
 # 新增資料庫
@@ -246,12 +232,12 @@ def listContainer():
 def edgeNodeHealthCheck():
     if request.method == 'POST':
         try:
-            edgedata = json.loads(str(request.json).replace("'", '"'))
-            edge_school_id = int(edgedata["school"])
-            edge_school_status = str(edgedata["status"])
-            edge_school_devices_table = str(edgedata["devices"])
-            edge_school_device_perf_table = str(edgedata["devices_perf"])
-            edge_school_alert_log_table = str(edgedata["alert_log"])
+            edgeData = json.loads(str(request.json).replace("'", '"'))
+            edge_school_id = int(edgeData["school"])
+            edge_school_status = str(edgeData["status"])
+            edge_school_devices_table = str(edgeData["devices"])
+            edge_school_device_perf_table = str(edgeData["devices_perf"])
+            edge_school_alert_log_table = str(edgeData["alert_log"])
             print("healthCheck = ", edge_school_id, edge_school_status)  
             print("devices", edge_school_devices_table)
             print("device_perf", edge_school_device_perf_table)
@@ -269,11 +255,11 @@ def edgeNodeHealthCheck():
 def edgeNodeRegist():
     if request.method == 'POST':
         try:
-            edgedata = json.loads(str(request.json).replace("'", '"'))
-            edge_school_id = int(edgedata["school"])
-            edge_school_ip = str(edgedata["ip"])
-            edge_school_mac = str(edgedata["mac"])
-            edge_school_port = 30000 + int(edgedata["school"])
+            edgeData = json.loads(str(request.json).replace("'", '"'))
+            edge_school_id = int(edgeData["school"])
+            edge_school_ip = str(edgeData["ip"])
+            edge_school_mac = str(edgeData["mac"])
+            edge_school_port = 30000 + int(edgeData["school"])
             print("School_Id = "+ str(edge_school_id))
             print("School_Ip = "+ edge_school_ip)
             print("School_Port = "+ str(edge_school_port))
@@ -322,13 +308,32 @@ def edgeNodeRegist():
 @app.route('/edgeNodeSqlUpload', methods=['POST'])
 def edgeNodeSqlUpload():
     if request.method == 'POST':
-        file = request.files['file']
-    if file and is_allowed_file(file):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join('/tmp', filename))
-        return {"upload": "ok"}
-    return {"upload": "fail"}
-
+        edgeData = json.loads(str(request.json).replace("'", '"'))
+        edge_school_id = int(edgeData["school"])
+        edge_school_devices = edgeData["devices"]
+        edge_school_device_perf = edgeData["device_perf"]
+        edge_school_alert_log = edgeData["alert_log"]
+        mysql_connect()
+        mysql_conn.select_db("school_" + edge_school_id)
+        mysql_connection = mysql_conn.cursor()
+        for x in range(0, len(edge_school_devices)):
+            mysql_connection.execute
+            print("insert into devices ( \
+            device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo, \
+            snmpver, port, transport, timeout, retries, snmp_disable, bgpLocalAs, sysObjectID, sysDescr, sysContact, version, \
+            hardware, features, location_id, os, status, status_reason, ignores, disabled, uptime, agent_uptime, last_polled, \
+            last_poll_attempted, last_polled_timetaken, last_discovered_timetaken, last_discovered, last_ping, last_ping_timetaken, \
+            purpose, type, serial, icon, poller_group, override_sysLocation, notes, port_association_mode, max_depth) \
+            VALUES \
+            (" + x["device_id"] + ", " + x["hostname"] + ", " + x["sysName"] + ", " + x["ip"] + ", " + x["community"] + ", " + x["authlevel"] + ", " + x["authname"] + ", " + x["authpass"] + ", \
+            " + x["authalgo"] + ", " + x["cryptopass"] + ", " + x["cryptoalgo"] + ", " + x["snmpver"] + ", " + x["port"] + ", " + x["transport"] + ", " + x["timeout"] + ", " + x["retries"] + ", \
+            " + x["snmp_disable"] + ", " + x["bgpLocalAs"] + ", " + x["sysObjectID"] + ", " + x["sysDescr"] + ", " + x["sysContact"] + ", " + x["version"] + ", " + x["hardware"] + ", \
+            " + x["features"] + ", " + x["location_id"] + ", " + x["os"] + ", " + x["status"] + ", " + x["status_reason"] + ", " + x["ignores"] + ", " + x["disabled"] + ", " + x["uptime"] + ", \
+            " + x["last_polled"] + ", " + x["last_poll_attempted"] + ", " + x["last_polled_timetaken"] + ", " + x["last_discovered_timetaken"] + ", " + x["last_discovered"] + ", " + x["last_ping"] + ", \
+            " + x["last_ping_timetaken"] + ", " + x["purpose"] + ", " + x["type"] + ", " + x["serial"] + ", " + x["icon"] + ", " + x["poller_group"] + ", " + x["override_sysLocation"] + ", \
+            " + x["notes"] + ", " + x["port_association_mode"] + ", " + x["max_depth"] + ")") 
+            mysql_conn.commit()
+            
 if __name__ == '__main__':
 #	app.run(debug = True)
 	app.run(host = '0.0.0.0', port=5000)
