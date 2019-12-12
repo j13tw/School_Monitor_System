@@ -324,12 +324,55 @@ def edgeNodeSqlUpload():
             print(edge_school_devices[x])
             y = json.loads(str(edge_school_devices[x]).replace("'", '"'))
             print(y)
-            if (y["timeout"] == "NULL"): y["timeout"] = "'" + y["timeout"] + "'"
-            else: y["timeout"] = str(y["timeout"])
-            if (y["retries"] == "NULL"): y["retries"] = "'" + y["retries"] + "'"
-            else: y["retries"] = str(y["retries"])
             print("-----")
-            mysql_connection.execute
+            if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
+            if (y["hostname"] != "NULL"): y["hostname"] = "'" + y["hostname"] + "'"
+            if (y["sysName"] != "NULL"): y["sysName"] = "'" + y["sysName"] + "'"
+            if (y["ip"] != "NULL"): y["ip"] = "'" + y["ip"] + "'"
+            if (y["community"] != "NULL"): y["community"] = "'" + y["community"] + "'"
+            if (y["authlevel"] != "NULL"): y["authlevel"] = str(y["authlevel"])
+            if (y["authname"] != "NULL"): y["authname"] = "'" + y["authname"] + "'"
+            if (y["authpass"] != "NULL"): y["authpass"] = "'" + y["authpass"] + "'"
+            if (y["authalgo"] != "NULL"): y["authalgo"] = "'" + y["authalgo"] + "'"
+            if (y["cryptopass"] != "NULL"): y["cryptopass"] = "'" + y["cryptopass"] + "'"
+            if (y["cryptoalgo"] != "NULL"): y["cryptoalgo"] = "'" + y["cryptoalgo"] + "'"
+            if (y["snmpver"] != "NULL"): y["snmpver"] = "'" + y["snmpver"] + "'"
+            if (y["port"] != "NULL"): y["port"] = str(y["port"])
+            if (y["transport"] != "NULL"): y["transport"] = "'" + y["transport"] + "'"
+            if (y["timeout"] != "NULL"): y["timeout"] = str(y["timeout"])
+            if (y["retries"] != "NULL"): y["retries"] = str(y["retries"])
+            if (y["snmp_disable"] != "NULL"): y["snmp_disable"] = str(y["snmp_disable"])
+            if (y["bgpLocalAs"] != "NULL"): y["bgpLocalAs"] = str(y["bgpLocalAs"])
+            if (y["sysObjectID"] != "NULL"): y["sysObjectID"] = "'" + y["sysObjectID"] + "'"
+            if (y["sysDescr"] != "NULL"): y["sysDescr"] = "'" + y["sysDescr"] + "'"
+            if (y["sysContact"] != "NULL"): y["sysContact"] = "'" + y["sysContact"] + "'"
+            if (y["version"] != "NULL"): y["version"] = "'" + y["version"] + "'"
+            if (y["hardware"] != "NULL"): y["hardware"] = "'" + y["hardware"] + "'"
+            if (y["features"] != "NULL"): y["features"] = "'" + y["features"] + "'"
+            if (y["location_id"] != "NULL"): y["location_id"] = str(y["location_id"])
+            if (y["os"] != "NULL"): y["os"] = "'" + y["os"] + "'"
+            if (y["status"] != "NULL"): y["status"] = str(y["status"])
+            if (y["status_reason"] != "NULL"): y["status_reason"] = "'" + y["status_reason"] + "'"
+            if (y["ignores"] != "NULL"): y["ignores"] = str(y["ignores"])
+            if (y["disabled"] != "NULL"): y["disabled"] = str(y["disabled"])
+            if (y["uptime"] != "NULL"): y["uptime"] = str(y["uptime"])
+            if (y["agent_uptime"] != "NULL"): y["agent_uptime"] = str(y["agent_uptime"])
+            if (y["last_polled"] != "NULL"): y["last_polled"] = "'" + y["last_polled"] + "'"
+            if (y["last_poll_attempted"] != "NULL"): y["last_poll_attempted"] = "'" + y["last_poll_attempted"] + "'"
+            if (y["last_polled_timetaken"] != "NULL"): y["last_polled_timetaken"] = str(y["last_polled_timetaken"])
+            if (y["last_discovered_timetaken"] != "NULL"): y["last_discovered_timetaken"] = str(y["last_discovered_timetaken"])
+            if (y["last_discovered"] != "NULL"): y["last_discovered"] = "'" + y["last_discovered"] + "'"
+            if (y["last_ping"] != "NULL"): y["last_ping"] = "'" + y["last_ping"] + "'"
+            if (y["last_ping_timetaken"] != "NULL"): y["last_ping_timetaken"] = str(y["last_ping_timetaken"])
+            if (y["purpose"] != "NULL"): y["purpose"] = "'" + y["purpose"] + "'"
+            if (y["type"] != "NULL"): y["type"] = "'" + y["type"] + "'"
+            if (y["serial"] != "NULL"): y["serial"] = "'" + y["serial"] + "'"
+            if (y["icon"] != "NULL"): y["icon"] = "'" + y["icon"] + "'"
+            if (y["poller_group"] != "NULL"): y["poller_group"] = str(y["poller_group"])
+            if (y["override_sysLocation"] != "NULL"): y["override_sysLocation"] = str(y["override_sysLocation"])
+            if (y["notes"] != "NULL"): y["notes"] = "'" + y["notes"] + "'"
+            if (y["port_association_mode"] != "NULL"): y["port_association_mode"] = str(y["port_association_mode"])
+            if (y["max_depth"] != "NULL"): y["max_depth"] = str(y["max_depth"])
             print("insert into devices ( \
                 device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo, \
                 snmpver, port, transport, timeout, retries, snmp_disable, bgpLocalAs, sysObjectID, sysDescr, sysContact, version, \
@@ -337,13 +380,13 @@ def edgeNodeSqlUpload():
                 last_poll_attempted, last_polled_timetaken, last_discovered_timetaken, last_discovered, last_ping, last_ping_timetaken, \
                 purpose, type, serial, icon, poller_group, override_sysLocation, notes, port_association_mode, max_depth) \
                 VALUES \
-                (" + str(y["device_id"]) + ", '" + y["hostname"] + "', '" + y["sysName"] + "', '" + y["ip"] + "', '" + y["community"] + "', '" + y["authlevel"] + "', '" + y["authname"] + "', '" + y["authpass"] + "', \
-                '" + y["authalgo"] + "', '" + y["cryptopass"] + "', '" + y["cryptoalgo"] + "', '" + y["snmpver"] + "', " + str(y["port"]) + ", '" + y["transport"] + "', " + y["timeout"] + ", " + y["retries"] + ", \
-                " + str(y["snmp_disable"]) + ", " + str(y["bgpLocalAs"]) + ", '" + y["sysObjectID"] + "', '" + y["sysDescr"] + "', '" + y["sysContact"] + "', '" + y["version"] + "', '" + y["hardware"] + "', \
-                '" + y["features"] + "', " + str(y["location_id"]) + ", '" + y["os"] + "', " + str(y["status"]) + ", '" + y["status_reason"] + "', " + str(y["ignores"]) + ", " + str(y["disabled"]) + ", \
-                " + str(y["uptime"]) + ", " + str(y["agent_uptime"]) + ", '" + y["last_polled"] + "', '" + y["last_poll_attempted"] + "', " + str(y["last_polled_timetaken"]) + ", " + str(y["last_discovered_timetaken"]) + ", \
-                '" + y["last_discovered"] + "', '" + y["last_ping"] + "', " + str(y["last_ping_timetaken"]) + ", '" + y["purpose"] + "', '" + y["type"] + "', '" + y["serial"] + "', '" + y["icon"] + "', \
-                " + str(y["poller_group"]) + ", " + str(y["override_sysLocation"]) + ", '" + y["notes"] + "', " + str(y["port_association_mode"]) + ", " + str(y["max_depth"]) + ")") 
+                (" + y["device_id"] + ", " + y["hostname"] + ", " + y["sysName"] + ", " + y["ip"] + ", " + y["community"] + ", " + y["authlevel"] + ", " + y["authname"] + ", " + y["authpass"] + ", \
+                " + y["authalgo"] + ", " + y["cryptopass"] + ", " + y["cryptoalgo"] + ", " + y["snmpver"] + ", " + y["port"] + ", " + y["transport"] + ", " + y["timeout"] + ", " + y["retries"] + ", \
+                " + y["snmp_disable"] + ", " + y["bgpLocalAs"] + ", " + y["sysObjectID"] + ", " + y["sysDescr"] + ", " + y["sysContact"] + ", " + y["version"] + ", " + y["hardware"] + ", \
+                " + y["features"] + ", " + y["location_id"] + ", " + y["os"] + ", " + y["status"] + ", " + y["status_reason"] + ", " + y["ignores"] + ", " + y["disabled"] + ", \
+                " + y["uptime"] + ", " + y["agent_uptime"] + ", " + y["last_polled"] + ", " + y["last_poll_attempted"] + ", " + y["last_polled_timetaken"] + ", " + y["last_discovered_timetaken"] + ", \
+                " + y["last_discovered"] + ", " + y["last_ping"] + ", " + y["last_ping_timetaken"] + ", " + y["purpose"] + ", " + y["type"] + ", " + y["serial"] + ", " + y["icon"] + ", \
+                " + y["poller_group"] + ", " + y["override_sysLocation"] + ", " + y["notes"] + ", " + y["port_association_mode"] + ", " + y["max_depth"] + ")") 
             print("-----")
             mysql_conn.commit()
     return {"uploadSql": "ok"}     
