@@ -73,57 +73,59 @@ def mysql_search_devices_tables():
     mysql_connection = mysql_conn.cursor()
     deviceCount = mysql_connection.execute("select * from devices")
     for x in mysql_connection:
+        z = []
         for y in range(0, len(x)):
-            if x[y] == None: x[y] == "'" + "None" + "'"
+            if x[y] == None: z.append("None")
+            else: z.append(x[y])
         devices_data.append({ \
-            "device_id": x[0], \
-            "hostname": x[1], \
-            "sysName": x[2], \
-            "ip": x[3], \
-            "community": x[4], \
-            "authlevel": x[5], \
-            "authname": x[6], \
-            "authpass": x[7], \
-            "authalgo": x[8], \
-            "cryptopass": x[9], \
-            "cryptoalgo": x[10], \
-            "snmpver": x[11], \
-            "port": x[12], \
-            "transport": x[13], \
-            "timeout": x[14], \
-            "retries": x[15], \
-            "snmp_disable": x[16], \
-            "bgpLocalAs": x[17], \
-            "sysObjectID": x[18], \
-            "sysDescr": x[19], \
-            "sysContact": x[20], \
-            "version": x[21], \
-            "hardware": x[22], \
-            "features": x[23], \
-            "location_id": x[24], \
-            "os": x[25], \
-            "status": x[26], \
-            "status_reason": x[27], \
-            "ignores": x[28], \
-            "disabled": x[29], \
-            "uptime": x[30], \
-            "agent_uptime": x[31], \
-            "last_polled": str(x[32]), \
-            "last_poll_attempted": x[33], \
-            "last_polled_timetaken": x[34], \
-            "last_discovered_timetaken": x[35], \
-            "last_discovered": str(x[36]), \
-            "last_ping": str(x[37]), \
-            "last_ping_timetaken": x[38], \
-            "purpose": x[39], \
-            "type": x[40], \
-            "serial": x[41], \
-            "icon": x[42], \
-            "poller_group": x[43], \
-            "override_sysLocation": x[44], \
-            "notes": x[45], \
-            "port_association_mode": x[46], \
-            "max_depth": x[47]})
+            "device_id": z[0], \
+            "hostname": z[1], \
+            "sysName": z[2], \
+            "ip": z[3], \
+            "community": z[4], \
+            "authlevel": z[5], \
+            "authname": z[6], \
+            "authpass": z[7], \
+            "authalgo": z[8], \
+            "cryptopass": z[9], \
+            "cryptoalgo": z[10], \
+            "snmpver": z[11], \
+            "port": z[12], \
+            "transport": z[13], \
+            "timeout": z[14], \
+            "retries": z[15], \
+            "snmp_disable": z[16], \
+            "bgpLocalAs": z[17], \
+            "sysObjectID": z[18], \
+            "sysDescr": z[19], \
+            "sysContact": z[20], \
+            "version": z[21], \
+            "hardware": z[22], \
+            "features": z[23], \
+            "location_id": z[24], \
+            "os": z[25], \
+            "status": z[26], \
+            "status_reason": z[27], \
+            "ignores": z[28], \
+            "disabled": z[29], \
+            "uptime": z[30], \
+            "agent_uptime": z[31], \
+            "last_polled": str(z[32]), \
+            "last_poll_attempted": z[33], \
+            "last_polled_timetaken": z[34], \
+            "last_discovered_timetaken": z[35], \
+            "last_discovered": str(z[36]), \
+            "last_ping": str(z[37]), \
+            "last_ping_timetaken": z[38], \
+            "purpose": z[39], \
+            "type": z[40], \
+            "serial": z[41], \
+            "icon": z[42], \
+            "poller_group": z[43], \
+            "override_sysLocation": z[44], \
+            "notes": z[45], \
+            "port_association_mode": z[46], \
+            "max_depth": z[47]})
     print(devices_data)
     if (len(devices_data) == deviceCount):
         return devices_data
