@@ -96,7 +96,7 @@ mysql_create_edge_devices_table = "CREATE TABLE devices (\
     poller_group                int(11)                                      NOT NULL   default '0', \
     override_sysLocation        tinyint(1)                                   NULL       default '0', \
     notes                       text                                         NULL, \
-    port_association_mode       int(11)                                      NULL       default '1', \
+    port_association_mode       int(11)                                      NOT NULL   default '1', \
     max_depth                   int(11)                                      NOT NULL   default '0', \
     PRIMARY KEY(device_id));"
 
@@ -349,7 +349,7 @@ def edgeNodeSqlUpload():
             if (y["location_id"] != "NULL"): y["location_id"] = str(y["location_id"])
             if (y["os"] != "NULL"): y["os"] = "'" + y["os"] + "'"
             if (y["status"] != "NULL"): y["status"] = str(y["status"])
-            if (y["status_reason"] != "NULL"): y["status_reason"] = "'" + y["status_reason"] + "'"
+            if (y["status_reason"] != "NULL"): y["status_reason"] = "'" + str(y["status_reason"]) + "'"
             if (y["ignores"] != "NULL"): y["ignores"] = str(y["ignores"])
             if (y["disabled"] != "NULL"): y["disabled"] = str(y["disabled"])
             if (y["uptime"] != "NULL"): y["uptime"] = str(y["uptime"])
