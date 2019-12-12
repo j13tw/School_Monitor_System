@@ -373,7 +373,8 @@ def edgeNodeSqlUpload():
 
             if (mysql_connection.execute("select * from devices where device_id = " + y["device_id"]) == 1):
                 try:
-                    mysql_connection.execute("UPDATE devices SET \
+                    # mysql_connection.execute
+                    print("UPDATE devices SET \
                         device_id = " + y["device_id"] + ", hostname = " + y["hostname"] + ", sysName = " + y["sysName"] + ", ip = " + y["ip"] + ", community = " + y["community"] + ", \
                         authlevel = " + y["authlevel"] + ", authname = " + y["authname"] + ", authpass = " + y["authpass"] + ", authalgo = " + y["authalgo"] + ", cryptopass = " + y["cryptopass"] + ", \
                         cryptoalgo = " + y["cryptoalgo"] + "snmpver = " + y["snmpver"] + ", port = " + y["port"] + ", transport = " + y["transport"] + ", timeout = " + y["timeout"] + ", \
@@ -384,7 +385,7 @@ def edgeNodeSqlUpload():
                         serial = " + y["serial"] + ", icon = " + y["icon"] + ", poller_group = " + y["poller_group"] + ", override_sysLocation = " + y["override_sysLocation"] + ", notes = " + y["notes"] + ", \
                         port_association_mode = " + y["port_association_mode"] + ", max_depth = " + y["max_depth"] + " WHERE device_id = " + y["device_id"])
                 except:
-                     return {"uploadSql": "devices_table_insert_Error"} 
+                     return {"uploadSql": "devices_table_update_Error"} 
             else:
                 try:
                     mysql_connection.execute("INSERT INTO devices ( \
