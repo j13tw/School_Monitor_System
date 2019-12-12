@@ -111,7 +111,7 @@ def mysql_search_devices_tables():
             "uptime": z[30], \
             "agent_uptime": z[31], \
             "last_polled": str(z[32]), \
-            "last_poll_attempted": z[33], \
+            "last_poll_attempted": str(z[33]), \
             "last_polled_timetaken": z[34], \
             "last_discovered_timetaken": z[35], \
             "last_discovered": str(z[36]), \
