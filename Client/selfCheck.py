@@ -10,10 +10,10 @@ import getmac
 cloudServerProtocol = "http"
 cloudServerIp = "127.0.0.1"
 cloudServerPort = 5000
+cloudState = 0 # 0 is connected / 1 is connect fail
 edgeNodeRegistUrl = "/edgeNodeRegist"
-
-edgeServiceCheckUrl = "/" + sys.argv[1] + "/status"
-edgeDatabaseFlashUrl = "/" + sys.argv[1] + "/dbFlash"
+edgeServiceCheckUrl = "/edgeNodeHealthCheck"
+edgeDatabaseFlashUrl = "/edgeNodeSqlUpload"
 
 registData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(),"port": sys.argv[1]}
 healthData = {"school": sys.argv[1], "status":""}
@@ -37,6 +37,9 @@ edgePreState = 200
 edgeNowState = 404
 edgeStatusCodeArray = ["running", "stop", "fail"]
 checkInterval = 10 # 鑑測輪詢秒數
+pushSqlDelay = 30  # 拋送 sql 查詢資料延遲次數
+pushSqlCount = checkInterval * pushSqlDelay  # 每次拋送 sql 查詢延時 (pushSqlCount*checkInterval=300s)
+
 
 def mysql_connect():
     global mysql_conn
@@ -62,7 +65,8 @@ def mysql_check_table(tableName):
             return False
     else:
         return False
-
+        
+# search edge Node ==> librenms devices data
 def mysql_search_devices_tables():
     devices_data = []
     deviceCount = 0
@@ -123,6 +127,7 @@ def mysql_search_devices_tables():
     else:
         return []
 
+# search edge Node ==> librenms device_perf data
 def mysql_search_device_perf_tables():
     deviceCount = 0
     devices_list = []
@@ -148,19 +153,31 @@ def mysql_search_device_perf_tables():
     if (deviceCount == len(device_perf_data)): 
         return device_perf_data
     else:
-        return []]
+        return []
 
+# search edge Node ==> librenms alert_log data
 def mysql_search_alert_log_tables():
-    mysql_conn.select_db("devices")
+    deviceCount = 0
+    devices_list = []
+    alert_log_data = []
     mysql_connection = mysql_conn.cursor()
-    mysql_connection.execute("select * from alert_log limit 1")
-        for x in mysql_connection:
-            if x[0] == tableName:
-                return True
-        else: 
-            return False
+    deviceCount = mysql_connection.execute("select * from devices")
+    for x in mysql_connection:
+        devices_list.append(x[0])
+    for x in range(0, len(devices_list)):
+        mysql_connection.execute("select * from alert_log where device_id = " + devices_list[x] + " group by timestamp limit 3")
+        for y in mysql_connection:
+            device_alert_log.append({ \
+                "id": y[0], \
+                "rule_id": y[1], \
+                "device_id": y[2], \
+                "state": y[3], \
+                "details": y[4], \
+                "time_logged": y[5]})
+    if (deviceCount == len(device_alert_log)): 
+        return device_alert_log
     else:
-        return False
+        return []
 
 # [Edge Init]
 while edgeInitState != 1:
@@ -219,8 +236,23 @@ while edgeInitState:
         try:
             healthData.status = edgeStatusCode
             # requests.post(cloudServerProtocol + "://" + cloudServerIp + cloudServerPort + edgeServiceCheckUrl, data=healthData)
-            print(str(datetime.datetime.now()) + " Response to Cloud  !")
+            print(str(datetime.datetime.now()) + " Response to Cloud !")
         except:
             print(str(datetime.datetime.now()) + " Network to Cloud Error !")
+            cloudState = 0
+        if (cloudState == 0 && pushSqlCount = 0):
+            searchSqlData["devices"] = mysql_search_devices_tables()
+            searchSqlData["device_perf"] = mysql_search_device_perf_tables()
+            searchSqlData["alert_log"] = mysql_search_alert_log_tables()
+            print(searchSqlData)
+            try:
+                requests.post(cloudServerProtocol + "://" + cloudServerIp + cloudServerPort + edgeDatabaseFlashUrl, data=searchSqlData)
+                print(str(datetime.datetime.now()) + " Upload Sql to Cloud ok !")
+            except:
+                print(str(datetime.datetime.now()) + " Upload Sql to Cloud fail !")
+            pushSqlCount = pushSqlDelay * checkInterval
+        else:
+            pushSqlCount = pushSqlCount - 1
+
     edgePreState = edgeNowState
     time.sleep(checkInterval)
