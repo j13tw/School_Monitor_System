@@ -74,7 +74,7 @@ def mysql_search_devices_tables():
     deviceCount = mysql_connection.execute("select * from devices")
     for x in mysql_connection:
         for y in range(0, len(x)):
-            if x[y] == None: x[y] == "None"
+            if x[y] == None: x[y] == "'" + "None" + "'""
         devices_data.append({ \
             "device_id": x[0], \
             "hostname": x[1], \
