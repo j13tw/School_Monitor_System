@@ -324,6 +324,10 @@ def edgeNodeSqlUpload():
             print(edge_school_devices[x])
             y = json.loads(str(edge_school_devices[x]).replace("'", '"'))
             print(y)
+            if (y["timeout"] == "NULL") y["timeout"] = "'" + y["timeout"] + "'"
+            else: y["timeout"] = str(y["timeout"])
+            if (y["retries"] == "NULL") y["retries"] = "'" + y["retries"] + "'"
+            else: y["retries"] = str(y["retries"])
             print("-----")
             mysql_connection.execute
             print("insert into devices ( \
@@ -334,7 +338,7 @@ def edgeNodeSqlUpload():
                 purpose, type, serial, icon, poller_group, override_sysLocation, notes, port_association_mode, max_depth) \
                 VALUES \
                 (" + str(y["device_id"]) + ", '" + y["hostname"] + "', '" + y["sysName"] + "', '" + y["ip"] + "', '" + y["community"] + "', '" + y["authlevel"] + "', '" + y["authname"] + "', '" + y["authpass"] + "', \
-                '" + y["authalgo"] + "', '" + y["cryptopass"] + "', '" + y["cryptoalgo"] + "', '" + y["snmpver"] + "', " + str(y["port"]) + ", '" + y["transport"] + "', " + str(y["timeout"]) + ", " + str(y["retries"]) + ", \
+                '" + y["authalgo"] + "', '" + y["cryptopass"] + "', '" + y["cryptoalgo"] + "', '" + y["snmpver"] + "', " + str(y["port"]) + ", '" + y["transport"] + "', " + y["timeout"] + ", " + y["retries"] + ", \
                 " + str(y["snmp_disable"]) + ", " + str(y["bgpLocalAs"]) + ", '" + y["sysObjectID"] + "', '" + y["sysDescr"] + "', '" + y["sysContact"] + "', '" + y["version"] + "', '" + y["hardware"] + "', \
                 '" + y["features"] + "', " + str(y["location_id"]) + ", '" + y["os"] + "', " + str(y["status"]) + ", '" + y["status_reason"] + "', " + str(y["ignores"]) + ", " + str(y["disabled"]) + ", \
                 " + str(y["uptime"]) + ", " + str(y["agent_uptime"]) + ", '" + y["last_polled"] + "', '" + y["last_poll_attempted"] + "', " + str(y["last_polled_timetaken"]) + ", " + str(y["last_discovered_timetaken"]) + ", \

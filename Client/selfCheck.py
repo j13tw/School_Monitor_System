@@ -75,8 +75,7 @@ def mysql_search_devices_tables():
     for x in mysql_connection:
         z = []
         for y in range(0, len(x)):
-            if x[y] == None: z.append("None")
-            elif x[y] == '[]': x[y] == z.append([])
+            if x[y] == None or x[y] == '[]': z.append("NULL")
             else: z.append(x[y])
         devices_data.append({ \
             "device_id": z[0], \
