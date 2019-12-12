@@ -212,7 +212,7 @@ while edgeInitState != 1:
             try:
                 print(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeNodeRegistUrl)
                 print(registData)
-                requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeNodeRegistUrl, data=registData)
+                requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeNodeRegistUrl, json=registData)
                 print(str(datetime.datetime.now()) + " Edge Init Network to Cloud : OK !")
                 edgeInitState = 1
             except:
@@ -249,7 +249,7 @@ while edgeInitState:
     if (edgeStatusCode != ""):
         try:
             healthData["status"] = edgeStatusCode
-            requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeServiceCheckUrl, data=healthData)
+            requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeServiceCheckUrl, json=healthData)
             print(str(datetime.datetime.now()) + " Health Response to Cloud ok !")
         except:
             print(str(datetime.datetime.now()) + " Health Response to Cloud Error !")
@@ -263,7 +263,7 @@ while edgeInitState:
         searchSqlData["alert_log"] = mysql_search_alert_log_tables()
         print(searchSqlData)
         try:
-            requests.post(cloudServerProtocol + "://" + cloudServerIp + cloudServerPort + ":" +  edgeDatabaseFlashUrl, data=searchSqlData)
+            requests.post(cloudServerProtocol + "://" + cloudServerIp + cloudServerPort + ":" +  edgeDatabaseFlashUrl, json=searchSqlData)
             print(str(datetime.datetime.now()) + " Upload Sql to Cloud ok !")
         except:
             print(str(datetime.datetime.now()) + " Upload Sql to Cloud fail !")
