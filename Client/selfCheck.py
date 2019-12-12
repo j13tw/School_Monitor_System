@@ -37,7 +37,7 @@ edgePreState = 200
 edgeNowState = 404
 edgeStatusCodeArray = ["running", "stop", "fail"]
 checkInterval = 10 # 鑑測輪詢秒數
-pushSqlDelay = 30  # 拋送 sql 查詢資料延遲次數
+pushSqlDelay = 6  # 拋送 sql 查詢資料延遲次數
 pushSqlCount = checkInterval * pushSqlDelay  # 每次拋送 sql 查詢延時 (pushSqlCount*checkInterval=300s)
 
 
@@ -122,7 +122,7 @@ def mysql_search_devices_tables():
             "notes": x[45], \
             "port_association_mode": x[46], \
             "max_depth": x[47]})
-    if (len(devices_data) == deviceCount)
+    if (len(devices_data) == deviceCount):
         return devices_data
     else:
         return []
@@ -181,15 +181,16 @@ def mysql_search_alert_log_tables():
 
 # [Edge Init]
 while edgeInitState != 1:
+    edgeStatusCode = ""
     try:
         mysql_conn = MySQLdb.connect(host = mysql_host, \
             port=mysql_port, \
             user=mysql_user, \
             passwd=mysql_passwd, \
             db=mysql_db)
-        mysql_check_table(mysql_db, "devices")
-        mysql_check_table(mysql_db, "device_perf")
-        mysql_check_table(mysql_db, "alert_log")
+        mysql_check_table("devices")
+        mysql_check_table("device_perf")
+        mysql_check_table("alert_log")
     except:
         print(str(datetime.datetime.now()) + " Connect MySQL Error !")
         edgeStatusCode = edgeStatusCodeArray[2]
@@ -198,9 +199,9 @@ while edgeInitState != 1:
             if (requests.get("http://127.0.0.1/login").status_code == requests.codes.ok): edgeStatusCode = edgeStatusCodeArray[0]
         except:
             edgeStatusCode = edgeStatusCodeArray[1]
-        if (edgeStatusCode == edgeStatusCodeArray[0])
+        if (edgeStatusCode == edgeStatusCodeArray[0]):
             try:
-                requests.post(cloudServerProtocol + "://" + cloudServerIp + cloudServerPort + edgeNodeRegistUrl, data=registData)
+                requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeNodeRegistUrl, data=registData)
                 print(str(datetime.datetime.now()) + " Edge Init Network to Cloud : OK !")
                 edgeInitState = 1
             except:
@@ -211,6 +212,7 @@ while edgeInitState != 1:
 
 # [Edge selfCheck]
 while edgeInitState:
+    edgeStatusCode = ""
     try:
         edgeNowState = requests.get("http://127.0.0.1/login").status_code
     except:
@@ -232,27 +234,29 @@ while edgeInitState:
         edgeStatusCode = edgeStatusCodeArray[0]
     else:
         print(str(datetime.datetime.now()) + " LibreNMS is Fail !")
+    # HealthCheck Flash API     
     if (edgeStatusCode != ""):
         try:
-            healthData.status = edgeStatusCode
-            # requests.post(cloudServerProtocol + "://" + cloudServerIp + cloudServerPort + edgeServiceCheckUrl, data=healthData)
-            print(str(datetime.datetime.now()) + " Response to Cloud !")
+            healthData["status"] = edgeStatusCode
+            # requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeServiceCheckUrl, data=healthData)
+            print(str(datetime.datetime.now()) + " Health Response to Cloud ok !")
         except:
-            print(str(datetime.datetime.now()) + " Network to Cloud Error !")
+            print(str(datetime.datetime.now()) + " Health Response to Cloud Error !")
             cloudState = 0
-        if (cloudState == 0 and pushSqlCount = 0):
-            searchSqlData["devices"] = mysql_search_devices_tables()
-            searchSqlData["device_perf"] = mysql_search_device_perf_tables()
-            searchSqlData["alert_log"] = mysql_search_alert_log_tables()
-            print(searchSqlData)
-            try:
-                requests.post(cloudServerProtocol + "://" + cloudServerIp + cloudServerPort + edgeDatabaseFlashUrl, data=searchSqlData)
-                print(str(datetime.datetime.now()) + " Upload Sql to Cloud ok !")
-            except:
-                print(str(datetime.datetime.now()) + " Upload Sql to Cloud fail !")
-            pushSqlCount = pushSqlDelay * checkInterval
-        else:
-            pushSqlCount = pushSqlCount - 1
-
+    else:
+        pushSqlCount = pushSqlCount - 1
+    # Mysql Data Flash API
+    if (pushSqlCount == 0):
+        searchSqlData["devices"] = mysql_search_devices_tables()
+        searchSqlData["device_perf"] = mysql_search_device_perf_tables()
+        searchSqlData["alert_log"] = mysql_search_alert_log_tables()
+        print(searchSqlData)
+        try:
+            requests.post(cloudServerProtocol + "://" + cloudServerIp + cloudServerPort + edgeDatabaseFlashUrl, data=searchSqlData)
+            print(str(datetime.datetime.now()) + " Upload Sql to Cloud ok !")
+        except:
+            print(str(datetime.datetime.now()) + " Upload Sql to Cloud fail !")
+        pushSqlCount = pushSqlDelay * checkInterval
+            
     edgePreState = edgeNowState
     time.sleep(checkInterval)
