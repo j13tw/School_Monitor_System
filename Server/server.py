@@ -335,7 +335,7 @@ def edgeNodeSqlUpload():
                 VALUES \
                 (" + str(y["device_id"]) + ", '" + y["hostname"] + "', '" + y["sysName"] + "', '" + y["ip"] + "', '" + y["community"] + "', '" + y["authlevel"] + "', '" + y["authname"] + "', '" + y["authpass"] + "', \
                 '" + y["authalgo"] + "', '" + y["cryptopass"] + "', '" + y["cryptoalgo"] + "', '" + y["snmpver"] + "', " + str(y["port"]) + ", '" + y["transport"] + "', " + str(y["timeout"]) + ", " + str(y["retries"]) + ", \
-                " + str(y["snmp_disable"]) + ", " + str(y["bgpLocalAs"]) + ", '" + y["sysObjectID"] + "', '" + y["sysDescr"] + "', '" + y["sysContact"] + "', '" + y["version"] + "', '" + y["hardware"] + ", \
+                " + str(y["snmp_disable"]) + ", " + str(y["bgpLocalAs"]) + ", '" + y["sysObjectID"] + "', '" + y["sysDescr"] + "', '" + y["sysContact"] + "', '" + y["version"] + "', '" + y["hardware"] + "', \
                 '" + y["features"] + "', " + str(y["location_id"]) + ", '" + y["os"] + "', " + str(y["status"]) + ", '" + y["status_reason"] + "', " + str(y["ignores"]) + ", " + str(y["disabled"]) + ", \
                 " + str(y["uptime"]) + ", " + str(y["agent_uptime"]) + ", '" + y["last_polled"] + "', '" + y["last_poll_attempted"] + "', " + str(y["last_polled_timetaken"]) + ", " + str(y["last_discovered_timetaken"]) + ", \
                 '" + y["last_discovered"] + "', '" + y["last_ping"] + "', " + str(y["last_ping_timetaken"]) + ", '" + y["purpose"] + "', '" + y["type"] + "', '" + y["serial"] + "', '" + y["icon"] + "', \
