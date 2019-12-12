@@ -390,7 +390,7 @@ def edgeNodeSqlUpload():
             else:
                 print("XXOO")
                 #try:
-                mysql_connection.execute("INSERT INTO devices ( \
+                mysql_command = "INSERT INTO devices ( \
                     device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo, \
                     snmpver, port, transport, timeout, retries, snmp_disable, bgpLocalAs, sysObjectID, sysDescr, sysContact, version, \
                     hardware, features, location_id, os, status, status_reason, ignores, disabled, uptime, agent_uptime, last_polled, \
@@ -403,7 +403,9 @@ def edgeNodeSqlUpload():
                     " + y["features"] + ", " + y["location_id"] + ", " + y["os"] + ", " + y["status"] + ", " + y["status_reason"] + ", " + y["ignores"] + ", " + y["disabled"] + ", \
                     " + y["uptime"] + ", " + y["agent_uptime"] + ", " + y["last_polled"] + ", " + y["last_poll_attempted"] + ", " + y["last_polled_timetaken"] + ", " + y["last_discovered_timetaken"] + ", \
                     " + y["last_discovered"] + ", " + y["last_ping"] + ", " + y["last_ping_timetaken"] + ", " + y["purpose"] + ", " + y["type"] + ", " + y["serial"] + ", " + y["icon"] + ", \
-                    " + y["poller_group"] + ", " + y["override_sysLocation"] + ", " + y["notes"] + ", " + y["port_association_mode"] + ", " + y["max_depth"] + ")")
+                    " + y["poller_group"] + ", " + y["override_sysLocation"] + ", " + y["notes"] + ", " + y["port_association_mode"] + ", " + y["max_depth"] + ")"
+                print(mysql_command)
+                mysql_connection.execute(mysql_command)
                 
                 #except:
                     #return {"uploadSql": "devices_table_insert_Error"} 
