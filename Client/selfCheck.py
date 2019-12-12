@@ -172,7 +172,7 @@ def mysql_search_alert_log_tables():
             alert_log_data.append({ \
                 "id": y[0], \
                 "rule_id": y[1], \
-                "id": y[2]_dataalert_log_data, \
+                "id": y[2], \
                 "state": y[3], \
                 "details": y[4], \
                 "time_logged": y[5]})
