@@ -152,7 +152,7 @@ def mysql_search_device_perf_tables():
                 "max": y[7], \
                 "avg": y[8], \
                 "debug": y[9]})
-        print(device_perf_data)
+    print(device_perf_data)
     if (deviceCount == len(device_perf_data)): 
         return device_perf_data
     else:
@@ -168,7 +168,7 @@ def mysql_search_alert_log_tables():
     for x in mysql_connection:
         devices_list.append(x[0])
     for x in range(0, len(devices_list)):
-        mysql_connection.execute("select * from alert_log where device_id = " + str(devices_list[x]) + " group by timestamp limit 3")
+        mysql_connection.execute("select * from alert_log where device_id = " + str(devices_list[x]) + " group by time_logged limit 3")
         for y in mysql_connection:
             alert_log_data.append({ \
                 "id": y[0], \
@@ -177,7 +177,7 @@ def mysql_search_alert_log_tables():
                 "state": y[3], \
                 "details": y[4], \
                 "time_logged": str(y[5])})
-        print(alert_log_data)
+    print(alert_log_data)
     if (deviceCount == len(alert_log_data)): 
         return alert_log_data
     else:
