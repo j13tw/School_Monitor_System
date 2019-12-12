@@ -321,7 +321,7 @@ def edgeNodeSqlUpload():
         mysql_conn.select_db("school_" + str(edge_school_id))
         mysql_connection = mysql_conn.cursor()
         for x in range(0, len(edge_school_devices)):
-            mysql_connection.execute
+            # mysql_connection.execute
             print("insert into devices ( \
             device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo, \
             snmpver, port, transport, timeout, retries, snmp_disable, bgpLocalAs, sysObjectID, sysDescr, sysContact, version, \
@@ -329,13 +329,13 @@ def edgeNodeSqlUpload():
             last_poll_attempted, last_polled_timetaken, last_discovered_timetaken, last_discovered, last_ping, last_ping_timetaken, \
             purpose, type, serial, icon, poller_group, override_sysLocation, notes, port_association_mode, max_depth) \
             VALUES \
-            (" + edge_school_devices["device_id"] + ", " + edge_school_devices["hostname"] + ", " + edge_school_devices["sysName"] + ", " + edge_school_devices["ip"] + ", " + edge_school_devices["community"] + ", " + edge_school_devices["authlevel"] + ", " + edge_school_devices["authname"] + ", " + edge_school_devices["authpass"] + ", \
-            " + edge_school_devices["authalgo"] + ", " + edge_school_devices["cryptopass"] + ", " + edge_school_devices["cryptoalgo"] + ", " + edge_school_devices["snmpver"] + ", " + edge_school_devices["port"] + ", " + edge_school_devices["transport"] + ", " + str(edge_school_devices["timeout"]) + ", " + str(edge_school_devices["retries"]) + ", \
-            " + str(edge_school_devices["snmp_disable"]) + ", " + str(edge_school_devices["bgpLocalAs"]) + ", " + edge_school_devices["sysObjectID"] + ", " + edge_school_devices["sysDescr"] + ", " + edge_school_devices["sysContact"] + ", " + edge_school_devices["version"] + ", " + edge_school_devices["hardware"] + ", \
-            " + edge_school_devices["features"] + ", " + str(edge_school_devices["location_id"]) + ", " + edge_school_devices["os"] + ", " + str(edge_school_devices["status"]) + ", " + edge_school_devices["status_reason"] + ", " + str(edge_school_devices["ignores"]) + ", " + str(edge_school_devices["disabled"]) + ", \
-            " + str(edge_school_devices["uptime"]) + ", " + str(edge_school_devices["agent_uptime"]) + ", " + edge_school_devices["last_polled"] + ", " + edge_school_devices["last_poll_attempted"] + ", " + str(edge_school_devices["last_polled_timetaken"]) + ", " + str(edge_school_devices["last_discovered_timetaken"]) + ", \
-            " + edge_school_devices["last_discovered"] + ", " + edge_school_devices["last_ping"] + ", " + str(edge_school_devices["last_ping_timetaken"]) + ", " + edge_school_devices["purpose"] + ", " + edge_school_devices["type"] + ", " + edge_school_devices["serial"] + ", " + edge_school_devices["icon"] + ", \
-            " + str(edge_school_devices["poller_group"]) + ", " + str(edge_school_devices["override_sysLocation"]) + ", " + edge_school_devices["notes"] + ", " + str(edge_school_devices["port_association_mode"]) + ", " + str(edge_school_devices["max_depth"]) + ")") 
+            (" + edge_school_devices[x]["device_id"] + ", " + edge_school_devices[x]["hostname"] + ", " + edge_school_devices[x]["sysName"] + ", " + edge_school_devices[x]["ip"] + ", " + edge_school_devices[x]["community"] + ", " + edge_school_devices[x]["authlevel"] + ", " + edge_school_devices[x]["authname"] + ", " + edge_school_devices[x]["authpass"] + ", \
+            " + edge_school_devices[x]["authalgo"] + ", " + edge_school_devices[x]["cryptopass"] + ", " + edge_school_devices[x]["cryptoalgo"] + ", " + edge_school_devices[x]["snmpver"] + ", " + edge_school_devices[x]["port"] + ", " + edge_school_devices[x]["transport"] + ", " + str(edge_school_devices[x]["timeout"]) + ", " + str(edge_school_devices[x]["retries"]) + ", \
+            " + str(edge_school_devices[x]["snmp_disable"]) + ", " + str(edge_school_devices[x]["bgpLocalAs"]) + ", " + edge_school_devices[x]["sysObjectID"] + ", " + edge_school_devices[x]["sysDescr"] + ", " + edge_school_devices[x]["sysContact"] + ", " + edge_school_devices[x]["version"] + ", " + edge_school_devices[x]["hardware"] + ", \
+            " + edge_school_devices[x]["features"] + ", " + str(edge_school_devices[x]["location_id"]) + ", " + edge_school_devices[x]["os"] + ", " + str(edge_school_devices[x]["status"]) + ", " + edge_school_devices[x]["status_reason"] + ", " + str(edge_school_devices[x]["ignores"]) + ", " + str(edge_school_devices[x]["disabled"]) + ", \
+            " + str(edge_school_devices[x]["uptime"]) + ", " + str(edge_school_devices[x]["agent_uptime"]) + ", " + edge_school_devices[x]["last_polled"] + ", " + edge_school_devices[x]["last_poll_attempted"] + ", " + str(edge_school_devices[x]["last_polled_timetaken"]) + ", " + str(edge_school_devices[x]["last_discovered_timetaken"]) + ", \
+            " + edge_school_devices[x]["last_discovered"] + ", " + edge_school_devices[x]["last_ping"] + ", " + str(edge_school_devices[x]["last_ping_timetaken"]) + ", " + edge_school_devices[x]["purpose"] + ", " + edge_school_devices[x]["type"] + ", " + edge_school_devices[x]["serial"] + ", " + edge_school_devices[x]["icon"] + ", \
+            " + str(edge_school_devices[x]["poller_group"]) + ", " + str(edge_school_devices[x]["override_sysLocation"]) + ", " + edge_school_devices[x]["notes"] + ", " + str(edge_school_devices[x]["port_association_mode"]) + ", " + str(edge_school_devices[x]["max_depth"]) + ")") 
             mysql_conn.commit()
             
 if __name__ == '__main__':
