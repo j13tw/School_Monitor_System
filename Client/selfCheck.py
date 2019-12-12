@@ -105,7 +105,7 @@ def mysql_search_devices_tables():
             "location_id": z[24], \
             "os": z[25], \
             "status": z[26], \
-            "status_reason": z[27], \
+            "status_reason": z[27].decode('utf-8'), \
             "ignores": z[28], \
             "disabled": z[29], \
             "uptime": z[30], \
