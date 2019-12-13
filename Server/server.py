@@ -372,8 +372,7 @@ def edgeNodeSqlUpload():
             if (mysql_connection.execute("select * from devices where device_id = " + y["device_id"]) == 1):
                 print("OOXX")
                 try:
-                    # mysql_connection.execute
-                    print("UPDATE devices SET \
+                    mysql_connection.execute("UPDATE devices SET \
                         device_id = " + y["device_id"] + ", hostname = " + y["hostname"] + ", sysName = " + y["sysName"] + ", ip = " + y["ip"] + ", community = " + y["community"] + ", \
                         authlevel = " + y["authlevel"] + ", authname = " + y["authname"] + ", authpass = " + y["authpass"] + ", authalgo = " + y["authalgo"] + ", cryptopass = " + y["cryptopass"] + ", \
                         cryptoalgo = " + y["cryptoalgo"] + ", snmpver = " + y["snmpver"] + ", port = " + y["port"] + ", transport = " + y["transport"] + ", timeout = " + y["timeout"] + ", \
