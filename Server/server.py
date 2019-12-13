@@ -376,7 +376,7 @@ def edgeNodeSqlUpload():
                     print("UPDATE devices SET \
                         device_id = " + y["device_id"] + ", hostname = " + y["hostname"] + ", sysName = " + y["sysName"] + ", ip = " + y["ip"] + ", community = " + y["community"] + ", \
                         authlevel = " + y["authlevel"] + ", authname = " + y["authname"] + ", authpass = " + y["authpass"] + ", authalgo = " + y["authalgo"] + ", cryptopass = " + y["cryptopass"] + ", \
-                        cryptoalgo = " + y["cryptoalgo"] + "snmpver = " + y["snmpver"] + ", port = " + y["port"] + ", transport = " + y["transport"] + ", timeout = " + y["timeout"] + ", \
+                        cryptoalgo = " + y["cryptoalgo"] + ", snmpver = " + y["snmpver"] + ", port = " + y["port"] + ", transport = " + y["transport"] + ", timeout = " + y["timeout"] + ", \
                         retries = " + y["retries"] + ", snmp_disable = " + y["snmp_disable"] + ", bgpLocalAs = " + y["bgpLocalAs"] + ", sysObjectID = " + y["sysObjectID"] + ", sysDescr = " + y["sysDescr"] + ", \
                         sysContact = " + y["sysContact"] + ", version = " + y["version"] + ", hardware = " + y["hardware"] + ", features = " + y["features"] + ", location_id = " + y["location_id"] + ", \
                         os = " + y["os"] + ", status = " + y["status"] + ", ignores = " + y["ignores"] + ", disabled = " + y["disabled"] + ", \
