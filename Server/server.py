@@ -319,6 +319,30 @@ def edgeNodeSqlUpload():
         mysql_conn.select_db("school_" + str(edge_school_id))
         mysql_connection = mysql_conn.cursor()
         print("XXXXX")
+        for x in range(0, len(edge_school_device_perf)):
+            y = json.loads(str(edge_school_devices[x]).replace("'", '"'))
+            if (y["id"] != "NULL"): y["id"]
+            if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
+            if (y["timestamp"] != "NULL"):  y["timestamp"] = "'" + str(y["timestamp"]) + "'"
+            if (y["xmt"] != "NULL"): y["xmt"] = str(y["xmt"])
+            if (y["rcv"] != "NULL"): y["rcv"] = str(y["rcv"])
+            if (y["loss"] != "NULL"): y["loss"] = str(y["loss"])
+            if (y["min"] != "NULL"): y["min"] = str(y["min"]) 
+            if (y["max"] != "NULL"): y["max"] = str(y["max"])
+            if (y["avg"] != "NULL"): y["avg"] = str(y["avg"] ) 
+            if (y["debug"] != "NULL"): y["debug"] = str(y["debug"])
+            if (mysql_connection.execute("select * from device_perf where device_id = " + y["device_id"] + "&& id = " + y["id"]) == 0):
+                try:
+                    #mysql_connection.execute
+                    print("INSERT INTO device_perf (id, device_id, timestamp, xmt, rcv, loss, min, max, avg, debug) \
+                    VALUE \
+                    (" + y["id"] + ", " + y["device_id"] + ", " + y["timestamp"] + ", " + y["xmt"] + ", " + y["rcv"] + ", " + y["min"] + ", " + y["max"] + ", " + y["avg"] + ", " + y["debug"] + ")")
+                    print("device_perf insert new data !")
+                    mysql_conn.commit()
+                except:
+                    return {"uploadSql": "device_perf_table_insert_Error"}
+        ''' 
+        # edge devices table update
         for x in range(0, len(edge_school_devices)):
             y = json.loads(str(edge_school_devices[x]).replace("'", '"'))
             if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
@@ -368,9 +392,7 @@ def edgeNodeSqlUpload():
             if (y["notes"] != "NULL"): y["notes"] = "'" + y["notes"] + "'"
             if (y["port_association_mode"] != "NULL"): y["port_association_mode"] = str(y["port_association_mode"])
             if (y["max_depth"] != "NULL"): y["max_depth"] = str(y["max_depth"])
-            print("OOOO")
             if (mysql_connection.execute("select * from devices where device_id = " + y["device_id"]) == 1):
-                print("OOXX")
                 try:
                     mysql_connection.execute("UPDATE devices SET \
                         device_id = " + y["device_id"] + ", hostname = " + y["hostname"] + ", sysName = " + y["sysName"] + ", ip = " + y["ip"] + ", community = " + y["community"] + ", \
@@ -385,7 +407,6 @@ def edgeNodeSqlUpload():
                 except:
                      return {"uploadSql": "devices_table_update_Error"} 
             else:
-                print("XXOO")
                 try:
                     mysql_connection.execute("INSERT INTO devices (device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo, \
                     snmpver, port, transport, timeout, retries, snmp_disable, bgpLocalAs, sysObjectID, sysDescr, sysContact, version, hardware, features, location_id, os, \
@@ -402,7 +423,9 @@ def edgeNodeSqlUpload():
                     print("recive school_" + str(edge_school_id) + " device " + y["device_id"])
                 except:
                     return {"uploadSql": "devices_table_insert_Error"} 
-            mysql_conn.commit()
+        '''
+        mysql_conn.commit()
+        
     return {"uploadSql": "ok"}     
 if __name__ == '__main__':
 #	app.run(debug = True)
