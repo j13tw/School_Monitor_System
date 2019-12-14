@@ -48,7 +48,8 @@ def mysql_connect():
             port=mysql_port, \
             user=mysql_user, \
             passwd=mysql_passwd, \
-            db=mysql_db)
+            db=mysql_db, \
+            set_character_set = 'utf-8')
         return True
     except:
         return False
@@ -141,7 +142,7 @@ def mysql_search_device_perf_tables():
     for x in mysql_connection:
         devices_list.append(x[0])
     for x in range(0, len(devices_list)):
-        mysql_connection.execute("select * from device_perf where device_id = " + str(devices_list[x]) + " group by timestamp limit 1")
+        mysql_connection.execute("select * from device_perf where device_id = " + str(devices_list[x]) + " group by timestamp desc limit 1")
         for y in mysql_connection:
             device_perf_data.append({ \
                 "id": y[0], \
@@ -170,14 +171,14 @@ def mysql_search_alert_log_tables():
     for x in mysql_connection:
         devices_list.append(x[0])
     for x in range(0, len(devices_list)):
-        mysql_connection.execute("select * from alert_log where device_id = " + str(devices_list[x]) + " group by time_logged limit 3")
+        mysql_connection.execute("select * from alert_log where device_id = " + str(devices_list[x]) + " group by time_logged desc limit 3")
         for y in mysql_connection:
             alert_log_data.append({ \
                 "id": y[0], \
                 "rule_id": y[1], \
                 "id": y[2], \
                 "state": y[3], \
-                "details": y[4].decode('utf-8'), \
+                "details": y[4], \
                 "time_logged": str(y[5])})
     print(alert_log_data)
     if (deviceCount == len(alert_log_data)): 
@@ -193,7 +194,8 @@ while edgeInitState != 1:
             port=mysql_port, \
             user=mysql_user, \
             passwd=mysql_passwd, \
-            db=mysql_db)
+            db=mysql_db, \
+            set_character_set = 'utf-8')
         mysql_check_table("devices")
         mysql_check_table("device_perf")
         mysql_check_table("alert_log")
