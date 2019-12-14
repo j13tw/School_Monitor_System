@@ -314,6 +314,7 @@ def edgeNodeRegist():
                 if (mysql_creat_edge_table("school_" + str(edge_school_id), "alert_log") == False):
                     print("02")
                     return {"regist": "fail", "info": "db_edgeTable_Error"}
+            print("03")
             return {"regist": "ok"}
         else:
             return {"regist": "fail", "info": "db_Connect_Error"}
