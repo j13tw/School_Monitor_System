@@ -320,6 +320,28 @@ def edgeNodeSqlUpload():
         mysql_conn.select_db("school_" + str(edge_school_id))
         mysql_connection = mysql_conn.cursor()
         print("XXXXX")
+
+        # edge alert_log table update
+        for x in range(0, len(edge_school_alert_log)):
+            y = json.loads(str(edge_school_alert_log[x]).replace("'", '"'))
+            if (y["id"] != NULL): y["id"] = str(y["id"])
+            if (y["rule_id"] != NULL): y["rule_id"] = str(y["rule_id"])
+            if (y["device_id"] != NULL): y["device_id"] = str(y["device_id"])
+            if (y["state"] != NULL): y["state"] = str(y["state"])
+            if (y["details"] != NULL): y["details"] = str(y["details"])
+            if (y["time_logged"] != NULL): y["time_logged"] = "'" + str(y["time_logged"]) + "'"
+            if (mysql_connection.execute("select * from alert_log where id = " + y["id"]) == 0):
+                try:
+                    mysql_connection.execute("INSERT INTO alert_log (id, rule_id, device_id, state, details, time_logged) \
+                        VALUE \
+                        (" + y["id"] + ", " + y["rule_id"] + ", " + y["device_id"] + ", " + y["state"] + ", " + y["details"] + ", " + y["time_logged"] + ")")
+                    print("alert_log insert new data !")
+                    mysql_conn.commit() 
+                except:
+                    return {"uploadSql": "device_perf_table_insert_Error"}
+
+        '''
+        # edge device_perf table update
         for x in range(0, len(edge_school_device_perf)):
             y = json.loads(str(edge_school_device_perf[x]).replace("'", '"'))
             if (y["id"] != "NULL"): y["id"] = str(y["id"])
@@ -332,7 +354,7 @@ def edgeNodeSqlUpload():
             if (y["max"] != "NULL"): y["max"] = str(y["max"])
             if (y["avg"] != "NULL"): y["avg"] = str(y["avg"] ) 
             if (y["debug"] != "NULL"): y["debug"] = "'" + str(y["debug"]) + "'"
-            if (mysql_connection.execute("select * from device_perf where device_id = " + y["device_id"] + "&& id = " + y["id"]) == 0):
+            if (mysql_connection.execute("select * from device_perf where id = " + y["id"]) == 0):
                 try:
                     mysql_connection.execute("INSERT INTO device_perf (id, device_id, timestamp, xmt, rcv, loss, min, max, avg, debug) \
                         VALUE \
@@ -341,7 +363,7 @@ def edgeNodeSqlUpload():
                     mysql_conn.commit()
                 except:
                     return {"uploadSql": "device_perf_table_insert_Error"}
-        ''' 
+
         # edge devices table update
         for x in range(0, len(edge_school_devices)):
             y = json.loads(str(edge_school_devices[x]).replace("'", '"'))
