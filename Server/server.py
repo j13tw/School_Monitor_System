@@ -336,7 +336,7 @@ def edgeNodeSqlUpload():
                 try:
                     mysql_connection.execute("INSERT INTO device_perf (id, device_id, timestamp, xmt, rcv, loss, min, max, avg, debug) \
                         VALUE \
-                        (" + y["id"] + ", " + y["device_id"] + ", " + y["timestamp"] + ", " + y["xmt"] + ", " + y["rcv"] + ", " + y["min"] + ", " + y["max"] + ", " + y["avg"] + ", " + y["debug"] + ")")
+                        (" + y["id"] + ", " + y["device_id"] + ", " + y["timestamp"] + ", " + y["xmt"] + ", " + y["rcv"] + ", " + y["loss"] + ", " + y["min"] + ", " + y["max"] + ", " + y["avg"] + ", " + y["debug"] + ")")
                     print("device_perf insert new data !")
                     mysql_conn.commit()
                 except:
