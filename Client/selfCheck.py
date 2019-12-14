@@ -177,7 +177,7 @@ def mysql_search_alert_log_tables():
                 "rule_id": y[1], \
                 "id": y[2], \
                 "state": y[3], \
-                "details": y[4], \
+                "details": y[4].decode('utf-8'), \
                 "time_logged": str(y[5])})
     print(alert_log_data)
     if (deviceCount == len(alert_log_data)): 

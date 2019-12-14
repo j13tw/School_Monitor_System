@@ -323,6 +323,7 @@ def edgeNodeSqlUpload():
 
         # edge alert_log table update
         for x in range(0, len(edge_school_alert_log)):
+            print("a")
             y = json.loads(str(edge_school_alert_log[x]).replace("'", '"'))
             if (y["id"] != NULL): y["id"] = str(y["id"])
             if (y["rule_id"] != NULL): y["rule_id"] = str(y["rule_id"])
@@ -330,9 +331,11 @@ def edgeNodeSqlUpload():
             if (y["state"] != NULL): y["state"] = str(y["state"])
             if (y["details"] != NULL): y["details"] = str(y["details"])
             if (y["time_logged"] != NULL): y["time_logged"] = "'" + str(y["time_logged"]) + "'"
+            print("b")
             if (mysql_connection.execute("select * from alert_log where id = " + y["id"]) == 0):
                 try:
-                    mysql_connection.execute("INSERT INTO alert_log (id, rule_id, device_id, state, details, time_logged) \
+                    #mysql_connection.execute
+                    print("INSERT INTO alert_log (id, rule_id, device_id, state, details, time_logged) \
                         VALUE \
                         (" + y["id"] + ", " + y["rule_id"] + ", " + y["device_id"] + ", " + y["state"] + ", " + y["details"] + ", " + y["time_logged"] + ")")
                     print("alert_log insert new data !")
