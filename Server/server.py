@@ -331,7 +331,7 @@ def edgeNodeSqlUpload():
             if (y["min"] != "NULL"): y["min"] = str(y["min"]) 
             if (y["max"] != "NULL"): y["max"] = str(y["max"])
             if (y["avg"] != "NULL"): y["avg"] = str(y["avg"] ) 
-            if (y["debug"] != "NULL"): y["debug"] = str(y["debug"])
+            if (y["debug"] != "NULL"): y["debug"] = "'" + str(y["debug"]) + "'"
             if (mysql_connection.execute("select * from device_perf where device_id = " + y["device_id"] + "&& id = " + y["id"]) == 0):
                 try:
                     mysql_connection.execute("INSERT INTO device_perf (id, device_id, timestamp, xmt, rcv, loss, min, max, avg, debug) \
