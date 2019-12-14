@@ -321,7 +321,7 @@ def edgeNodeSqlUpload():
         mysql_connection = mysql_conn.cursor()
         print("XXXXX")
         for x in range(0, len(edge_school_device_perf)):
-            y = json.loads(str(edge_school_devices[x]).replace("'", '"'))
+            y = json.loads(str(edge_school_device_perf[x]).replace("'", '"'))
             if (y["id"] != "NULL"): y["id"] = str(y["id"])
             if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
             if (y["timestamp"] != "NULL"):  y["timestamp"] = "'" + str(y["timestamp"]) + "'"
