@@ -290,31 +290,19 @@ def edgeNodeRegist():
                 except: 
                     return {"regist": "fail", "info": "db_Update_Error"}
             mysql_conn.commit()
-            print("123")
             if (mysql_check_db("school_" + str(edge_school_id)) == False):
-                print("1")
                 if (mysql_creat_edge_db("school_" + str(edge_school_id)) == False):
-                    print("2")
                     return {"regist": "fail", "info": "db_edgeDb_Error"}
-            print("456")
             if (mysql_check_table("school_" + str(edge_school_id), "devices") == False):
-                print("4")
                 if (mysql_creat_edge_table("school_" + str(edge_school_id), "devices") == False):
-                    print("5")
                     return {"regist": "fail", "info": "db_edgeTable_devices_Error"}
-            print("789")
             if (mysql_check_table("school_" + str(edge_school_id), "device_perf") == False):
-                print("7")
                 if (mysql_creat_edge_table("school_" + str(edge_school_id), "device_perf") == False):
-                    print("8")
                     return {"regist": "fail", "info": "db_edgeTable_device_perf_Error"}
             print("000")
             if (mysql_check_table("school_" + str(edge_school_id), "alert_log") == False):
-                print("01")
                 if (mysql_creat_edge_table("school_" + str(edge_school_id), "alert_log") == False):
-                    print("02")
                     return {"regist": "fail", "info": "db_edgeTable_Error"}
-            print("03")
             return {"regist": "ok"}
         else:
             return {"regist": "fail", "info": "db_Connect_Error"}
