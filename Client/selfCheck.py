@@ -48,8 +48,7 @@ def mysql_connect():
             port=mysql_port, \
             user=mysql_user, \
             passwd=mysql_passwd, \
-            db=mysql_db, \
-            set_character_set = 'utf-8')
+            db=mysql_db)
         return True
     except:
         return False
@@ -194,8 +193,7 @@ while edgeInitState != 1:
             port=mysql_port, \
             user=mysql_user, \
             passwd=mysql_passwd, \
-            db=mysql_db, \
-            set_character_set = 'utf-8')
+            db=mysql_db)
         mysql_check_table("devices")
         mysql_check_table("device_perf")
         mysql_check_table("alert_log")
