@@ -328,10 +328,10 @@ def edgeNodeSqlUpload():
         edge_school_alert_log = edgeData["alert_log"]
         mysql_conn.select_db("school_" + str(edge_school_id))
         mysql_connection = mysql_conn.cursor()
-        print("school_id", "\n", edge_school_id)
-        print("edge_school_devices", "\n", edge_school_devices)
-        print("edge_school_device_perf", "\n", edge_school_device_perf)
-        print("edge_school_alert_log", "\n", edge_school_alert_log)
+        # print("school_id", "\n", edge_school_id)
+        # print("edge_school_devices", "\n", edge_school_devices)
+        # print("edge_school_device_perf", "\n", edge_school_device_perf)
+        # print("edge_school_alert_log", "\n", edge_school_alert_log)
         # edge alert_log table update
         print("Insert alert_log tables")
         for x in range(0, len(edge_school_alert_log)):
@@ -454,7 +454,7 @@ def edgeNodeSqlUpload():
                 mysql_connection.execute("INSERT INTO devices (device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo, \
                     snmpver, port, transport, timeout, retries, snmp_disable, bgpLocalAs, sysObjectID, sysDescr, sysContact, version, hardware, features, location_id, os, \
                     status, status_reason, ignores, disabled, uptime, agent_uptime, last_polled_timetaken, last_discovered_timetaken, last_ping_timetaken, purpose, type, serial, icon, \
-                    poller_group, override_sysLocation, notes, port_association_mode, max_depth) \
+                    poller_group, override_sysLocation, notes, port_association_mode, max_depth, last_polled) \
                     VALUES (\
                     " + y["device_id"] + ", " + y["hostname"] + ", " + y["sysName"] + ", " + y["ip"] + ", " + y["community"] + ", " + y["authlevel"] + ", " + y["authname"] + ", " + y["authpass"] + ", \
                     " + y["authalgo"] + ", " + y["cryptopass"] + ", " + y["cryptoalgo"] + ", " + y["snmpver"] + ", " + y["port"] + ", " + y["transport"] + ", " + y["timeout"] + ", " + y["retries"] + ", \
@@ -462,7 +462,7 @@ def edgeNodeSqlUpload():
                     " + y["features"] + ", " + y["location_id"] + ", " + y["os"] + ", " + y["status"] + ", " + y["status_reason"] + ", " + y["ignores"] + ", " + y["disabled"] + ", " + y["uptime"] + ", \
                     " + y["agent_uptime"] + ", " + y["last_polled_timetaken"] + ", " + y["last_discovered_timetaken"] + ", \
                     " + y["last_ping_timetaken"] + ", " + y["purpose"] + ", " + y["type"] + ", " + y["serial"] + ", " + y["icon"] + ", \
-                    " + y["poller_group"] + ", " + y["override_sysLocation"] + ", " + y["notes"] + ", " + y["port_association_mode"] + ", " + y["max_depth"] + ")")
+                    " + y["poller_group"] + ", " + y["override_sysLocation"] + ", " + y["notes"] + ", " + y["port_association_mode"] + ", " + y["max_depth"] + ", " + y["last_polled"] + ")")
                 mysql_conn.commit()
                 print("d")
                 #except:
