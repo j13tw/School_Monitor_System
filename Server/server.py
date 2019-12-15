@@ -81,12 +81,12 @@ mysql_create_edge_devices_table = "CREATE TABLE devices (\
     disabled                    tinyint(1)                                   NOT NULL   default '0', \
     uptime                      bigint(20)                                   NULL, \
     agent_uptime                int(10) unsigned                             NOT NULL   default '0', \
-    last_polled                 timestamp                                    NULL, \
-    last_poll_attempted         timestamp                                    NULL, \
+    last_polled                 datetime                                     NULL, \
+    last_poll_attempted         datetime                                     NULL, \
     last_polled_timetaken       double(5,2)                                  NULL, \
     last_discovered_timetaken   double(5,2)                                  NULL, \
-    last_discovered             timestamp                                    NULL, \
-    last_ping                   timestamp                                    NULL, \
+    last_discovered             datetime                                     NULL, \
+    last_ping                   datetime                                     NULL, \
     last_ping_timetaken         double(8,2)                                  NULL, \
     purpose                     text                                         NULL, \
     type                        varchar(20)                                  NOT NULL   default '', \
