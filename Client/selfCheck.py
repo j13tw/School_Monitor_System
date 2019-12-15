@@ -251,7 +251,7 @@ while edgeInitState:
                 cloudState = 0
             except:
                 print(str(datetime.datetime.now()) + " Health Response to Cloud Error !")
-            if (cloudState == 1) time.sleep(checkInterval)
+            if (cloudState == 1): time.sleep(checkInterval)
     else:
         pushSqlCount = pushSqlCount - checkInterval
     # Mysql Data Flash API
