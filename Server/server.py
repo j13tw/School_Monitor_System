@@ -136,7 +136,6 @@ def mysql_connect():
 
 # 建立 edge 所使用的 DB 的 Table
 def mysql_creat_edge_table(dbName, tableName):
-    mysql_connect()
     if tableName == "devices": tableInfo = mysql_create_edge_devices_table
     elif tableName == "device_perf": tableInfo = mysql_create_edge_device_perf_table
     elif tableName == "alert_log": tableInfo = mysql_create_edge_alert_log_table
@@ -151,7 +150,6 @@ def mysql_creat_edge_table(dbName, tableName):
 
 # 建立 edge 所使用的 DB
 def mysql_creat_edge_db(dbName):
-    mysql_connect()
     try:
         mysql_connection = mysql_conn.cursor()
         mysql_connection.execute("create database " + dbName)
@@ -161,7 +159,6 @@ def mysql_creat_edge_db(dbName):
 
 # mysql 檢查指定 db 是否存
 def mysql_check_db(dbName):
-    mysql_connect()
     try:
         mysql_conn.select_db(dbName)
         return True
@@ -316,7 +313,6 @@ def edgeNodeSqlUpload():
         edge_school_devices = edgeData["devices"]
         edge_school_device_perf = edgeData["device_perf"]
         edge_school_alert_log = edgeData["alert_log"]
-        mysql_connect()
         mysql_conn.select_db("school_" + str(edge_school_id))
         mysql_connection = mysql_conn.cursor()
         print("XXXXX")
