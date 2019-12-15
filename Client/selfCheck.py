@@ -170,12 +170,12 @@ def mysql_search_alert_log_tables():
     for x in mysql_connection:
         devices_list.append(x[0])
     for x in range(0, len(devices_list)):
-        mysql_connection.execute("select alert_log.id, alert_log.rule_id, alert_log.state, alert_log.device_id, alert_rules.name as details, alert_log.time_logged from alert_log, alert_rules where alert_log.rule_id = alert_rules.id and alert_log.device_id = " + str(devices_list[x]) + " group by time_logged desc limit 3;")
+        mysql_connection.execute("select alert_log.id, alert_log.rule_id, alert_log.device_id, alert_log.state, alert_rules.name as details, alert_log.time_logged from alert_log, alert_rules where alert_log.rule_id = alert_rules.id and alert_log.device_id = " + str(devices_list[x]) + " group by time_logged desc limit 3;")
         for y in mysql_connection:
             alert_log_data.append({ \
                 "id": y[0], \
                 "rule_id": y[1], \
-                "id": y[2], \
+                "device_id": y[2], \
                 "state": y[3], \
                 "details": y[4], \
                 "time_logged": str(y[5])})
