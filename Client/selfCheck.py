@@ -113,8 +113,8 @@ def mysql_search_devices_tables():
             "last_poll_attempted": str(z[33]), \
             "last_polled_timetaken": z[34], \
             "last_discovered_timetaken": z[35], \
-            "last_discovered": str(z[36]), \
-            "last_ping": str(z[37]), \
+            "last_discovered": z[36], \
+            "last_ping": z[37], \
             "last_ping_timetaken": z[38], \
             "purpose": z[39], \
             "type": z[40], \
