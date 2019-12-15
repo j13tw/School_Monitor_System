@@ -327,8 +327,12 @@ def edgeNodeSqlUpload():
         edge_school_alert_log = edgeData["alert_log"]
         mysql_conn.select_db("school_" + str(edge_school_id))
         mysql_connection = mysql_conn.cursor()
-        print("XXXXX")
+        print("school_id", "\n", edge_school_id)
+        print("edge_school_devices", "\n", edge_school_devices)
+        print("edge_school_device_perf", "\n", edge_school_device_perf)
+        print("edge_school_alert_log", "\n", edge_school_alert_log)
         # edge alert_log table update
+        print("Inser alert_log tables")
         for x in range(0, len(edge_school_alert_log)):
             y = json.loads(str(edge_school_alert_log[x]).replace("'", '"'))
             if (y["id"] != "NULL"): y["id"] = str(y["id"])
@@ -348,6 +352,7 @@ def edgeNodeSqlUpload():
                     return {"uploadSql": "device_perf_table_insert_Error"}
 
         # edge device_perf table update
+        print("Inser device_perf tables")
         for x in range(0, len(edge_school_device_perf)):
             y = json.loads(str(edge_school_device_perf[x]).replace("'", '"'))
             if (y["id"] != "NULL"): y["id"] = str(y["id"])
@@ -371,6 +376,7 @@ def edgeNodeSqlUpload():
                     return {"uploadSql": "device_perf_table_insert_Error"}
 
         # edge devices table update
+        print("Inser devices tables")
         for x in range(0, len(edge_school_devices)):
             y = json.loads(str(edge_school_devices[x]).replace("'", '"'))
             if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
