@@ -458,7 +458,7 @@ def edgeNodeSqlUpload():
                     " + y["snmp_disable"] + ", " + y["bgpLocalAs"] + ", " + y["sysObjectID"] + ", " + y["sysDescr"] + ", " + y["sysContact"] + ", " + y["version"] + ", " + y["hardware"] + ", \
                     " + y["features"] + ", " + y["location_id"] + ", " + y["os"] + ", " + y["status"] + ", " + y["ignores"] + ", " + y["disabled"] + ", " + y["uptime"] + ", \
                     " + y["agent_uptime"] + ", " + y["last_polled_timetaken"] + ", " + y["last_discovered_timetaken"] + ", \
-                    " + ", " + y["last_ping_timetaken"] + ", " + y["purpose"] + ", " + y["type"] + ", " + y["serial"] + ", " + y["icon"] + ", \
+                    " + y["last_ping_timetaken"] + ", " + y["purpose"] + ", " + y["type"] + ", " + y["serial"] + ", " + y["icon"] + ", \
                     " + y["poller_group"] + ", " + y["override_sysLocation"] + ", " + y["notes"] + ", " + y["port_association_mode"] + ", " + y["max_depth"] + ")")
                 mysql_conn.commit()
                 print("d")
