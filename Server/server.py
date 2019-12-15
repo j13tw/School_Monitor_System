@@ -347,7 +347,6 @@ def edgeNodeSqlUpload():
                 except:
                     return {"uploadSql": "device_perf_table_insert_Error"}
 
-        '''
         # edge device_perf table update
         for x in range(0, len(edge_school_device_perf)):
             y = json.loads(str(edge_school_device_perf[x]).replace("'", '"'))
@@ -452,7 +451,6 @@ def edgeNodeSqlUpload():
                     print("recive school_" + str(edge_school_id) + " device " + y["device_id"])
                 except:
                     return {"uploadSql": "devices_table_insert_Error"} 
-        '''
         mysql_conn.commit()
         
     return {"uploadSql": "ok"}     

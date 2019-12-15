@@ -242,13 +242,16 @@ while edgeInitState:
         print(str(datetime.datetime.now()) + " LibreNMS is Fail !")
     # HealthCheck Flash API     
     if (edgeStatusCode != ""):
-        try:
-            healthData["status"] = edgeStatusCode
-            requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeServiceCheckUrl, json=healthData)
-            print(str(datetime.datetime.now()) + " Health Response to Cloud ok !")
-        except:
-            print(str(datetime.datetime.now()) + " Health Response to Cloud Error !")
-            cloudState = 0
+        cloudState = 1
+        while(cloudState):
+            try:
+                healthData["status"] = edgeStatusCode
+                requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeServiceCheckUrl, json=healthData)
+                print(str(datetime.datetime.now()) + " Health Response to Cloud ok !")
+                cloudState = 0
+            except:
+                print(str(datetime.datetime.now()) + " Health Response to Cloud Error !")
+            if (cloudState): time.sleep(checkInterval)
     else:
         pushSqlCount = pushSqlCount - checkInterval
     # Mysql Data Flash API
