@@ -332,7 +332,7 @@ def edgeNodeSqlUpload():
         print("edge_school_device_perf", "\n", edge_school_device_perf)
         print("edge_school_alert_log", "\n", edge_school_alert_log)
         # edge alert_log table update
-        print("Inser alert_log tables")
+        print("Insert alert_log tables")
         for x in range(0, len(edge_school_alert_log)):
             y = json.loads(str(edge_school_alert_log[x]).replace("'", '"'))
             if (y["id"] != "NULL"): y["id"] = str(y["id"])
@@ -352,7 +352,7 @@ def edgeNodeSqlUpload():
                     return {"uploadSql": "device_perf_table_insert_Error"}
 
         # edge device_perf table update
-        print("Inser device_perf tables")
+        print("Insert device_perf tables")
         for x in range(0, len(edge_school_device_perf)):
             y = json.loads(str(edge_school_device_perf[x]).replace("'", '"'))
             if (y["id"] != "NULL"): y["id"] = str(y["id"])
@@ -426,7 +426,9 @@ def edgeNodeSqlUpload():
             if (y["notes"] != "NULL"): y["notes"] = "'" + y["notes"] + "'"
             if (y["port_association_mode"] != "NULL"): y["port_association_mode"] = str(y["port_association_mode"])
             if (y["max_depth"] != "NULL"): y["max_depth"] = str(y["max_depth"])
+            print("device_a")
             if (mysql_connection.execute("select * from devices where device_id = " + y["device_id"]) == 1):
+                print("device_b")
                 try:
                     mysql_connection.execute("UPDATE devices SET \
                         device_id = " + y["device_id"] + ", hostname = " + y["hostname"] + ", sysName = " + y["sysName"] + ", ip = " + y["ip"] + ", community = " + y["community"] + ", \
@@ -441,8 +443,10 @@ def edgeNodeSqlUpload():
                 except:
                      return {"uploadSql": "devices_table_update_Error"} 
             else:
+                print("device_c")
                 try:
-                    mysql_connection.execute("INSERT INTO devices (device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo, \
+                    #mysql_connection.execute
+                    print("INSERT INTO devices (device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo, \
                     snmpver, port, transport, timeout, retries, snmp_disable, bgpLocalAs, sysObjectID, sysDescr, sysContact, version, hardware, features, location_id, os, \
                     status, ignores, disabled, uptime, agent_uptime, last_polled, last_poll_attempted, last_polled_timetaken, last_discovered_timetaken, \
                     last_discovered, last_ping, last_ping_timetaken, purpose, type, serial, icon, poller_group, override_sysLocation, notes, port_association_mode, max_depth) \
