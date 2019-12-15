@@ -350,6 +350,7 @@ def edgeNodeSqlUpload():
                     mysql_conn.commit() 
                 except:
                     return {"uploadSql": "device_perf_table_insert_Error"}
+            print("recive school_" + str(edge_school_id) + " alert_log " + y["device_id"]) 
 
         # edge device_perf table update
         print("Insert device_perf tables")
@@ -374,6 +375,7 @@ def edgeNodeSqlUpload():
                     mysql_conn.commit()
                 except:
                     return {"uploadSql": "device_perf_table_insert_Error"}
+            print("recive school_" + str(edge_school_id) + " device_perf " + y["device_id"]) 
 
         # edge devices table update
         print("Inser devices tables")
@@ -426,7 +428,6 @@ def edgeNodeSqlUpload():
             if (y["notes"] != "NULL"): y["notes"] = "'" + y["notes"] + "'"
             if (y["port_association_mode"] != "NULL"): y["port_association_mode"] = str(y["port_association_mode"])
             if (y["max_depth"] != "NULL"): y["max_depth"] = str(y["max_depth"])
-            print("device_a")
             if (mysql_connection.execute("select * from devices where device_id = " + y["device_id"]) == 1):
                 try:
                     mysql_connection.execute("UPDATE devices SET \
@@ -455,12 +456,12 @@ def edgeNodeSqlUpload():
                         " + y["agent_uptime"] + ", " + y["last_polled"] + ", " + y["last_poll_attempted"] + ", " + y["last_polled_timetaken"] + ", " + y["last_discovered_timetaken"] + ", \
                         " + y["last_discovered"] + ", " + y["last_ping"] + ", " + y["last_ping_timetaken"] + ", " + y["purpose"] + ", " + y["type"] + ", " + y["serial"] + ", " + y["icon"] + ", \
                         " + y["poller_group"] + ", " + y["override_sysLocation"] + ", " + y["notes"] + ", " + y["port_association_mode"] + ", " + y["max_depth"] + ")")
-                    print("recive school_" + str(edge_school_id) + " device " + y["device_id"])
                 except:
-                    return {"uploadSql": "devices_table_insert_Error"} 
+                    return {"uploadSql": "devices_table_insert_Error"}
+            print("recive school_" + str(edge_school_id) + " devices " + y["device_id"]) 
             mysql_conn.commit()
-        
-    return {"uploadSql": "ok"}     
+    return {"uploadSql": "ok"}
+
 if __name__ == '__main__':
 #	app.run(debug = True)
 	app.run(host = '10.0.0.194', port=5000)
