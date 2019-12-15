@@ -193,7 +193,7 @@ app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 128 * 1024 * 1024  # 128MB
 
 # mysql server db 準備
-os.system("service mysql start")
+# os.system("service mysql start")
 try:
     mysql_conn = MySQLdb.connect(host = mysql_host, \
         port=mysql_port, \
