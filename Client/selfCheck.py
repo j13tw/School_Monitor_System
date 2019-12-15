@@ -180,10 +180,7 @@ def mysql_search_alert_log_tables():
                 "details": y[4], \
                 "time_logged": str(y[5])})
     print(alert_log_data)
-    if (deviceCount == len(alert_log_data)): 
-        return alert_log_data
-    else:
-        return []
+    return alert_log_data
 
 # [Edge Init]
 while edgeInitState != 1:

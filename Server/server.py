@@ -316,7 +316,6 @@ def edgeNodeSqlUpload():
         mysql_conn.select_db("school_" + str(edge_school_id))
         mysql_connection = mysql_conn.cursor()
         print("XXXXX")
-
         # edge alert_log table update
         for x in range(0, len(edge_school_alert_log)):
             print("a")
