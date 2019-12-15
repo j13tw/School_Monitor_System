@@ -81,12 +81,12 @@ mysql_create_edge_devices_table = "CREATE TABLE devices (\
     disabled                    tinyint(1)                                   NOT NULL   default '0', \
     uptime                      bigint(20)                                   NULL, \
     agent_uptime                int(10) unsigned                             NOT NULL   default '0', \
-    last_polled                 datetime                                     NULL, \
-    last_poll_attempted         datetime                                     NULL, \
+    last_polled                 timestamp                                    NULL, \
+    last_poll_attempted         timestamp                                    NULL, \
     last_polled_timetaken       double(5,2)                                  NULL, \
     last_discovered_timetaken   double(5,2)                                  NULL, \
-    last_discovered             datetime                                     NULL, \
-    last_ping                   datetime                                     NULL, \
+    last_discovered             timestamp                                    NULL, \
+    last_ping                   timestamp                                    NULL, \
     last_ping_timetaken         double(8,2)                                  NULL, \
     purpose                     text                                         NULL, \
     type                        varchar(20)                                  NOT NULL   default '', \
@@ -448,6 +448,18 @@ def edgeNodeSqlUpload():
             else:
                 print("c")
                 #try:
+                print("INSERT INTO devices (device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo, \
+                    snmpver, port, transport, timeout, retries, snmp_disable, bgpLocalAs, sysObjectID, sysDescr, sysContact, version, hardware, features, location_id, os, \
+                    status, ignores, disabled, uptime, agent_uptime, last_polled, last_poll_attempted, last_polled_timetaken, last_discovered_timetaken, \
+                    last_discovered, last_ping, last_ping_timetaken, purpose, type, serial, icon, poller_group, override_sysLocation, notes, port_association_mode, max_depth) \
+                    VALUES (\
+                    " + y["device_id"] + ", " + y["hostname"] + ", " + y["sysName"] + ", " + y["ip"] + ", " + y["community"] + ", " + y["authlevel"] + ", " + y["authname"] + ", " + y["authpass"] + ", \
+                    " + y["authalgo"] + ", " + y["cryptopass"] + ", " + y["cryptoalgo"] + ", " + y["snmpver"] + ", " + y["port"] + ", " + y["transport"] + ", " + y["timeout"] + ", " + y["retries"] + ", \
+                    " + y["snmp_disable"] + ", " + y["bgpLocalAs"] + ", " + y["sysObjectID"] + ", " + y["sysDescr"] + ", " + y["sysContact"] + ", " + y["version"] + ", " + y["hardware"] + ", \
+                    " + y["features"] + ", " + y["location_id"] + ", " + y["os"] + ", " + y["status"] + ", " + y["ignores"] + ", " + y["disabled"] + ", " + y["uptime"] + ", \
+                    " + y["agent_uptime"] + ", " + y["last_polled"] + ", " + y["last_poll_attempted"] + ", " + y["last_polled_timetaken"] + ", " + y["last_discovered_timetaken"] + ", \
+                    " + y["last_discovered"] + ", " + y["last_ping"] + ", " + y["last_ping_timetaken"] + ", " + y["purpose"] + ", " + y["type"] + ", " + y["serial"] + ", " + y["icon"] + ", \
+                    " + y["poller_group"] + ", " + y["override_sysLocation"] + ", " + y["notes"] + ", " + y["port_association_mode"] + ", " + y["max_depth"] + ")")
                 mysql_connection.execute("INSERT INTO devices (device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo, \
                     snmpver, port, transport, timeout, retries, snmp_disable, bgpLocalAs, sysObjectID, sysDescr, sysContact, version, hardware, features, location_id, os, \
                     status, ignores, disabled, uptime, agent_uptime, last_polled, last_poll_attempted, last_polled_timetaken, last_discovered_timetaken, \
