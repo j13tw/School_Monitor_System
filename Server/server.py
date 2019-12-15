@@ -318,12 +318,12 @@ def edgeNodeSqlUpload():
         for x in range(0, len(edge_school_alert_log)):
             print("a")
             y = json.loads(str(edge_school_alert_log[x]).replace("'", '"'))
-            if (y["id"] != NULL): y["id"] = str(y["id"])
-            if (y["rule_id"] != NULL): y["rule_id"] = str(y["rule_id"])
-            if (y["device_id"] != NULL): y["device_id"] = str(y["device_id"])
-            if (y["state"] != NULL): y["state"] = str(y["state"])
-            if (y["details"] != NULL): y["details"] = "'" + str(y["details"]).split("'")[1] + "'"
-            if (y["time_logged"] != NULL): y["time_logged"] = "'" + str(y["time_logged"]) + "'"
+            if (y["id"] != "NULL"): y["id"] = str(y["id"])
+            if (y["rule_id"] != "NULL"): y["rule_id"] = str(y["rule_id"])
+            if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
+            if (y["state"] != "NULL"): y["state"] = str(y["state"])
+            if (y["details"] != "NULL"): y["details"] = "'" + str(y["details"]).split("'")[1] + "'"
+            if (y["time_logged"] != "NULL"): y["time_logged"] = "'" + str(y["time_logged"]) + "'"
             print("b")
             if (mysql_connection.execute("select * from alert_log where id = " + y["id"]) == 0):
                 try:
