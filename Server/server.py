@@ -441,14 +441,14 @@ def edgeNodeSqlUpload():
                         uptime = " + y["uptime"] + ", agent_uptime = " + y["agent_uptime"] + ", last_polled = " + y["last_polled"] + ", purpose = " + y["purpose"] + ", type = " + y["type"] + ", \
                         serial = " + y["serial"] + ", icon = " + y["icon"] + ", poller_group = " + y["poller_group"] + ", override_sysLocation = " + y["override_sysLocation"] + ", notes = " + y["notes"] + ", \
                         port_association_mode = " + y["port_association_mode"] + ", max_depth = " + y["max_depth"] + " WHERE device_id = " + y["device_id"])
+                    mysql_conn.commit()
                     print("b")
                 except:
                      return {"uploadSql": "devices_table_update_Error"} 
             else:
                 print("c")
                 try:
-                    mysql_connection.execute
-                    print("INSERT INTO devices (device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo, \
+                    mysql_connection.execute("INSERT INTO devices (device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo, \
                         snmpver, port, transport, timeout, retries, snmp_disable, bgpLocalAs, sysObjectID, sysDescr, sysContact, version, hardware, features, location_id, os, \
                         status, ignores, disabled, uptime, agent_uptime, last_polled, last_poll_attempted, last_polled_timetaken, last_discovered_timetaken, \
                         last_discovered, last_ping, last_ping_timetaken, purpose, type, serial, icon, poller_group, override_sysLocation, notes, port_association_mode, max_depth) \
@@ -460,8 +460,10 @@ def edgeNodeSqlUpload():
                         " + y["agent_uptime"] + ", " + y["last_polled"] + ", " + y["last_poll_attempted"] + ", " + y["last_polled_timetaken"] + ", " + y["last_discovered_timetaken"] + ", \
                         " + y["last_discovered"] + ", " + y["last_ping"] + ", " + y["last_ping_timetaken"] + ", " + y["purpose"] + ", " + y["type"] + ", " + y["serial"] + ", " + y["icon"] + ", \
                         " + y["poller_group"] + ", " + y["override_sysLocation"] + ", " + y["notes"] + ", " + y["port_association_mode"] + ", " + y["max_depth"] + ")")
+                    mysql_conn.commit()
                     print("d")
-                except:
+                except e:
+                    print(e)
                     return {"uploadSql": "devices_table_insert_Error"}
             print("recive school_" + str(edge_school_id) + " devices " + y["device_id"]) 
             mysql_conn.commit()
