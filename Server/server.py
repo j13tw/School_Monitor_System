@@ -438,7 +438,8 @@ def edgeNodeSqlUpload():
                         retries = " + y["retries"] + ", snmp_disable = " + y["snmp_disable"] + ", bgpLocalAs = " + y["bgpLocalAs"] + ", sysObjectID = " + y["sysObjectID"] + ", sysDescr = " + y["sysDescr"] + ", \
                         sysContact = " + y["sysContact"] + ", version = " + y["version"] + ", hardware = " + y["hardware"] + ", features = " + y["features"] + ", location_id = " + y["location_id"] + ", \
                         os = " + y["os"] + ", status = " + y["status"] + ", ignores = " + y["ignores"] + ", disabled = " + y["disabled"] + ", \
-                        uptime = " + y["uptime"] + ", agent_uptime = " + y["agent_uptime"] + ", last_polled = " + y["last_polled"] + ", purpose = " + y["purpose"] + ", type = " + y["type"] + ", \
+                        uptime = " + y["uptime"] + ", agent_uptime = " + y["agent_uptime"] + ", last_polled = " + y["last_polled"] + ", last_polled_timetaken = " + y["last_polled_timetaken"] + ", \
+                        last_discovered_timetaken = " + y["last_discovered_timetaken"] + ", last_ping_timetaken = " + y["last_ping_timetaken"] + ", purpose = " + y["purpose"] + ", type = " + y["type"] + ", \
                         serial = " + y["serial"] + ", icon = " + y["icon"] + ", poller_group = " + y["poller_group"] + ", override_sysLocation = " + y["override_sysLocation"] + ", notes = " + y["notes"] + ", \
                         port_association_mode = " + y["port_association_mode"] + ", max_depth = " + y["max_depth"] + " WHERE device_id = " + y["device_id"])
                     mysql_conn.commit()
@@ -450,8 +451,8 @@ def edgeNodeSqlUpload():
                 #try:
                 mysql_connection.execute("INSERT INTO devices (device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo, \
                     snmpver, port, transport, timeout, retries, snmp_disable, bgpLocalAs, sysObjectID, sysDescr, sysContact, version, hardware, features, location_id, os, \
-                    status, ignores, disabled, uptime, agent_uptime, last_polled_timetaken, last_discovered_timetaken, \
-                    last_ping_timetaken, purpose, type, serial, icon, poller_group, override_sysLocation, notes, port_association_mode, max_depth) \
+                    status, ignores, disabled, uptime, agent_uptime, last_polled_timetaken, last_discovered_timetaken, last_ping_timetaken, purpose, type, serial, icon, \
+                    poller_group, override_sysLocation, notes, port_association_mode, max_depth) \
                     VALUES (\
                     " + y["device_id"] + ", " + y["hostname"] + ", " + y["sysName"] + ", " + y["ip"] + ", " + y["community"] + ", " + y["authlevel"] + ", " + y["authname"] + ", " + y["authpass"] + ", \
                     " + y["authalgo"] + ", " + y["cryptopass"] + ", " + y["cryptoalgo"] + ", " + y["snmpver"] + ", " + y["port"] + ", " + y["transport"] + ", " + y["timeout"] + ", " + y["retries"] + ", \
