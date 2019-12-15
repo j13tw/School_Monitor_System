@@ -443,7 +443,7 @@ def edgeNodeSqlUpload():
                         uptime = " + y["uptime"] + ", agent_uptime = " + y["agent_uptime"] + ", last_polled = " + y["last_polled"] + ", last_polled_timetaken = " + y["last_polled_timetaken"] + ", \
                         last_discovered_timetaken = " + y["last_discovered_timetaken"] + ", last_ping_timetaken = " + y["last_ping_timetaken"] + ", purpose = " + y["purpose"] + ", type = " + y["type"] + ", \
                         serial = " + y["serial"] + ", icon = " + y["icon"] + ", poller_group = " + y["poller_group"] + ", override_sysLocation = " + y["override_sysLocation"] + ", notes = " + y["notes"] + ", \
-                        port_association_mode = " + y["port_association_mode"] + ", max_depth = " + y["max_depth"] + " WHERE device_id = " + y["device_id"])
+                        port_association_mode = " + y["port_association_mode"] + ", max_depth = " + y["max_depth"] + "last_poll_attempted = " + y["ast_poll_attempted"] + " WHERE device_id = " + y["device_id"])
                     mysql_conn.commit()
                     print("b")
                 except:
@@ -454,7 +454,7 @@ def edgeNodeSqlUpload():
                 mysql_connection.execute("INSERT INTO devices (device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo, \
                     snmpver, port, transport, timeout, retries, snmp_disable, bgpLocalAs, sysObjectID, sysDescr, sysContact, version, hardware, features, location_id, os, \
                     status, status_reason, ignores, disabled, uptime, agent_uptime, last_polled_timetaken, last_discovered_timetaken, last_ping_timetaken, purpose, type, serial, icon, \
-                    poller_group, override_sysLocation, notes, port_association_mode, max_depth, last_polled, last_poll_attempted) \
+                    poller_group, override_sysLocation, notes, port_association_mode, max_depth, last_polled, last_poll_attempted, last_discovered) \
                     VALUES (\
                     " + y["device_id"] + ", " + y["hostname"] + ", " + y["sysName"] + ", " + y["ip"] + ", " + y["community"] + ", " + y["authlevel"] + ", " + y["authname"] + ", " + y["authpass"] + ", \
                     " + y["authalgo"] + ", " + y["cryptopass"] + ", " + y["cryptoalgo"] + ", " + y["snmpver"] + ", " + y["port"] + ", " + y["transport"] + ", " + y["timeout"] + ", " + y["retries"] + ", \
@@ -462,7 +462,7 @@ def edgeNodeSqlUpload():
                     " + y["features"] + ", " + y["location_id"] + ", " + y["os"] + ", " + y["status"] + ", " + y["status_reason"] + ", " + y["ignores"] + ", " + y["disabled"] + ", " + y["uptime"] + ", \
                     " + y["agent_uptime"] + ", " + y["last_polled_timetaken"] + ", " + y["last_discovered_timetaken"] + ", " + y["last_ping_timetaken"] + ", " + y["purpose"] + ", " + y["type"] + ", \
                     " + y["serial"] + ", " + y["icon"] + ", " + y["poller_group"] + ", " + y["override_sysLocation"] + ", " + y["notes"] + ", " + y["port_association_mode"] + ", " + y["max_depth"] + ", \
-                    " + y["last_polled"] + ", " + y["last_poll_attempted"] + ")")
+                    " + y["last_polled"] + ", " + y["last_poll_attempted"] + ", " + y["last_discovered"] + ")")
                 mysql_conn.commit()
                 print("d")
                 #except:
