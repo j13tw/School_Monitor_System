@@ -479,12 +479,12 @@ def edgeNodeSqlUpload():
         print(device_difference_list)
         for x in device_difference_list:
             print(x)
-            # mysql_connection.execute("DELETE from devices where device_id = " + str(x))
-            # mysql_conn.commit()
-            # mysql_connection.execute("DELETE from device_perf where device_id = " + str(x))
-            # mysql_conn.commit()
-            # mysql_connection.execute("DELETE from alert_log where device_id = " + str(x))
-            # mysql_conn.commit()
+            mysql_connection.execute("DELETE from devices where device_id = " + str(x))
+            mysql_conn.commit()
+            mysql_connection.execute("DELETE from device_perf where device_id = " + str(x))
+            mysql_conn.commit()
+            mysql_connection.execute("DELETE from alert_log where device_id = " + str(x))
+            mysql_conn.commit()
     print(str(datetime.datetime.now()) + "over")
     return {"uploadSql": "ok"}
 
