@@ -466,9 +466,11 @@ def edgeNodeSqlUpload():
                     mysql_conn.commit()
                 except:
                     return {"uploadSql": "devices_table_insert_Error"}
-            print("recive school_" + str(edge_school_id) + " devices " + y["device_id"] + "=" + y["hostname"]) 
+            print("recive school_" + str(edge_school_id) + " devices " + y["device_id"] + "=" + y["hostname"])
+        print(edge_device_list) 
         edge_device_list_set = set(edge_device_list)
         mysql_connection.execute("select device_id from devices")
+        print(mysql_connection.fetchall())
         cloud_device_list_set = set(mysql_connection.fetchall())
         device_difference_list = edge_device_list_set.difference(cloud_device_list_set)
         print(device_difference_list)
