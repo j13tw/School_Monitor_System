@@ -206,10 +206,10 @@ while edgeInitState != 1:
             user=mysql_user, \
             passwd=mysql_passwd, \
             db=mysql_db)
+        mysql_conn.close()
         mysql_check_table("devices")
         mysql_check_table("device_perf")
         mysql_check_table("alert_log")
-        mysql_conn.close()
     except:
         print(str(datetime.datetime.now()) + " Connect MySQL Error !")
         edgeStatusCode = edgeStatusCodeArray[2]
