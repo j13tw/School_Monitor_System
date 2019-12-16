@@ -181,7 +181,7 @@ def mysql_search_alert_log_tables():
                 "state": y[3], \
                 "details": y[4], \
                 "time_logged": str(y[5])})
-    print(alert_log_data)
+    #print(alert_log_data)
     return alert_log_data
 
 # [Edge Init]
