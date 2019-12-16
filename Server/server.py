@@ -201,7 +201,6 @@ docker_client = docker.from_env()
 # docker_create = docker_client.containers.run(image='grafana/grafana', name=1234, ports={'3000/tcp': 1234}, detach=True).id
 # docker_delete = client.containers.get(edge_school_container_id).remove(force=True)
 app = Flask(__name__)
-app.config['MAX_CONTENT_LENGTH'] = 128 * 1024 * 1024  # 128MB
 
 # mysql server db 準備
 # os.system("service mysql start")
@@ -379,7 +378,7 @@ def edgeNodeSqlUpload():
             print("recive school_" + str(edge_school_id) + " device_perf " + y["device_id"]) 
 
         # edge devices table update
-        print("Inser devices tables")
+        print("Insert devices tables")
         for x in range(0, len(edge_school_devices)):
             y = json.loads(str(edge_school_devices[x]).replace("'", '"'))
             if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
