@@ -209,6 +209,8 @@ while edgeInitState != 1:
                 print(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeNodeRegistUrl)
                 print(registData)
                 r = requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeNodeRegistUrl, json=registData)
+                print(r,json)
+                print(json.loads(r.text)["regist"])
                 if (json.loads(r.text)["regist"] == "ok"):
                     edgeInitState = 1
                     print(str(datetime.datetime.now()) + " Edge Init Network to Cloud : Regist OK !")
