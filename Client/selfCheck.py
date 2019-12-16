@@ -209,7 +209,7 @@ while edgeInitState != 1:
                 print(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeNodeRegistUrl)
                 print(registData)
                 r = requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeNodeRegistUrl, json=registData)
-                print(r.json)
+                print(r.text)
                 print(json.loads(r.text)["regist"])
                 if (json.loads(r.text)["regist"] == "ok"):
                     edgeInitState = 1
