@@ -21,9 +21,9 @@ healthData = {"school": sys.argv[1], "status":""}
 searchSqlData = {"school": sys.argv[1], "devices": [], "device_perf": [], "alert_log": []}
 
 
-print("argv = "+sys.argv[1])
-print(registData)
-print(healthData)
+#print("argv = "+sys.argv[1])
+#print(registData)
+#print(healthData)
 
 # [Mysql Setup]
 mysql_user = "libeenms"
@@ -127,7 +127,7 @@ def mysql_search_devices_tables():
             "notes": z[45], \
             "port_association_mode": z[46], \
             "max_depth": z[47]})
-    print(devices_data)
+    #print(devices_data)
     if (len(devices_data) == deviceCount):
         return devices_data
     else:
@@ -156,7 +156,7 @@ def mysql_search_device_perf_tables():
                 "max": y[7], \
                 "avg": y[8], \
                 "debug": y[9]})
-    print(device_perf_data)
+    #print(device_perf_data)
     if (deviceCount == len(device_perf_data)): 
         return device_perf_data
     else:
@@ -264,7 +264,7 @@ while edgeInitState:
         searchSqlData["devices"] = mysql_search_devices_tables()
         searchSqlData["device_perf"] = mysql_search_device_perf_tables()
         searchSqlData["alert_log"] = mysql_search_alert_log_tables()
-        # print(searchSqlData)
+        print(searchSqlData)
         try:
             requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeDatabaseFlashUrl, json=searchSqlData)
             print(str(datetime.datetime.now()) + " Upload Sql to Cloud ok !")
