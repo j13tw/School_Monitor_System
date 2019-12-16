@@ -443,7 +443,7 @@ def edgeNodeSqlUpload():
                         uptime = " + y["uptime"] + ", agent_uptime = " + y["agent_uptime"] + ", last_polled = " + y["last_polled"] + ", last_polled_timetaken = " + y["last_polled_timetaken"] + ", \
                         last_discovered_timetaken = " + y["last_discovered_timetaken"] + ", last_ping_timetaken = " + y["last_ping_timetaken"] + ", purpose = " + y["purpose"] + ", type = " + y["type"] + ", \
                         serial = " + y["serial"] + ", icon = " + y["icon"] + ", poller_group = " + y["poller_group"] + ", override_sysLocation = " + y["override_sysLocation"] + ", notes = " + y["notes"] + ", \
-                        port_association_mode = " + y["port_association_mode"] + ", max_depth = " + y["max_depth"] + "last_poll_attempted = " + y["ast_poll_attempted"] + ", \
+                        port_association_mode = " + y["port_association_mode"] + ", max_depth = " + y["max_depth"] + ", last_poll_attempted = " + y["ast_poll_attempted"] + ", \
                         last_discovered = " + y["last_discovered"] + " WHERE device_id = " + y["device_id"])
                     mysql_conn.commit()
                     print("b")
