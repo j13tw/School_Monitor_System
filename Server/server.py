@@ -462,7 +462,7 @@ def edgeNodeSqlUpload():
                     mysql_conn.commit()
                 except:
                     return {"uploadSql": "devices_table_insert_Error"}
-            print("recive school_" + str(edge_school_id) + " devices " + y["device_id"] "=" + y["hostname"]) 
+            print("recive school_" + str(edge_school_id) + " devices " + y["device_id"] + "=" + y["hostname"]) 
             mysql_conn.commit()
     return {"uploadSql": "ok"}
 
