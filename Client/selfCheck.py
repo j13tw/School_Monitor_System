@@ -26,8 +26,12 @@ searchSqlData = {"school": sys.argv[1], "devices": [], "device_perf": [], "alert
 #print(healthData)
 
 # [Mysql Setup]
-mysql_user = "libeenms"
-mysql_passwd = "librenms"
+# mysql_user = str(sys.argv[1]) + "user"
+# mysql_passwd = str(sys.argv[1]) + "pass"
+# mysql_db = "lib" + str(sys.argv[1]) + "name"
+
+mysql_user = "root"
+mysql_passwd = "root"
 mysql_db = "librenms"
 mysql_host = "127.0.0.1"
 mysql_port = 3306
