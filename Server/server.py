@@ -472,7 +472,7 @@ def edgeNodeSqlUpload():
         edge_device_list = []
         mysql_connection.execute("select device_id from devices")
         for x in mysql_connection:
-            edge_device_list.append(str(x))
+            edge_device_list.append(str(x[0]))
         print(edge_device_list)
         cloud_device_list_set = set(edge_device_list)
         device_difference_list = edge_device_list_set.difference(cloud_device_list_set)
