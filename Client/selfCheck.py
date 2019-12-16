@@ -30,8 +30,8 @@ searchSqlData = {"school": sys.argv[1], "devices": [], "device_perf": [], "alert
 # mysql_passwd = str(sys.argv[1]) + "pass"
 # mysql_db = "lib" + str(sys.argv[1]) + "name"
 
-mysql_user = "root"
-mysql_passwd = "root"
+mysql_user = "libeenms"
+mysql_passwd = "librenms"
 mysql_db = "librenms"
 mysql_host = "127.0.0.1"
 mysql_port = 3306
@@ -60,9 +60,11 @@ def mysql_connect():
 
 # mysql 檢查指定 db 中 table 是否存
 def mysql_check_table(tableName):
-    if mysql_connect == True:
+    global mysql_conn
+    if mysql_connect() == True:
         mysql_connection = mysql_conn.cursor()
         mysql_connection.execute("show tables;")
+        mysql_conn.close()
         for x in mysql_connection:
             if x[0] == tableName:
                 return True
@@ -73,8 +75,10 @@ def mysql_check_table(tableName):
 
 # search edge Node ==> librenms devices data
 def mysql_search_devices_tables():
+    global mysql_conn
     devices_data = []
     deviceCount = 0
+    mysql_connect()
     mysql_connection = mysql_conn.cursor()
     deviceCount = mysql_connection.execute("select * from devices")
     for x in mysql_connection:
@@ -132,6 +136,7 @@ def mysql_search_devices_tables():
             "port_association_mode": z[46], \
             "max_depth": z[47]})
     #print(devices_data)
+    mysql_conn.close()
     if (len(devices_data) == deviceCount):
         return devices_data
     else:
@@ -142,6 +147,7 @@ def mysql_search_device_perf_tables():
     deviceCount = 0
     devices_list = []
     device_perf_data = []
+    mysql_connect()
     mysql_connection = mysql_conn.cursor()
     deviceCount = mysql_connection.execute("select * from devices")
     for x in mysql_connection:
@@ -161,6 +167,7 @@ def mysql_search_device_perf_tables():
                 "avg": y[8], \
                 "debug": y[9]})
     #print(device_perf_data)
+    mysql_conn.close()
     if (deviceCount == len(device_perf_data)): 
         return device_perf_data
     else:
@@ -171,6 +178,7 @@ def mysql_search_alert_log_tables():
     deviceCount = 0
     devices_list = []
     alert_log_data = []
+    mysql_connect()
     mysql_connection = mysql_conn.cursor()
     deviceCount = mysql_connection.execute("select * from devices")
     for x in mysql_connection:
@@ -186,6 +194,7 @@ def mysql_search_alert_log_tables():
                 "details": y[4], \
                 "time_logged": str(y[5])})
     #print(alert_log_data)
+    mysql_conn.close()
     return alert_log_data
 
 # [Edge Init]
@@ -200,6 +209,7 @@ while edgeInitState != 1:
         mysql_check_table("devices")
         mysql_check_table("device_perf")
         mysql_check_table("alert_log")
+        mysql_conn.close()
     except:
         print(str(datetime.datetime.now()) + " Connect MySQL Error !")
         edgeStatusCode = edgeStatusCodeArray[2]
