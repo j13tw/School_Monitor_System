@@ -475,7 +475,7 @@ def edgeNodeSqlUpload():
             edge_device_list.append(str(x[0]))
         print(edge_device_list)
         cloud_device_list_set = set(edge_device_list)
-        device_difference_list = edge_device_list_set.difference(cloud_device_list_set)
+        device_difference_list = cloud_device_list_set.difference(edge_device_list_set)
         print(device_difference_list)
         for x in device_difference_list:
             print(x)
