@@ -144,6 +144,7 @@ def mysql_search_devices_tables():
 
 # search edge Node ==> librenms device_perf data
 def mysql_search_device_perf_tables():
+    global mysql_conn
     deviceCount = 0
     devices_list = []
     device_perf_data = []

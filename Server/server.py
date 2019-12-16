@@ -331,6 +331,8 @@ def edgeNodeSqlUpload():
         # print("edge_school_devices", "\n", edge_school_devices)
         # print("edge_school_device_perf", "\n", edge_school_device_perf)
         # print("edge_school_alert_log", "\n", edge_school_alert_log)
+        edge_device_list = []
+
         # edge alert_log table update
         print("Refresh alert_log tables")
         for x in range(0, len(edge_school_alert_log)):
@@ -429,6 +431,7 @@ def edgeNodeSqlUpload():
             if (y["notes"] != "NULL"): y["notes"] = "'" + y["notes"] + "'"
             if (y["port_association_mode"] != "NULL"): y["port_association_mode"] = str(y["port_association_mode"])
             if (y["max_depth"] != "NULL"): y["max_depth"] = str(y["max_depth"])
+            edge_device_list.append(y["device_id"])
             if (mysql_connection.execute("select * from devices where device_id = " + y["device_id"]) == 1):
                 try:
                     mysql_connection.execute("UPDATE devices SET \
@@ -464,7 +467,19 @@ def edgeNodeSqlUpload():
                 except:
                     return {"uploadSql": "devices_table_insert_Error"}
             print("recive school_" + str(edge_school_id) + " devices " + y["device_id"] + "=" + y["hostname"]) 
-            mysql_conn.commit()
+        edge_device_list_set = set(edge_device_list)
+        mysql_connection.execute("select device_id from devices")
+        cloud_device_list_set = set(mysql_connection.fetchall())
+        device_difference_list = edge_device_list_set.difference(cloud_device_list_set)
+        print(device_difference_list)
+        for x in device_difference_list:
+            print(x)
+            # mysql_connection.execute("DELETE from devices where device_id = " + str(x))
+            # mysql_conn.commit()
+            # mysql_connection.execute("DELETE from device_perf where device_id = " + str(x))
+            # mysql_conn.commit()
+            # mysql_connection.execute("DELETE from alert_log where device_id = " + str(x))
+            # mysql_conn.commit()
     print(str(datetime.datetime.now()) + "over")
     return {"uploadSql": "ok"}
 
