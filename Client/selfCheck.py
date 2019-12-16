@@ -209,11 +209,11 @@ while edgeInitState != 1:
                 print(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeNodeRegistUrl)
                 print(registData)
                 r = requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeNodeRegistUrl, json=registData)
-               if (json.loads(r.text)["regist"] == "ok"):
+                if (json.loads(r.text)["regist"] == "ok"):
                     edgeInitState = 1
                     print(str(datetime.datetime.now()) + " Edge Init Network to Cloud : Regist OK !")`
                 else: 
-                    print(str(datetime.datetime.now()) + " Edge Init Network to Cloud : Regist Fail !")
+                    print(str(datetime.datetime.now()) + " Edge Init Network to Cloud : Regist Fail ! (" + json.loads(r.text)["info"] + ")")
             except:
                 print(str(datetime.datetime.now()) + " Edge Init Network to Cloud : Error !")
     else:
@@ -263,7 +263,7 @@ while edgeInitState:
         searchSqlData["devices"] = mysql_search_devices_tables()
         searchSqlData["device_perf"] = mysql_search_device_perf_tables()
         searchSqlData["alert_log"] = mysql_search_alert_log_tables()
-        print(searchSqlData)
+        # print(searchSqlData)
         try:
             requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeDatabaseFlashUrl, json=searchSqlData)
             print(str(datetime.datetime.now()) + " Upload Sql to Cloud ok !")
