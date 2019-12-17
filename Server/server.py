@@ -3,7 +3,6 @@
 from flask import Flask, request
 import MySQLdb
 import os, sys
-import docker
 import datetime
 import json
 
@@ -39,7 +38,6 @@ mysql_create_regist_table = "CREATE TABLE " + mysql_service_table + " (\
     School_Ip           varchar(15) NOT NULL, \
     School_MAC          varchar(17) NOT NULL, \
     School_Port         int NOT NULL, \
-    School_ContainerId  varchar(64) NOT NULL, \
     School_Status       varchar(10) NOT NULL, \
     School_LastCheck    datetime NOT NULL, \
     PRIMARY KEY(School_Id));"
@@ -196,10 +194,6 @@ def mysql_check_table(dbName, tableName):
 # mysql_school_dbName = "school_" + str(edge_school_id)
 # mysql_connection.execute("create database " + str(mysql_school_dbName))
 
-# docker container 啟動
-docker_client = docker.from_env()
-# docker_create = docker_client.containers.run(image='grafana/grafana', name=1234, ports={'3000/tcp': 1234}, detach=True).id
-# docker_delete = client.containers.get(edge_school_container_id).remove(force=True)
 app = Flask(__name__)
 
 # mysql server db 準備
@@ -275,11 +269,6 @@ def edgeNodeRegist():
             print("School_MAC = "+ edge_school_mac)
         except:
             return {"regist": "fail", "info": "post_Error"}
-        try:
-            edge_school_container_id = docker_client.containers.run(image='grafana/grafana', name=str("school_" + str(edge_school_id)), ports={'3000/tcp': edge_school_port}, detach=True).short_id    
-        except:
-            edge_school_container_id = docker_client.containers.get("school_" + str(edge_school_id)).short_id
-        print("School_ContainerId = "+ edge_school_container_id)
         
         if (mysql_connect() == True):
             mysql_conn.select_db(mysql_service_db)
@@ -287,7 +276,7 @@ def edgeNodeRegist():
             mysql_find_school = mysql_connection.execute("Select school_Id from " + mysql_service_table + " where school_Id = " + str(edge_school_id))
             if (mysql_find_school == 0):
                 try:
-                    mysql_connection.execute("Insert INTO " + mysql_service_table + " (School_Id, School_Ip, School_MAC, School_Port, School_ContainerId, School_Status, School_LastCheck) VALUE (" + str(edge_school_id) + ", '" + edge_school_ip + "', '" + edge_school_mac + "', " + str(edge_school_port) + ", '" + edge_school_container_id + "', '" +  edge_school_status + "', '" + str(datetime.datetime.now()) + "')")
+                    mysql_connection.execute("Insert INTO " + mysql_service_table + " (School_Id, School_Ip, School_MAC, School_Port, School_Status, School_LastCheck) VALUE (" + str(edge_school_id) + ", '" + edge_school_ip + "', '" + edge_school_mac + "', " + str(edge_school_port) + ", '" +  edge_school_status + "', '" + str(datetime.datetime.now()) + "')")
                     print("db_Insert : " + "school_" + str(edge_school_id))
                 except: 
                     return {"regist": "fail", "info": "db_Insert_Error"}
