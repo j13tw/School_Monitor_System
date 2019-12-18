@@ -1,0 +1,8 @@
+{
+    "name": "librenms-cloud-mysql", 
+    "type": "mysql", 
+    "host": "localhost:3306", 
+    "password": "root", 
+    "user": "root", 
+    "access": "direct"
+}
