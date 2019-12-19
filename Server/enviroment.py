@@ -29,6 +29,8 @@ os.system("apt-get update")
 os.system("apt-get install grafana")
 os.system("systemctl daemon-reload")
 os.system("systemctl start grafana-server")
+os.system("grafana-cli plugins install grafana-clock-panel")
+os.system("service grafana-server restart")
 '''
 
 print("wait for system check")
