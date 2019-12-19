@@ -20,7 +20,6 @@ os.system("pip3 install requests")
 os.system("pip3 install mysqlclient")
 
 # grafana-install
-'''
 os.system("apt-get install -y apt-transport-https")
 os.system("apt-get install -y software-properties-common wget")
 os.system('add-apt-repository "deb https://packages.grafana.com/oss/deb stable main"')
@@ -31,7 +30,6 @@ os.system("systemctl daemon-reload")
 os.system("systemctl start grafana-server")
 os.system("grafana-cli plugins install grafana-clock-panel")
 os.system("service grafana-server restart")
-'''
 
 print("wait for system check")
 time.sleep(10)
