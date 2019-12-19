@@ -292,5 +292,4 @@ while edgeInitState:
             print(str(datetime.datetime.now()) + " Fetch Sql to Cloud fail !")
             
     edgePreState = edgeNowState
-    mysql_conn.close()
     time.sleep(checkInterval)
