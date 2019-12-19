@@ -8,14 +8,18 @@ datasources = open("/home/imac/School_Monitor_System/Server/datasource.json", "r
 dashboard = open("/home/imac/School_Monitor_System/Server/dashboard.json", "r")
 datasources_info = datasources.read()
 dashboard_info = dashboard.read()
-print(datasources_info)
-print(dashboard_info)
+# print(datasources_info)
+# print(dashboard_info)
+
+# mysql install
+os.system("apt-get update")
+os.system("apt-get install mysql-server")
+os.system("apt-get install mysql-client")
 
 # python3-install
 os.system("apt-get install -y python3-dev python3-pip libmysqlclient-dev")
 os.system("apt-get install build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev")
 os.system("pip3 install flask")
-os.system("pip3 install request")
 os.system("pip3 install requests")
 os.system("pip3 install mysqlclient")
 
@@ -34,7 +38,7 @@ os.system("service grafana-server restart")
 print("wait for system check")
 time.sleep(10)
 
-while (not (create_grafana_datasource and create_grafana_dashboard))
+while (not (create_grafana_datasource and create_grafana_dashboard)):
     if (requests.get("http://127.0.0.1:3000").status_code == 200):
         '''
         try:
