@@ -246,7 +246,6 @@ while edgeInitState:
     if (edgeNowState == 200 and edgePreState == 200): print(str(datetime.datetime.now()) + " LibreNMS is Running")
     elif (edgeNowState == 404 and edgePreState == 200):
         print(str(datetime.datetime.now()) + " Service Fail, Retry Secure Service")
-        os.system("service mysql restart")
         os.system("service apache2 restart")
         try:
             edgeNowState = requests.get("http://127.0.0.1/login").status_code
@@ -260,6 +259,7 @@ while edgeInitState:
         edgeStatusCode = edgeStatusCodeArray[0]
     else:
         print(str(datetime.datetime.now()) + " LibreNMS is Fail !")
+    if (mysql_connect() == False): os.system("service mysql restart")
     # HealthCheck Flash API     
     if (edgeStatusCode != ""):
         cloudState = 1
