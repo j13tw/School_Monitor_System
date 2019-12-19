@@ -267,15 +267,15 @@ while edgeInitState:
             try:
                 healthData["status"] = edgeStatusCode
                 requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeServiceCheckUrl, json=healthData)
-                print(str(datetime.datetime.now()) + " Health Response to Cloud ok !")
+                print(str(datetime.datetime.now()) + " Health Status Refresh to Cloud ok !")
                 cloudState = 0
             except:
                 print(str(datetime.datetime.now()) + " Health Response to Cloud Error !")
             if (cloudState == 1): time.sleep(checkInterval)
     else:
-        pushSqlCount = pushSqlCount - checkInterval
+        if (pushSqlCount != 0): pushSqlCount = pushSqlCount - checkInterval
     # Mysql Data Flash API
-    if (pushSqlCount == 0):
+    if (pushSqlCount == 0 and edgeStatusCode == ""):
         searchSqlData["devices"] = mysql_search_devices_tables()
         searchSqlData["device_perf"] = mysql_search_device_perf_tables()
         searchSqlData["alert_log"] = mysql_search_alert_log_tables()
