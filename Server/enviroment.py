@@ -11,14 +11,17 @@ dashboard_info = dashboard.read()
 # print(datasources_info)
 # print(dashboard_info)
 
+# system time setup
+os.system("timedatectl set-timezone Asia/Taipei")
+
 # mysql install
 os.system("apt-get update")
-os.system("apt-get install mysql-server")
-os.system("apt-get install mysql-client")
+os.system("apt-get install -y mysql-server")
+os.system("apt-get install -y mysql-client")
 
 # python3-install
 os.system("apt-get install -y python3-dev python3-pip libmysqlclient-dev")
-os.system("apt-get install build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev")
+os.system("apt-get install -y build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev")
 os.system("pip3 install flask")
 os.system("pip3 install requests")
 os.system("pip3 install mysqlclient")
