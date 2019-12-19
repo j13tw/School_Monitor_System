@@ -247,7 +247,7 @@ while edgeInitState:
     elif (edgeNowState == 404 and edgePreState == 200):
         print(str(datetime.datetime.now()) + " Service Fail, Retry Secure Service")
         os.system("service mysql restart")
-        os.system("service apach2 restart")
+        os.system("service apache2 restart")
         try:
             edgeNowState = requests.get("http://127.0.0.1/login").status_code
             print(str(datetime.datetime.now()) + " LibreNMS is Running")
@@ -276,16 +276,21 @@ while edgeInitState:
         if (pushSqlCount != 0): pushSqlCount = pushSqlCount - checkInterval
     # Mysql Data Flash API
     if (pushSqlCount == 0 and edgeStatusCode == ""):
-        searchSqlData["devices"] = mysql_search_devices_tables()
-        searchSqlData["device_perf"] = mysql_search_device_perf_tables()
-        searchSqlData["alert_log"] = mysql_search_alert_log_tables()
-        print(searchSqlData)
         try:
-            requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeDatabaseFlashUrl, json=searchSqlData)
-            print(str(datetime.datetime.now()) + " Upload Sql to Cloud ok !")
+            searchSqlData["devices"] = mysql_search_devices_tables()
+            searchSqlData["device_perf"] = mysql_search_device_perf_tables()
+            searchSqlData["alert_log"] = mysql_search_alert_log_tables()
+            print(searchSqlData)
+            try:
+                requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeDatabaseFlashUrl, json=searchSqlData)
+                print(str(datetime.datetime.now()) + " Upload Sql to Cloud ok !")
+            except:
+                print(str(datetime.datetime.now()) + " Upload Sql to Cloud fail !")
+            pushSqlCount = pushSqlDelay * checkInterval
         except:
-            print(str(datetime.datetime.now()) + " Upload Sql to Cloud fail !")
-        pushSqlCount = pushSqlDelay * checkInterval
+            os.system("service mysql restart")
+            print(str(datetime.datetime.now()) + " Fetch Sql to Cloud fail !")
             
     edgePreState = edgeNowState
+    mysql_conn.close()
     time.sleep(checkInterval)
