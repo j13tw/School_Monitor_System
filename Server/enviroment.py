@@ -57,7 +57,7 @@ while (not (create_grafana_datasource and create_grafana_dashboard))
                 print("add datasource error")
         if (create_grafana_dashboard == 0):
             try:
-                requests.post("http://admin:admin@127.0.0.1:3000/api/datasources", json=dashboard_info)
+                requests.post("http://admin:admin@127.0.0.1:3000/api/dashboard", json=dashboard_info)
                 create_grafana_dashboard = 1
             except:
                 print("add dashboard error")
@@ -66,3 +66,4 @@ while (not (create_grafana_datasource and create_grafana_dashboard))
             os.system("service grafana-server start")
         except:
             print("grafana_service error")
+time.sleep(10)
