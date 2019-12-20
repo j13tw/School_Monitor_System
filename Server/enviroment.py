@@ -4,8 +4,8 @@ import time
 
 create_grafana_datasource = 0
 create_grafana_dashboard = 0
-datasources = open("/home/imac/School_Monitor_System/Server/datasource.json", "r")
-dashboard = open("/home/imac/School_Monitor_System/Server/dashboard.json", "r")
+datasources = open("/home/ubuntu/School_Monitor_System/Server/datasource.json", "r")
+dashboard = open("/home/ubuntu/School_Monitor_System/Server/dashboard.json", "r")
 datasources_info = datasources.read()
 dashboard_info = dashboard.read()
 # print(datasources_info)
