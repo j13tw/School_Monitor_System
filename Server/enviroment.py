@@ -19,6 +19,7 @@ os.system("apt-get update")
 os.system("apt-get install -y mysql-server")
 os.system("apt-get install -y mysql-client")
 os.system("apt-get install -y libmysqlclient-dev")
+os.system("service mysql start")
 
 # python3-install
 os.system("apt-get install -y python3-dev python3-pip libmysqlclient-dev")
@@ -62,12 +63,14 @@ while (not (create_grafana_datasource and create_grafana_dashboard)):
             if (create_grafana_datasource == 0):
                 try:
                     requests.post("http://admin:admin@127.0.0.1:3000/api/datasources", data=datasources_info.encode('utf-8'), headers={"Content-Type": "application/json"})
+                    print("create datasource")
                     create_grafana_datasource = 1
                 except:
                     print("add datasource error")
             if (create_grafana_dashboard == 0):
                 try:
                     requests.post("http://admin:admin@127.0.0.1:3000/api/dashboards/db", data=dashboard_info.encode('utf-8'), headers={"Content-Type": "application/json"})
+                    print("create dashboard")
                     create_grafana_dashboard = 1
                 except:
                     print("add dashboard error")
