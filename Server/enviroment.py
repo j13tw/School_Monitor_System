@@ -42,36 +42,39 @@ print("wait for system check")
 time.sleep(10)
 
 while (not (create_grafana_datasource and create_grafana_dashboard)):
-    if (requests.get("http://127.0.0.1:3000").status_code == 200):
-        '''
-        try:
-            if(requests.get("http://admin:admin@127.0.0.1:3000/api/datasources/name/librenms-cloud-mysql").status_code == 200)
-                print("datasource exist")
-                create_grafana_datasource = 1
-        except:
-            print("datasource not exist")
-        try:
-            if(requests.get("http://admin:admin@127.0.0.1:3000/api/dashboard/name/Librenms").status_code == 200)
-            print("dashboard exist")
-            create_grafana_dashboard = 1
-        except:
-            print("dashboard not exist")
-        '''
-        if (create_grafana_datasource == 0):
+    try: 
+        if (requests.get("http://127.0.0.1:3000/login").status_code == 200):
+            '''
             try:
-                requests.post("http://admin:admin@127.0.0.1:3000/api/datasources", data=datasources_info.encode('utf-8'), headers={"Content-Type": "application/json"})
-                create_grafana_datasource = 1
+                if(requests.get("http://admin:admin@127.0.0.1:3000/api/datasources/name/librenms-cloud-mysql").status_code == 200)
+                    print("datasource exist")
+                    create_grafana_datasource = 1
             except:
-                print("add datasource error")
-        if (create_grafana_dashboard == 0):
+                print("datasource not exist")
             try:
-                requests.post("http://admin:admin@127.0.0.1:3000/api/dashboards/db", data=dashboard_info.encode('utf-8'), headers={"Content-Type": "application/json"})
+                if(requests.get("http://admin:admin@127.0.0.1:3000/api/dashboard/name/Librenms").status_code == 200)
+                print("dashboard exist")
                 create_grafana_dashboard = 1
             except:
-                print("add dashboard error")
-    else:
-        try:
-            os.system("service grafana-server start")
-        except:
-            print("grafana_service error")
-time.sleep(10)
+                print("dashboard not exist")
+            '''
+            if (create_grafana_datasource == 0):
+                try:
+                    requests.post("http://admin:admin@127.0.0.1:3000/api/datasources", data=datasources_info.encode('utf-8'), headers={"Content-Type": "application/json"})
+                    create_grafana_datasource = 1
+                except:
+                    print("add datasource error")
+            if (create_grafana_dashboard == 0):
+                try:
+                    requests.post("http://admin:admin@127.0.0.1:3000/api/dashboards/db", data=dashboard_info.encode('utf-8'), headers={"Content-Type": "application/json"})
+                    create_grafana_dashboard = 1
+                except:
+                    print("add dashboard error")
+        else:
+            try:
+                os.system("service grafana-server start")
+            except:
+                print("grafana_service error")
+    except:
+        print("grafana_service error")
+        time.sleep(10)
