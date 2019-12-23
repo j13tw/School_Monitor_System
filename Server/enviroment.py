@@ -43,12 +43,15 @@ os.system("service grafana-server restart")
 
 # supervisor install 
 os.system("apt-get install supervisor")
-os.system("cp ./selfCheck.conf /etc/supervisor/conf.d")
+os.system("cp ./server.conf /etc/supervisor/conf.d")
 os.system("service supervisor restart")
-if (len(str(check_output(["pidof","python3"]).decode("utf-8")).split("\n")[0].split(" ")) == 2):
-    print("supervisor is on")
-else:
-    print("supervisor is dead")
+while True:
+    if (len(str(check_output(["pidof","python3"]).decode("utf-8")).split("\n")[0].split(" ")) == 2):
+        print("supervisor is on")
+        break;
+    else:
+        print("supervisor is dead")
+    time.sleep(1)
 
 print("wait for system check")
 time.sleep(10)
