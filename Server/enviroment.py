@@ -1,7 +1,7 @@
 import os, sys
 import requests
 import time
-import subprocess
+from subprocess import check_output
 
 create_grafana_datasource = 0
 create_grafana_dashboard = 0
@@ -42,7 +42,7 @@ os.system("grafana-cli plugins install grafana-clock-panel")
 os.system("service grafana-server restart")
 
 # supervisor install 
-os.system("apt-get install supervisor")
+os.system("apt-get -y install supervisor")
 os.system("cp ./server.conf /etc/supervisor/conf.d")
 os.system("service supervisor restart")
 while True:
