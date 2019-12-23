@@ -1,6 +1,7 @@
 import os, sys
 import requests
 import time
+import subprocess
 
 create_grafana_datasource = 0
 create_grafana_dashboard = 0
@@ -39,6 +40,15 @@ os.system("systemctl daemon-reload")
 os.system("systemctl start grafana-server")
 os.system("grafana-cli plugins install grafana-clock-panel")
 os.system("service grafana-server restart")
+
+# supervisor install 
+os.system("apt-get install supervisor")
+os.system("cp ./selfCheck.conf /etc/supervisor/conf.d")
+os.system("service supervisor restart")
+if (len(str(check_output(["pidof","python3"]).decode("utf-8")).split("\n")[0].split(" ")) == 2):
+    print("supervisor is on")
+else:
+    print("supervisor is dead")
 
 print("wait for system check")
 time.sleep(10)
