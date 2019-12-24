@@ -226,17 +226,6 @@ if (not mysql_check_table(mysql_service_db, mysql_service_table)):
     mysql_connection.execute(mysql_create_regist_table)
     mysql_conn.commit()
 
-@app.route('/listContainer', methods=['GET'])
-def listContainer():
-    x = 0
-    container_list = [0]*len(docker_client.containers.list())
-    for y in docker_client.containers.list():
-        print(y.id, y.name, y.status, y.image.tags[0])
-        container_list[x] = {"id": y.short_id, "name": y.name, "status": y.status, "image": y.image.tags[0]}
-        x += 1
-    # print(container_list)
-    return str(container_list)
-
 @app.route('/edgeNodeHealthCheck', methods=['POST'])
 def edgeNodeHealthCheck():
     if request.method == 'POST':
@@ -333,7 +322,7 @@ def edgeNodeSqlUpload():
         # print("edge_school_alert_log", "\n", edge_school_alert_log)
         edge_device_list = []
 
-        mysql_connection.execute("select id from device_state_history group by time_logged desc limit 1")
+        mysql_connection.execute("select id from device_state_history group by id desc limit 1")
         if (len(list(mysql_connection)) == 0): device_state_count = 0
         else: 
             device_state_count = int(list(mysql_connection)[1][1])
