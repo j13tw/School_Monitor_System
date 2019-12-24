@@ -1,5 +1,6 @@
 #! /usr/bin/python3
 import os, sys
+from subprocess import check_output
 
 os.system("apt-get install -y python3 python3-dev python3-pip")
 #os.system("apt-get install gcc libssl-dev")
@@ -11,7 +12,7 @@ os.system("pip3 install ipgetter2")
 os.system("pip3 install requests")
 
 # supervisor install 
-os.system("apt-get install supervisor")
+os.system("apt-get install -y supervisor")
 os.system("cp ./client.conf /etc/supervisor/conf.d")
 os.system("service supervisor restart")
 while True:
