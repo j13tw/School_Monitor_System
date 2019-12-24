@@ -1,5 +1,6 @@
 #! /usr/bin/python3
 import os, sys
+import time
 from subprocess import check_output
 
 os.system("apt-get install -y python3 python3-dev python3-pip")
