@@ -146,7 +146,8 @@ def mysql_reconnect():
         mysql_conn = MySQLdb.connect(host = mysql_host, \
             port=mysql_port, \
             user=mysql_user, \
-            passwd=mysql_passwd)
+            passwd=mysql_passwd, \
+            charset='utf8')
         return True
     except:
         return False
@@ -222,7 +223,7 @@ try:
         port=mysql_port, \
         user=mysql_user, \
         passwd=mysql_passwd, \
-        charset='utf8',)
+        charset='utf8')
 except:
     print("Connect MySQL Error !")
     exit()
@@ -250,7 +251,7 @@ if (not mysql_check_table(mysql_service_db, mysql_school_table)):
     for x in range(1, school_sheet.nrows):
         mysql_connection.execute("set names utf8;")
         mysql_connection.execute("INSERT INTO " + mysql_school_table + "(School_Serial_Id, School_Location, School_Name, School_Id) \
-            VALUES (" + str(int(school_sheet.row_values(x)[0])) + ", '" + str(school_sheet.row_values(x)[1]) + "', '" + str(school_sheet.row_values(x)[2]) + "', " + str(school_sheet.row_values(x)[3]) + ")")
+            VALUES (" + str(int(school_sheet.row_values(x)[0])) + ", '" + str(school_sheet.row_values(x)[1]) + "', '" + str(school_sheet.row_values(x)[2]) + "', '" + str(school_sheet.row_values(x)[3]) + "')")
         mysql_conn.commit()
 
 @app.route('/edgeNodeHealthCheck', methods=['POST'])
