@@ -1,4 +1,5 @@
 #! /usr/bin/python3
+# -*- coding: utf-8 -*-
 
 from flask import Flask, request
 import MySQLdb
