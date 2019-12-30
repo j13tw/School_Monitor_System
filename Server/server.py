@@ -50,7 +50,7 @@ mysql_create_school_table = "CREATE TABLE " + mysql_school_table + " (\
     School_Location     varchar(10) NOT NULL, \
     School_Name         varchar(25) NOT NULL, \
     School_Id           varchar(10) NOT NULL, \
-    PRIMARY KEY(School_Serial_Id) CHARACTER SET = utf8;"
+    PRIMARY KEY(School_Serial_Id)) CHARACTER SET = utf8;"
 
 # edge system
 mysql_edge_db = ""
