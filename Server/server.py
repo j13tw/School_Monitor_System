@@ -5,6 +5,7 @@ import MySQLdb
 import os, sys
 import datetime
 import json
+import xlrd
 
 
 # define Mysql status
@@ -30,17 +31,26 @@ edge_school_status = ""
 # define mysql command
 # cloud system
 mysql_service_db = "school_monitor_system"
-mysql_create_service_db = "create database " + mysql_service_db
+mysql_create_service_db = "CREATE DATABASE " + mysql_service_db + " CHARACTER SET utf8 COLLATE utf8_general_ci;" 
 mysql_service_table = "edge_regist"
+mysql_school_table = "edge_list"
+
 
 mysql_create_regist_table = "CREATE TABLE " + mysql_service_table + " (\
     School_Id           int AUTO_INCREMENT, \
     School_Ip           varchar(15) NOT NULL, \
-    School_MAC          varchar(17) NOT NULL, \
+    School_MAC          varchar(60) NOT NULL, \
     School_Port         int NOT NULL, \
-    School_Status       varchar(10) NOT NULL, \
+    School_Status       varchar(6) NOT NULL, \
     School_LastCheck    datetime NOT NULL, \
     PRIMARY KEY(School_Id));"
+
+mysql_create_school_table = "CREATE TABLE " + mysql_school_table + " (\
+    School_Serial_Id    int AUTO_INCREMENT, \
+    School_Location     varchar(10) NOT NULL, \
+    School_Name         varchar(25) NOT NULL, \
+    School_Id           varchar(10) NOT NULL, \
+    PRIMARY KEY(School_Serial_Id));"
 
 # edge system
 mysql_edge_db = ""
@@ -222,9 +232,20 @@ if (not mysql_check_db(mysql_service_db)):
 mysql_conn.select_db(mysql_service_db)
 mysql_connection = mysql_conn.cursor()
 if (not mysql_check_table(mysql_service_db, mysql_service_table)):
-    print("create regist table")
+    print("create school_regist table")
     mysql_connection.execute(mysql_create_regist_table)
     mysql_conn.commit()
+if (not mysql_check_table(mysql_service_db, mysql_school_table)):
+    print("create school_list table")
+    school_list = xlrd.open_workbook("./315校名單.xlsx")
+    sheet1 = book.sheets()[0]
+    mysql_connection.execute(mysql_create_regist_table)
+    mysql_conn.commit()
+    for x in range(1, sheet1.nrows+1):
+        #mysql_connection.execute
+        print("INSERT INTO FROM " + edge_list + "(School_Serial_Id, School_Location, School_Name, School_Id) \
+        VALUES (" + str(int(sheet1.row_values(x)[0])) + ", '" + str(sheet1.row_values(x)[1]) "', '" + str(sheet1.row_values(x)[2]) "', " + str(sheet1.row_values(x)[3]))
+        #mysql_conn.commit()
 
 @app.route('/edgeNodeHealthCheck', methods=['POST'])
 def edgeNodeHealthCheck():
