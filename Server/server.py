@@ -245,6 +245,7 @@ if (not mysql_check_table(mysql_service_db, mysql_school_table)):
     school_sheet = school_list.sheets()[0]
     mysql_connection.execute(mysql_create_school_table)
     mysql_conn.commit()
+    print(school_sheet.nrows)
     for x in range(1, school_sheet.nrows+1):
         #mysql_connection.execute
         print("INSERT INTO FROM " + mysql_school_table + "(School_Serial_Id, School_Location, School_Name, School_Id) \
