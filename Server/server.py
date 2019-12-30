@@ -244,7 +244,7 @@ if (not mysql_check_table(mysql_service_db, mysql_school_table)):
     for x in range(1, sheet1.nrows+1):
         #mysql_connection.execute
         print("INSERT INTO FROM " + edge_list + "(School_Serial_Id, School_Location, School_Name, School_Id) \
-        VALUES (" + str(int(sheet1.row_values(x)[0])) + ", '" + str(sheet1.row_values(x)[1]) "', '" + str(sheet1.row_values(x)[2]) "', " + str(sheet1.row_values(x)[3]))
+        VALUES (" + str(int(sheet1.row_values(x)[0])) + ", '" + str(sheet1.row_values(x)[1]) + "', '" + str(sheet1.row_values(x)[2]) + "', " + str(sheet1.row_values(x)[3]) + ")")
         #mysql_conn.commit()
 
 @app.route('/edgeNodeHealthCheck', methods=['POST'])
