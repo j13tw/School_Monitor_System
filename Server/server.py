@@ -243,7 +243,7 @@ if (not mysql_check_table(mysql_service_db, mysql_school_table)):
         print("lose school list file (315校名單.xlsx)")
         exit()
     sheet1 = school_list.sheets()[0]
-    mysql_connection.execute(mysql_create_regist_table)
+    mysql_connection.execute(mysql_create_school_table)
     mysql_conn.commit()
     for x in range(1, sheet1.nrows+1):
         #mysql_connection.execute
