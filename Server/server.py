@@ -237,8 +237,12 @@ if (not mysql_check_table(mysql_service_db, mysql_service_table)):
     mysql_conn.commit()
 if (not mysql_check_table(mysql_service_db, mysql_school_table)):
     print("create school_list table")
-    school_list = xlrd.open_workbook("./315校名單.xlsx")
-    sheet1 = book.sheets()[0]
+    try:
+        school_list = xlrd.open_workbook("./315校名單.xlsx")
+    except:
+        print("lose school list file (315校名單.xlsx)")
+        exit()
+    sheet1 = school_list.sheets()[0]
     mysql_connection.execute(mysql_create_regist_table)
     mysql_conn.commit()
     for x in range(1, sheet1.nrows+1):
