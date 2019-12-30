@@ -154,7 +154,7 @@ def mysql_search_device_perf_tables():
     for x in mysql_connection:
         devices_list.append(x[0])
     for x in range(0, len(devices_list)):
-        mysql_connection.execute("select * from device_perf where device_id = " + str(devices_list[x]) + " group by timestamp desc limit 1")
+        mysql_connection.execute("select * from device_perf where device_id = " + str(devices_list[x]) + " order by timestamp desc limit 1")
         for y in mysql_connection:
             device_perf_data.append({ \
                 "id": y[0], \
@@ -185,7 +185,7 @@ def mysql_search_alert_log_tables():
     for x in mysql_connection:
         devices_list.append(x[0])
     for x in range(0, len(devices_list)):
-        mysql_connection.execute("select alert_log.id, alert_log.rule_id, alert_log.device_id, alert_log.state, alert_rules.name as details, alert_log.time_logged from alert_log, alert_rules where alert_log.rule_id = alert_rules.id and alert_log.device_id = " + str(devices_list[x]) + " group by time_logged desc limit 3;")
+        mysql_connection.execute("select alert_log.id, alert_log.rule_id, alert_log.device_id, alert_log.state, alert_rules.name as details, alert_log.time_logged from alert_log, alert_rules where alert_log.rule_id = alert_rules.id and alert_log.device_id = " + str(devices_list[x]) + " order by time_logged desc limit 3;")
         for y in mysql_connection:
             alert_log_data.append({ \
                 "id": y[0], \
