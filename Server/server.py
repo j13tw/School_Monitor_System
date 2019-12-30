@@ -247,10 +247,9 @@ if (not mysql_check_table(mysql_service_db, mysql_school_table)):
     mysql_conn.commit()
     print(school_sheet.nrows)
     for x in range(1, school_sheet.nrows):
-        #mysql_connection.execute
-        print("INSERT INTO FROM " + mysql_school_table + "(School_Serial_Id, School_Location, School_Name, School_Id) \
-        VALUES (" + str(int(school_sheet.row_values(x)[0])) + ", '" + str(school_sheet.row_values(x)[1]) + "', '" + str(school_sheet.row_values(x)[2]) + "', " + str(school_sheet.row_values(x)[3]) + ")")
-        #mysql_conn.commit()
+        mysql_connection.execute("INSERT INTO " + mysql_school_table + "(School_Serial_Id, School_Location, School_Name, School_Id) \
+            VALUES (" + str(int(school_sheet.row_values(x)[0])) + ", '" + str(school_sheet.row_values(x)[1]) + "', '" + str(school_sheet.row_values(x)[2]) + "', " + str(school_sheet.row_values(x)[3]) + ")")
+        mysql_conn.commit()
 
 @app.route('/edgeNodeHealthCheck', methods=['POST'])
 def edgeNodeHealthCheck():
