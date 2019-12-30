@@ -50,7 +50,7 @@ mysql_create_school_table = "CREATE TABLE " + mysql_school_table + " (\
     School_Location     varchar(10) NOT NULL, \
     School_Name         varchar(25) NOT NULL, \
     School_Id           varchar(10) NOT NULL, \
-    PRIMARY KEY(School_Serial_Id));"
+    PRIMARY KEY(School_Serial_Id) CHARACTER SET = utf8;"
 
 # edge system
 mysql_edge_db = ""
@@ -245,7 +245,6 @@ if (not mysql_check_table(mysql_service_db, mysql_school_table)):
     school_sheet = school_list.sheets()[0]
     mysql_connection.execute(mysql_create_school_table)
     mysql_conn.commit()
-    print(school_sheet.nrows)
     for x in range(1, school_sheet.nrows):
         mysql_connection.execute("INSERT INTO " + mysql_school_table + "(School_Serial_Id, School_Location, School_Name, School_Id) \
             VALUES (" + str(int(school_sheet.row_values(x)[0])) + ", '" + str(school_sheet.row_values(x)[1]) + "', '" + str(school_sheet.row_values(x)[2]) + "', " + str(school_sheet.row_values(x)[3]) + ")")
