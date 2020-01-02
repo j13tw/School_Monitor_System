@@ -282,14 +282,12 @@ def edgeNodeRegist():
     if request.method == 'POST':
         try:
             edgeData = json.loads(str(request.json).replace("'", '"'))
-            edge_school_id = int(edgeData["school"])
+            edge_school_id = str(edgeData["school"])
             edge_school_ip = str(edgeData["ip"])
             edge_school_mac = str(edgeData["mac"])
             edge_school_status = str(edgeData["status"])
-            edge_school_port = 30000 + int(edgeData["school"])
             print("School_Id = "+ str(edge_school_id))
             print("School_Ip = "+ edge_school_ip)
-            print("School_Port = "+ str(edge_school_port))
             print("School_Status = "+ str(edge_school_status))
             print("School_MAC = "+ edge_school_mac)
         except:
@@ -298,16 +296,20 @@ def edgeNodeRegist():
         if (mysql_connect() == True):
             mysql_conn.select_db(mysql_service_db)
             mysql_connection = mysql_conn.cursor()
+            mysql_check_school = mysql_connection.execute("Select school_Id from " + mysql_school_table + " where school_Id = " + str(edge_school_id))
+            if (mysql_check_school == 0):
+                print("school.id - Error")
+                return {"regist": "fail", "info": "school_Error"}
             mysql_find_school = mysql_connection.execute("Select school_Id from " + mysql_service_table + " where school_Id = " + str(edge_school_id))
             if (mysql_find_school == 0):
                 try:
-                    mysql_connection.execute("Insert INTO " + mysql_service_table + " (School_Id, School_Ip, School_MAC, School_Port, School_Status, School_LastCheck) VALUE (" + str(edge_school_id) + ", '" + edge_school_ip + "', '" + edge_school_mac + "', " + str(edge_school_port) + ", '" +  edge_school_status + "', '" + str(datetime.datetime.now()) + "')")
+                    mysql_connection.execute("Insert INTO " + mysql_service_table + " (School_Id, School_Ip, School_MAC, School_Status, School_LastCheck) VALUE (" + str(edge_school_id) + ", '" + edge_school_ip + "', '" + edge_school_mac + "', '" +  edge_school_status + "', '" + str(datetime.datetime.now()) + "')")
                     print("db_Insert : " + "school_" + str(edge_school_id))
                 except: 
                     return {"regist": "fail", "info": "db_Insert_Error"}
             else:
                 try:
-                    mysql_connection.execute("UPDATE " + mysql_service_table + " SET School_Ip='" + edge_school_ip + "', School_MAC = '" + edge_school_mac + "', School_Port = " + str(edge_school_port) + ", School_Status = '" + edge_school_status + "', School_LastCheck = '" + str(datetime.datetime.now()) + "' WHERE School_Id = " + str(edge_school_id))
+                    mysql_connection.execute("UPDATE " + mysql_service_table + " SET School_Ip='" + edge_school_ip + "', School_MAC = '" + edge_school_mac + "', School_Status = '" + edge_school_status + "', School_LastCheck = '" + str(datetime.datetime.now()) + "' WHERE School_Id = " + str(edge_school_id))
                     print("db_Update : " + "school_" + str(edge_school_id))
                 except: 
                     return {"regist": "fail", "info": "db_Update_Error"}
