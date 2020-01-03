@@ -38,7 +38,7 @@ mysql_school_table = "edge_list"
 
 
 mysql_create_regist_table = "CREATE TABLE " + mysql_service_table + " (\
-    School_Id           int AUTO_INCREMENT, \
+    School_Id           varchar(10) AUTO_INCREMENT, \
     School_Ip           varchar(15) NOT NULL, \
     School_MAC          varchar(60) NOT NULL, \
     School_Port         int NOT NULL, \
@@ -211,7 +211,7 @@ def mysql_check_table(dbName, tableName):
 # 切換資料庫
 # conn.select_db('edge-regist')
 # 新增資料庫
-# mysql_school_dbName = "school_" + str(edge_school_id)
+# mysql_school_dbName = "school_" + edge_school_id
 # mysql_connection.execute("create database " + str(mysql_school_dbName))
 
 app = Flask(__name__)
@@ -286,7 +286,7 @@ def edgeNodeRegist():
             edge_school_ip = str(edgeData["ip"])
             edge_school_mac = str(edgeData["mac"])
             edge_school_status = str(edgeData["status"])
-            print("School_Id = "+ str(edge_school_id))
+            print("School_Id = "+ edge_school_id)
             print("School_Ip = "+ edge_school_ip)
             print("School_Status = "+ str(edge_school_status))
             print("School_MAC = "+ edge_school_mac)
@@ -296,38 +296,38 @@ def edgeNodeRegist():
         if (mysql_connect() == True):
             mysql_conn.select_db(mysql_service_db)
             mysql_connection = mysql_conn.cursor()
-            mysql_check_school = mysql_connection.execute("Select school_Id from " + mysql_school_table + " where school_Id = '" + str(edge_school_id) + "'")
+            mysql_check_school = mysql_connection.execute("Select school_Id from " + mysql_school_table + " where school_Id = '" + edge_school_id + "'")
             if (mysql_check_school == 0):
                 print("school.id - Error")
                 return {"regist": "fail", "info": "school_Error"}
-            mysql_find_school = mysql_connection.execute("Select school_Id from " + mysql_service_table + " where school_Id = '" + str(edge_school_id) + "'")
+            mysql_find_school = mysql_connection.execute("Select school_Id from " + mysql_service_table + " where school_Id = '" + edge_school_id + "'")
             if (mysql_find_school == 0):
                 try:
-                    mysql_connection.execute("Insert INTO " + mysql_service_table + " (School_Id, School_Ip, School_MAC, School_Status, School_LastCheck) VALUE (" + str(edge_school_id) + ", '" + edge_school_ip + "', '" + edge_school_mac + "', '" +  edge_school_status + "', '" + str(datetime.datetime.now()) + "')")
-                    print("db_Insert : " + "school_" + str(edge_school_id))
+                    mysql_connection.execute("Insert INTO " + mysql_service_table + " (School_Id, School_Ip, School_MAC, School_Status, School_LastCheck) VALUE ('" + edge_school_id + "', '" + edge_school_ip + "', '" + edge_school_mac + "', '" +  edge_school_status + "', '" + str(datetime.datetime.now()) + "')")
+                    print("db_Insert : " + "school_" + edge_school_id)
                 except: 
                     return {"regist": "fail", "info": "db_Insert_Error"}
             else:
                 try:
-                    mysql_connection.execute("UPDATE " + mysql_service_table + " SET School_Ip='" + edge_school_ip + "', School_MAC = '" + edge_school_mac + "', School_Status = '" + edge_school_status + "', School_LastCheck = '" + str(datetime.datetime.now()) + "' WHERE School_Id = " + str(edge_school_id))
-                    print("db_Update : " + "school_" + str(edge_school_id))
+                    mysql_connection.execute("UPDATE " + mysql_service_table + " SET School_Ip='" + edge_school_ip + "', School_MAC = '" + edge_school_mac + "', School_Status = '" + edge_school_status + "', School_LastCheck = '" + str(datetime.datetime.now()) + "' WHERE School_Id = '" + edge_school_id + "'")
+                    print("db_Update : " + "school_" + edge_school_id)
                 except: 
                     return {"regist": "fail", "info": "db_Update_Error"}
             mysql_conn.commit()
-            if (mysql_check_db("school_" + str(edge_school_id)) == False):
-                if (mysql_creat_edge_db("school_" + str(edge_school_id)) == False):
+            if (mysql_check_db("school_" + edge_school_id) == False):
+                if (mysql_creat_edge_db("school_" + edge_school_id) == False):
                     return {"regist": "fail", "info": "db_edgeDb_Error"}
-            if (mysql_check_table("school_" + str(edge_school_id), "devices") == False):
-                if (mysql_creat_edge_table("school_" + str(edge_school_id), "devices") == False):
+            if (mysql_check_table("school_" + edge_school_id, "devices") == False):
+                if (mysql_creat_edge_table("school_" + edge_school_id, "devices") == False):
                     return {"regist": "fail", "info": "db_edgeTable_devices_Error"}
-            if (mysql_check_table("school_" + str(edge_school_id), "device_perf") == False):
-                if (mysql_creat_edge_table("school_" + str(edge_school_id), "device_perf") == False):
+            if (mysql_check_table("school_" + edge_school_id, "device_perf") == False):
+                if (mysql_creat_edge_table("school_" + edge_school_id, "device_perf") == False):
                     return {"regist": "fail", "info": "db_edgeTable_device_perf_Error"}
-            if (mysql_check_table("school_" + str(edge_school_id), "alert_log") == False):
-                if (mysql_creat_edge_table("school_" + str(edge_school_id), "alert_log") == False):
+            if (mysql_check_table("school_" + edge_school_id, "alert_log") == False):
+                if (mysql_creat_edge_table("school_" + edge_school_id, "alert_log") == False):
                     return {"regist": "fail", "info": "db_edgeTable_alert_log_Error"}
-            if (mysql_check_table("school_" + str(edge_school_id), "device_state_history") == False):
-                if (mysql_creat_edge_table("school_" + str(edge_school_id), "device_state_history") == False):
+            if (mysql_check_table("school_" + edge_school_id, "device_state_history") == False):
+                if (mysql_creat_edge_table("school_" + edge_school_id, "device_state_history") == False):
                     return {"regist": "fail", "info": "db_edgeTable_device_state_history_Error"}
             return {"regist": "ok"}
         else:
@@ -340,11 +340,11 @@ def edgeNodeSqlUpload():
     if request.method == 'POST':
         print(str(datetime.datetime.now()) + "start")
         edgeData = json.loads(str(request.json).replace("'", '"'))
-        edge_school_id = int(edgeData["school"])
+        edge_school_id = str(edgeData["school"])
         edge_school_devices = edgeData["devices"]
         edge_school_device_perf = edgeData["device_perf"]
         edge_school_alert_log = edgeData["alert_log"]
-        mysql_conn.select_db("school_" + str(edge_school_id))
+        mysql_conn.select_db("school_" + edge_school_id)
         mysql_connection = mysql_conn.cursor()
         # print("school_id", "\n", edge_school_id)
         # print("edge_school_devices", "\n", edge_school_devices)
@@ -444,7 +444,7 @@ def edgeNodeSqlUpload():
                     mysql_conn.commit()
                 except:
                     return {"uploadSql": "devices_table_insert_Error"}
-            print("recive school_" + str(edge_school_id) + " devices " + y["device_id"] + "=" + y["hostname"]) 
+            print("recive school_" + edge_school_id + " devices " + y["device_id"] + "=" + y["hostname"]) 
 
             device_state_count = device_state_count + 1
             try:
@@ -479,7 +479,7 @@ def edgeNodeSqlUpload():
                     mysql_conn.commit()
                 except:
                     return {"uploadSql": "device_perf_table_insert_Error"}
-            print("recive school_" + str(edge_school_id) + " device_perf " + y["device_id"] + "=> device_perf_id = " + y["id"]) 
+            print("recive school_" + edge_school_id + " device_perf " + y["device_id"] + "=> device_perf_id = " + y["id"]) 
 
         # edge alert_log table update
         print("Refresh alert_log tables")
@@ -500,7 +500,7 @@ def edgeNodeSqlUpload():
                     mysql_conn.commit() 
                 except:
                     return {"uploadSql": "device_perf_table_insert_Error"}
-            print("recive school_" + str(edge_school_id) + " alert_log " + y["device_id"] + "=> alert_log_id = " + y["id"]) 
+            print("recive school_" + edge_school_id + " alert_log " + y["device_id"] + "=> alert_log_id = " + y["id"]) 
         
         # print(edge_device_list)
         edge_device_list_set = set(edge_device_list)
