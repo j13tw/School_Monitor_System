@@ -38,10 +38,9 @@ mysql_school_table = "edge_list"
 
 
 mysql_create_regist_table = "CREATE TABLE " + mysql_service_table + " (\
-    School_Id           varchar(10) AUTO_INCREMENT, \
+    School_Id           varchar(10) NOT NULL, \
     School_Ip           varchar(15) NOT NULL, \
     School_MAC          varchar(60) NOT NULL, \
-    School_Port         int NOT NULL, \
     School_Status       varchar(6) NOT NULL, \
     School_LastCheck    datetime NOT NULL, \
     PRIMARY KEY(School_Id));"
