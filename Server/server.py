@@ -157,6 +157,7 @@ def mysql_connect():
             port=mysql_port, \
             user=mysql_user, \
             passwd=mysql_passwd)
+        mysql_conn.close()
         return True
     except:
         return False
@@ -252,6 +253,7 @@ if (not mysql_check_table(mysql_service_db, mysql_school_table)):
         mysql_connection.execute("INSERT INTO " + mysql_school_table + "(School_Serial_Id, School_Location, School_Name, School_Id) \
             VALUES (" + str(int(school_sheet.row_values(x)[0])) + ", '" + str(school_sheet.row_values(x)[1]) + "', '" + str(school_sheet.row_values(x)[2]) + "', '" + str(school_sheet.row_values(x)[3]) + "')")
         mysql_conn.commit()
+mysql_conn.close()
 
 @app.route('/edgeNodeHealthCheck', methods=['POST'])
 def edgeNodeHealthCheck():
@@ -293,6 +295,7 @@ def edgeNodeRegist():
             return {"regist": "fail", "info": "post_Error"}
         
         if (mysql_connect() == True):
+            mysql_reconnect()
             mysql_conn.select_db(mysql_service_db)
             mysql_connection = mysql_conn.cursor()
             mysql_check_school = mysql_connection.execute("Select school_Id from " + mysql_school_table + " where school_Id = '" + edge_school_id + "'")
@@ -328,9 +331,9 @@ def edgeNodeRegist():
             if (mysql_check_table("school_" + edge_school_id, "device_state_history") == False):
                 if (mysql_creat_edge_table("school_" + edge_school_id, "device_state_history") == False):
                     return {"regist": "fail", "info": "db_edgeTable_device_state_history_Error"}
+            mysql_conn.close()
             return {"regist": "ok"}
         else:
-            mysql_reconnect()
             return {"regist": "fail"}
         
 
@@ -343,187 +346,192 @@ def edgeNodeSqlUpload():
         edge_school_devices = edgeData["devices"]
         edge_school_device_perf = edgeData["device_perf"]
         edge_school_alert_log = edgeData["alert_log"]
-        mysql_conn.select_db("school_" + edge_school_id)
-        mysql_connection = mysql_conn.cursor()
         # print("school_id", "\n", edge_school_id)
         # print("edge_school_devices", "\n", edge_school_devices)
         # print("edge_school_device_perf", "\n", edge_school_device_perf)
         # print("edge_school_alert_log", "\n", edge_school_alert_log)
         edge_device_list = []
 
-        mysql_connection.execute("select id from device_state_history group by id desc limit 1")
-        if (len(list(mysql_connection)) == 0): device_state_count = 0
-        else: 
-            device_state_count = int(list(mysql_connection)[0][0])
+        if (mysql_connect() == True):
+            mysql_reconnect()
+            mysql_conn.select_db("school_" + edge_school_id)
+            mysql_connection = mysql_conn.cursor()
+            mysql_connection.execute("select id from device_state_history group by id desc limit 1")
+            if (len(list(mysql_connection)) == 0): device_state_count = 0
+            else: 
+                device_state_count = int(list(mysql_connection)[0][0])
 
-        # edge devices table update
-        print("Refresh devices tables")
-        for x in range(0, len(edge_school_devices)):
-            y = json.loads(str(edge_school_devices[x]).replace("'", '"'))
-            if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
-            if (y["hostname"] != "NULL"): y["hostname"] = "'" + y["hostname"] + "'"
-            if (y["sysName"] != "NULL"): y["sysName"] = "'" + y["sysName"] + "'"
-            if (y["ip"] != "NULL"): y["ip"] = "'" + y["ip"] + "'"
-            if (y["community"] != "NULL"): y["community"] = "'" + y["community"] + "'"
-            if (y["authlevel"] != "NULL"): y["authlevel"] = str(y["authlevel"])
-            if (y["authname"] != "NULL"): y["authname"] = "'" + y["authname"] + "'"
-            if (y["authpass"] != "NULL"): y["authpass"] = "'" + y["authpass"] + "'"
-            if (y["authalgo"] != "NULL"): y["authalgo"] = "'" + y["authalgo"] + "'"
-            if (y["cryptopass"] != "NULL"): y["cryptopass"] = "'" + y["cryptopass"] + "'"
-            if (y["cryptoalgo"] != "NULL"): y["cryptoalgo"] = "'" + y["cryptoalgo"] + "'"
-            if (y["snmpver"] != "NULL"): y["snmpver"] = "'" + y["snmpver"] + "'"
-            if (y["port"] != "NULL"): y["port"] = str(y["port"])
-            if (y["transport"] != "NULL"): y["transport"] = "'" + y["transport"] + "'"
-            if (y["timeout"] != "NULL"): y["timeout"] = str(y["timeout"])
-            if (y["retries"] != "NULL"): y["retries"] = str(y["retries"])
-            if (y["snmp_disable"] != "NULL"): y["snmp_disable"] = str(y["snmp_disable"])
-            if (y["bgpLocalAs"] != "NULL"): y["bgpLocalAs"] = str(y["bgpLocalAs"])
-            if (y["sysObjectID"] != "NULL"): y["sysObjectID"] = "'" + y["sysObjectID"] + "'"
-            if (y["sysDescr"] != "NULL"): y["sysDescr"] = "'" + y["sysDescr"] + "'"
-            if (y["sysContact"] != "NULL"): y["sysContact"] = "'" + y["sysContact"] + "'"
-            if (y["version"] != "NULL"): y["version"] = "'" + y["version"] + "'"
-            if (y["hardware"] != "NULL"): y["hardware"] = "'" + y["hardware"] + "'"
-            if (y["features"] != "NULL"): y["features"] = "'" + y["features"] + "'"
-            if (y["location_id"] != "NULL"): y["location_id"] = str(y["location_id"])
-            if (y["os"] != "NULL"): y["os"] = "'" + y["os"] + "'"
-            if (y["status"] != "NULL"): y["status"] = str(y["status"])
-            if (y["status_reason"] != "NULL"): y["status_reason"] = "'" + str(y["status_reason"]) + "'" 
-            if (y["ignores"] != "NULL"): y["ignores"] = str(y["ignores"])
-            if (y["disabled"] != "NULL"): y["disabled"] = str(y["disabled"])
-            if (y["uptime"] != "NULL"): y["uptime"] = str(y["uptime"])
-            if (y["agent_uptime"] != "NULL"): y["agent_uptime"] = str(y["agent_uptime"])
-            if (y["last_polled"] != "NULL"): y["last_polled"] = "'" + str(y["last_polled"]) + "'"
-            if (y["last_poll_attempted"] != "NULL"): y["last_poll_attempted"] = "'" + str(y["last_poll_attempted"]) + "'"
-            if (y["last_polled_timetaken"] != "NULL"): y["last_polled_timetaken"] = str(y["last_polled_timetaken"])
-            if (y["last_discovered_timetaken"] != "NULL"): y["last_discovered_timetaken"] = str(y["last_discovered_timetaken"])
-            if (y["last_discovered"] != "NULL"): y["last_discovered"] = "'" + str(y["last_discovered"]) + "'"
-            if (y["last_ping"] != "NULL"): y["last_ping"] = "'" + str(y["last_ping"]) + "'"
-            if (y["last_ping_timetaken"] != "NULL"): y["last_ping_timetaken"] = str(y["last_ping_timetaken"])
-            if (y["purpose"] != "NULL"): y["purpose"] = "'" + y["purpose"] + "'"
-            if (y["type"] != "NULL"): y["type"] = "'" + y["type"] + "'"
-            if (y["serial"] != "NULL"): y["serial"] = "'" + y["serial"] + "'"
-            if (y["icon"] != "NULL"): y["icon"] = "'" + y["icon"] + "'"
-            if (y["poller_group"] != "NULL"): y["poller_group"] = str(y["poller_group"])
-            if (y["override_sysLocation"] != "NULL"): y["override_sysLocation"] = str(y["override_sysLocation"])
-            if (y["notes"] != "NULL"): y["notes"] = "'" + y["notes"] + "'"
-            if (y["port_association_mode"] != "NULL"): y["port_association_mode"] = str(y["port_association_mode"])
-            if (y["max_depth"] != "NULL"): y["max_depth"] = str(y["max_depth"])
-            edge_device_list.append(y["device_id"])
-            if (mysql_connection.execute("select * from devices where device_id = " + y["device_id"]) == 1):
+            # edge devices table update
+            print("Refresh devices tables")
+            for x in range(0, len(edge_school_devices)):
+                y = json.loads(str(edge_school_devices[x]).replace("'", '"'))
+                if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
+                if (y["hostname"] != "NULL"): y["hostname"] = "'" + y["hostname"] + "'"
+                if (y["sysName"] != "NULL"): y["sysName"] = "'" + y["sysName"] + "'"
+                if (y["ip"] != "NULL"): y["ip"] = "'" + y["ip"] + "'"
+                if (y["community"] != "NULL"): y["community"] = "'" + y["community"] + "'"
+                if (y["authlevel"] != "NULL"): y["authlevel"] = str(y["authlevel"])
+                if (y["authname"] != "NULL"): y["authname"] = "'" + y["authname"] + "'"
+                if (y["authpass"] != "NULL"): y["authpass"] = "'" + y["authpass"] + "'"
+                if (y["authalgo"] != "NULL"): y["authalgo"] = "'" + y["authalgo"] + "'"
+                if (y["cryptopass"] != "NULL"): y["cryptopass"] = "'" + y["cryptopass"] + "'"
+                if (y["cryptoalgo"] != "NULL"): y["cryptoalgo"] = "'" + y["cryptoalgo"] + "'"
+                if (y["snmpver"] != "NULL"): y["snmpver"] = "'" + y["snmpver"] + "'"
+                if (y["port"] != "NULL"): y["port"] = str(y["port"])
+                if (y["transport"] != "NULL"): y["transport"] = "'" + y["transport"] + "'"
+                if (y["timeout"] != "NULL"): y["timeout"] = str(y["timeout"])
+                if (y["retries"] != "NULL"): y["retries"] = str(y["retries"])
+                if (y["snmp_disable"] != "NULL"): y["snmp_disable"] = str(y["snmp_disable"])
+                if (y["bgpLocalAs"] != "NULL"): y["bgpLocalAs"] = str(y["bgpLocalAs"])
+                if (y["sysObjectID"] != "NULL"): y["sysObjectID"] = "'" + y["sysObjectID"] + "'"
+                if (y["sysDescr"] != "NULL"): y["sysDescr"] = "'" + y["sysDescr"] + "'"
+                if (y["sysContact"] != "NULL"): y["sysContact"] = "'" + y["sysContact"] + "'"
+                if (y["version"] != "NULL"): y["version"] = "'" + y["version"] + "'"
+                if (y["hardware"] != "NULL"): y["hardware"] = "'" + y["hardware"] + "'"
+                if (y["features"] != "NULL"): y["features"] = "'" + y["features"] + "'"
+                if (y["location_id"] != "NULL"): y["location_id"] = str(y["location_id"])
+                if (y["os"] != "NULL"): y["os"] = "'" + y["os"] + "'"
+                if (y["status"] != "NULL"): y["status"] = str(y["status"])
+                if (y["status_reason"] != "NULL"): y["status_reason"] = "'" + str(y["status_reason"]) + "'" 
+                if (y["ignores"] != "NULL"): y["ignores"] = str(y["ignores"])
+                if (y["disabled"] != "NULL"): y["disabled"] = str(y["disabled"])
+                if (y["uptime"] != "NULL"): y["uptime"] = str(y["uptime"])
+                if (y["agent_uptime"] != "NULL"): y["agent_uptime"] = str(y["agent_uptime"])
+                if (y["last_polled"] != "NULL"): y["last_polled"] = "'" + str(y["last_polled"]) + "'"
+                if (y["last_poll_attempted"] != "NULL"): y["last_poll_attempted"] = "'" + str(y["last_poll_attempted"]) + "'"
+                if (y["last_polled_timetaken"] != "NULL"): y["last_polled_timetaken"] = str(y["last_polled_timetaken"])
+                if (y["last_discovered_timetaken"] != "NULL"): y["last_discovered_timetaken"] = str(y["last_discovered_timetaken"])
+                if (y["last_discovered"] != "NULL"): y["last_discovered"] = "'" + str(y["last_discovered"]) + "'"
+                if (y["last_ping"] != "NULL"): y["last_ping"] = "'" + str(y["last_ping"]) + "'"
+                if (y["last_ping_timetaken"] != "NULL"): y["last_ping_timetaken"] = str(y["last_ping_timetaken"])
+                if (y["purpose"] != "NULL"): y["purpose"] = "'" + y["purpose"] + "'"
+                if (y["type"] != "NULL"): y["type"] = "'" + y["type"] + "'"
+                if (y["serial"] != "NULL"): y["serial"] = "'" + y["serial"] + "'"
+                if (y["icon"] != "NULL"): y["icon"] = "'" + y["icon"] + "'"
+                if (y["poller_group"] != "NULL"): y["poller_group"] = str(y["poller_group"])
+                if (y["override_sysLocation"] != "NULL"): y["override_sysLocation"] = str(y["override_sysLocation"])
+                if (y["notes"] != "NULL"): y["notes"] = "'" + y["notes"] + "'"
+                if (y["port_association_mode"] != "NULL"): y["port_association_mode"] = str(y["port_association_mode"])
+                if (y["max_depth"] != "NULL"): y["max_depth"] = str(y["max_depth"])
+                edge_device_list.append(y["device_id"])
+                if (mysql_connection.execute("select * from devices where device_id = " + y["device_id"]) == 1):
+                    try:
+                        mysql_connection.execute("UPDATE devices SET \
+                            device_id = " + y["device_id"] + ", hostname = " + y["hostname"] + ", sysName = " + y["sysName"] + ", ip = " + y["ip"] + ", community = " + y["community"] + ", \
+                            authlevel = " + y["authlevel"] + ", authname = " + y["authname"] + ", authpass = " + y["authpass"] + ", authalgo = " + y["authalgo"] + ", cryptopass = " + y["cryptopass"] + ", \
+                            cryptoalgo = " + y["cryptoalgo"] + ", snmpver = " + y["snmpver"] + ", port = " + y["port"] + ", transport = " + y["transport"] + ", timeout = " + y["timeout"] + ", \
+                            retries = " + y["retries"] + ", snmp_disable = " + y["snmp_disable"] + ", bgpLocalAs = " + y["bgpLocalAs"] + ", sysObjectID = " + y["sysObjectID"] + ", sysDescr = " + y["sysDescr"] + ", \
+                            sysContact = " + y["sysContact"] + ", version = " + y["version"] + ", hardware = " + y["hardware"] + ", features = " + y["features"] + ", location_id = " + y["location_id"] + ", \
+                            os = " + y["os"] + ", status = " + y["status"] + ", status_reason = " + y["status_reason"] + ", ignores = " + y["ignores"] + ", disabled = " + y["disabled"] + ", \
+                            uptime = " + y["uptime"] + ", agent_uptime = " + y["agent_uptime"] + ", last_polled = " + y["last_polled"] + ", last_polled_timetaken = " + y["last_polled_timetaken"] + ", \
+                            last_discovered_timetaken = " + y["last_discovered_timetaken"] + ", last_ping_timetaken = " + y["last_ping_timetaken"] + ", purpose = " + y["purpose"] + ", type = " + y["type"] + ", \
+                            serial = " + y["serial"] + ", icon = " + y["icon"] + ", poller_group = " + y["poller_group"] + ", override_sysLocation = " + y["override_sysLocation"] + ", notes = " + y["notes"] + ", \
+                            port_association_mode = " + y["port_association_mode"] + ", max_depth = " + y["max_depth"] + ", last_poll_attempted = " + y["last_poll_attempted"] + ", \
+                            last_discovered = " + y["last_discovered"] + ", last_ping = " + y["last_ping"] + " WHERE device_id = " + y["device_id"])
+                        mysql_conn.commit()
+                    except:
+                        return {"uploadSql": "devices_table_update_Error"} 
+                else:
+                    try:
+                        mysql_connection.execute("INSERT INTO devices (device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo, \
+                            snmpver, port, transport, timeout, retries, snmp_disable, bgpLocalAs, sysObjectID, sysDescr, sysContact, version, hardware, features, location_id, os, \
+                            status, status_reason, ignores, disabled, uptime, agent_uptime, last_polled_timetaken, last_discovered_timetaken, last_ping_timetaken, purpose, type, serial, icon, \
+                            poller_group, override_sysLocation, notes, port_association_mode, max_depth, last_polled, last_poll_attempted, last_discovered, last_ping) \
+                            VALUES (\
+                            " + y["device_id"] + ", " + y["hostname"] + ", " + y["sysName"] + ", " + y["ip"] + ", " + y["community"] + ", " + y["authlevel"] + ", " + y["authname"] + ", " + y["authpass"] + ", \
+                            " + y["authalgo"] + ", " + y["cryptopass"] + ", " + y["cryptoalgo"] + ", " + y["snmpver"] + ", " + y["port"] + ", " + y["transport"] + ", " + y["timeout"] + ", " + y["retries"] + ", \
+                            " + y["snmp_disable"] + ", " + y["bgpLocalAs"] + ", " + y["sysObjectID"] + ", " + y["sysDescr"] + ", " + y["sysContact"] + ", " + y["version"] + ", " + y["hardware"] + ", \
+                            " + y["features"] + ", " + y["location_id"] + ", " + y["os"] + ", " + y["status"] + ", " + y["status_reason"] + ", " + y["ignores"] + ", " + y["disabled"] + ", " + y["uptime"] + ", \
+                            " + y["agent_uptime"] + ", " + y["last_polled_timetaken"] + ", " + y["last_discovered_timetaken"] + ", " + y["last_ping_timetaken"] + ", " + y["purpose"] + ", " + y["type"] + ", \
+                            " + y["serial"] + ", " + y["icon"] + ", " + y["poller_group"] + ", " + y["override_sysLocation"] + ", " + y["notes"] + ", " + y["port_association_mode"] + ", " + y["max_depth"] + ", \
+                            " + y["last_polled"] + ", " + y["last_poll_attempted"] + ", " + y["last_discovered"] + ", " + y["last_ping"] + ")")
+                        mysql_conn.commit()
+                    except:
+                        return {"uploadSql": "devices_table_insert_Error"}
+                print("recive school_" + edge_school_id + " devices " + y["device_id"] + "=" + y["hostname"]) 
+
+                device_state_count = device_state_count + 1
                 try:
-                    mysql_connection.execute("UPDATE devices SET \
-                        device_id = " + y["device_id"] + ", hostname = " + y["hostname"] + ", sysName = " + y["sysName"] + ", ip = " + y["ip"] + ", community = " + y["community"] + ", \
-                        authlevel = " + y["authlevel"] + ", authname = " + y["authname"] + ", authpass = " + y["authpass"] + ", authalgo = " + y["authalgo"] + ", cryptopass = " + y["cryptopass"] + ", \
-                        cryptoalgo = " + y["cryptoalgo"] + ", snmpver = " + y["snmpver"] + ", port = " + y["port"] + ", transport = " + y["transport"] + ", timeout = " + y["timeout"] + ", \
-                        retries = " + y["retries"] + ", snmp_disable = " + y["snmp_disable"] + ", bgpLocalAs = " + y["bgpLocalAs"] + ", sysObjectID = " + y["sysObjectID"] + ", sysDescr = " + y["sysDescr"] + ", \
-                        sysContact = " + y["sysContact"] + ", version = " + y["version"] + ", hardware = " + y["hardware"] + ", features = " + y["features"] + ", location_id = " + y["location_id"] + ", \
-                        os = " + y["os"] + ", status = " + y["status"] + ", status_reason = " + y["status_reason"] + ", ignores = " + y["ignores"] + ", disabled = " + y["disabled"] + ", \
-                        uptime = " + y["uptime"] + ", agent_uptime = " + y["agent_uptime"] + ", last_polled = " + y["last_polled"] + ", last_polled_timetaken = " + y["last_polled_timetaken"] + ", \
-                        last_discovered_timetaken = " + y["last_discovered_timetaken"] + ", last_ping_timetaken = " + y["last_ping_timetaken"] + ", purpose = " + y["purpose"] + ", type = " + y["type"] + ", \
-                        serial = " + y["serial"] + ", icon = " + y["icon"] + ", poller_group = " + y["poller_group"] + ", override_sysLocation = " + y["override_sysLocation"] + ", notes = " + y["notes"] + ", \
-                        port_association_mode = " + y["port_association_mode"] + ", max_depth = " + y["max_depth"] + ", last_poll_attempted = " + y["last_poll_attempted"] + ", \
-                        last_discovered = " + y["last_discovered"] + ", last_ping = " + y["last_ping"] + " WHERE device_id = " + y["device_id"])
+                    mysql_connection.execute("INSERT INTO device_state_history (id, device_id, status ,time_logged) \
+                    VALUES (\
+                    " + str(device_state_count) + ", " + y["device_id"] + ", " + y["status"] + ", '" + str(datetime.datetime.now()) + "')")
                     mysql_conn.commit()
                 except:
-                     return {"uploadSql": "devices_table_update_Error"} 
-            else:
-                try:
-                    mysql_connection.execute("INSERT INTO devices (device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo, \
-                        snmpver, port, transport, timeout, retries, snmp_disable, bgpLocalAs, sysObjectID, sysDescr, sysContact, version, hardware, features, location_id, os, \
-                        status, status_reason, ignores, disabled, uptime, agent_uptime, last_polled_timetaken, last_discovered_timetaken, last_ping_timetaken, purpose, type, serial, icon, \
-                        poller_group, override_sysLocation, notes, port_association_mode, max_depth, last_polled, last_poll_attempted, last_discovered, last_ping) \
-                        VALUES (\
-                        " + y["device_id"] + ", " + y["hostname"] + ", " + y["sysName"] + ", " + y["ip"] + ", " + y["community"] + ", " + y["authlevel"] + ", " + y["authname"] + ", " + y["authpass"] + ", \
-                        " + y["authalgo"] + ", " + y["cryptopass"] + ", " + y["cryptoalgo"] + ", " + y["snmpver"] + ", " + y["port"] + ", " + y["transport"] + ", " + y["timeout"] + ", " + y["retries"] + ", \
-                        " + y["snmp_disable"] + ", " + y["bgpLocalAs"] + ", " + y["sysObjectID"] + ", " + y["sysDescr"] + ", " + y["sysContact"] + ", " + y["version"] + ", " + y["hardware"] + ", \
-                        " + y["features"] + ", " + y["location_id"] + ", " + y["os"] + ", " + y["status"] + ", " + y["status_reason"] + ", " + y["ignores"] + ", " + y["disabled"] + ", " + y["uptime"] + ", \
-                        " + y["agent_uptime"] + ", " + y["last_polled_timetaken"] + ", " + y["last_discovered_timetaken"] + ", " + y["last_ping_timetaken"] + ", " + y["purpose"] + ", " + y["type"] + ", \
-                        " + y["serial"] + ", " + y["icon"] + ", " + y["poller_group"] + ", " + y["override_sysLocation"] + ", " + y["notes"] + ", " + y["port_association_mode"] + ", " + y["max_depth"] + ", \
-                        " + y["last_polled"] + ", " + y["last_poll_attempted"] + ", " + y["last_discovered"] + ", " + y["last_ping"] + ")")
-                    mysql_conn.commit()
-                except:
-                    return {"uploadSql": "devices_table_insert_Error"}
-            print("recive school_" + edge_school_id + " devices " + y["device_id"] + "=" + y["hostname"]) 
+                    return {"uploadSql": "device_state_history_table_insert_Error"}
+                print("add device " + y["device_id"] + " status: " + y["status"] + " time: " + str(datetime.datetime.now()))
 
-            device_state_count = device_state_count + 1
-            try:
-                mysql_connection.execute("INSERT INTO device_state_history (id, device_id, status ,time_logged) \
-                VALUES (\
-                " + str(device_state_count) + ", " + y["device_id"] + ", " + y["status"] + ", '" + str(datetime.datetime.now()) + "')")
+            # edge device_perf table update
+            print("Refresh device_perf tables")
+            for x in range(0, len(edge_school_device_perf)):
+                y = json.loads(str(edge_school_device_perf[x]).replace("'", '"'))
+                if (y["id"] != "NULL"): y["id"] = str(y["id"])
+                if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
+                if (y["timestamp"] != "NULL"):  y["timestamp"] = "'" + str(y["timestamp"]) + "'"
+                if (y["xmt"] != "NULL"): y["xmt"] = str(y["xmt"])
+                if (y["rcv"] != "NULL"): y["rcv"] = str(y["rcv"])
+                if (y["loss"] != "NULL"): y["loss"] = str(y["loss"])
+                if (y["min"] != "NULL"): y["min"] = str(y["min"]) 
+                if (y["max"] != "NULL"): y["max"] = str(y["max"])
+                if (y["avg"] != "NULL"): y["avg"] = str(y["avg"] ) 
+                if (y["debug"] != "NULL"): y["debug"] = "'" + str(y["debug"]) + "'"
+                if (mysql_connection.execute("select * from device_perf where id = " + y["id"]) == 0):
+                    try:
+                        mysql_connection.execute("INSERT INTO device_perf (id, device_id, timestamp, xmt, rcv, loss, min, max, avg, debug) \
+                            VALUE \
+                            (" + y["id"] + ", " + y["device_id"] + ", " + y["timestamp"] + ", " + y["xmt"] + ", " + y["rcv"] + ", " + y["loss"] + ", " + y["min"] + ", " + y["max"] + ", " + y["avg"] + ", " + y["debug"] + ")")
+                        print("device_perf insert new data !")
+                        mysql_conn.commit()
+                    except:
+                        return {"uploadSql": "device_perf_table_insert_Error"}
+                print("recive school_" + edge_school_id + " device_perf " + y["device_id"] + "=> device_perf_id = " + y["id"]) 
+
+            # edge alert_log table update
+            print("Refresh alert_log tables")
+            for x in range(0, len(edge_school_alert_log)):
+                y = json.loads(str(edge_school_alert_log[x]).replace("'", '"'))
+                if (y["id"] != "NULL"): y["id"] = str(y["id"])
+                if (y["rule_id"] != "NULL"): y["rule_id"] = str(y["rule_id"])
+                if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
+                if (y["state"] != "NULL"): y["state"] = str(y["state"])
+                if (y["details"] != "NULL"): y["details"] = "'" + str(y["details"]) + "'"
+                if (y["time_logged"] != "NULL"): y["time_logged"] = "'" + str(y["time_logged"]) + "'"
+                if (mysql_connection.execute("select * from alert_log where id = " + y["id"]) == 0):
+                    try:
+                        mysql_connection.execute("INSERT INTO alert_log (id, rule_id, device_id, state, details, time_logged) \
+                            VALUE \
+                            (" + y["id"] + ", " + y["rule_id"] + ", " + y["device_id"] + ", " + y["state"] + ", " + y["details"] + ", " + y["time_logged"] + ")")
+                        print("alert_log insert new data !")
+                        mysql_conn.commit() 
+                    except:
+                        return {"uploadSql": "device_perf_table_insert_Error"}
+                print("recive school_" + edge_school_id + " alert_log " + y["device_id"] + "=> alert_log_id = " + y["id"]) 
+            
+            # print(edge_device_list)
+            edge_device_list_set = set(edge_device_list)
+            edge_device_list = []
+            mysql_connection.execute("select device_id from devices")
+            for x in mysql_connection:
+                edge_device_list.append(str(x[0]))
+            # print(edge_device_list)
+            cloud_device_list_set = set(edge_device_list)
+            device_difference_list = cloud_device_list_set.difference(edge_device_list_set)
+            # print(device_difference_list)
+            for x in device_difference_list:
+            #    print(x)
+                mysql_connection.execute("DELETE from devices where device_id = " + str(x))
                 mysql_conn.commit()
-            except:
-                return {"uploadSql": "device_state_history_table_insert_Error"}
-            print("add device " + y["device_id"] + " status: " + y["status"] + " time: " + str(datetime.datetime.now()))
-
-        # edge device_perf table update
-        print("Refresh device_perf tables")
-        for x in range(0, len(edge_school_device_perf)):
-            y = json.loads(str(edge_school_device_perf[x]).replace("'", '"'))
-            if (y["id"] != "NULL"): y["id"] = str(y["id"])
-            if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
-            if (y["timestamp"] != "NULL"):  y["timestamp"] = "'" + str(y["timestamp"]) + "'"
-            if (y["xmt"] != "NULL"): y["xmt"] = str(y["xmt"])
-            if (y["rcv"] != "NULL"): y["rcv"] = str(y["rcv"])
-            if (y["loss"] != "NULL"): y["loss"] = str(y["loss"])
-            if (y["min"] != "NULL"): y["min"] = str(y["min"]) 
-            if (y["max"] != "NULL"): y["max"] = str(y["max"])
-            if (y["avg"] != "NULL"): y["avg"] = str(y["avg"] ) 
-            if (y["debug"] != "NULL"): y["debug"] = "'" + str(y["debug"]) + "'"
-            if (mysql_connection.execute("select * from device_perf where id = " + y["id"]) == 0):
-                try:
-                    mysql_connection.execute("INSERT INTO device_perf (id, device_id, timestamp, xmt, rcv, loss, min, max, avg, debug) \
-                        VALUE \
-                        (" + y["id"] + ", " + y["device_id"] + ", " + y["timestamp"] + ", " + y["xmt"] + ", " + y["rcv"] + ", " + y["loss"] + ", " + y["min"] + ", " + y["max"] + ", " + y["avg"] + ", " + y["debug"] + ")")
-                    print("device_perf insert new data !")
-                    mysql_conn.commit()
-                except:
-                    return {"uploadSql": "device_perf_table_insert_Error"}
-            print("recive school_" + edge_school_id + " device_perf " + y["device_id"] + "=> device_perf_id = " + y["id"]) 
-
-        # edge alert_log table update
-        print("Refresh alert_log tables")
-        for x in range(0, len(edge_school_alert_log)):
-            y = json.loads(str(edge_school_alert_log[x]).replace("'", '"'))
-            if (y["id"] != "NULL"): y["id"] = str(y["id"])
-            if (y["rule_id"] != "NULL"): y["rule_id"] = str(y["rule_id"])
-            if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
-            if (y["state"] != "NULL"): y["state"] = str(y["state"])
-            if (y["details"] != "NULL"): y["details"] = "'" + str(y["details"]) + "'"
-            if (y["time_logged"] != "NULL"): y["time_logged"] = "'" + str(y["time_logged"]) + "'"
-            if (mysql_connection.execute("select * from alert_log where id = " + y["id"]) == 0):
-                try:
-                    mysql_connection.execute("INSERT INTO alert_log (id, rule_id, device_id, state, details, time_logged) \
-                        VALUE \
-                        (" + y["id"] + ", " + y["rule_id"] + ", " + y["device_id"] + ", " + y["state"] + ", " + y["details"] + ", " + y["time_logged"] + ")")
-                    print("alert_log insert new data !")
-                    mysql_conn.commit() 
-                except:
-                    return {"uploadSql": "device_perf_table_insert_Error"}
-            print("recive school_" + edge_school_id + " alert_log " + y["device_id"] + "=> alert_log_id = " + y["id"]) 
-        
-        # print(edge_device_list)
-        edge_device_list_set = set(edge_device_list)
-        edge_device_list = []
-        mysql_connection.execute("select device_id from devices")
-        for x in mysql_connection:
-            edge_device_list.append(str(x[0]))
-        # print(edge_device_list)
-        cloud_device_list_set = set(edge_device_list)
-        device_difference_list = cloud_device_list_set.difference(edge_device_list_set)
-        # print(device_difference_list)
-        for x in device_difference_list:
-        #    print(x)
-            mysql_connection.execute("DELETE from devices where device_id = " + str(x))
-            mysql_conn.commit()
-            mysql_connection.execute("DELETE from device_perf where device_id = " + str(x))
-            mysql_conn.commit()
-            mysql_connection.execute("DELETE from alert_log where device_id = " + str(x))
-            mysql_conn.commit()
-            mysql_connection.execute("DELETE from device_state_history where device_id = " + str(x))
-            mysql_conn.commit()
-
-    print(str(datetime.datetime.now()) + "over")
-    return {"uploadSql": "ok"}
+                mysql_connection.execute("DELETE from device_perf where device_id = " + str(x))
+                mysql_conn.commit()
+                mysql_connection.execute("DELETE from alert_log where device_id = " + str(x))
+                mysql_conn.commit()
+                mysql_connection.execute("DELETE from device_state_history where device_id = " + str(x))
+                mysql_conn.commit()
+            print(str(datetime.datetime.now()) + "over")
+            mysql_conn.close()
+            return {"uploadSql": "ok"}
+        else:
+            print(str(datetime.datetime.now()) + "Server Mysql Fail")
+            return {"uploadSql": "fail"}
 
 if __name__ == '__main__':
 #	app.run(debug = True)
