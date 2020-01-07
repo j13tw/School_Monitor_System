@@ -77,7 +77,10 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("創建雲端環境服務")
-    docker_librenms_config = "docker exec -ti " + school_name + " sh -c " + '"nohup python3 -u /School_Monitor_System/Client/selfCheck_docker.py ' + school_name + " " + docker_mysql_ip + ' > client.log 2>&1 &"'
+    docker_librenms_config = "docker exec -ti " + school_name + " sh -c " + 'echo "nohup python3 -u /School_Monitor_System/Client/selfCheck_docker.py ' + school_name + " " + docker_mysql_ip + ' > client.log 2>&1 &" > Client.sh'
+    print(docker_librenms_config)
+    os.system(docker_librenms_config + " >/dev/null 2>&1")
+    docker_librenms_config = "docker exec -ti " + school_name + " sh -c " + 'sudo sh Client.sh'
     print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
 
