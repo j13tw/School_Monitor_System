@@ -61,23 +61,23 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
     docker_librenms_config = "docker start " + docker_mysql_name
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("Docker Contailer 環境更新")
-    docker_librenms_config = "docker exec -ti " + docker_mysql_name + " sh -c " + '"apt-get update"'
+    docker_librenms_config = "docker exec -ti " + school_name + " sh -c " + '"apt-get update"'
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("Docker Contailer 環境安裝")
-    docker_librenms_config = "docker exec -ti " + docker_mysql_name + " sh -c " + '"apt-get install -y git python3 python3-pip"'
+    docker_librenms_config = "docker exec -ti " + school_name + " sh -c " + '"apt-get install -y git python3 python3-pip"'
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("下載雲端連線服務")
-    docker_librenms_config = "docker exec -ti " + docker_mysql_name + " sh -c " + '"git clone https://github.com/j13tw/School_Monitor_System.git"'
+    docker_librenms_config = "docker exec -ti " + school_name + " sh -c " + '"git clone https://github.com/j13tw/School_Monitor_System.git"'
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("創建學校環境服務")
-    docker_librenms_config = "docker exec -ti " + docker_mysql_name + " sh -c " + '"python3 /School_Monitor_System/Client/envoriment_docker.py"'
+    docker_librenms_config = "docker exec -ti " + school_name + " sh -c " + '"python3 /School_Monitor_System/Client/envoriment_docker.py"'
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("創建雲端環境服務")
-    docker_librenms_config = "docker exec -ti " + docker_mysql_name + " sh -c " + '"nohup python3 -u  /School_Monitor_System/Client/selfCheck.py ' + school_name + ' > client.log 2>&1 &"'
+    docker_librenms_config = "docker exec -ti " + school_name + " sh -c " + '"nohup python3 -u  /School_Monitor_System/Client/selfCheck_docker.py ' + school_name docker_mysql_ip + ' > client.log 2>&1 &"'
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
 
