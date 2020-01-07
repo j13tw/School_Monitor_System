@@ -69,7 +69,7 @@ def create_mysql(school_serial_id, school_name, docker_mysql_name, db_root_pwd, 
     os.chdir("./School_Monitor")
     mysql_volume = str(subprocess.Popen("pwd", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0]
    # print(mysql_volume)
-    docker_mysql_config = 'docker run --net ' + librenms_network + ' --name ' + docker_mysql_name + " -d -e MYSQL_ROOT_PASSWORD=" + db_root_pwd + " -e MYSQL_USER=" + db_user_name + " -e MYSQL_PASSWORD=" + db_user_pwd + " -e MYSQL_DATABASE=" + db_name + " -p 127.0.0.1:" + str(33060 + int(school_serial_id)) + ":3306 -v " + mysql_volume + '/School_Monitor/mysql/' + school_name + ':/var/lib/mysql mysql:5.6 --sql-mode=""'
+    docker_mysql_config = 'docker run --name ' + docker_mysql_name + " -d -e MYSQL_ROOT_PASSWORD=" + db_root_pwd + " -e MYSQL_USER=" + db_user_name + " -e MYSQL_PASSWORD=" + db_user_pwd + " -e MYSQL_DATABASE=" + db_name + " -p 127.0.0.1:" + str(33060 + int(school_serial_id)) + ":3306 -v " + mysql_volume + '/School_Monitor/mysql/' + school_name + ':/var/lib/mysql mysql:5.6 --sql-mode=""'
    # print(docker_mysql_config)
     os.system(docker_mysql_config + " >/dev/null 2>&1")
     print("重新啟動資料庫系統")
