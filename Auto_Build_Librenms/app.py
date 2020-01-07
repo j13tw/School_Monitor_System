@@ -57,6 +57,22 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
     docker_librenms_config = "docker exec " + school_name + " create_admin"
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
+    print("Docker Contailer 環境更新")
+    docker_librenms_config = "docker exec -ti " + docker_mysql_name + " sh -c " + '"apt-get update"'
+   # print(docker_librenms_config)
+    os.system(docker_librenms_config + " >/dev/null 2>&1")
+    print("Docker Contailer 環境安裝")
+    docker_librenms_config = "docker exec -ti " + docker_mysql_name + " sh -c " + '"apt-get install -y git python3 python3-pip"'
+   # print(docker_librenms_config)
+    os.system(docker_librenms_config + " >/dev/null 2>&1")
+    print("下載雲端連線服務")
+    docker_librenms_config = "docker exec -ti " + docker_mysql_name + " sh -c " + '"git clone https://github.com/j13tw/School_Monitor_System.git"'
+   # print(docker_librenms_config)
+    os.system(docker_librenms_config + " >/dev/null 2>&1")
+    print("創建學校環境服務")
+    docker_librenms_config = "docker exec -ti " + docker_mysql_name + " sh -c " + '"python3 /School_Monitor_System/Client/envoriment_docker.py"'
+   # print(docker_librenms_config)
+    os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("重新啟動資料庫系統")
     docker_librenms_config = "docker start " + docker_mysql_name
     os.system(docker_librenms_config + " >/dev/null 2>&1")
@@ -137,6 +153,6 @@ def create_service(school_serial_id, school_name):
 school_list = xlrd.open_workbook("./315校名單.xlsx")
 school_sheet = school_list.sheets()[0]
 print(school_sheet.nrows)
-for x in range(1, 6):
+for x in range(1, 3):
     create_service(str(int(school_sheet.row_values(x)[0])), str(school_sheet.row_values(x)[3]))
 
