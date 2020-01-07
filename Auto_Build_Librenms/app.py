@@ -77,16 +77,8 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("複製服務設定檔")
-    docker_librenms_config = "docker exec -ti " + school_name + " sh -c "
-    print("===")
+    docker_librenms_config = "docker exec -ti " + school_name + ' sh -c "echo "nohup python3 -u /School_Monitor_System/Client/selfCheck_docker.py ' + school_name + " " + docker_mysql_ip + ' > client.log 2>&1 &" > client.sh'
     print(docker_librenms_config)
-    print("===")
-    echo_index = "echo 'nohup python3 -u /School_Monitor_System/Client/selfCheck_docker.py " + school_name + " " + docker_mysql_ip + " > client.log 2>&1 &' > client.sh"
-    print(echo_index)
-    print("===")
-    docker_librenms_config = docker_librenms_config + echo_index
-    print(docker_librenms_config)
-    print("===")
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("創建雲端環境服務")
     docker_librenms_config = "docker exec -ti " + school_name + " sh -c " + 'sudo sh client.sh'
@@ -112,7 +104,7 @@ def create_mysql(school_serial_id, school_name, docker_mysql_name, db_root_pwd, 
     os.system(docker_mysql_config + " >/dev/null 2>&1")
     docker_mysql_config = 'docker exec -ti ' + docker_mysql_name + " sh -c " + '"hostname -I"'
    # print(docker_mysql_config)
-    docker_mysql_ip = str(subprocess.Popen(docker_mysql_config, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0]
+    docker_mysql_ip = str(subprocess.Popen(docker_mysql_config, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0].split("\r")[0]
    # print("docker_mysql_ip", docker_mysql_ip)
     return docker_mysql_ip
 
