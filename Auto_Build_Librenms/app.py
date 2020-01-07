@@ -27,6 +27,7 @@ def create_docker_network(network_name):
     # network_config = 'docker network create --subnet 172.3.0.0/24 ' + network_name
     # print(network_config)
     # os.system(network_config)
+    print("No Create Docker Network")
 
 def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mysql_ip, db_name, db_user_name, db_user_pwd, librenms_network):
     print("建立監控系統總服務")
@@ -136,6 +137,6 @@ def create_service(school_serial_id, school_name):
 school_list = xlrd.open_workbook("./315校名單.xlsx")
 school_sheet = school_list.sheets()[0]
 print(school_sheet.nrows)
-for x in range(1, 3):
+for x in range(1, 6):
     create_service(str(int(school_sheet.row_values(x)[0])), str(school_sheet.row_values(x)[3]))
 
