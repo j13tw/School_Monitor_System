@@ -60,11 +60,11 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
     print("重新啟動資料庫系統")
     docker_librenms_config = "docker start " + docker_mysql_name
     os.system(docker_librenms_config + " >/dev/null 2>&1")
-    print("Docker Contailer 環境更新")
+    print("Docker Container 環境更新")
     docker_librenms_config = "docker exec -ti " + school_name + " sh -c " + '"apt-get update"'
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
-    print("Docker Contailer 環境安裝")
+    print("Docker Container 環境安裝")
     docker_librenms_config = "docker exec -ti " + school_name + " sh -c " + '"apt-get install -y git python3 python3-pip"'
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
@@ -87,7 +87,10 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
     docker_librenms_config = docker_librenms_config + 'echo "nohup python3 -u /School_Monitor_System/Client/selfCheck_docker.py '
     print(docker_librenms_config)
     print("===")
-    docker_librenms_config = docker_librenms_config + school_name + " " + docker_mysql_ip + ' > client.log 2>&1 &" > client.sh'
+    docker_librenms_config = docker_librenms_config + school_name + " " + docker_mysql_ip
+    print(docker_librenms_config)
+    print("===")
+    docker_librenms_config = docker_librenms_config +  + ' > client.log 2>&1 &" > client.sh'
     print(docker_librenms_config)
     print("===")
     os.system(docker_librenms_config + " >/dev/null 2>&1")
