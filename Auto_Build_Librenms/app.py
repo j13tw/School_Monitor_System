@@ -134,5 +134,5 @@ school_list = xlrd.open_workbook("./315校名單.xlsx")
 school_sheet = school_list.sheets()[0]
 print(school_sheet.nrows)
 for x in range(1, 3):
-    create_service(str(school_sheet.row_values(x)[0]), str(school_sheet.row_values(x)[1]))
+    create_service(str(int(school_sheet.row_values(x)[0])), str(school_sheet.row_values(x)[1]))
 
