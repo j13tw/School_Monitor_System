@@ -60,7 +60,7 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
 def create_mysql(school_serial_id, school_name, docker_mysql_name, db_root_pwd, db_name, db_user_name, db_user_pwd, librenms_network):
     print("建立監控系統資料庫")
     if (os.path.isdir("./School_Monitor") == 0): os.mkdir("./School_Monitor")
-    if (os.path.isdir("./School_Monitor/mysql/" + school_name) == 0): os.mkdir("./School_Monitor/mysql" + school_name)
+    if (os.path.isdir("./School_Monitor/mysql/" + school_name) == 0): os.mkdir("./School_Monitor/mysql/" + school_name)
     os.chdir("./School_Monitor")
     mysql_volume = str(subprocess.Popen("pwd", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0]
    # print(mysql_volume)
