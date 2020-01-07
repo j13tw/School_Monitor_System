@@ -27,19 +27,19 @@ def create_docker_network(network_name):
    # print(network_config)
     os.system(network_config)
 
-def create_librenms(school_serial_id, docker_librenms_name, docker_mysql_name, docker_mysql_ip, db_name, db_user_name, db_user_pwd, librenms_network):
+def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mysql_ip, db_name, db_user_name, db_user_pwd, librenms_network):
     print("建立監控系統總服務")
     print("生成系統認證金鑰碼")
     docker_librenms_config = "docker run --rm jarischaefer/docker-librenms generate_key"
     librenms_product_key = str(subprocess.Popen(docker_librenms_config, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0]
    # print(librenms_product_key)
-    if (os.path.isdir("./librenms" + docker_librenms_name) == 0): os.mkdir("./librenms" + docker_librenms_name)
-    if (os.path.isdir("./librenms" + docker_librenms_name + "/logs") == 0): os.mkdir("./librenms" + docker_librenms_name + "/logs")
-    if (os.path.isdir("./librenms" + docker_librenms_name + "/rrd") == 0): os.mkdir("./librenms" + docker_librenms_name + "/rrd")
+    if (os.path.isdir("./librenms/" + school_name) == 0): os.mkdir("./librenms/" + school_name)
+    if (os.path.isdir("./librenms/" + school_name + "/logs") == 0): os.mkdir("./librenms/" + school_name + "/logs")
+    if (os.path.isdir("./librenms/" + school_name + "/rrd") == 0): os.mkdir("./librenms/" + school_name + "/rrd")
     librenms_volume = str(subprocess.Popen("pwd", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0]
    # print(librenms_volume)
     print("安裝系統基礎監控服務")
-    docker_librenms_config = "docker run --net " + librenms_network + " -d -h " + docker_librenms_name + " -p " + str(30000 + school_serial_id) + ":80 -e APP_KEY=" + librenms_product_key +  " -e DB_HOST='" + docker_mysql_ip + "' -e DB_NAME=" + db_name + " -e DB_USER=" + db_user_name + " -e DB_PASS=" + db_user_pwd + " -e BASE_URL=http://127.0.0.1" + " --link " + docker_mysql_name + ":db -v " + librenms_volume + "/librenms/" + docker_librenms_name + "logs:/opt/librenms/logs -v " + librenms_volume + "/librenms" + docker_librenms_name + "/rrd:/opt/librenms/rrd --name " + docker_librenms_name + " jarischaefer/docker-librenms"
+    docker_librenms_config = "docker run --net " + librenms_network + " -d -h " + docker_librenms_name + " -p " + str(30000 + school_serial_id) + ":80 -e APP_KEY=" + librenms_product_key +  " -e DB_HOST='" + docker_mysql_ip + "' -e DB_NAME=" + db_name + " -e DB_USER=" + db_user_name + " -e DB_PASS=" + db_user_pwd + " -e BASE_URL=http://127.0.0.1" + " --link " + docker_mysql_name + ":db -v " + librenms_volume + "/librenms/" + school_name + "logs:/opt/librenms/logs -v " + librenms_volume + "/librenms/" + school_name + "/rrd:/opt/librenms/rrd --name " + school_name + " jarischaefer/docker-librenms"
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     time.sleep(30)
@@ -57,14 +57,14 @@ def create_librenms(school_serial_id, docker_librenms_name, docker_mysql_name, d
     docker_librenms_config = "docker start " + docker_mysql_name
     os.system(docker_librenms_config + " >/dev/null 2>&1")
 
-def create_mysql(school_serial_id, docker_mysql_name, db_root_pwd, db_name, db_user_name, db_user_pwd, librenms_network):
+def create_mysql(school_serial_id, school_name, docker_mysql_name, db_root_pwd, db_name, db_user_name, db_user_pwd, librenms_network):
     print("建立監控系統資料庫")
     if (os.path.isdir("./School_Monitor") == 0): os.mkdir("./School_Monitor")
-    if (os.path.isdir("./School_Monitor/mysql" + docker_librenms_name) == 0): os.mkdir("./School_Monitor/mysql" + docker_librenms_name)
+    if (os.path.isdir("./School_Monitor/mysql/" + school_name) == 0): os.mkdir("./School_Monitor/mysql" + school_name)
     os.chdir("./School_Monitor")
     mysql_volume = str(subprocess.Popen("pwd", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0]
    # print(mysql_volume)
-    docker_mysql_config = 'docker run --net ' + librenms_network + ' --name ' + docker_mysql_name + " -d -e MYSQL_ROOT_PASSWORD=" + db_root_pwd + " -e MYSQL_USER=" + db_user_name + " -e MYSQL_PASSWORD=" + db_user_pwd + " -e MYSQL_DATABASE=" + db_name + " -p 127.0.0.1:" + str(33060 + school_serial_id) + ":3306 -v " + mysql_volume + '/mysql:/var/lib/mysql mysql:5.6 --sql-mode=""'
+    docker_mysql_config = 'docker run --net ' + librenms_network + ' --name ' + docker_mysql_name + " -d -e MYSQL_ROOT_PASSWORD=" + db_root_pwd + " -e MYSQL_USER=" + db_user_name + " -e MYSQL_PASSWORD=" + db_user_pwd + " -e MYSQL_DATABASE=" + db_name + " -p 127.0.0.1:" + str(33060 + school_serial_id) + ":3306 -v " + mysql_volume + '/mysql/' + school_name + ':/var/lib/mysql mysql:5.6 --sql-mode=""'
    # print(docker_mysql_config)
     os.system(docker_mysql_config + " >/dev/null 2>&1")
     print("重新啟動資料庫系統")
@@ -98,9 +98,9 @@ def create_service(school_serial_id, school_name):
     print("資料庫總管密碼：" + librenms_mysql_root_pwd)
     create_docker_network(librenms_network)
    # print("librenms_network" + librenms_network)
-    librenms_mysql_ip = create_mysql(school_serial_id, librenms_mysql_docker_name, librenms_mysql_root_pwd, librenms_mysql_user_db, librenms_mysql_user_name, librenms_mysql_user_pwd, librenms_network)
+    librenms_mysql_ip = create_mysql(school_serial_id, school_name, librenms_mysql_docker_name, librenms_mysql_root_pwd, librenms_mysql_user_db, librenms_mysql_user_name, librenms_mysql_user_pwd, librenms_network)
    # print(librenms_mysql_ip)
-    create_librenms(school_serial_id, librenms_docker_name, librenms_mysql_docker_name, librenms_mysql_ip, librenms_mysql_user_db, librenms_mysql_user_name, librenms_mysql_user_pwd, librenms_network)
+    create_librenms(school_serial_id, school_name, librenms_mysql_docker_name, librenms_mysql_ip, librenms_mysql_user_db, librenms_mysql_user_name, librenms_mysql_user_pwd, librenms_network)
     print("監控系統安裝完成")
     print("請輸入 http://127.0.0.1/")
     print("帳號 : admin")
