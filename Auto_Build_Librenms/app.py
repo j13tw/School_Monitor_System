@@ -34,7 +34,7 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
     docker_librenms_config = "docker run --rm jarischaefer/docker-librenms generate_key"
     librenms_product_key = str(subprocess.Popen(docker_librenms_config, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0]
    # print(librenms_product_key)
-   if (os.path.isdir("./School_Monitor/librenms") == 0): os.mkdir("./School_Monitor/librenms")
+    if (os.path.isdir("./School_Monitor/librenms") == 0): os.mkdir("./School_Monitor/librenms")
     if (os.path.isdir("./School_Monitor/librenms/" + school_name) == 0): os.mkdir("./School_Monitor/librenms/" + school_name)
     if (os.path.isdir("./School_Monitor/librenms/" + school_name + "/logs") == 0): os.mkdir("./School_Monitor/librenms/" + school_name + "/logs")
     if (os.path.isdir("./School_Monitor/librenms/" + school_name + "/rrd") == 0): os.mkdir("./School_Monitor/librenms/" + school_name + "/rrd")
