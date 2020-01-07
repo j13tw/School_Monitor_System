@@ -81,7 +81,7 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
     print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("創建雲端環境服務")
-    docker_librenms_config = "docker exec -ti " + school_name + " sh -c " + 'sudo sh client.sh'
+    docker_librenms_config = "docker exec -ti " + school_name + ' sh -c "sudo sh client.sh"'
     print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
 
