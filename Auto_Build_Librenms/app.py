@@ -4,6 +4,7 @@ import os, sys
 import subprocess
 import math
 import time
+import xlrd
 
 control_id = 0
 error_id = 1
@@ -128,5 +129,10 @@ def create_service(school_serial_id, school_name):
 # else:
 #     delete_service()
 
-create_service(sys.argv[1], sys.argv[2])
+
+school_list = xlrd.open_workbook("./315校名單.xlsx")
+school_sheet = school_list.sheets()[0]
+print(school_sheet.nrows)
+for x in range(1, 3):
+    create_service(str(school_sheet.row_values(x)[0]), str(school_sheet.row_values(x)[1]))
 
