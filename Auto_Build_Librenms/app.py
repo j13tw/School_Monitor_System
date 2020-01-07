@@ -57,6 +57,9 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
     docker_librenms_config = "docker exec " + school_name + " create_admin"
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
+    print("重新啟動資料庫系統")
+    docker_librenms_config = "docker start " + docker_mysql_name
+    os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("Docker Contailer 環境更新")
     docker_librenms_config = "docker exec -ti " + docker_mysql_name + " sh -c " + '"apt-get update"'
    # print(docker_librenms_config)
@@ -73,8 +76,9 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
     docker_librenms_config = "docker exec -ti " + docker_mysql_name + " sh -c " + '"python3 /School_Monitor_System/Client/envoriment_docker.py"'
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
-    print("重新啟動資料庫系統")
-    docker_librenms_config = "docker start " + docker_mysql_name
+    print("創建雲端環境服務")
+    docker_librenms_config = "docker exec -ti " + docker_mysql_name + " sh -c " + '"nohup python3 -u  /School_Monitor_System/Client/selfCheck.py ' + school_name + '"'
+   # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
 
 def create_mysql(school_serial_id, school_name, docker_mysql_name, db_root_pwd, db_name, db_user_name, db_user_pwd, librenms_network):
@@ -107,7 +111,7 @@ def create_service(school_serial_id, school_name):
     librenms_mysql_root_pwd = school_name + "root"
     librenms_mysql_user_db = "lib" + school_name + "name"
     librenms_mysql_user_name = "lib" + school_name + "user"
-    librenms_mysql_user_pwd = "lib" + school_name + "pwd"
+    librenms_mysql_user_pwd = "lib" + school_name + "pass"
     librenms_network = school_name + "-net"
     print("librenms_docker_name ", librenms_docker_name)
     print("librenms_docker_mysql_name ", librenms_mysql_docker_name)
