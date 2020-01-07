@@ -80,7 +80,7 @@ def create_mysql(school_serial_id, docker_mysql_name, db_root_pwd, db_name, db_u
     return docker_mysql_ip
 
 def create_service(school_serial_id, school_name):
-    school_name = input("請輸入學校代碼：")
+#    school_name = input("請輸入學校代碼：")
     librenms_docker_name = school_name + "-librenms"
     librenms_mysql_docker_name = school_name + "-librenms-mysql"
     librenms_mysql_root_pwd = school_name + "root"
