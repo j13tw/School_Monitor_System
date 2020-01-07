@@ -81,7 +81,7 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
     print("===")
     print(docker_librenms_config)
     print("===")
-    echo_index = 'echo "nohup python3 -u /School_Monitor_System/Client/selfCheck_docker.py ' + school_name + " " + docker_mysql_ip + ' > client.log 2>&1 &" > client.sh'
+    echo_index = "echo 'nohup python3 -u /School_Monitor_System/Client/selfCheck_docker.py " + school_name + " " + docker_mysql_ip + " > client.log 2>&1 &' > client.sh"
     print(echo_index)
     print("===")
     docker_librenms_config = docker_librenms_config + echo_index
