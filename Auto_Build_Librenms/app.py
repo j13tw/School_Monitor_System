@@ -34,13 +34,14 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
     docker_librenms_config = "docker run --rm jarischaefer/docker-librenms generate_key"
     librenms_product_key = str(subprocess.Popen(docker_librenms_config, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0]
    # print(librenms_product_key)
-    if (os.path.isdir("./librenms/" + school_name) == 0): os.mkdir("./librenms/" + school_name)
-    if (os.path.isdir("./librenms/" + school_name + "/logs") == 0): os.mkdir("./librenms/" + school_name + "/logs")
-    if (os.path.isdir("./librenms/" + school_name + "/rrd") == 0): os.mkdir("./librenms/" + school_name + "/rrd")
+   if (os.path.isdir("./School_Monitor/librenms") == 0): os.mkdir("./School_Monitor/librenms")
+    if (os.path.isdir("./School_Monitor/librenms/" + school_name) == 0): os.mkdir("./School_Monitor/librenms/" + school_name)
+    if (os.path.isdir("./School_Monitor/librenms/" + school_name + "/logs") == 0): os.mkdir("./School_Monitor/librenms/" + school_name + "/logs")
+    if (os.path.isdir("./School_Monitor/librenms/" + school_name + "/rrd") == 0): os.mkdir("./School_Monitor/librenms/" + school_name + "/rrd")
     librenms_volume = str(subprocess.Popen("pwd", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0]
    # print(librenms_volume)
     print("安裝系統基礎監控服務")
-    docker_librenms_config = "docker run --net " + librenms_network + " -d -h librenms -p " + str(30000 + int(school_serial_id)) + ":80 -e APP_KEY=" + librenms_product_key +  " -e DB_HOST='" + docker_mysql_ip + "' -e DB_NAME=" + db_name + " -e DB_USER=" + db_user_name + " -e DB_PASS=" + db_user_pwd + " -e BASE_URL=http://127.0.0.1" + " --link " + docker_mysql_name + ":db -v " + librenms_volume + "/librenms/" + school_name + "logs:/opt/librenms/logs -v " + librenms_volume + "/librenms/" + school_name + "/rrd:/opt/librenms/rrd --name " + school_name + " jarischaefer/docker-librenms"
+    docker_librenms_config = "docker run --net " + librenms_network + " -d -h librenms -p " + str(30000 + int(school_serial_id)) + ":80 -e APP_KEY=" + librenms_product_key +  " -e DB_HOST='" + docker_mysql_ip + "' -e DB_NAME=" + db_name + " -e DB_USER=" + db_user_name + " -e DB_PASS=" + db_user_pwd + " -e BASE_URL=http://127.0.0.1" + " --link " + docker_mysql_name + ":db -v " + librenms_volume + "/School_Monitor/librenms/" + school_name + "logs:/opt/librenms/logs -v " + librenms_volume + "/School_Monitor/librenms/" + school_name + "/rrd:/opt/librenms/rrd --name " + school_name + " jarischaefer/docker-librenms"
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     time.sleep(30)
@@ -61,11 +62,12 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
 def create_mysql(school_serial_id, school_name, docker_mysql_name, db_root_pwd, db_name, db_user_name, db_user_pwd, librenms_network):
     print("建立監控系統資料庫")
     if (os.path.isdir("./School_Monitor") == 0): os.mkdir("./School_Monitor")
+    if (os.path.isdir("./School_Monitor/mysql") == 0): os.mkdir("./School_Monitor/mysql")
     if (os.path.isdir("./School_Monitor/mysql/" + school_name) == 0): os.mkdir("./School_Monitor/mysql/" + school_name)
     os.chdir("./School_Monitor")
     mysql_volume = str(subprocess.Popen("pwd", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0]
    # print(mysql_volume)
-    docker_mysql_config = 'docker run --net ' + librenms_network + ' --name ' + docker_mysql_name + " -d -e MYSQL_ROOT_PASSWORD=" + db_root_pwd + " -e MYSQL_USER=" + db_user_name + " -e MYSQL_PASSWORD=" + db_user_pwd + " -e MYSQL_DATABASE=" + db_name + " -p 127.0.0.1:" + str(33060 + int(school_serial_id)) + ":3306 -v " + mysql_volume + '/mysql/' + school_name + ':/var/lib/mysql mysql:5.6 --sql-mode=""'
+    docker_mysql_config = 'docker run --net ' + librenms_network + ' --name ' + docker_mysql_name + " -d -e MYSQL_ROOT_PASSWORD=" + db_root_pwd + " -e MYSQL_USER=" + db_user_name + " -e MYSQL_PASSWORD=" + db_user_pwd + " -e MYSQL_DATABASE=" + db_name + " -p 127.0.0.1:" + str(33060 + int(school_serial_id)) + ":3306 -v " + mysql_volume + '/School_Monitor/mysql/' + school_name + ':/var/lib/mysql mysql:5.6 --sql-mode=""'
    # print(docker_mysql_config)
     os.system(docker_mysql_config + " >/dev/null 2>&1")
     print("重新啟動資料庫系統")
