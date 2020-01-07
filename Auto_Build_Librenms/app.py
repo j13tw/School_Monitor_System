@@ -39,7 +39,7 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
     librenms_volume = str(subprocess.Popen("pwd", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0]
    # print(librenms_volume)
     print("安裝系統基礎監控服務")
-    docker_librenms_config = "docker run --net " + librenms_network + " -d -h librenms -p " + str(30000 + school_serial_id) + ":80 -e APP_KEY=" + librenms_product_key +  " -e DB_HOST='" + docker_mysql_ip + "' -e DB_NAME=" + db_name + " -e DB_USER=" + db_user_name + " -e DB_PASS=" + db_user_pwd + " -e BASE_URL=http://127.0.0.1" + " --link " + docker_mysql_name + ":db -v " + librenms_volume + "/librenms/" + school_name + "logs:/opt/librenms/logs -v " + librenms_volume + "/librenms/" + school_name + "/rrd:/opt/librenms/rrd --name " + school_name + " jarischaefer/docker-librenms"
+    docker_librenms_config = "docker run --net " + librenms_network + " -d -h librenms -p " + str(30000 + int(school_serial_id)) + ":80 -e APP_KEY=" + librenms_product_key +  " -e DB_HOST='" + docker_mysql_ip + "' -e DB_NAME=" + db_name + " -e DB_USER=" + db_user_name + " -e DB_PASS=" + db_user_pwd + " -e BASE_URL=http://127.0.0.1" + " --link " + docker_mysql_name + ":db -v " + librenms_volume + "/librenms/" + school_name + "logs:/opt/librenms/logs -v " + librenms_volume + "/librenms/" + school_name + "/rrd:/opt/librenms/rrd --name " + school_name + " jarischaefer/docker-librenms"
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     time.sleep(30)
