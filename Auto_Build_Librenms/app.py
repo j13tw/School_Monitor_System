@@ -90,7 +90,7 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
     docker_librenms_config = docker_librenms_config + school_name + " " + docker_mysql_ip
     print(docker_librenms_config)
     print("===")
-    docker_librenms_config = docker_librenms_config +  + ' > client.log 2>&1 &" > client.sh'
+    docker_librenms_config = docker_librenms_config + ' > client.log 2>&1 &" > client.sh'
     print(docker_librenms_config)
     print("===")
     os.system(docker_librenms_config + " >/dev/null 2>&1")
