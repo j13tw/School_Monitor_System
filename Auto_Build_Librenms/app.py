@@ -77,8 +77,17 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("複製服務設定檔")
-    docker_librenms_config = "docker exec -ti " + school_name + " sh -c " + 'echo "nohup python3 -u /School_Monitor_System/Client/selfCheck_docker.py ' + school_name + " " + docker_mysql_ip + ' > client.log 2>&1 &" > client.sh'
+    docker_librenms_config = "docker exec -ti "
     print("===")
+    print(docker_librenms_config)
+    print("===")
+    docker_librenms_config = docker_librenms_config + school_name + " sh -c " 
+    print(docker_librenms_config)
+    print("===")
+    docker_librenms_config = docker_librenms_config + 'echo "nohup python3 -u /School_Monitor_System/Client/selfCheck_docker.py '
+    print(docker_librenms_config)
+    print("===")
+    docker_librenms_config = docker_librenms_config + school_name + " " + docker_mysql_ip + ' > client.log 2>&1 &" > client.sh'
     print(docker_librenms_config)
     print("===")
     os.system(docker_librenms_config + " >/dev/null 2>&1")
