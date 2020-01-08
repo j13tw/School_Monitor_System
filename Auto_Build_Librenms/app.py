@@ -61,47 +61,47 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
     # os.system(docker_librenms_config + " >/dev/null 2>&1")
     # time.sleep(30)
     print("Docker Container 環境更新")
-    docker_librenms_config = "docker exec -ti " + school_name + " sh -c " + '"apt-get update"'
+    docker_librenms_config = "docker exec " + school_name + " sh -c " + '"apt-get update"'
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("Docker Container 環境安裝")
-    docker_librenms_config = "docker exec -ti " + school_name + " sh -c " + '"apt-get install -y git python3 python3-pip"'
+    docker_librenms_config = "docker exec " + school_name + " sh -c " + '"apt-get install -y git python3 python3-pip"'
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("下載雲端連線服務")
-    docker_librenms_config = "docker exec -ti " + school_name + " sh -c " + '"git clone https://github.com/j13tw/School_Monitor_System.git"'
+    docker_librenms_config = "docker exec " + school_name + " sh -c " + '"git clone https://github.com/j13tw/School_Monitor_System.git"'
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("創建學校環境服務")
-    docker_librenms_config = "docker exec -ti " + school_name + " sh -c " + '"python3 /School_Monitor_System/Client/envoriment_docker.py"'
+    docker_librenms_config = "docker exec " + school_name + " sh -c " + '"python3 /School_Monitor_System/Client/envoriment_docker.py"'
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("複製服務設定檔")
-    docker_librenms_config = "docker exec -ti " + school_name + ' sh -c "' + "echo 'nohup python3 -u /School_Monitor_System/Client/selfCheck_docker.py " + school_name + " " + docker_mysql_ip + " > client.log 2>&1 &' > client.sh" + '"'
+    docker_librenms_config = "docker exec " + school_name + ' sh -c "' + "echo 'nohup python3 -u /School_Monitor_System/Client/selfCheck_docker.py " + school_name + " " + docker_mysql_ip + " > client.log 2>&1 &' > client.sh" + '"'
     print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("創建雲端環境服務")
-    docker_librenms_config = "docker exec -ti " + school_name + ' sh -c "sudo sh client.sh"'
+    docker_librenms_config = "docker exec " + school_name + ' sh -c "sudo sh client.sh"'
     print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("自動添加設備服務-1")
-    docker_librenms_config = "docker exec -ti " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.176/32"'
+    docker_librenms_config = "docker exec " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.176/32"'
     print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("自動添加設備服務-2")
-    docker_librenms_config = "docker exec -ti " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.196/32"'
+    docker_librenms_config = "docker exec " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.196/32"'
     print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("自動添加設備服務-3")
-    docker_librenms_config = "docker exec -ti " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.197/32"'
+    docker_librenms_config = "docker exec " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.197/32"'
     print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("自動添加設備服務-4")
-    docker_librenms_config = "docker exec -ti " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.199/32"'
+    docker_librenms_config = "docker exec " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.199/32"'
     print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("自動添加設備服務-5")
-    docker_librenms_config = "docker exec -ti " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.254/32"'
+    docker_librenms_config = "docker exec " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.254/32"'
     print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
 
