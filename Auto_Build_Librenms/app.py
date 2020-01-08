@@ -57,8 +57,9 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
    # print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("重新啟動資料庫系統")
-    docker_librenms_config = "docker start " + docker_mysql_name
-    os.system(docker_librenms_config + " >/dev/null 2>&1")
+    # docker_librenms_config = "docker start " + docker_mysql_name
+    # os.system(docker_librenms_config + " >/dev/null 2>&1")
+    # time.sleep(30)
     print("Docker Container 環境更新")
     docker_librenms_config = "docker exec -ti " + school_name + " sh -c " + '"apt-get update"'
    # print(docker_librenms_config)
@@ -111,9 +112,9 @@ def create_mysql(school_serial_id, school_name, docker_mysql_name, db_root_pwd, 
     if (os.path.isdir("./School_Monitor/mysql/" + school_name) == 0): os.mkdir("./School_Monitor/mysql/" + school_name)
     os.chdir("./School_Monitor")
     mysql_volume = str(subprocess.Popen("pwd", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0]
-   # print(mysql_volume)
+    # print(mysql_volume)
     docker_mysql_config = 'docker run --name ' + docker_mysql_name + " -d -e MYSQL_ROOT_PASSWORD=" + db_root_pwd + " -e MYSQL_USER=" + db_user_name + " -e MYSQL_PASSWORD=" + db_user_pwd + " -e MYSQL_DATABASE=" + db_name + " -p 127.0.0.1:" + str(33060 + int(school_serial_id)) + ":3306 -v " + mysql_volume + '/School_Monitor/mysql/' + school_name + ':/var/lib/mysql mysql:5.6 --sql-mode=""'
-   # print(docker_mysql_config)
+    # print(docker_mysql_config)
     os.system(docker_mysql_config + " >/dev/null 2>&1")
     print("重新啟動資料庫系統")
     docker_librenms_config = "docker start " + docker_mysql_name
@@ -124,7 +125,7 @@ def create_mysql(school_serial_id, school_name, docker_mysql_name, db_root_pwd, 
     docker_mysql_config = 'docker exec -ti ' + docker_mysql_name + " sh -c " + '"hostname -I"'
    # print(docker_mysql_config)
     docker_mysql_ip = str(subprocess.Popen(docker_mysql_config, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0].split("\r")[0]
-   # print("docker_mysql_ip", docker_mysql_ip)
+    print("docker_mysql_ip", docker_mysql_ip)
     return docker_mysql_ip
 
 def create_service(school_serial_id, school_name):
