@@ -122,8 +122,7 @@ def create_mysql(school_serial_id, school_name, docker_mysql_name, db_root_pwd, 
     docker_mysql_config = 'docker exec -ti ' + docker_mysql_name + " service mysql start"
    # print(docker_mysql_config)
     os.system(docker_mysql_config + " >/dev/null 2>&1")
-    time.sleep(120)
-    docker_mysql_config = 'docker exec -ti ' + docker_mysql_name + " sh -c " + '"hostname -I"'
+    docker_mysql_config = 'docker exec ' + docker_mysql_name + " sh -c " + '"hostname -I"'
     print(docker_mysql_config)
     docker_mysql_ip = str(subprocess.Popen(docker_mysql_config, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0].split("\r")[0]
     print("docker_mysql_ip", docker_mysql_ip)
