@@ -1,3 +1,4 @@
+import os, sys
 import xlrd
 
 school_list = xlrd.open_workbook("./315校名單.xlsx")
