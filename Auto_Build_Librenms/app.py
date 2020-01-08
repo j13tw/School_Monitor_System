@@ -84,6 +84,26 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
     docker_librenms_config = "docker exec -ti " + school_name + ' sh -c "sudo sh client.sh"'
     print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
+    print("自動添加設備服務-1")
+    docker_librenms_config = "docker exec -ti " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.176/32'
+    print(docker_librenms_config)
+    os.system(docker_librenms_config + " >/dev/null 2>&1")
+    print("自動添加設備服務-2")
+    docker_librenms_config = "docker exec -ti " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.196/32'
+    print(docker_librenms_config)
+    os.system(docker_librenms_config + " >/dev/null 2>&1")
+    print("自動添加設備服務-3")
+    docker_librenms_config = "docker exec -ti " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.197/32'
+    print(docker_librenms_config)
+    os.system(docker_librenms_config + " >/dev/null 2>&1")
+    print("自動添加設備服務-4")
+    docker_librenms_config = "docker exec -ti " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.199/32'
+    print(docker_librenms_config)
+    os.system(docker_librenms_config + " >/dev/null 2>&1")
+    print("自動添加設備服務-5")
+    docker_librenms_config = "docker exec -ti " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.254/32'
+    print(docker_librenms_config)
+    os.system(docker_librenms_config + " >/dev/null 2>&1")
 
 def create_mysql(school_serial_id, school_name, docker_mysql_name, db_root_pwd, db_name, db_user_name, db_user_pwd, librenms_network):
     print("建立監控系統資料庫")
@@ -161,6 +181,6 @@ def create_service(school_serial_id, school_name):
 school_list = xlrd.open_workbook("./315校名單.xlsx")
 school_sheet = school_list.sheets()[0]
 print(school_sheet.nrows)
-for x in range(1, 3):
+for x in range(1, 4):
     create_service(str(int(school_sheet.row_values(x)[0])), str(school_sheet.row_values(x)[3]))
 
