@@ -427,7 +427,7 @@ def edgeNodeSqlUpload():
                             last_discovered_timetaken = " + last_discovered_timetaken + ", last_ping_timetaken = " + last_ping_timetaken + ", purpose = " + purpose + ", type = " + type + ", \
                             serial = " + serial + ", icon = " + icon + ", poller_group = " + poller_group + ", override_sysLocation = " + override_sysLocation + ", notes = " + notes + ", \
                             port_association_mode = " + port_association_mode + ", max_depth = " + max_depth + ", last_poll_attempted = " + last_poll_attempted + ", \
-                            last_discovered = " + last_discovered + ", last_ping = " + last_ping + " WHERE device_id = " + device_id"])
+                            last_discovered = " + last_discovered + ", last_ping = " + last_ping + " WHERE device_id = " + device_id)
                         mysql_conn.commit()
                     except:
                         return {"uploadSql": "devices_table_update_Error"} 
