@@ -85,19 +85,19 @@ def create_librenms(school_serial_id, school_name, docker_mysql_name, docker_mys
     print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("自動添加設備服務-1")
-    docker_librenms_config = "docker exec " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.196/32"'
+    docker_librenms_config = "docker exec " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.196"'
     print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("自動添加設備服務-2")
-    docker_librenms_config = "docker exec " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.197/32"'
+    docker_librenms_config = "docker exec " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.197"'
     print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("自動添加設備服務-3")
-    docker_librenms_config = "docker exec " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.199/32"'
+    docker_librenms_config = "docker exec " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.199"'
     print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
     print("自動添加設備服務-4")
-    docker_librenms_config = "docker exec " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.254/32"'
+    docker_librenms_config = "docker exec " + school_name + ' sh -c "python3 /opt/librenms/snmp-scan.py 10.0.0.254"'
     print(docker_librenms_config)
     os.system(docker_librenms_config + " >/dev/null 2>&1")
 
