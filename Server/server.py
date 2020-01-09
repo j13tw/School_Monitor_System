@@ -445,9 +445,9 @@ def edgeNodeSqlUpload():
 
                 # device_state_count = device_state_count + 1
                 # try:
-                #     mysql_connection.execute("INSERT INTO device_state_history (id, device_id, status ,time_logged) \
+                #     mysql_connection.execute("INSERT INTO device_state_history (device_id, status ,time_logged) \
                 #     VALUES (\
-                #     " + str(device_state_count) + ", " + y["device_id"] + ", " + y["status"] + ", '" + str(datetime.datetime.now()) + "')")
+                #     " + y["device_id"] + ", " + y["status"] + ", '" + str(datetime.datetime.now()) + "')")
                 #     mysql_conn.commit()
                 # except:
                 #     return {"uploadSql": "device_state_history_table_insert_Error"}
