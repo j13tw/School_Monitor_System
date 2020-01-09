@@ -131,9 +131,9 @@ mysql_create_edge_alert_log_table = "CREATE TABLE alert_log (\
     PRIMARY KEY(id));"
 
 mysql_create_edge_device_state_history_table = "CREATE TABLE device_state_history (\
-    id          int(10) unsigned    NOT NULL, \
+    id          int(10) unsigned    NOT NULL AUTO_INCREMENT, \
     device_id   int(10) unsigned    NOT NULL, \
-    status       int(11)             NOT NULL, \
+    status       int(11)            NOT NULL, \
     time_logged timestamp           NOT NULL, \
     PRIMARY KEY(id));"
 
@@ -353,12 +353,6 @@ def edgeNodeSqlUpload():
             mysql_reconnect()
             mysql_conn.select_db("school_" + edge_school_id)
             mysql_connection = mysql_conn.cursor()
-            mysql_connection.execute("select id from device_state_history group by id desc limit 1")
-            device_count_id = mysql_connection.fetchall()
-            print(device_count_id)
-            # if (len(list(device)count_id)) == 0): device_state_count = 0
-            # else: 
-            #     device_state_count = int(list(device)count_id)[0][0])
 
             # edge devices table update
             print("Refresh devices tables")
