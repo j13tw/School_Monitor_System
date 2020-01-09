@@ -357,7 +357,7 @@ def edgeNodeSqlUpload():
                 port=mysql_port, \
                 user=mysql_user, \
                 passwd=mysql_passwd, \
-                db="school_" + edge_school_id
+                db="school_" + edge_school_id,
                 charset='utf8')
             mysql_conn.select_db("school_" + edge_school_id)
             mysql_connection = mysql_conn.cursor()
