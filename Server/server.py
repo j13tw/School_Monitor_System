@@ -353,7 +353,7 @@ def edgeNodeSqlUpload():
 
         if (mysql_connect() == True):
             # mysql_reconnect()
-            if (mysql_check_db("school_" + edge_school_id)) return {"uploadSql": "Mysql_DB_Not_Exist_Error"} 
+            if (mysql_check_db("school_" + edge_school_id)): return {"uploadSql": "Mysql_DB_Not_Exist_Error"} 
             mysql_conn = MySQLdb.connect(host = mysql_host, \
                 port=mysql_port, \
                 user=mysql_user, \
