@@ -351,8 +351,8 @@ def edgeNodeSqlUpload():
 
         if (mysql_connect() == True):
             # mysql_reconnect()
-            # mysql_conn.select_db("school_" + edge_school_id)
-            # mysql_connection = mysql_conn.cursor()
+            mysql_conn.select_db("school_" + edge_school_id)
+            mysql_connection = mysql_conn.cursor()
             # mysql_connection.execute("select id from device_state_history group by id desc limit 1")
             # if (len(list(mysql_connection)) == 0): device_state_count = 0
             # else: 
