@@ -121,7 +121,7 @@ def create_mysql(school_serial_id, school_name, docker_mysql_name, db_root_pwd, 
     docker_mysql_config = 'docker exec ' + docker_mysql_name + " sh -c " + '"hostname -I"'
     print(docker_mysql_config)
     docker_mysql_ip = str(subprocess.Popen(docker_mysql_config, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].decode('utf-8')).split("\n")[0].split("\r")[0].split(" ")[0]
-    print("docker_mysql_ip" + docker_mysql_ip + "-123")
+    print("docker_mysql_ip", docker_mysql_ip)
     return docker_mysql_ip
 
 def create_service(school_serial_id, school_name):
@@ -147,7 +147,7 @@ def create_service(school_serial_id, school_name):
    # print(librenms_mysql_ip)
     create_librenms(school_serial_id, school_name, librenms_mysql_docker_name, librenms_mysql_ip, librenms_mysql_user_db, librenms_mysql_user_name, librenms_mysql_user_pwd, librenms_network)
     print("監控系統安裝完成")
-    print("請輸入 http://127.0.0.1/")
+    print("請輸入 http://127.0.0.1:" + str(30000+int(argv[1])))
     print("帳號 : admin")
     print("密碼 : admin")
     print("感謝您的安裝與使用~")
