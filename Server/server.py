@@ -408,8 +408,8 @@ def edgeNodeSqlUpload():
                 if (y["max_depth"] != "NULL"): y["max_depth"] = str(y["max_depth"])
                 edge_device_list.append(y["device_id"])
 
-                if (mysql_connection.execute("select * from devices where device_id = " + y["device_id"]) == 1):
-                    print("a")
+                # if (mysql_connection.execute("select * from devices where device_id = " + y["device_id"]) == 1):
+                #     print("a")
                 #     try:
                 #         mysql_connection.execute("UPDATE devices SET \
                 #             device_id = " + y["device_id"] + ", hostname = " + y["hostname"] + ", sysName = " + y["sysName"] + ", ip = " + y["ip"] + ", community = " + y["community"] + ", \
@@ -426,8 +426,8 @@ def edgeNodeSqlUpload():
                 #         mysql_conn.commit()
                 #     except:
                 #         return {"uploadSql": "devices_table_update_Error"} 
-                else:
-                    print("b")
+                # else:
+                #     print("b")
                 #     try:
                 #         mysql_connection.execute("INSERT INTO devices (device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo, \
                 #             snmpver, port, transport, timeout, retries, snmp_disable, bgpLocalAs, sysObjectID, sysDescr, sysContact, version, hardware, features, location_id, os, \
