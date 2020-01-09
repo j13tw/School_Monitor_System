@@ -352,9 +352,15 @@ def edgeNodeSqlUpload():
         edge_device_list = []
 
         if (mysql_connect() == True):
-            mysql_reconnect()
+            # mysql_reconnect()
+            mysql_conn = MySQLdb.connect(host = mysql_host, \
+                port=mysql_port, \
+                user=mysql_user, \
+                passwd=mysql_passwd, \
+                db="school_" + edge_school_id
+                charset='utf8')
             mysql_conn.select_db("school_" + edge_school_id)
-            #mysql_connection = mysql_conn.cursor()
+            mysql_connection = mysql_conn.cursor()
 
             # edge devices table update
             print("Refresh devices tables")
@@ -449,41 +455,38 @@ def edgeNodeSqlUpload():
                 print("recive school_" + edge_school_id + " devices " + y["device_id"] + "=" + y["hostname"]) 
 
                 try:
-                    mysql_conn.query("INSERT INTO device_state_history (device_id, status ,time_logged) \
+                    mysql_connection.execute("INSERT INTO device_state_history (device_id, status ,time_logged) \
                     VALUES (\
                     " + y["device_id"] + ", " + y["status"] + ", '" + str(datetime.datetime.now()) + "')")
-                    # mysql_connection.execute("INSERT INTO device_state_history (device_id, status ,time_logged) \
-                    # VALUES (\
-                    # " + y["device_id"] + ", " + y["status"] + ", '" + str(datetime.datetime.now()) + "')")
                     mysql_conn.commit()
                 except:
                     return {"uploadSql": "device_state_history_table_insert_Error"}
                 print("add device " + y["device_id"] + " status: " + y["status"] + " time: " + str(datetime.datetime.now()))
 
             # edge device_perf table update
-            print("Refresh device_perf tables")
-            for x in range(0, len(edge_school_device_perf)):
-                y = json.loads(str(edge_school_device_perf[x]).replace("'", '"'))
-                if (y["id"] != "NULL"): y["id"] = str(y["id"])
-                if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
-                if (y["timestamp"] != "NULL"):  y["timestamp"] = "'" + str(y["timestamp"]) + "'"
-                if (y["xmt"] != "NULL"): y["xmt"] = str(y["xmt"])
-                if (y["rcv"] != "NULL"): y["rcv"] = str(y["rcv"])
-                if (y["loss"] != "NULL"): y["loss"] = str(y["loss"])
-                if (y["min"] != "NULL"): y["min"] = str(y["min"]) 
-                if (y["max"] != "NULL"): y["max"] = str(y["max"])
-                if (y["avg"] != "NULL"): y["avg"] = str(y["avg"] ) 
-                if (y["debug"] != "NULL"): y["debug"] = "'" + str(y["debug"]) + "'"
-                if (mysql_connection.execute("select count(*) from device_perf where id = " + y["id"]) == 0):
-                    try:
-                        mysql_connection.execute("INSERT INTO device_perf (id, device_id, timestamp, xmt, rcv, loss, min, max, avg, debug) \
-                            VALUE \
-                            (" + y["id"] + ", " + y["device_id"] + ", " + y["timestamp"] + ", " + y["xmt"] + ", " + y["rcv"] + ", " + y["loss"] + ", " + y["min"] + ", " + y["max"] + ", " + y["avg"] + ", " + y["debug"] + ")")
-                        print("device_perf insert new data !")
-                        mysql_conn.commit()
-                    except:
-                        return {"uploadSql": "device_perf_table_insert_Error"}
-                print("recive school_" + edge_school_id + " device_perf " + y["device_id"] + "=> device_perf_id = " + y["id"]) 
+            # print("Refresh device_perf tables")
+            # for x in range(0, len(edge_school_device_perf)):
+            #     y = json.loads(str(edge_school_device_perf[x]).replace("'", '"'))
+            #     if (y["id"] != "NULL"): y["id"] = str(y["id"])
+            #     if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
+            #     if (y["timestamp"] != "NULL"):  y["timestamp"] = "'" + str(y["timestamp"]) + "'"
+            #     if (y["xmt"] != "NULL"): y["xmt"] = str(y["xmt"])
+            #     if (y["rcv"] != "NULL"): y["rcv"] = str(y["rcv"])
+            #     if (y["loss"] != "NULL"): y["loss"] = str(y["loss"])
+            #     if (y["min"] != "NULL"): y["min"] = str(y["min"]) 
+            #     if (y["max"] != "NULL"): y["max"] = str(y["max"])
+            #     if (y["avg"] != "NULL"): y["avg"] = str(y["avg"] ) 
+            #     if (y["debug"] != "NULL"): y["debug"] = "'" + str(y["debug"]) + "'"
+            #     if (mysql_connection.execute("select count(*) from device_perf where id = " + y["id"]) == 0):
+            #         try:
+            #             mysql_connection.execute("INSERT INTO device_perf (id, device_id, timestamp, xmt, rcv, loss, min, max, avg, debug) \
+            #                 VALUE \
+            #                 (" + y["id"] + ", " + y["device_id"] + ", " + y["timestamp"] + ", " + y["xmt"] + ", " + y["rcv"] + ", " + y["loss"] + ", " + y["min"] + ", " + y["max"] + ", " + y["avg"] + ", " + y["debug"] + ")")
+            #             print("device_perf insert new data !")
+            #             mysql_conn.commit()
+            #         except:
+            #             return {"uploadSql": "device_perf_table_insert_Error"}
+            #     print("recive school_" + edge_school_id + " device_perf " + y["device_id"] + "=> device_perf_id = " + y["id"]) 
 
             # # edge alert_log table update
             # print("Refresh alert_log tables")
