@@ -350,7 +350,6 @@ def edgeNodeSqlUpload():
         edge_device_list = []
 
         if (mysql_connect() == True):
-            mysql_reconnect()
             mysql_conn.select_db("school_" + edge_school_id)
             mysql_connection = mysql_conn.cursor()
 
