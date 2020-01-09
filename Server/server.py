@@ -8,6 +8,8 @@ import datetime
 import json
 import xlrd
 
+# unlock memory use
+sys.setrecursionlimit(100000)
 
 # define Mysql status
 mysql_conn = ""
