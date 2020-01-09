@@ -293,7 +293,10 @@ def edgeNodeRegist():
             return {"regist": "fail", "info": "post_Error"}
         
         if (mysql_connect() == True):
-            mysql_reconnect()
+            try:
+                mysql_conn.ping()
+            except:
+                mysql_reconnect()
             mysql_conn.select_db(mysql_service_db)
             mysql_connection = mysql_conn.cursor()
             mysql_check_school = mysql_connection.execute("Select school_Id from " + mysql_school_table + " where school_Id = '" + edge_school_id + "'")
@@ -350,7 +353,10 @@ def edgeNodeSqlUpload():
         edge_device_list = []
 
         if (mysql_connect() == True):
-            mysql_reconnect()
+            try:
+                mysql_conn.ping()
+            except:
+                mysql_reconnect()
             mysql_conn.select_db("school_" + edge_school_id)
             mysql_connection = mysql_conn.cursor()
             mysql_connection.execute("select id from device_state_history group by id desc limit 1")
