@@ -360,7 +360,7 @@ def edgeNodeSqlUpload():
                 passwd=mysql_passwd, \
                 db="school_" + edge_school_id,
                 charset='utf8')
-            mysql_conn.select_db("school_" + edge_school_id)
+            # mysql_conn.select_db("school_" + edge_school_id)
             mysql_connection = mysql_conn.cursor()
 
             # edge devices table update
