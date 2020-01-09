@@ -9,10 +9,16 @@ os.system("apt-get install -y python3 python3-dev python3-pip")
 #os.system("apt-get install libmariadbclient-dev")
 os.system("pip3 install mysqlclient")
 os.system("pip3 install get-mac")
-os.system("pip3 install ipgetter2==1.1.9")
+#os.system("pip3 install ipgetter2==1.1.9")
+os.system("wget https://files.pythonhosted.org/packages/bd/c6/54f2a8e8a187b537d588a3760b7a14feb5e0057c708b29b8e094a3383021/ipgetter2-1.1.9.zip")
+os.system("apt-get install -y unzip")
+os.system("unzip ipgetter2-1.1.9.zip")
+os.chdir("ipgetter2-1.1.9")
+os.system("python3 setup.py install --user")
+os.chdir("..")
 os.system("pip3 install requests")
 
-# supervisor install 
+# supervisor install
 os.system("apt-get install -y supervisor")
 os.system("cp /home/pi/School_Monitor_System/Client/client.conf /etc/supervisor/conf.d")
 os.system("service supervisor restart")
