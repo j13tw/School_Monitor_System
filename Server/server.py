@@ -156,8 +156,7 @@ def mysql_connect():
         mysql_conn = MySQLdb.connect(host = mysql_host, \
             port=mysql_port, \
             user=mysql_user, \
-            passwd=mysql_passwd)
-        mysql_conn.close()
+            passwd=mysql_passwd)      
         return True
     except:
         return False
@@ -253,7 +252,6 @@ if (not mysql_check_table(mysql_service_db, mysql_school_table)):
         mysql_connection.execute("INSERT INTO " + mysql_school_table + "(School_Serial_Id, School_Location, School_Name, School_Id) \
             VALUES (" + str(int(school_sheet.row_values(x)[0])) + ", '" + str(school_sheet.row_values(x)[1]) + "', '" + str(school_sheet.row_values(x)[2]) + "', '" + str(school_sheet.row_values(x)[3]) + "')")
         mysql_conn.commit()
-mysql_conn.close()
 
 @app.route('/edgeNodeHealthCheck', methods=['POST'])
 def edgeNodeHealthCheck():
@@ -331,7 +329,6 @@ def edgeNodeRegist():
             if (mysql_check_table("school_" + edge_school_id, "device_state_history") == False):
                 if (mysql_creat_edge_table("school_" + edge_school_id, "device_state_history") == False):
                     return {"regist": "fail", "info": "db_edgeTable_device_state_history_Error"}
-            mysql_conn.close()
             return {"regist": "ok"}
         else:
             return {"regist": "fail"}
@@ -526,8 +523,7 @@ def edgeNodeSqlUpload():
                 mysql_conn.commit()
                 mysql_connection.execute("DELETE from device_state_history where device_id = " + str(x))
                 mysql_conn.commit()
-            print(str(datetime.datetime.now()) + "over")
-            mysql_conn.close()
+            print(str(datetime.datetime.now()) + "over")  
             return {"uploadSql": "ok"}
         else:
             print(str(datetime.datetime.now()) + "Server Mysql Fail")
