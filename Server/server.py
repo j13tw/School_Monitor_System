@@ -354,7 +354,7 @@ def edgeNodeSqlUpload():
         if (mysql_connect() == True):
             mysql_reconnect()
             mysql_conn.select_db("school_" + edge_school_id)
-            mysql_connection = mysql_conn.cursor()
+            #mysql_connection = mysql_conn.cursor()
 
             # edge devices table update
             print("Refresh devices tables")
@@ -449,9 +449,12 @@ def edgeNodeSqlUpload():
                 print("recive school_" + edge_school_id + " devices " + y["device_id"] + "=" + y["hostname"]) 
 
                 try:
-                    mysql_connection.execute("INSERT INTO device_state_history (device_id, status ,time_logged) \
+                    mysql_conn.query("INSERT INTO device_state_history (device_id, status ,time_logged) \
                     VALUES (\
                     " + y["device_id"] + ", " + y["status"] + ", '" + str(datetime.datetime.now()) + "')")
+                    # mysql_connection.execute("INSERT INTO device_state_history (device_id, status ,time_logged) \
+                    # VALUES (\
+                    # " + y["device_id"] + ", " + y["status"] + ", '" + str(datetime.datetime.now()) + "')")
                     mysql_conn.commit()
                 except:
                     return {"uploadSql": "device_state_history_table_insert_Error"}
