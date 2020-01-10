@@ -308,7 +308,7 @@ def edgeNodeRegist():
             return {"regist": "fail", "info": "post_Error"}
         
         if (mysql_connect() == True):
-            if (mysql_check_db("school_" + edge_school_id)): return {"uploadSql": "Mysql_DB_Not_Exist_Error"} 
+            if (mysql_check_db("school_" + edge_school_id) == False): return {"uploadSql": "Mysql_DB_Not_Exist_Error"} 
             mysql_conn = MySQLdb.connect(host = mysql_host, \
                 port=mysql_port, \
                 user=mysql_user, \
@@ -363,10 +363,10 @@ def edgeNodeSqlUpload():
         edge_school_devices = edgeData["devices"]
         edge_school_device_perf = edgeData["device_perf"]
         edge_school_alert_log = edgeData["alert_log"]
-        # print("school_id", "\n", edge_school_id)
-        # print("edge_school_devices", "\n", edge_school_devices)
-        # print("edge_school_device_perf", "\n", edge_school_device_perf)
-        # print("edge_school_alert_log", "\n", edge_school_alert_log)
+        print("school_id", "\n", edge_school_id)
+        print("edge_school_devices", "\n", edge_school_devices)
+        print("edge_school_device_perf", "\n", edge_school_device_perf)
+        print("edge_school_alert_log", "\n", edge_school_alert_log)
         edge_device_list = []
 
         if (mysql_connect() == True):
@@ -433,6 +433,7 @@ def edgeNodeSqlUpload():
                 if (y["max_depth"] != "NULL"): y["max_depth"] = str(y["max_depth"])
                 edge_device_list.append(y["device_id"])
 
+                print(mysql_connection.execute("select count(*) from devices where device_id = " + y["device_id"]))
                 if (mysql_connection.execute("select count(*) from devices where device_id = " + y["device_id"]) == 1):
                     print("a")
                     try:
