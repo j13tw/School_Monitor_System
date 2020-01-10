@@ -198,6 +198,11 @@ def mysql_creat_edge_db(dbName):
 # mysql 檢查指定 db 是否存
 def mysql_check_db(dbName):
     try:
+        mysql_conn = MySQLdb.connect(host = mysql_host, \
+            port=mysql_port, \
+            user=mysql_user, \
+            passwd=mysql_passwd, \
+            charset='utf8')
         mysql_conn.select_db(dbName)
         return True
     except:
@@ -295,10 +300,10 @@ def edgeNodeRegist():
             edge_school_ip = str(edgeData["ip"])
             edge_school_mac = str(edgeData["mac"])
             edge_school_status = str(edgeData["status"])
-            print("School_Id = "+ edge_school_id)
-            print("School_Ip = "+ edge_school_ip)
-            print("School_Status = "+ str(edge_school_status))
-            print("School_MAC = "+ edge_school_mac)
+            print("School_Id = " + edge_school_id)
+            print("School_Ip = " + edge_school_ip)
+            print("School_Status = " + str(edge_school_status))
+            print("School_MAC = " + edge_school_mac)
         except:
             return {"regist": "fail", "info": "post_Error"}
         
@@ -308,7 +313,8 @@ def edgeNodeRegist():
                 port=mysql_port, \
                 user=mysql_user, \
                 db=mysql_service_db, \
-                passwd=mysql_passwd)
+                passwd=mysql_passwd, \
+                charset='utf8')
             mysql_connection = mysql_conn.cursor()
             mysql_check_school = mysql_connection.execute("Select school_Id from " + mysql_school_table + " where school_Id = '" + edge_school_id + "'")
             if (mysql_check_school == 0):
@@ -369,7 +375,8 @@ def edgeNodeSqlUpload():
                 port=mysql_port, \
                 user=mysql_user, \
                 passwd=mysql_passwd, \
-                db="school_" + edge_school_id)
+                db="school_" + edge_school_id,
+                charset='utf8')
             mysql_connection = mysql_conn.cursor()
 
             # edge devices table update
