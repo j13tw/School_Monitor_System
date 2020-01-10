@@ -147,8 +147,7 @@ def mysql_reconnect():
         mysql_conn = MySQLdb.connect(host = mysql_host, \
             port=mysql_port, \
             user=mysql_user, \
-            passwd=mysql_passwd, \
-            charset='utf8')
+            passwd=mysql_passwd)
         return True
     except:
         return False
@@ -175,8 +174,7 @@ def mysql_creat_edge_table(dbName, tableName):
         mysql_conn = MySQLdb.connect(host = mysql_host, \
             port=mysql_port, \
             user=mysql_user, \
-            passwd=mysql_passwd,
-            charset='utf8')   
+            passwd=mysql_passwd)   
         mysql_conn.select_db(dbName)
         mysql_connection = mysql_conn.cursor()
         mysql_connection.execute(tableInfo)
@@ -190,8 +188,7 @@ def mysql_creat_edge_db(dbName):
         mysql_conn = MySQLdb.connect(host = mysql_host, \
             port=mysql_port, \
             user=mysql_user, \
-            passwd=mysql_passwd,
-            charset='utf8')   
+            passwd=mysql_passwd)   
         mysql_connection = mysql_conn.cursor()
         mysql_connection.execute("create database " + dbName)
         return True
