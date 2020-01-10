@@ -308,7 +308,6 @@ def edgeNodeRegist():
             return {"regist": "fail", "info": "post_Error"}
         
         if (mysql_connect() == True):
-            if (mysql_check_db("school_" + edge_school_id) == False): return {"uploadSql": "Mysql_DB_Not_Exist_Error"} 
             mysql_conn = MySQLdb.connect(host = mysql_host, \
                 port=mysql_port, \
                 user=mysql_user, \
@@ -370,7 +369,7 @@ def edgeNodeSqlUpload():
         edge_device_list = []
 
         if (mysql_connect() == True):
-            if (mysql_check_db("school_" + edge_school_id)): return {"uploadSql": "Mysql_DB_Not_Exist_Error"} 
+            if (mysql_check_db("school_" + edge_school_id) == False): return {"uploadSql": "Mysql_DB_Not_Exist_Error"} 
             mysql_conn = MySQLdb.connect(host = mysql_host, \
                 port=mysql_port, \
                 user=mysql_user, \
