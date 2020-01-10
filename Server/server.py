@@ -211,7 +211,11 @@ def mysql_check_db(dbName):
 # mysql 檢查指定 db 中 table 是否存
 def mysql_check_table(dbName, tableName):
     if mysql_check_db(dbName) == True:
-        mysql_conn.select_db(dbName)
+        mysql_conn = MySQLdb.connect(host = mysql_host, \
+            port=mysql_port, \
+            user=mysql_user, \
+            passwd=mysql_passwd
+            db=dbName)
         mysql_connection = mysql_conn.cursor()
         mysql_connection.execute("show tables;")
         for x in mysql_connection:
