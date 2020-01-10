@@ -307,9 +307,7 @@ def edgeNodeRegist():
             mysql_conn = MySQLdb.connect(host = mysql_host, \
                 port=mysql_port, \
                 user=mysql_user, \
-                passwd=mysql_passwd, \
-                db="school_" + edge_school_id,
-                charset='utf8')
+                passwd=mysql_passwd)
             mysql_connection = mysql_conn.cursor()
             mysql_check_school = mysql_connection.execute("Select school_Id from " + mysql_school_table + " where school_Id = '" + edge_school_id + "'")
             if (mysql_check_school == 0):
