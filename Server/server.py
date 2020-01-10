@@ -432,7 +432,7 @@ def edgeNodeSqlUpload():
                 if (y["max_depth"] != "NULL"): y["max_depth"] = str(y["max_depth"])
                 edge_device_list.append(y["device_id"])
 
-                print("select count(*) from devices where device_id = " + y["device_id"])
+                print(mysql_connection.execute("select * from devices where device_id = " + y["device_id"]))
                 if (mysql_connection.execute("select count(*) from devices where device_id = " + y["device_id"]) == 1):
                     print("a")
                     try:
