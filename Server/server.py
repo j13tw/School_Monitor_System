@@ -214,7 +214,7 @@ def mysql_check_table(dbName, tableName):
         mysql_conn = MySQLdb.connect(host = mysql_host, \
             port=mysql_port, \
             user=mysql_user, \
-            passwd=mysql_passwd
+            passwd=mysql_passwd, \
             db=dbName)
         mysql_connection = mysql_conn.cursor()
         mysql_connection.execute("show tables;")
