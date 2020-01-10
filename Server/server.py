@@ -369,8 +369,7 @@ def edgeNodeSqlUpload():
                 port=mysql_port, \
                 user=mysql_user, \
                 passwd=mysql_passwd, \
-                db="school_" + edge_school_id,
-                charset='utf8')
+                db="school_" + edge_school_id)
             mysql_connection = mysql_conn.cursor()
 
             # edge devices table update
