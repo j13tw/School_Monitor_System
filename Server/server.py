@@ -158,7 +158,8 @@ def mysql_connect():
         mysql_conn = MySQLdb.connect(host = mysql_host, \
             port=mysql_port, \
             user=mysql_user, \
-            passwd=mysql_passwd)      
+            passwd=mysql_passwd,
+            charset='utf8')      
         return True
     except:
         return False
@@ -171,6 +172,11 @@ def mysql_creat_edge_table(dbName, tableName):
     elif tableName == "device_state_history": tableInfo = mysql_create_edge_device_state_history_table
     # print(tableName, tableInfo)
     try:
+        mysql_conn = MySQLdb.connect(host = mysql_host, \
+            port=mysql_port, \
+            user=mysql_user, \
+            passwd=mysql_passwd,
+            charset='utf8')   
         mysql_conn.select_db(dbName)
         mysql_connection = mysql_conn.cursor()
         mysql_connection.execute(tableInfo)
@@ -181,6 +187,11 @@ def mysql_creat_edge_table(dbName, tableName):
 # 建立 edge 所使用的 DB
 def mysql_creat_edge_db(dbName):
     try:
+        mysql_conn = MySQLdb.connect(host = mysql_host, \
+            port=mysql_port, \
+            user=mysql_user, \
+            passwd=mysql_passwd,
+            charset='utf8')   
         mysql_connection = mysql_conn.cursor()
         mysql_connection.execute("create database " + dbName)
         return True
@@ -295,8 +306,13 @@ def edgeNodeRegist():
             return {"regist": "fail", "info": "post_Error"}
         
         if (mysql_connect() == True):
-            mysql_reconnect()
-            mysql_conn.select_db(mysql_service_db)
+            if (mysql_check_db("school_" + edge_school_id)): return {"uploadSql": "Mysql_DB_Not_Exist_Error"} 
+            mysql_conn = MySQLdb.connect(host = mysql_host, \
+                port=mysql_port, \
+                user=mysql_user, \
+                passwd=mysql_passwd, \
+                db="school_" + edge_school_id,
+                charset='utf8')
             mysql_connection = mysql_conn.cursor()
             mysql_check_school = mysql_connection.execute("Select school_Id from " + mysql_school_table + " where school_Id = '" + edge_school_id + "'")
             if (mysql_check_school == 0):
@@ -352,7 +368,6 @@ def edgeNodeSqlUpload():
         edge_device_list = []
 
         if (mysql_connect() == True):
-            # mysql_reconnect()
             if (mysql_check_db("school_" + edge_school_id)): return {"uploadSql": "Mysql_DB_Not_Exist_Error"} 
             mysql_conn = MySQLdb.connect(host = mysql_host, \
                 port=mysql_port, \
@@ -360,7 +375,6 @@ def edgeNodeSqlUpload():
                 passwd=mysql_passwd, \
                 db="school_" + edge_school_id,
                 charset='utf8')
-            # mysql_conn.select_db("school_" + edge_school_id)
             mysql_connection = mysql_conn.cursor()
 
             # edge devices table update
@@ -465,76 +479,77 @@ def edgeNodeSqlUpload():
                 print("add device " + y["device_id"] + " status: " + y["status"] + " time: " + str(datetime.datetime.now()))
 
             # edge device_perf table update
-            # print("Refresh device_perf tables")
-            # for x in range(0, len(edge_school_device_perf)):
-            #     y = json.loads(str(edge_school_device_perf[x]).replace("'", '"'))
-            #     if (y["id"] != "NULL"): y["id"] = str(y["id"])
-            #     if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
-            #     if (y["timestamp"] != "NULL"):  y["timestamp"] = "'" + str(y["timestamp"]) + "'"
-            #     if (y["xmt"] != "NULL"): y["xmt"] = str(y["xmt"])
-            #     if (y["rcv"] != "NULL"): y["rcv"] = str(y["rcv"])
-            #     if (y["loss"] != "NULL"): y["loss"] = str(y["loss"])
-            #     if (y["min"] != "NULL"): y["min"] = str(y["min"]) 
-            #     if (y["max"] != "NULL"): y["max"] = str(y["max"])
-            #     if (y["avg"] != "NULL"): y["avg"] = str(y["avg"] ) 
-            #     if (y["debug"] != "NULL"): y["debug"] = "'" + str(y["debug"]) + "'"
-            #     if (mysql_connection.execute("select count(*) from device_perf where id = " + y["id"]) == 0):
-            #         try:
-            #             mysql_connection.execute("INSERT INTO device_perf (id, device_id, timestamp, xmt, rcv, loss, min, max, avg, debug) \
-            #                 VALUE \
-            #                 (" + y["id"] + ", " + y["device_id"] + ", " + y["timestamp"] + ", " + y["xmt"] + ", " + y["rcv"] + ", " + y["loss"] + ", " + y["min"] + ", " + y["max"] + ", " + y["avg"] + ", " + y["debug"] + ")")
-            #             print("device_perf insert new data !")
-            #             mysql_conn.commit()
-            #         except:
-            #             return {"uploadSql": "device_perf_table_insert_Error"}
-            #     print("recive school_" + edge_school_id + " device_perf " + y["device_id"] + "=> device_perf_id = " + y["id"]) 
+            print("Refresh device_perf tables")
+            for x in range(0, len(edge_school_device_perf)):
+                y = json.loads(str(edge_school_device_perf[x]).replace("'", '"'))
+                if (y["id"] != "NULL"): y["id"] = str(y["id"])
+                if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
+                if (y["timestamp"] != "NULL"):  y["timestamp"] = "'" + str(y["timestamp"]) + "'"
+                if (y["xmt"] != "NULL"): y["xmt"] = str(y["xmt"])
+                if (y["rcv"] != "NULL"): y["rcv"] = str(y["rcv"])
+                if (y["loss"] != "NULL"): y["loss"] = str(y["loss"])
+                if (y["min"] != "NULL"): y["min"] = str(y["min"]) 
+                if (y["max"] != "NULL"): y["max"] = str(y["max"])
+                if (y["avg"] != "NULL"): y["avg"] = str(y["avg"] ) 
+                if (y["debug"] != "NULL"): y["debug"] = "'" + str(y["debug"]) + "'"
+                if (mysql_connection.execute("select count(*) from device_perf where id = " + y["id"]) == 0):
+                    try:
+                        mysql_connection.execute("INSERT INTO device_perf (id, device_id, timestamp, xmt, rcv, loss, min, max, avg, debug) \
+                            VALUE \
+                            (" + y["id"] + ", " + y["device_id"] + ", " + y["timestamp"] + ", " + y["xmt"] + ", " + y["rcv"] + ", " + y["loss"] + ", " + y["min"] + ", " + y["max"] + ", " + y["avg"] + ", " + y["debug"] + ")")
+                        print("device_perf insert new data !")
+                        mysql_conn.commit()
+                    except:
+                        return {"uploadSql": "device_perf_table_insert_Error"}
+                print("recive school_" + edge_school_id + " device_perf " + y["device_id"] + "=> device_perf_id = " + y["id"]) 
 
-            # # edge alert_log table update
-            # print("Refresh alert_log tables")
-            # for x in range(0, len(edge_school_alert_log)):
-            #     y = json.loads(str(edge_school_alert_log[x]).replace("'", '"'))
-            #     if (y["id"] != "NULL"): y["id"] = str(y["id"])
-            #     if (y["rule_id"] != "NULL"): y["rule_id"] = str(y["rule_id"])
-            #     if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
-            #     if (y["state"] != "NULL"): y["state"] = str(y["state"])
-            #     if (y["details"] != "NULL"): y["details"] = "'" + str(y["details"]) + "'"
-            #     if (y["time_logged"] != "NULL"): y["time_logged"] = "'" + str(y["time_logged"]) + "'"
-            #     if (mysql_connection.execute("select * from alert_log where id = " + y["id"]) == 0):
-            #         try:
-            #             mysql_connection.execute("INSERT INTO alert_log (id, rule_id, device_id, state, details, time_logged) \
-            #                 VALUE \
-            #                 (" + y["id"] + ", " + y["rule_id"] + ", " + y["device_id"] + ", " + y["state"] + ", " + y["details"] + ", " + y["time_logged"] + ")")
-            #             print("alert_log insert new data !")
-            #             mysql_conn.commit() 
-            #         except:
-            #             return {"uploadSql": "device_perf_table_insert_Error"}
-            #     print("recive school_" + edge_school_id + " alert_log " + y["device_id"] + "=> alert_log_id = " + y["id"]) 
+            # edge alert_log table update
+            print("Refresh alert_log tables")
+            for x in range(0, len(edge_school_alert_log)):
+                y = json.loads(str(edge_school_alert_log[x]).replace("'", '"'))
+                if (y["id"] != "NULL"): y["id"] = str(y["id"])
+                if (y["rule_id"] != "NULL"): y["rule_id"] = str(y["rule_id"])
+                if (y["device_id"] != "NULL"): y["device_id"] = str(y["device_id"])
+                if (y["state"] != "NULL"): y["state"] = str(y["state"])
+                if (y["details"] != "NULL"): y["details"] = "'" + str(y["details"]) + "'"
+                if (y["time_logged"] != "NULL"): y["time_logged"] = "'" + str(y["time_logged"]) + "'"
+                if (mysql_connection.execute("select * from alert_log where id = " + y["id"]) == 0):
+                    try:
+                        mysql_connection.execute("INSERT INTO alert_log (id, rule_id, device_id, state, details, time_logged) \
+                            VALUE \
+                            (" + y["id"] + ", " + y["rule_id"] + ", " + y["device_id"] + ", " + y["state"] + ", " + y["details"] + ", " + y["time_logged"] + ")")
+                        print("alert_log insert new data !")
+                        mysql_conn.commit() 
+                    except:
+                        return {"uploadSql": "device_perf_table_insert_Error"}
+                print("recive school_" + edge_school_id + " alert_log " + y["device_id"] + "=> alert_log_id = " + y["id"]) 
             
-            # # print(edge_device_list)
-            # edge_device_list_set = set(edge_device_list)
-            # cloud_device_list = []
-            # mysql_connection.execute("select device_id from devices")
-            # for x in mysql_connection:
-            #     cloud_device_list.append(str(x[0]))
-            # # print(edge_device_list)
-            # cloud_device_list_set = set(cloud_device_list)
-            # device_difference_list = cloud_device_list_set.difference(edge_device_list_set)
-            # # print(device_difference_list)
-            # for x in device_difference_list:
-            # #    print(x)
-            #     mysql_connection.execute("DELETE from devices where device_id = " + str(x))
-            #     mysql_conn.commit()
-            #     mysql_connection.execute("DELETE from device_perf where device_id = " + str(x))
-            #     mysql_conn.commit()
-            #     mysql_connection.execute("DELETE from alert_log where device_id = " + str(x))
-            #     mysql_conn.commit()
-            #     mysql_connection.execute("DELETE from device_state_history where device_id = " + str(x))
-            #     mysql_conn.commit()
+            # print(edge_device_list)
+            edge_device_list_set = set(edge_device_list)
+            cloud_device_list = []
+            mysql_connection.execute("select device_id from devices")
+            for x in mysql_connection:
+                cloud_device_list.append(str(x[0]))
+            # print(edge_device_list)
+            cloud_device_list_set = set(cloud_device_list)
+            device_difference_list = cloud_device_list_set.difference(edge_device_list_set)
+            # print(device_difference_list)
+            for x in device_difference_list:
+            #    print(x)
+                mysql_connection.execute("DELETE from devices where device_id = " + str(x))
+                mysql_conn.commit()
+                mysql_connection.execute("DELETE from device_perf where device_id = " + str(x))
+                mysql_conn.commit()
+                mysql_connection.execute("DELETE from alert_log where device_id = " + str(x))
+                mysql_conn.commit()
+                mysql_connection.execute("DELETE from device_state_history where device_id = " + str(x))
+                mysql_conn.commit()
             print(str(datetime.datetime.now()) + "over")  
             return {"uploadSql": "ok"}
         else:
             print(str(datetime.datetime.now()) + "Server Mysql Fail")
             return {"uploadSql": "fail"}
+        mysql_conn.close()
 
 if __name__ == '__main__':
 #	app.run(debug = True)
