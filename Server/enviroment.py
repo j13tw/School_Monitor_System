@@ -2,6 +2,12 @@ import os, sys
 import requests
 import time
 from subprocess import check_output
+import json
+
+f = open('/etc/mysql/debian.cnf', 'r')
+fr = f.read()
+mysql_user = fr.split(" = ")[2].split("\n")[0]
+mysql_passwd = fr.split(" = ")[3].split("\n")[0]
 
 create_grafana_datasource = 0
 create_grafana_dashboard = 0
@@ -9,6 +15,10 @@ datasources = open("./datasource.json", "r")
 dashboard = open("./dashboard.json", "r")
 datasources_info = datasources.read()
 dashboard_info = dashboard.read()
+datasources_info_json = json.loads(str(datasources_info))
+datasources_info_json["user"] = mysql_user
+datasources_info_json["password"] = mysql_passwd
+datasources_info = json.dumps(datasources_info_json)
 # print(datasources_info)
 # print(dashboard_info)
 
