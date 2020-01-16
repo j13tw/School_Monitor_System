@@ -5,8 +5,8 @@ from subprocess import check_output
 
 create_grafana_datasource = 0
 create_grafana_dashboard = 0
-datasources = open("/home/ubuntu/School_Monitor_System/Server/datasource.json", "r")
-dashboard = open("/home/ubuntu/School_Monitor_System/Server/dashboard.json", "r")
+datasources = open("./datasource.json", "r")
+dashboard = open("./dashboard.json", "r")
 datasources_info = datasources.read()
 dashboard_info = dashboard.read()
 # print(datasources_info)
@@ -47,6 +47,7 @@ os.system("apt-get -y install supervisor")
 os.system("cp ./server.conf /etc/supervisor/conf.d")
 os.system("service supervisor restart")
 while True:
+    print(str(check_output(["pidof","python3"]).decode("utf-8")).split("\n")[0].split(" "))
     if (len(str(check_output(["pidof","python3"]).decode("utf-8")).split("\n")[0].split(" ")) == 2):
         print("supervisor is on")
         break;
