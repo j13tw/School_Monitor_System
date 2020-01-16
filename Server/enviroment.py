@@ -34,22 +34,6 @@ os.system("systemctl start grafana-server")
 os.system("grafana-cli plugins install grafana-clock-panel")
 os.system("service grafana-server restart")
 
-# supervisor install 
-os.system("apt-get -y install supervisor")
-os.system("cp ./server.conf /etc/supervisor/conf.d")
-os.system("service supervisor restart")
-while True:
-    print(str(check_output(["pidof","python3"]).decode("utf-8")).split("\n")[0].split(" "))
-    if (len(str(check_output(["pidof","python3"]).decode("utf-8")).split("\n")[0].split(" ")) == 2):
-        print("supervisor is on")
-        break;
-    else:
-        print("supervisor is dead")
-    time.sleep(1)
-
-print("wait for system check")
-time.sleep(10)
-
 # grafana setup
 f = open('/etc/mysql/debian.cnf', 'r')
 fr = f.read()
@@ -108,3 +92,19 @@ while (not (create_grafana_datasource and create_grafana_dashboard)):
     except:
         print("grafana_service error")
         time.sleep(10)
+
+# supervisor install 
+os.system("apt-get -y install supervisor")
+os.system("cp ./server.conf /etc/supervisor/conf.d")
+os.system("service supervisor restart")
+while True:
+    print(str(check_output(["pidof","python3"]).decode("utf-8")).split("\n")[0].split(" "))
+    if (len(str(check_output(["pidof","python3"]).decode("utf-8")).split("\n")[0].split(" ")) == 2):
+        print("supervisor is on")
+        break;
+    else:
+        print("supervisor is dead")
+    time.sleep(1)
+
+print("wait for system check")
+time.sleep(10)
