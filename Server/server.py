@@ -8,6 +8,9 @@ import datetime
 import json
 import xlrd
 
+f = open('/etc/mysql/debian.cnf', 'r')
+fr = f.read()
+
 # unlock memory use
 sys.setrecursionlimit(100000)
 
@@ -16,8 +19,8 @@ mysql_conn = ""
 mysql_host = "127.0.0.1"
 mysql_port = 3306
 mysql_db = ""
-mysql_user = "root"
-mysql_passwd = "root"
+mysql_user = fr.split(" = ")[2].split("\n")[0]
+mysql_passwd = fr.split(" = ")[3].split("\n")[0]
 mysql_error = 0
 mysql_output = ""
 mysql_status = 0
