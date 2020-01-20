@@ -281,20 +281,40 @@ def edgeNodeHealthCheck():
         try:
             edgeData = json.loads(str(request.json).replace("'", '"'))
             edge_school_id = int(edgeData["school"])
+            edge_school_ip = str(edgeData["ip"])
+            edge_school_mac = str(edgeData["mac"])
             edge_school_status = str(edgeData["status"])
-            edge_school_devices_table = str(edgeData["devices"])
-            edge_school_device_perf_table = str(edgeData["devices_perf"])
-            edge_school_alert_log_table = str(edgeData["alert_log"])
-            print("healthCheck = ", edge_school_id, edge_school_status)  
-            print("devices", edge_school_devices_table)
-            print("device_perf", edge_school_device_perf_table)
-            print("alert_log", edge_school_alert_log_table) 
+            print("healthCheck = ", edge_school_id, edge_school_status)
+            print("School_Id = " + edge_school_id)
+            print("School_Ip = " + edge_school_ip)
+            print("School_Status = " + str(edge_school_status))
+            print("School_MAC = " + edge_school_mac)
         except:
             return {"check": "fail"}
-        if (edge_school_status == "running"):
-            print("running")
-        else:
-            print("stop")
+
+        if (mysql_connect() == True):
+            mysql_conn = MySQLdb.connect(host = mysql_host, \
+                port=mysql_port, \
+                user=mysql_user, \
+                db=mysql_service_db, \
+                passwd=mysql_passwd, \
+                charset='utf8')
+            mysql_connection = mysql_conn.cursor()
+            mysql_check_school = mysql_connection.execute("Select school_Id from " + mysql_school_table + " where school_Id = '" + edge_school_id + "'")
+            if (mysql_check_school == 0):
+                print("school.id not exist - Error")
+                return {"healthCheck": "fail", "info": "school_id_Error"}
+            check_school_status = mysql_connection.execute("Select * from " + mysql_school_table + " where School_Id = '" + edge_school_id + "' and School_Ip = '" + edge_school_ip + "' and School_MAC = '" + edge_school_mac + "'")
+            if (mysql_check_school == 0):
+                print("school.id not regist- Error")
+                return {"healthCheck": "fail", "info": "school_not_regist_Error"}
+            try:
+                mysql_connection.execute("UPDATE " + mysql_service_table + " SET School_Status = '" + edge_school_status + "', School_LastCheck = '" + str(datetime.datetime.now()) + "' WHERE School_Id = '" + edge_school_id + "'")
+                print("db_Update : " + "school_" + edge_school_id)
+            except: 
+                return {"regist": "fail", "info": "db_Update_Error"}
+            mysql_conn.commit()
+            print(edge_school_id, "is", edge_school_status)
         return {"check": "ok"}
 
 
