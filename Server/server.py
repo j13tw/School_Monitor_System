@@ -142,6 +142,20 @@ mysql_create_edge_device_state_history_table = "CREATE TABLE device_state_histor
     time_logged timestamp           NOT NULL, \
     PRIMARY KEY(id));"
 
+''' speedtest server_distance is km'''
+mysql_create_edge_speedtest_table = "CREATE TABLE speedtest (\
+    id              int(10) unsigned    NOT NULL AUTO_INCREMENT, \
+    ping            double(6,3)        NOT NULL, \
+    download        double(8,3)        NOT NULL, \
+    upload          double(8,3)        NOT NULL, \
+    server_name     varchar(64)        NOT NULL, \
+    server_sponsor  varchar(64)        NOT NULL, \
+    server_distance double(10,5)       NOT NULL, \
+    time_logged     timestamp          NOT NULL, \
+    start_time      datetime           NOT NULL, \
+    end_time        datetime           NOT NULL, \
+    PRIMARY KEY(id));"
+
 mysql_push_edge_data = ""
 
 def mysql_reconnect():
@@ -172,6 +186,7 @@ def mysql_creat_edge_table(dbName, tableName):
     elif tableName == "device_perf": tableInfo = mysql_create_edge_device_perf_table
     elif tableName == "alert_log": tableInfo = mysql_create_edge_alert_log_table
     elif tableName == "device_state_history": tableInfo = mysql_create_edge_device_state_history_table
+    elif tableName == "speedtest": tableInfo = mysql_create_edge_speedtest_table
     # print(tableName, tableInfo)
     try:
         mysql_conn = MySQLdb.connect(host = mysql_host, \
@@ -375,6 +390,9 @@ def edgeNodeRegist():
             if (mysql_check_table("school_" + edge_school_id, "device_state_history") == False):
                 if (mysql_creat_edge_table("school_" + edge_school_id, "device_state_history") == False):
                     return {"regist": "fail", "info": "db_edgeTable_device_state_history_Error"}
+            if (mysql_check_table("school_" + edge_school_id, "speedtest") == False):
+                if (mysql_creat_edge_table("school_" + edge_school_id, "speedtest") == False):
+                    return {"regist": "fail", "info": "db_edgeTable_speedtest_Error"}
             return {"regist": "ok"}
         else:
             return {"regist": "fail"}
@@ -397,7 +415,7 @@ def edgeNodeSpeedtestUpload():
         print("server-sponsor", "{0}".format(edge_school_speedtest["server"]["sponsor"]))
         print("server-name", "{0}".format(edge_school_speedtest["server"]["name"]))
         print("server-distance", "{0:.3f}".format(edge_school_speedtest["server"]["d"]))
-        return
+        return {"uploadSpeedtest": "data_ok"}
 
 @app.route('/edgeNodeSqlUpload', methods=['POST'])
 def edgeNodeSqlUpload():
