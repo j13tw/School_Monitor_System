@@ -388,7 +388,7 @@ def edgeNodeSpeedtestUpload():
         edge_school_speedtest = edgeData["speedtest"]
         print("school_id", edge_school_id)
         print("edge_school_speedtest", edge_school_speedtest)
-        print("ping", "{0:d}".format(edge_school_speedtest["ping"]))
+        print("ping", "{0:.3f}".format(edge_school_speedtest["ping"]))
         print("download-raw", edge_school_speedtest["download"])
         print("download-Mbps", "{0:.3f}".format(int(edge_school_speedtest["download"])/1024/1024))
         print("upload-raw", edge_school_speedtest["upload"])
