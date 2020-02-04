@@ -29,8 +29,10 @@ os.system('add-apt-repository "deb https://packages.grafana.com/oss/deb stable m
 os.system("wget -q -O - https://packages.grafana.com/gpg.key | apt-key add -")
 os.system("apt-get update")
 os.system("apt-get install -y grafana")
-os.system("systemctl daemon-reload")
-os.system("systemctl start grafana-server")
+# os.system("systemctl daemon-reload")
+# os.system("systemctl start grafana-server")
+# os.system("systemctl enable grafana-server")
+os.system("service grafana-server start")
 os.system("grafana-cli plugins install grafana-clock-panel")
 os.system("service grafana-server restart")
 

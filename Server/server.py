@@ -379,6 +379,25 @@ def edgeNodeRegist():
         else:
             return {"regist": "fail"}
         
+@app.route('/edgeNodeSpeedtestUpload', methods=['POST'])
+def edgeNodeSpeedtestUpload():
+    if request.method == 'POST':
+        print(str(datetime.datetime.now()) + "start")
+        edgeData = json.loads(str(request.json).replace("'", '"'))
+        edge_school_id = str(edgeData["school"])
+        edge_school_speedtest = edgeData["speedtest"]
+        print("school_id", edge_school_id)
+        print("edge_school_speedtest", edge_school_speedtest)
+        print("ping", "{0:d}".format(edge_school_speedtest["ping"]))
+        print("download-raw", edge_school_speedtest["download"])
+        print("download-Mbps", "{0:.3f}".format(int(edge_school_speedtest["download"])/1024/1024))
+        print("upload-raw", edge_school_speedtest["upload"])
+        print("upload-Mbps", "{0:.3f}".format(int(edge_school_speedtest["upload"])/1024/1024))
+        print("timestamp", "{0:s}".format(edge_school_speedtest["timestamp"]))
+        print("server-sponsor", "{0:d}".format(edge_school_speedtest["server"]["sponsor"]))
+        print("server-name", "{0:d}".format(edge_school_speedtest["server"]["name"]))
+        print("server-distance", "{0:d}".format(edge_school_speedtest["server"]["d"]))
+        return
 
 @app.route('/edgeNodeSqlUpload', methods=['POST'])
 def edgeNodeSqlUpload():
