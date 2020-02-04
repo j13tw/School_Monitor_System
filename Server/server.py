@@ -394,9 +394,9 @@ def edgeNodeSpeedtestUpload():
         print("upload-raw", edge_school_speedtest["upload"])
         print("upload-Mbps", "{0:.3f}".format(int(edge_school_speedtest["upload"])/1024/1024))
         print("timestamp", "{0:s}".format(edge_school_speedtest["timestamp"]))
-        print("server-sponsor", "{0:d}".format(edge_school_speedtest["server"]["sponsor"]))
-        print("server-name", "{0:d}".format(edge_school_speedtest["server"]["name"]))
-        print("server-distance", "{0:d}".format(edge_school_speedtest["server"]["d"]))
+        print("server-sponsor", "{0}".format(edge_school_speedtest["server"]["sponsor"]))
+        print("server-name", "{0}".format(edge_school_speedtest["server"]["name"]))
+        print("server-distance", "{0:.3f}".format(edge_school_speedtest["server"]["d"]))
         return
 
 @app.route('/edgeNodeSqlUpload', methods=['POST'])
