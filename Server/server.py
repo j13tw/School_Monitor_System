@@ -405,28 +405,28 @@ def edgeNodeSpeedtestUpload():
         edge_school_id = str(edgeData["school"])
         edge_school_speedtest = edgeData["speedtest"]
 
-        ping = "{0:.3f}".format(float(edge_school_speedtest["ping"]))
-        download = "{0:.3f}".format(float(edge_school_speedtest["download"])/1024/1024)
-        upload = "{0:.3f}".format(float(edge_school_speedtest["upload"])/1024/1024)
-        server_distance = "{0:.3f}".format(float(edge_school_speedtest["server"]["d"]))
-        server_name = "'" + edge_school_speedtest["server"]["name"]) + "'"
-        server_sponsor = "'" + edge_school_speedtest["server"]["sponsor"]) + "'"
+        ping = str(edge_school_speedtest["ping"])
+        download = str(edge_school_speedtest["download"])
+        upload = str(edge_school_speedtest["upload"])
+        server_distance = str(edge_school_speedtest["server_distance"]))
+        server_name = "'" + str(edge_school_speedtest["server_name"]) + "'"
+        server_sponsor = "'" + str(edge_school_speedtest["server_sponsor"]) + "'"
         time_logged = "'" + str(edge_school_speedtest["timestamp"]) + "'"
         start_time = "'" + str(edge_school_speedtest["start_time"]) + "'"
         end_time = "'" + str(edge_school_speedtest["end_time"]) + "'"
 
-        print("school_id", edge_school_id)
-        print("edge_school_speedtest", edge_school_speedtest)
+        print("school_id = ", edge_school_id)
+        print("edge_school_speedtest = ", edge_school_speedtest)
         print("")
-        print("ping", ping)
-        print("download-Mbps", download)
-        print("upload-Mbps", upload)
-        print("timestamp", time_logged)
-        print("server-sponsor", server_sponsor)
-        print("server-name", server_name)
-        print("server-distance", server_distance)
-        print("start_time", start_time)
-        print("end_time", end_time)
+        print("ping = ", ping)
+        print("download-Mbps = ", download)
+        print("upload-Mbps = ", upload)
+        print("timestamp = ", time_logged)
+        print("server-sponsor = ", server_sponsor)
+        print("server-name = ", server_name)
+        print("server-distance = ", server_distance)
+        print("start_time = ", start_time)
+        print("end_time = ", end_time)
 
         if (mysql_connect() == True):
             if (mysql_check_db("school_" + edge_school_id) == False or mysql_check_table("school_" + edge_school_id, "speedtest") == False): 
@@ -439,9 +439,13 @@ def edgeNodeSpeedtestUpload():
                 charset='utf8')
             mysql_connection = mysql_conn.cursor()
             print("connect db + speedtest")
-            return {"uploadSpeedtest": "data_ok"}
+            mysql_connection.execute("Insert into speedtest (ping, download, upload, server_name, server_sponsor, server_distance, start_time, end_time) VALUES \
+            (" + ping + ", " + download + ", " + upload + ", " + server_name + ", " + server_sponsor + ", " +  server_distance+ ", " + start_time+ ", " + end_time + ")")
+            mysql_conn.commit()
+            print(mysql_connection.execute("select * from speedtest"))
+            return {"uploadSpeedtest": "ok"}
         }
-        else: return {"uploadSpeedtest": "data_ok"}
+        else: return {"uploadSpeedtest": "db_fail"}
 
 @app.route('/edgeNodeSqlUpload', methods=['POST'])
 def edgeNodeSqlUpload():

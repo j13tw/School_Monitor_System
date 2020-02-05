@@ -16,6 +16,7 @@ cloudState = 0 # 0 is connected / 1 is connect fail
 edgeNodeRegistUrl = "/edgeNodeRegist"
 edgeServiceCheckUrl = "/edgeNodeHealthCheck"
 edgeDatabaseFlashUrl = "/edgeNodeSqlUpload"
+edgeSpeedtestUploadUrl = "/edgeNodeSpeedtestUpload"
 
 registData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "status": ""}
 healthData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "status":""}
@@ -47,22 +48,33 @@ pushSqlDelay = 3  # 拋送 sql 查詢資料延遲次數
 pushSqlCount = checkInterval * pushSqlDelay  # 每次拋送 sql 查詢延時 (pushSqlCount*checkInterval=300s)
 
 def make_speedtest():
-    spd = speedtest.Speedtest()
-    spd.get_best_server()
-    start_time = str(datetime.datetime.now())
-    spd.download()
-    spd.upload()
-    end_time = str(datetime.datetime.now())
+    try:
+        spd = speedtest.Speedtest()
+        spd.get_best_server()
+        start_time = str(datetime.datetime.now())
+        spd.download()
+        spd.upload()
+        end_time = str(datetime.datetime.now())
+    except:
+        return False
     speedtestData['ping'] = "{:.3f}".format(float(spd.results.ping))
     speedtestData['download'] = "{:.3f}".format(float(spd.results.download)/1024/1024)
     speedtestData['upload'] = "{:.3f}".format(float(spd.results.upload)/1024/1024)
     speedtestData['server_name'] = spd.results.server["name"]
     speedtestData['server_sponsor'] = spd.results.server["sponsor"]
     speedtestData['server_distance'] = "{:.5f}".format(float(spd.results.server["d"]))
-    speedtestData['time_log'] = str(datetime.datetime.strptime(spd.results.timestamp, "%Y-%m-%dT%H:%M:%S.%fZ") + datetime.timedelta(hours=8))
+    speedtestData['timestamp'] = str(datetime.datetime.strptime(spd.results.timestamp, "%Y-%m-%dT%H:%M:%S.%fZ") + datetime.timedelta(hours=8))
     speedtestData['start_time'] = start_time
     speedtestData['end_time'] = end_time
     print(speedtestData)
+    try:
+        r = requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeSpeedtestUploadUrl, json=speedtestData)
+        if (json.loads(r.text)["uploadSpeedtest"] == "ok") return True
+        else: False  
+    except:
+        return False
+
+
 
 def mysql_connect():
     global mysql_conn
