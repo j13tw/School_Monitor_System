@@ -439,11 +439,11 @@ def edgeNodeSpeedtestUpload():
                 charset='utf8')
             mysql_connection = mysql_conn.cursor()
             print("connect db + speedtest")
-            mysql_connection.execute("Insert into speedtest (ping, download, upload, server_name, server_sponsor, server_distance, start_time, end_time) VALUES \
-            (" + ping + ", " + download + ", " + upload + ", " + server_name + ", " + server_sponsor + ", " +  server_distance+ ", " + start_time+ ", " + end_time + ")")
-            mysql_conn.commit()
-            print(mysql_connection.execute("select * from speedtest where time_logged like '" + str(edge_school_speedtest["timestamp"]).split(" ")[0] + "%%' order by id desc  limit 1"))
-            return {"uploadSpeedtest": "ok"}
+            if (mysql_connection.execute("select * from speedtest where time_logged like '" + str(edge_school_speedtest["timestamp"]).split(" ")[0] + "%%' order by id desc  limit 1") == 0):
+                mysql_connection.execute("Insert into speedtest (ping, download, upload, server_name, server_sponsor, server_distance, start_time, end_time) VALUES \
+                (" + ping + ", " + download + ", " + upload + ", " + server_name + ", " + server_sponsor + ", " +  server_distance+ ", " + start_time+ ", " + end_time + ")")
+                mysql_conn.commit()
+                return {"uploadSpeedtest": "ok"}
         else: return {"uploadSpeedtest": "db_fail"}
 
 @app.route('/edgeNodeSqlUpload', methods=['POST'])
