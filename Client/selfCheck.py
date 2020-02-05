@@ -59,7 +59,7 @@ def make_speedtest():
     speedtestData['server_name'] = spd.results.server["name"]
     speedtestData['server_sponsor'] = spd.results.server["sponsor"]
     speedtestData['server_distance'] = "{:.5f}".format(float(spd.results.server["d"]))
-    speedtestData['time_log'] = type(spd.results.timestamp)
+    speedtestData['time_log'] = str(datetime.datetime.strptime(spd.results.timestamp, "%Y-%m-%dT%H:%M:%S.%fZ") + datetime.timedelta(hours=8))
     speedtestData['start_time'] = start_time
     speedtestData['end_time'] = end_time
     print(speedtestData)
