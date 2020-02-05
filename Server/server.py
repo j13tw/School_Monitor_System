@@ -444,7 +444,6 @@ def edgeNodeSpeedtestUpload():
             mysql_conn.commit()
             print(mysql_connection.execute("select * from speedtest"))
             return {"uploadSpeedtest": "ok"}
-        }
         else: return {"uploadSpeedtest": "db_fail"}
 
 @app.route('/edgeNodeSqlUpload', methods=['POST'])
