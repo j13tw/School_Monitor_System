@@ -18,6 +18,7 @@ os.chdir("ipgetter2-1.1.9")
 os.system("python3 setup.py install --user")
 os.chdir("..")
 os.system("pip3 install requests")
+os.system("pip3 install speedtest-cli")
 
 # supervisor install
 os.system("apt-get install -y supervisor")

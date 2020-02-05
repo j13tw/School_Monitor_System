@@ -6,6 +6,7 @@ import MySQLdb
 import requests
 import getmac
 import json
+import speedtest
 
 # [Cloud Setup]
 cloudServerProtocol = "http"
@@ -45,6 +46,24 @@ checkInterval = 10 # 鑑測輪詢秒數
 pushSqlDelay = 3  # 拋送 sql 查詢資料延遲次數
 pushSqlCount = checkInterval * pushSqlDelay  # 每次拋送 sql 查詢延時 (pushSqlCount*checkInterval=300s)
 
+def speedtest():
+    submitData = {}
+    spd = speedtest.Speedtest()
+    spd.get_best_server()
+    start_time = datetime.datetime.now()
+    spd.download()
+    spd.upload()
+    end_time = datetime.datetime.now()
+    submitData['ping'] = "{:.3f}".format(float(spd.results.ping))
+    submitData['download'] = "{:.3f}".format(float(spd.results.download)/1024/1024)
+    submitData['upload'] = "{:.3f}".format(float(spd.results.upload)/1024/1024)
+    submitData['server_name'] = spd.results.server["name"]
+    submitData['server_sponsor'] = spd.results.server["sponsor"]
+    submitData['server_distance'] = "{:.5f}".format(float(sspd.results.server["d"]))
+    submitData['time_log'] = spd.results.timestamp
+    submitData['start_time'] = start_time
+    submitData['end_time'] = end_time
+    print(submitData)
 
 def mysql_connect():
     global mysql_conn
@@ -238,6 +257,7 @@ while edgeInitState != 1:
 
 # [Edge selfCheck]
 while edgeInitState:
+    speedtest()
     edgeStatusCode = ""
     try:
         edgeNowState = requests.get("http://127.0.0.1/login").status_code
