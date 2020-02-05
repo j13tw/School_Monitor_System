@@ -69,7 +69,7 @@ def make_speedtest():
     print(speedtestData)
     try:
         r = requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeSpeedtestUploadUrl, json=speedtestData)
-        if (json.loads(r.text)["uploadSpeedtest"] == "ok") return True
+        if (json.loads(r.text)["uploadSpeedtest"] == "ok"): return True
         else: False  
     except:
         return False
