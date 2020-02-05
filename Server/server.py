@@ -408,7 +408,7 @@ def edgeNodeSpeedtestUpload():
         ping = str(edge_school_speedtest["ping"])
         download = str(edge_school_speedtest["download"])
         upload = str(edge_school_speedtest["upload"])
-        server_distance = str(edge_school_speedtest["server_distance"]))
+        server_distance = str(edge_school_speedtest["server_distance"])
         server_name = "'" + str(edge_school_speedtest["server_name"]) + "'"
         server_sponsor = "'" + str(edge_school_speedtest["server_sponsor"]) + "'"
         time_logged = "'" + str(edge_school_speedtest["timestamp"]) + "'"
