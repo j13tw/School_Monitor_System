@@ -50,10 +50,10 @@ def make_speedtest():
     submitData = {}
     spd = speedtest.Speedtest()
     spd.get_best_server()
-    start_time = datetime.datetime.now()
+    start_time = str(datetime.datetime.now())
     spd.download()
     spd.upload()
-    end_time = datetime.datetime.now()
+    end_time = str(datetime.datetime.now())
     submitData['ping'] = "{:.3f}".format(float(spd.results.ping))
     submitData['download'] = "{:.3f}".format(float(spd.results.download)/1024/1024)
     submitData['upload'] = "{:.3f}".format(float(spd.results.upload)/1024/1024)
