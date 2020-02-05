@@ -20,7 +20,7 @@ edgeDatabaseFlashUrl = "/edgeNodeSqlUpload"
 registData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "status": ""}
 healthData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "status":""}
 searchSqlData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "devices": [], "device_perf": [], "alert_log": []}
-
+speedtestData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip()}
 
 #print("argv = "+sys.argv[1])
 #print(registData)
@@ -47,23 +47,22 @@ pushSqlDelay = 3  # 拋送 sql 查詢資料延遲次數
 pushSqlCount = checkInterval * pushSqlDelay  # 每次拋送 sql 查詢延時 (pushSqlCount*checkInterval=300s)
 
 def make_speedtest():
-    submitData = {}
     spd = speedtest.Speedtest()
     spd.get_best_server()
     start_time = str(datetime.datetime.now())
     spd.download()
     spd.upload()
     end_time = str(datetime.datetime.now())
-    submitData['ping'] = "{:.3f}".format(float(spd.results.ping))
-    submitData['download'] = "{:.3f}".format(float(spd.results.download)/1024/1024)
-    submitData['upload'] = "{:.3f}".format(float(spd.results.upload)/1024/1024)
-    submitData['server_name'] = spd.results.server["name"]
-    submitData['server_sponsor'] = spd.results.server["sponsor"]
-    submitData['server_distance'] = "{:.5f}".format(float(spd.results.server["d"]))
-    submitData['time_log'] = spd.results.timestamp
-    submitData['start_time'] = start_time
-    submitData['end_time'] = end_time
-    print(submitData)
+    speedtestData['ping'] = "{:.3f}".format(float(spd.results.ping))
+    speedtestData['download'] = "{:.3f}".format(float(spd.results.download)/1024/1024)
+    speedtestData['upload'] = "{:.3f}".format(float(spd.results.upload)/1024/1024)
+    speedtestData['server_name'] = spd.results.server["name"]
+    speedtestData['server_sponsor'] = spd.results.server["sponsor"]
+    speedtestData['server_distance'] = "{:.5f}".format(float(spd.results.server["d"]))
+    speedtestData['time_log'] = spd.results.timestamp
+    speedtestData['start_time'] = start_time
+    speedtestData['end_time'] = end_time
+    print(speedtestData)
 
 def mysql_connect():
     global mysql_conn
