@@ -21,7 +21,7 @@ edgeSpeedtestUploadUrl = "/edgeNodeSpeedtestUpload"
 registData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "status": ""}
 healthData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "status":""}
 searchSqlData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "devices": [], "device_perf": [], "alert_log": []}
-speedtestData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip()}
+speedtestData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "speedtest": {}}
 
 #print("argv = "+sys.argv[1])
 #print(registData)
@@ -57,15 +57,16 @@ def make_speedtest():
         end_time = str(datetime.datetime.now())
     except:
         return False
-    speedtestData['ping'] = "{:.3f}".format(float(spd.results.ping))
-    speedtestData['download'] = "{:.3f}".format(float(spd.results.download)/1024/1024)
-    speedtestData['upload'] = "{:.3f}".format(float(spd.results.upload)/1024/1024)
-    speedtestData['server_name'] = spd.results.server["name"]
-    speedtestData['server_sponsor'] = spd.results.server["sponsor"]
-    speedtestData['server_distance'] = "{:.5f}".format(float(spd.results.server["d"]))
-    speedtestData['timestamp'] = str(datetime.datetime.strptime(spd.results.timestamp, "%Y-%m-%dT%H:%M:%S.%fZ") + datetime.timedelta(hours=8))
-    speedtestData['start_time'] = start_time
-    speedtestData['end_time'] = end_time
+    
+    speedtestData["speedtest"]['ping'] = "{:.3f}".format(float(spd.results.ping))
+    speedtestData["speedtest"]['download'] = "{:.3f}".format(float(spd.results.download)/1024/1024)
+    speedtestData["speedtest"]['upload'] = "{:.3f}".format(float(spd.results.upload)/1024/1024)
+    speedtestData["speedtest"]['server_name'] = spd.results.server["name"]
+    speedtestData["speedtest"]['server_sponsor'] = spd.results.server["sponsor"]
+    speedtestData["speedtest"]['server_distance'] = "{:.5f}".format(float(spd.results.server["d"]))
+    speedtestData["speedtest"]['timestamp'] = str(datetime.datetime.strptime(spd.results.timestamp, "%Y-%m-%dT%H:%M:%S.%fZ") + datetime.timedelta(hours=8))
+    speedtestData["speedtest"]['start_time'] = start_time
+    speedtestData["speedtest"]['end_time'] = end_time
     print(speedtestData)
     try:
         r = requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeSpeedtestUploadUrl, json=speedtestData)
