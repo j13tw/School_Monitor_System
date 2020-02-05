@@ -46,7 +46,7 @@ checkInterval = 10 # 鑑測輪詢秒數
 pushSqlDelay = 3  # 拋送 sql 查詢資料延遲次數
 pushSqlCount = checkInterval * pushSqlDelay  # 每次拋送 sql 查詢延時 (pushSqlCount*checkInterval=300s)
 
-def speedtest():
+def make_speedtest():
     submitData = {}
     spd = speedtest.Speedtest()
     spd.get_best_server()
@@ -257,7 +257,7 @@ while edgeInitState != 1:
 
 # [Edge selfCheck]
 while edgeInitState:
-    speedtest()
+    make_speedtest()
     edgeStatusCode = ""
     try:
         edgeNowState = requests.get("http://127.0.0.1/login").status_code
