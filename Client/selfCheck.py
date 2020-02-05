@@ -59,7 +59,7 @@ def make_speedtest():
     submitData['upload'] = "{:.3f}".format(float(spd.results.upload)/1024/1024)
     submitData['server_name'] = spd.results.server["name"]
     submitData['server_sponsor'] = spd.results.server["sponsor"]
-    submitData['server_distance'] = "{:.5f}".format(float(sspd.results.server["d"]))
+    submitData['server_distance'] = "{:.5f}".format(float(spd.results.server["d"]))
     submitData['time_log'] = spd.results.timestamp
     submitData['start_time'] = start_time
     submitData['end_time'] = end_time
