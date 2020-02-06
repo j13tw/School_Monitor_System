@@ -176,7 +176,7 @@ def mysql_search_devices_tables():
             "last_discovered_timetaken": z[35], \
             "last_discovered": str(z[36]), \
             "last_ping": str(z[37]), \
-            "last_ping_timetaken": z[38], \
+            "last_ping_timetaken": str(z[38]), \
             "purpose": z[39], \
             "type": z[40], \
             "serial": z[41], \
