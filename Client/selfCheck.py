@@ -167,7 +167,6 @@ def mysql_search_devices_tables():
             "os": z[25], \
             "status": z[26], \
             "status_reason": z[27], \
-            #"ignores": z[28], \
             "disabled": z[28], \
             "uptime": z[29], \
             "agent_uptime": z[30], \
