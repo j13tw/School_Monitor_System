@@ -503,7 +503,7 @@ def edgeNodeSqlUpload():
                 if (y["os"] != "NULL"): y["os"] = "'" + str(y["os"]) + "'"
                 if (y["status"] != "NULL"): y["status"] = str(y["status"])
                 if (y["status_reason"] != "NULL"): y["status_reason"] = "'" + str(y["status_reason"]) + "'" 
-                if (y["ignores"] != "NULL"): y["ignores"] = str(y["ignores"])
+                if (y["ignores"] != "NULL"): y["ignores"] = "'" + str(y["ignores"]) + "'"
                 if (y["disabled"] != "NULL"): y["disabled"] = str(y["disabled"])
                 if (y["uptime"] != "NULL"): y["uptime"] = str(y["uptime"])
                 if (y["agent_uptime"] != "NULL"): y["agent_uptime"] = str(y["agent_uptime"])
