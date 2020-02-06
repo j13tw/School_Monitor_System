@@ -21,7 +21,7 @@ edgeSpeedtestUploadUrl = "/edgeNodeSpeedtestUpload"
 registData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "status": ""}
 healthData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "status":""}
 searchSqlData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "devices": [], "device_perf": [], "alert_log": []}
-speedtestData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "speedtest": {{"timestamp": "2020-01-01 00:00:00"}}
+speedtestData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "speedtest": {"timestamp": "2020-01-01 00:00:00"}}
 
 #print("argv = "+sys.argv[1])
 #print(registData)
