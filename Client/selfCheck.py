@@ -178,7 +178,7 @@ def mysql_search_devices_tables():
             "last_ping": str(z[36]), \
             "last_ping_timetaken": str(z[37]), \
             "purpose": z[38], \
-            "type": z[30], \
+            "type": z[39], \
             "serial": z[40], \
             "icon": z[41], \
             "poller_group": z[42], \
