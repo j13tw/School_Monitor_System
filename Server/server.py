@@ -488,7 +488,7 @@ def edgeNodeSqlUpload():
                 if (y["cryptoalgo"] != "NULL"): y["cryptoalgo"] = "'" + y["cryptoalgo"] + "'"
                 if (y["snmpver"] != "NULL"): y["snmpver"] = "'" + y["snmpver"] + "'"
                 if (y["port"] != "NULL"): y["port"] = str(y["port"])
-                if (y["transport"] != "NULL"): y["transport"] = "'" + y["transport"] + "'"
+                if (y["transport"] != "NULL"): y["transport"] = "'" + str(y["transport"]) + "'"
                 if (y["timeout"] != "NULL"): y["timeout"] = str(y["timeout"])
                 if (y["retries"] != "NULL"): y["retries"] = str(y["retries"])
                 if (y["snmp_disable"] != "NULL"): y["snmp_disable"] = str(y["snmp_disable"])
