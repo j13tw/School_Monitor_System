@@ -130,7 +130,7 @@ def mysql_search_devices_tables():
     mysql_connection = mysql_conn.cursor()
     deviceCount = mysql_connection.execute("select device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, \
         cryptopass, cryptoalgo, snmpver, port, transport, timeout, retries, snmp_disable, bgpLocalAs, sysObjectID, sysDescr, sysContact, \
-        version, hardware, features, location_id, os, status, status_reason, ignores, disabled, uptime, agent_uptime, last_polled, \
+        version, hardware, features, location_id, os, status, status_reason, disabled, uptime, agent_uptime, last_polled, \
         last_poll_attempted, last_polled_timetaken, last_discovered_timetaken, last_discovered, last_ping, last_ping_timetaken, purpose, \
         type, serial, icon, poller_group, override_sysLocation, notes, port_association_mode, max_depth from devices")
     for x in mysql_connection:
@@ -167,26 +167,26 @@ def mysql_search_devices_tables():
             "os": z[25], \
             "status": z[26], \
             "status_reason": z[27], \
-            "ignores": z[28], \
-            "disabled": z[29], \
-            "uptime": z[30], \
-            "agent_uptime": z[31], \
-            "last_polled": str(z[32]), \
-            "last_poll_attempted": str(z[33]), \
-            "last_polled_timetaken": z[34], \
-            "last_discovered_timetaken": z[35], \
-            "last_discovered": str(z[36]), \
-            "last_ping": str(z[37]), \
-            "last_ping_timetaken": str(z[38]), \
-            "purpose": z[39], \
-            "type": z[40], \
-            "serial": z[41], \
-            "icon": z[42], \
-            "poller_group": z[43], \
-            "override_sysLocation": z[44], \
-            "notes": z[45], \
-            "port_association_mode": z[46], \
-            "max_depth": z[47]})
+            #"ignores": z[28], \
+            "disabled": z[28], \
+            "uptime": z[29], \
+            "agent_uptime": z[30], \
+            "last_polled": str(z[31]), \
+            "last_poll_attempted": str(z[32]), \
+            "last_polled_timetaken": z[33], \
+            "last_discovered_timetaken": z[34], \
+            "last_discovered": str(z[35]), \
+            "last_ping": str(z[36]), \
+            "last_ping_timetaken": str(z[37]), \
+            "purpose": z[38], \
+            "type": z[30], \
+            "serial": z[40], \
+            "icon": z[41], \
+            "poller_group": z[42], \
+            "override_sysLocation": z[43], \
+            "notes": z[44], \
+            "port_association_mode": z[45], \
+            "max_depth": z[46]})
     #print(devices_data)
     mysql_conn.close()
     if (len(devices_data) == deviceCount):
