@@ -443,7 +443,7 @@ def edgeNodeSpeedtestUpload():
                 mysql_connection.execute("Insert into speedtest (ping, download, upload, server_name, server_sponsor, server_distance, start_time, end_time) VALUES \
                 (" + ping + ", " + download + ", " + upload + ", " + server_name + ", " + server_sponsor + ", " +  server_distance+ ", " + start_time+ ", " + end_time + ")")
                 mysql_conn.commit()
-                return {"uploadSpeedtest": "ok"}
+            return {"uploadSpeedtest": "ok"}
         else: return {"uploadSpeedtest": "db_fail"}
 
 @app.route('/edgeNodeSqlUpload', methods=['POST'])
