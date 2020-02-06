@@ -520,7 +520,7 @@ def edgeNodeSqlUpload():
                 if (y["icon"] != "NULL"): y["icon"] = "'" + y["icon"] + "'"
                 if (y["poller_group"] != "NULL"): y["poller_group"] = str(y["poller_group"])
                 if (y["override_sysLocation"] != "NULL"): y["override_sysLocation"] = str(y["override_sysLocation"])
-                if (y["notes"] != "NULL"): y["notes"] = "'" + y["notes"] + "'"
+                if (y["notes"] != "NULL"): y["notes"] = "'" + str(y["notes"]) + "'"
                 if (y["port_association_mode"] != "NULL"): y["port_association_mode"] = str(y["port_association_mode"])
                 if (y["max_depth"] != "NULL"): y["max_depth"] = str(y["max_depth"])
                 edge_device_list.append(y["device_id"])
