@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 4,
-  "iteration": 1581002257029,
+  "iteration": 1581002440989,
   "links": [],
   "panels": [
     {
@@ -1069,7 +1069,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 2,
+        "w": 3,
         "x": 11,
         "y": 5
       },
@@ -1172,7 +1172,7 @@
       "gridPos": {
         "h": 4,
         "w": 2,
-        "x": 13,
+        "x": 14,
         "y": 5
       },
       "id": 41,
@@ -1274,7 +1274,7 @@
       "gridPos": {
         "h": 4,
         "w": 3,
-        "x": 15,
+        "x": 16,
         "y": 5
       },
       "id": 42,
@@ -1375,8 +1375,8 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 18,
+        "w": 3,
+        "x": 19,
         "y": 5
       },
       "id": 43,
@@ -1445,7 +1445,7 @@
       "timeShift": null,
       "title": "Server Distance",
       "type": "singlestat",
-      "valueFontSize": "100%",
+      "valueFontSize": "80%",
       "valueMaps": [
         {
           "op": "=",
@@ -2965,5 +2965,5 @@
   "timezone": "",
   "title": "LibreNMS-Cloud-DashBoard",
   "uid": "nutcimac",
-  "version": 3
+  "version": 4
 }
