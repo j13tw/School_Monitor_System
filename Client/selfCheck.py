@@ -79,7 +79,7 @@ def make_speedtest():
         except:
             return False
 
-    elif (str(datetime.datetime.now()).split(" ")[0] == spd_log_timestamp and spd_log_json["speedtest"]["submit"] == 0):
+    elif (str(datetime.datetime.now()).split(" ")[0] == speedtestData["speedtest"]['timestamp'] and spd_log_json["speedtest"]["submit"] == 0):
         try:
             r = requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeSpeedtestUploadUrl, json=speedtestData)
             if (json.loads(r.text)["uploadSpeedtest"] == "ok"): 
