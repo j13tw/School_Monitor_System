@@ -500,7 +500,7 @@ def edgeNodeSqlUpload():
                 if (y["hardware"] != "NULL"): y["hardware"] = "'" + y["hardware"] + "'"
                 if (y["features"] != "NULL"): y["features"] = "'" + y["features"] + "'"
                 if (y["location_id"] != "NULL"): y["location_id"] = str(y["location_id"])
-                if (y["os"] != "NULL"): y["os"] = "'" + y["os"] + "'"
+                if (y["os"] != "NULL"): y["os"] = "'" + str(y["os"]) + "'"
                 if (y["status"] != "NULL"): y["status"] = str(y["status"])
                 if (y["status_reason"] != "NULL"): y["status_reason"] = "'" + str(y["status_reason"]) + "'" 
                 if (y["ignores"] != "NULL"): y["ignores"] = str(y["ignores"])
