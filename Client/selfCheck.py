@@ -94,9 +94,6 @@ def make_speedtest():
     else:
         return False
         
-
-
-
 def mysql_connect():
     global mysql_conn
     try:
@@ -131,7 +128,11 @@ def mysql_search_devices_tables():
     deviceCount = 0
     mysql_connect()
     mysql_connection = mysql_conn.cursor()
-    deviceCount = mysql_connection.execute("select * from devices")
+    deviceCount = mysql_connection.execute("select device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, \
+        cryptopass, cryptoalgo, snmpver, port, transport, timeout, retries, snmp_disable, bgpLocalAs, sysObjectID, sysDescr, sysContact, \
+        version, hardware, features, location_id, os, status, status_reason, ignores, disabled, uptime, agent_uptime, last_polled, \
+        last_poll_attempted, last_polled_timetaken, last_discovered_timetaken, last_discovered, last_ping, last_ping_timetaken, purpose, \
+        type, serial, icon, poller_group, override_sysLocation, notes, port_association_mode, max_depth from devices")
     for x in mysql_connection:
         z = []
         for y in range(0, len(x)):
