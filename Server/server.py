@@ -514,7 +514,7 @@ def edgeNodeSqlUpload():
                 if (y["last_discovered"] != "NULL"): y["last_discovered"] = "'" + str(y["last_discovered"]) + "'"
                 if (y["last_ping"] != "NULL"): y["last_ping"] = "'" + str(y["last_ping"]) + "'"
                 if (y["last_ping_timetaken"] != "NULL"): y["last_ping_timetaken"] = str(y["last_ping_timetaken"])
-                if (y["purpose"] != "NULL"): y["purpose"] = "'" + y["purpose"] + "'"
+                if (y["purpose"] != "NULL"): y["purpose"] = "'" + str(y["purpose"]) + "'"
                 if (y["type"] != "NULL"): y["type"] = "'" + y["type"] + "'"
                 if (y["serial"] != "NULL"): y["serial"] = "'" + y["serial"] + "'"
                 if (y["icon"] != "NULL"): y["icon"] = "'" + y["icon"] + "'"
