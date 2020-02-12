@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 4,
-  "iteration": 1581002440989,
+  "iteration": 1581500531236,
   "links": [],
   "panels": [
     {
@@ -753,7 +753,7 @@
       ],
       "datasource": "librenms-cloud-mysql",
       "decimals": 2,
-      "format": "none",
+      "format": "ms",
       "gauge": {
         "maxValue": 100,
         "minValue": 0,
@@ -785,7 +785,7 @@
       "nullPointMode": "connected",
       "nullText": null,
       "options": {},
-      "postfix": "ms",
+      "postfix": "",
       "postfixFontSize": "100%",
       "prefix": "",
       "prefixFontSize": "50%",
@@ -1069,7 +1069,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 3,
+        "w": 2,
         "x": 11,
         "y": 5
       },
@@ -1171,8 +1171,8 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 2,
-        "x": 14,
+        "w": 3,
+        "x": 13,
         "y": 5
       },
       "id": 41,
@@ -1443,7 +1443,7 @@
       "thresholds": "",
       "timeFrom": null,
       "timeShift": null,
-      "title": "Server Distance",
+      "title": "Test TimeStamp",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -1558,13 +1558,390 @@
       "valueName": "current"
     },
     {
+      "aliasColors": {},
+      "bars": false,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "librenms-cloud-mysql",
+      "fill": 2,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 9
+      },
+      "hiddenSeries": false,
+      "hideTimeOverride": false,
+      "id": 53,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 3,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  DATE_SUB(time_logged, INTERVAL 8 HOUR) AS \"time\",\n  ping\nFROM $DataBase_Name.speedtest\nORDER BY id\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": "1w",
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "SpeedTest Ping History",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 2,
+          "format": "ms",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "download": "green",
+        "upload": "dark-blue",
+        "上傳": "orange",
+        "下載": "dark-blue"
+      },
+      "bars": false,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "librenms-cloud-mysql",
+      "decimals": 3,
+      "fill": 2,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 6,
+        "y": 9
+      },
+      "hiddenSeries": false,
+      "hideTimeOverride": false,
+      "id": 54,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  DATE_SUB(time_logged, INTERVAL 8 HOUR) AS \"time\",\n  download AS \"下載\"\nFROM $DataBase_Name.speedtest\nORDER BY id\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  DATE_SUB(time_logged, INTERVAL 8 HOUR) AS \"time\",\n  upload AS \"上傳\"\nFROM $DataBase_Name.speedtest\nORDER BY id\n",
+          "refId": "B",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": "1w",
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "SpeedTest Download / Upload History",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 1,
+          "format": "MBs",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "end_time-start_time": "rgba(204, 196, 40, 0.55)"
+      },
+      "bars": false,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "librenms-cloud-mysql",
+      "fill": 2,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 9
+      },
+      "hiddenSeries": false,
+      "hideTimeOverride": false,
+      "id": 56,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "hideZero": true,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 3,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  DATE_SUB(time_logged, INTERVAL 8 HOUR) AS \"time\",\n  end_time-start_time\nFROM $DataBase_Name.speedtest\nORDER BY id\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": "1w",
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "SpeedTest Use Time History",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": null,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "decimals": null,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
       "collapsed": false,
       "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 17
       },
       "id": 51,
       "panels": [],
@@ -1579,7 +1956,7 @@
         "h": 7,
         "w": 14,
         "x": 0,
-        "y": 10
+        "y": 18
       },
       "id": 29,
       "options": {},
@@ -1685,7 +2062,7 @@
         "h": 7,
         "w": 10,
         "x": 14,
-        "y": 10
+        "y": 18
       },
       "id": 10,
       "interval": "",
@@ -1810,7 +2187,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 17
+        "y": 25
       },
       "id": 49,
       "panels": [],
@@ -1839,7 +2216,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 18
+        "y": 26
       },
       "id": 15,
       "interval": null,
@@ -1950,7 +2327,7 @@
         "h": 4,
         "w": 3,
         "x": 4,
-        "y": 18
+        "y": 26
       },
       "id": 17,
       "interval": null,
@@ -2061,7 +2438,7 @@
         "h": 4,
         "w": 4,
         "x": 7,
-        "y": 18
+        "y": 26
       },
       "id": 34,
       "interval": null,
@@ -2172,7 +2549,7 @@
         "h": 4,
         "w": 3,
         "x": 11,
-        "y": 18
+        "y": 26
       },
       "id": 16,
       "interval": null,
@@ -2283,7 +2660,7 @@
         "h": 4,
         "w": 2,
         "x": 14,
-        "y": 18
+        "y": 26
       },
       "id": 20,
       "interval": null,
@@ -2399,7 +2776,7 @@
         "h": 4,
         "w": 8,
         "x": 16,
-        "y": 18
+        "y": 26
       },
       "id": 14,
       "interval": null,
@@ -2495,7 +2872,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 22
+        "y": 30
       },
       "id": 47,
       "panels": [],
@@ -2514,7 +2891,7 @@
         "h": 8,
         "w": 10,
         "x": 0,
-        "y": 23
+        "y": 31
       },
       "hiddenSeries": false,
       "id": 12,
@@ -2655,7 +3032,7 @@
         "h": 8,
         "w": 10,
         "x": 10,
-        "y": 23
+        "y": 31
       },
       "hiddenSeries": false,
       "hideTimeOverride": false,
@@ -2764,7 +3141,7 @@
         "h": 8,
         "w": 4,
         "x": 20,
-        "y": 23
+        "y": 31
       },
       "id": 31,
       "links": [],
@@ -2965,5 +3342,5 @@
   "timezone": "",
   "title": "LibreNMS-Cloud-DashBoard",
   "uid": "nutcimac",
-  "version": 4
+  "version": 18
 }

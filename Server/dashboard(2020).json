@@ -1,0 +1,2308 @@
+{
+    "dashboard": {
+        "annotations": {
+            "list": [
+            {
+                "builtIn": 1,
+                "datasource": "-- Grafana --",
+                "enable": true,
+                "hide": true,
+                "iconColor": "rgba(0, 211, 255, 1)",
+                "name": "Annotations & Alerts",
+                "type": "dashboard"
+            }
+            ]
+        },
+        "editable": true,
+        "gnetId": null,
+        "graphTooltip": 0,
+        "id": 0,
+        "iteration": 1579158882100,
+        "links": [],
+        "panels": [
+            {
+            "bgColor": null,
+            "clockType": "24 hour",
+            "countdownSettings": {
+                "customFormat": null,
+                "endCountdownTime": "2019-12-20T04:48:00.000Z",
+                "endText": "00:00:00"
+            },
+            "datasource": null,
+            "dateSettings": {
+                "dateFormat": "YYYY-MM-DD",
+                "fontSize": "32px",
+                "fontWeight": "normal",
+                "showDate": true
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 3,
+                "x": 0,
+                "y": 0
+            },
+            "id": 27,
+            "mode": "time",
+            "options": {},
+            "refreshSettings": {
+                "syncWithDashboard": false
+            },
+            "timeFrom": null,
+            "timeSettings": {
+                "customFormat": "HH:mm:ss",
+                "fontSize": "32px",
+                "fontWeight": "normal"
+            },
+            "timeShift": null,
+            "timezone": "Asia/Taipei",
+            "timezoneSettings": {
+                "fontSize": "12px",
+                "fontWeight": "normal",
+                "showTimezone": false,
+                "zoneFormat": "offsetAbbv"
+            },
+            "title": "現在時間",
+            "type": "grafana-clock-panel"
+            },
+            {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": false,
+            "colors": [
+                "#299c46",
+                "rgba(237, 129, 40, 0.89)",
+                "#d44a3a"
+            ],
+            "datasource": "librenms-cloud-mysql",
+            "format": "none",
+            "gauge": {
+                "maxValue": 100,
+                "minValue": 0,
+                "show": false,
+                "thresholdLabels": false,
+                "thresholdMarkers": true
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 2,
+                "x": 3,
+                "y": 0
+            },
+            "id": 33,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+                {
+                "name": "value to text",
+                "value": 1
+                },
+                {
+                "name": "range to text",
+                "value": 2
+                }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "options": {},
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+                {
+                "from": "running",
+                "text": "執行中",
+                "to": "running"
+                }
+            ],
+            "sparkline": {
+                "fillColor": "rgba(31, 118, 189, 0.18)",
+                "full": false,
+                "lineColor": "rgb(31, 120, 193)",
+                "show": false,
+                "ymax": null,
+                "ymin": null
+            },
+            "tableColumn": "",
+            "targets": [
+                {
+                "format": "table",
+                "group": [],
+                "metricColumn": "none",
+                "rawQuery": false,
+                "rawSql": "SELECT\n  School_Serial_Id AS \"time\",\n  School_Location\nFROM school_monitor_system.edge_list\nWHERE\n  concat('school_', school_Id) = '$DataBase_Name'\nORDER BY School_Serial_Id",
+                "refId": "A",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "School_Location"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "table": "school_monitor_system.edge_list",
+                "timeColumn": "School_Serial_Id",
+                "timeColumnType": "timestamp",
+                "where": [
+                    {
+                    "name": "",
+                    "params": [
+                        "concat('school_', school_Id)",
+                        "=",
+                        "'$DataBase_Name'"
+                    ],
+                    "type": "expression"
+                    }
+                ]
+                }
+            ],
+            "thresholds": "",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "學校縣市",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [
+                {
+                "op": "=",
+                "text": "執行中",
+                "value": "running"
+                }
+            ],
+            "valueName": "first"
+            },
+            {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": false,
+            "colors": [
+                "#299c46",
+                "rgba(237, 129, 40, 0.89)",
+                "#d44a3a"
+            ],
+            "datasource": "librenms-cloud-mysql",
+            "format": "none",
+            "gauge": {
+                "maxValue": 100,
+                "minValue": 0,
+                "show": false,
+                "thresholdLabels": false,
+                "thresholdMarkers": true
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 5,
+                "y": 0
+            },
+            "id": 32,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+                {
+                "name": "value to text",
+                "value": 1
+                },
+                {
+                "name": "range to text",
+                "value": 2
+                }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "options": {},
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+                {
+                "from": "running",
+                "text": "執行中",
+                "to": "running"
+                }
+            ],
+            "sparkline": {
+                "fillColor": "rgba(31, 118, 189, 0.18)",
+                "full": false,
+                "lineColor": "rgb(31, 120, 193)",
+                "show": false,
+                "ymax": null,
+                "ymin": null
+            },
+            "tableColumn": "",
+            "targets": [
+                {
+                "format": "table",
+                "group": [],
+                "metricColumn": "none",
+                "rawQuery": false,
+                "rawSql": "SELECT\n  School_Serial_Id AS \"time\",\n  School_Name\nFROM school_monitor_system.edge_list\nWHERE\n  concat('school_', school_Id) = '$DataBase_Name'\nORDER BY School_Serial_Id",
+                "refId": "A",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "School_Name"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "table": "school_monitor_system.edge_list",
+                "timeColumn": "School_Serial_Id",
+                "timeColumnType": "timestamp",
+                "where": [
+                    {
+                    "name": "",
+                    "params": [
+                        "concat('school_', school_Id)",
+                        "=",
+                        "'$DataBase_Name'"
+                    ],
+                    "type": "expression"
+                    }
+                ]
+                }
+            ],
+            "thresholds": "",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "國教署-學校總稱",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [
+                {
+                "op": "=",
+                "text": "執行中",
+                "value": "running"
+                }
+            ],
+            "valueName": "first"
+            },
+            {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": false,
+            "colors": [
+                "#299c46",
+                "rgba(237, 129, 40, 0.89)",
+                "#d44a3a"
+            ],
+            "datasource": "librenms-cloud-mysql",
+            "format": "none",
+            "gauge": {
+                "maxValue": 100,
+                "minValue": 0,
+                "show": false,
+                "thresholdLabels": false,
+                "thresholdMarkers": true
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 2,
+                "x": 11,
+                "y": 0
+            },
+            "id": 22,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+                {
+                "name": "value to text",
+                "value": 1
+                },
+                {
+                "name": "range to text",
+                "value": 2
+                }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "options": {},
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+                {
+                "from": "running",
+                "text": "執行中",
+                "to": "running"
+                }
+            ],
+            "sparkline": {
+                "fillColor": "rgba(31, 118, 189, 0.18)",
+                "full": false,
+                "lineColor": "rgb(31, 120, 193)",
+                "show": false,
+                "ymax": null,
+                "ymin": null
+            },
+            "tableColumn": "",
+            "targets": [
+                {
+                "format": "table",
+                "group": [],
+                "metricColumn": "none",
+                "rawQuery": false,
+                "rawSql": "SELECT\n  School_LastCheck AS \"time\",\n  concat(upper(LEFT(School_Status,1)), SUBSTRING(School_Status, 2, length(School_Status)-1))\nFROM school_monitor_system.edge_regist\nWHERE\n  concat('school_', school_Id) = '$DataBase_Name'\nORDER BY School_LastCheck",
+                "refId": "A",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "concat(upper(LEFT(School_Status,1)), SUBSTRING(School_Status, 2, length(School_Status)-1))"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "table": "school_monitor_system.edge_regist",
+                "timeColumn": "School_LastCheck",
+                "timeColumnType": "timestamp",
+                "where": [
+                    {
+                    "name": "",
+                    "params": [
+                        "concat('school_', school_Id)",
+                        "=",
+                        "'$DataBase_Name'"
+                    ],
+                    "type": "expression"
+                    }
+                ]
+                }
+            ],
+            "thresholds": "",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Librenms 狀態",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [
+                {
+                "op": "=",
+                "text": "執行中",
+                "value": "running"
+                }
+            ],
+            "valueName": "first"
+            },
+            {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": false,
+            "colors": [
+                "#299c46",
+                "rgba(237, 129, 40, 0.89)",
+                "#d44a3a"
+            ],
+            "datasource": "librenms-cloud-mysql",
+            "format": "none",
+            "gauge": {
+                "maxValue": 100,
+                "minValue": 0,
+                "show": false,
+                "thresholdLabels": false,
+                "thresholdMarkers": true
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 13,
+                "y": 0
+            },
+            "id": 23,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+                {
+                "name": "value to text",
+                "value": 1
+                },
+                {
+                "name": "range to text",
+                "value": 2
+                }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "options": {},
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+                {
+                "from": "running",
+                "text": "執行中",
+                "to": "running"
+                }
+            ],
+            "sparkline": {
+                "fillColor": "rgba(31, 118, 189, 0.18)",
+                "full": false,
+                "lineColor": "rgb(31, 120, 193)",
+                "show": false,
+                "ymax": null,
+                "ymin": null
+            },
+            "tableColumn": "",
+            "targets": [
+                {
+                "format": "table",
+                "group": [],
+                "metricColumn": "none",
+                "rawQuery": false,
+                "rawSql": "SELECT\n  School_LastCheck AS \"time\",\n  upper(School_MAC)\nFROM school_monitor_system.edge_regist\nWHERE\n  concat('school_', school_Id) = '$DataBase_Name'\nORDER BY School_LastCheck",
+                "refId": "A",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "upper(School_MAC)"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "table": "school_monitor_system.edge_regist",
+                "timeColumn": "School_LastCheck",
+                "timeColumnType": "timestamp",
+                "where": [
+                    {
+                    "name": "",
+                    "params": [
+                        "concat('school_', school_Id)",
+                        "=",
+                        "'$DataBase_Name'"
+                    ],
+                    "type": "expression"
+                    }
+                ]
+                }
+            ],
+            "thresholds": "",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "學校端 Librenms 樹莓派 MAC",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [
+                {
+                "op": "=",
+                "text": "執行中",
+                "value": "running"
+                }
+            ],
+            "valueName": "first"
+            },
+            {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": false,
+            "colors": [
+                "#299c46",
+                "rgba(237, 129, 40, 0.89)",
+                "#d44a3a"
+            ],
+            "datasource": "librenms-cloud-mysql",
+            "format": "none",
+            "gauge": {
+                "maxValue": 100,
+                "minValue": 0,
+                "show": false,
+                "thresholdLabels": false,
+                "thresholdMarkers": true
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 3,
+                "x": 17,
+                "y": 0
+            },
+            "id": 24,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+                {
+                "name": "value to text",
+                "value": 1
+                },
+                {
+                "name": "range to text",
+                "value": 2
+                }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "options": {},
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+                {
+                "from": "running",
+                "text": "執行中",
+                "to": "running"
+                }
+            ],
+            "sparkline": {
+                "fillColor": "rgba(31, 118, 189, 0.18)",
+                "full": false,
+                "lineColor": "rgb(31, 120, 193)",
+                "show": false,
+                "ymax": null,
+                "ymin": null
+            },
+            "tableColumn": "",
+            "targets": [
+                {
+                "format": "table",
+                "group": [],
+                "metricColumn": "none",
+                "rawQuery": false,
+                "rawSql": "SELECT\n  School_LastCheck AS \"time\",\n  School_IP\nFROM school_monitor_system.edge_regist\nWHERE\n  concat('school_', school_Id) = '$DataBase_Name'\nORDER BY School_LastCheck",
+                "refId": "A",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "School_IP"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "table": "school_monitor_system.edge_regist",
+                "timeColumn": "School_LastCheck",
+                "timeColumnType": "timestamp",
+                "where": [
+                    {
+                    "name": "",
+                    "params": [
+                        "concat('school_', school_Id)",
+                        "=",
+                        "'$DataBase_Name'"
+                    ],
+                    "type": "expression"
+                    }
+                ]
+                }
+            ],
+            "thresholds": "",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "學校端 對外 IP",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [
+                {
+                "op": "=",
+                "text": "執行中",
+                "value": "running"
+                }
+            ],
+            "valueName": "first"
+            },
+            {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorPostfix": false,
+            "colorPrefix": false,
+            "colorValue": false,
+            "colors": [
+                "#299c46",
+                "rgba(237, 129, 40, 0.89)",
+                "#d44a3a"
+            ],
+            "datasource": "librenms-cloud-mysql",
+            "format": "none",
+            "gauge": {
+                "maxValue": 100,
+                "minValue": 0,
+                "show": false,
+                "thresholdLabels": false,
+                "thresholdMarkers": true
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 20,
+                "y": 0
+            },
+            "id": 25,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+                {
+                "name": "value to text",
+                "value": 1
+                },
+                {
+                "name": "range to text",
+                "value": 2
+                }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "options": {},
+            "pluginVersion": "6.5.2",
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+                {
+                "from": "running",
+                "text": "執行中",
+                "to": "running"
+                }
+            ],
+            "sparkline": {
+                "fillColor": "rgba(31, 118, 189, 0.18)",
+                "full": false,
+                "lineColor": "rgb(31, 120, 193)",
+                "show": false,
+                "ymax": null,
+                "ymin": null
+            },
+            "tableColumn": "",
+            "targets": [
+                {
+                "format": "table",
+                "group": [],
+                "metricColumn": "none",
+                "rawQuery": false,
+                "rawSql": "SELECT\n  School_LastCheck AS \"time\",\n  concat(LEFT(School_LastCheck, 10), '\\n', SUBSTRING(School_LastCheck, 11))\nFROM school_monitor_system.edge_regist\nWHERE\n  concat('school_', school_Id) = '$DataBase_Name'\nORDER BY School_LastCheck",
+                "refId": "A",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "concat(LEFT(School_LastCheck, 10), '\\n', SUBSTRING(School_LastCheck, 11))"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "table": "school_monitor_system.edge_regist",
+                "timeColumn": "School_LastCheck",
+                "timeColumnType": "timestamp",
+                "where": [
+                    {
+                    "name": "",
+                    "params": [
+                        "concat('school_', school_Id)",
+                        "=",
+                        "'$DataBase_Name'"
+                    ],
+                    "type": "expression"
+                    }
+                ]
+                }
+            ],
+            "thresholds": "",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "學校端 最後更新狀態時間",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [],
+            "valueName": "first"
+            },
+            {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": false,
+            "colors": [
+                "#299c46",
+                "rgba(237, 129, 40, 0.89)",
+                "#d44a3a"
+            ],
+            "datasource": "librenms-cloud-mysql",
+            "format": "none",
+            "gauge": {
+                "maxValue": 100,
+                "minValue": 0,
+                "show": false,
+                "thresholdLabels": false,
+                "thresholdMarkers": true
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 0,
+                "y": 4
+            },
+            "id": 15,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+                {
+                "name": "value to text",
+                "value": 1
+                },
+                {
+                "name": "range to text",
+                "value": 2
+                }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "options": {},
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+                {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+                }
+            ],
+            "sparkline": {
+                "fillColor": "rgba(31, 118, 189, 0.18)",
+                "full": false,
+                "lineColor": "rgb(31, 120, 193)",
+                "show": false,
+                "ymax": null,
+                "ymin": null
+            },
+            "tableColumn": "",
+            "targets": [
+                {
+                "format": "table",
+                "group": [],
+                "metricColumn": "none",
+                "rawQuery": false,
+                "rawSql": "SELECT\n  agent_uptime AS \"time\",\n  hostname\nFROM $DataBase_Name.devices\nWHERE\n  $DataBase_Name.devices.sysName = '$Devices'\nORDER BY agent_uptime",
+                "refId": "A",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "hostname"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "table": "$DataBase_Name.devices",
+                "timeColumn": "agent_uptime",
+                "timeColumnType": "int",
+                "where": [
+                    {
+                    "name": "",
+                    "params": [
+                        "$DataBase_Name.devices.sysName",
+                        "=",
+                        "'$Devices'"
+                    ],
+                    "type": "expression"
+                    }
+                ]
+                }
+            ],
+            "thresholds": "",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "設備管理 IP",
+            "type": "singlestat",
+            "valueFontSize": "100%",
+            "valueMaps": [
+                {
+                "op": "=",
+                "text": "N/A",
+                "value": "null"
+                }
+            ],
+            "valueName": "first"
+            },
+            {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": false,
+            "colors": [
+                "#299c46",
+                "rgba(237, 129, 40, 0.89)",
+                "#d44a3a"
+            ],
+            "datasource": "librenms-cloud-mysql",
+            "format": "none",
+            "gauge": {
+                "maxValue": 100,
+                "minValue": 0,
+                "show": false,
+                "thresholdLabels": false,
+                "thresholdMarkers": true
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 3,
+                "x": 4,
+                "y": 4
+            },
+            "id": 17,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+                {
+                "name": "value to text",
+                "value": 1
+                },
+                {
+                "name": "range to text",
+                "value": 2
+                }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "options": {},
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+                {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+                }
+            ],
+            "sparkline": {
+                "fillColor": "rgba(31, 118, 189, 0.18)",
+                "full": false,
+                "lineColor": "rgb(31, 120, 193)",
+                "show": false,
+                "ymax": null,
+                "ymin": null
+            },
+            "tableColumn": "",
+            "targets": [
+                {
+                "format": "table",
+                "group": [],
+                "metricColumn": "none",
+                "rawQuery": false,
+                "rawSql": "SELECT\n  agent_uptime AS \"time\",\n  concat(upper(LEFT(icon,1)), SUBSTRING(icon, 2, length(icon)-5))\nFROM $DataBase_Name.devices\nWHERE\n  $DataBase_Name.devices.sysName = '$Devices'\nORDER BY agent_uptime",
+                "refId": "A",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "concat(upper(LEFT(icon,1)), SUBSTRING(icon, 2, length(icon)-5))"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "table": "$DataBase_Name.devices",
+                "timeColumn": "agent_uptime",
+                "timeColumnType": "int",
+                "where": [
+                    {
+                    "name": "",
+                    "params": [
+                        "$DataBase_Name.devices.sysName",
+                        "=",
+                        "'$Devices'"
+                    ],
+                    "type": "expression"
+                    }
+                ]
+                }
+            ],
+            "thresholds": "",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "設備廠商",
+            "type": "singlestat",
+            "valueFontSize": "100%",
+            "valueMaps": [
+                {
+                "op": "=",
+                "text": "N/A",
+                "value": "null"
+                }
+            ],
+            "valueName": "first"
+            },
+            {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": false,
+            "colors": [
+                "#299c46",
+                "rgba(237, 129, 40, 0.89)",
+                "#d44a3a"
+            ],
+            "datasource": "librenms-cloud-mysql",
+            "format": "none",
+            "gauge": {
+                "maxValue": 100,
+                "minValue": 0,
+                "show": false,
+                "thresholdLabels": false,
+                "thresholdMarkers": true
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 7,
+                "y": 4
+            },
+            "id": 34,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+                {
+                "name": "value to text",
+                "value": 1
+                },
+                {
+                "name": "range to text",
+                "value": 2
+                }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "options": {},
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+                {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+                }
+            ],
+            "sparkline": {
+                "fillColor": "rgba(31, 118, 189, 0.18)",
+                "full": false,
+                "lineColor": "rgb(31, 120, 193)",
+                "show": false,
+                "ymax": null,
+                "ymin": null
+            },
+            "tableColumn": "",
+            "targets": [
+                {
+                "format": "table",
+                "group": [],
+                "metricColumn": "none",
+                "rawQuery": false,
+                "rawSql": "SELECT\n  agent_uptime AS \"time\",\n  hardware\nFROM $DataBase_Name.devices\nWHERE\n  $DataBase_Name.devices.sysName = '$Devices'\nORDER BY agent_uptime",
+                "refId": "A",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "hardware"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "table": "$DataBase_Name.devices",
+                "timeColumn": "agent_uptime",
+                "timeColumnType": "int",
+                "where": [
+                    {
+                    "name": "",
+                    "params": [
+                        "$DataBase_Name.devices.sysName",
+                        "=",
+                        "'$Devices'"
+                    ],
+                    "type": "expression"
+                    }
+                ]
+                }
+            ],
+            "thresholds": "",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "設備名稱",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [
+                {
+                "op": "=",
+                "text": "N/A",
+                "value": "null"
+                }
+            ],
+            "valueName": "first"
+            },
+            {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": false,
+            "colors": [
+                "#299c46",
+                "rgba(237, 129, 40, 0.89)",
+                "#d44a3a"
+            ],
+            "datasource": "librenms-cloud-mysql",
+            "format": "none",
+            "gauge": {
+                "maxValue": 100,
+                "minValue": 0,
+                "show": false,
+                "thresholdLabels": false,
+                "thresholdMarkers": true
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 3,
+                "x": 11,
+                "y": 4
+            },
+            "id": 16,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+                {
+                "name": "value to text",
+                "value": 1
+                },
+                {
+                "name": "range to text",
+                "value": 2
+                }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "options": {},
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+                {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+                }
+            ],
+            "sparkline": {
+                "fillColor": "rgba(31, 118, 189, 0.18)",
+                "full": false,
+                "lineColor": "rgb(31, 120, 193)",
+                "show": false,
+                "ymax": null,
+                "ymin": null
+            },
+            "tableColumn": "",
+            "targets": [
+                {
+                "format": "table",
+                "group": [],
+                "metricColumn": "none",
+                "rawQuery": false,
+                "rawSql": "SELECT\n  agent_uptime AS \"time\",\n  concat(upper(LEFT(type,1)), SUBSTRING(type, 2, length(type)-1))\nFROM $DataBase_Name.devices\nWHERE\n  $DataBase_Name.devices.sysName = '$Devices'\nORDER BY agent_uptime",
+                "refId": "A",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "concat(upper(LEFT(type,1)), SUBSTRING(type, 2, length(type)-1))"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "table": "$DataBase_Name.devices",
+                "timeColumn": "agent_uptime",
+                "timeColumnType": "int",
+                "where": [
+                    {
+                    "name": "",
+                    "params": [
+                        "$DataBase_Name.devices.sysName",
+                        "=",
+                        "'$Devices'"
+                    ],
+                    "type": "expression"
+                    }
+                ]
+                }
+            ],
+            "thresholds": "",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "設備分類",
+            "type": "singlestat",
+            "valueFontSize": "100%",
+            "valueMaps": [
+                {
+                "op": "=",
+                "text": "N/A",
+                "value": "null"
+                }
+            ],
+            "valueName": "first"
+            },
+            {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": false,
+            "colors": [
+                "#299c46",
+                "rgba(237, 129, 40, 0.89)",
+                "#d44a3a"
+            ],
+            "datasource": "librenms-cloud-mysql",
+            "format": "none",
+            "gauge": {
+                "maxValue": 100,
+                "minValue": 0,
+                "show": false,
+                "thresholdLabels": false,
+                "thresholdMarkers": true
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 2,
+                "x": 14,
+                "y": 4
+            },
+            "id": 20,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+                {
+                "name": "value to text",
+                "value": 1
+                },
+                {
+                "name": "range to text",
+                "value": 2
+                }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "options": {},
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+                {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+                }
+            ],
+            "sparkline": {
+                "fillColor": "rgba(31, 118, 189, 0.18)",
+                "full": false,
+                "lineColor": "rgb(31, 120, 193)",
+                "show": false,
+                "ymax": null,
+                "ymin": null
+            },
+            "tableColumn": "",
+            "targets": [
+                {
+                "format": "table",
+                "group": [],
+                "metricColumn": "none",
+                "rawQuery": false,
+                "rawSql": "SELECT\n  agent_uptime AS \"time\",\n  status\nFROM $DataBase_Name.devices\nWHERE\n  $DataBase_Name.devices.sysName = '$Devices'\nORDER BY agent_uptime",
+                "refId": "A",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "status"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "table": "$DataBase_Name.devices",
+                "timeColumn": "agent_uptime",
+                "timeColumnType": "int",
+                "where": [
+                    {
+                    "name": "",
+                    "params": [
+                        "$DataBase_Name.devices.sysName",
+                        "=",
+                        "'$Devices'"
+                    ],
+                    "type": "expression"
+                    }
+                ]
+                }
+            ],
+            "thresholds": "",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "設備狀態",
+            "type": "singlestat",
+            "valueFontSize": "100%",
+            "valueMaps": [
+                {
+                "op": "=",
+                "text": "開機中",
+                "value": "1"
+                },
+                {
+                "op": "=",
+                "text": "關機",
+                "value": "0"
+                }
+            ],
+            "valueName": "first"
+            },
+            {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": false,
+            "colors": [
+                "#299c46",
+                "rgba(237, 129, 40, 0.89)",
+                "#d44a3a"
+            ],
+            "datasource": "librenms-cloud-mysql",
+            "format": "none",
+            "gauge": {
+                "maxValue": 100,
+                "minValue": 0,
+                "show": false,
+                "thresholdLabels": false,
+                "thresholdMarkers": true
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 8,
+                "x": 16,
+                "y": 4
+            },
+            "id": 14,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+                {
+                "name": "value to text",
+                "value": 1
+                },
+                {
+                "name": "range to text",
+                "value": 2
+                }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "options": {},
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+                {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+                }
+            ],
+            "sparkline": {
+                "fillColor": "rgba(31, 118, 189, 0.18)",
+                "full": false,
+                "lineColor": "rgb(31, 120, 193)",
+                "show": false,
+                "ymax": null,
+                "ymin": null
+            },
+            "tableColumn": "",
+            "targets": [
+                {
+                "format": "table",
+                "group": [],
+                "metricColumn": "none",
+                "rawQuery": false,
+                "rawSql": "SELECT\n  agent_uptime AS \"time\",\n  sysDescr\nFROM $DataBase_Name.devices\nWHERE\n  $DataBase_Name.devices.sysName = '$Devices'\nORDER BY agent_uptime",
+                "refId": "A",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "sysDescr"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "table": "$DataBase_Name.devices",
+                "timeColumn": "agent_uptime",
+                "timeColumnType": "int",
+                "where": [
+                    {
+                    "name": "",
+                    "params": [
+                        "$DataBase_Name.devices.sysName",
+                        "=",
+                        "'$Devices'"
+                    ],
+                    "type": "expression"
+                    }
+                ]
+                }
+            ],
+            "thresholds": "",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "設備註釋",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [
+                {
+                "op": "=",
+                "text": "N/A",
+                "value": "null"
+                }
+            ],
+            "valueName": "first"
+            },
+            {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "librenms-cloud-mysql",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 8,
+                "w": 10,
+                "x": 0,
+                "y": 8
+            },
+            "hiddenSeries": false,
+            "id": 12,
+            "legend": {
+                "alignAsTable": false,
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "rightSide": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                "format": "time_series",
+                "group": [],
+                "metricColumn": "none",
+                "rawQuery": true,
+                "rawSql": "SELECT\n  a.timestamp AS \"time\",\n  a.max,\n  a.min,\n  a.avg\nFROM $DataBase_Name.device_perf a, $DataBase_Name.devices b\nWHERE\n  a.device_id = b.device_id AND\n  b.sysName = '$Devices'\nORDER BY a.timestamp",
+                "refId": "A",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "id"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "table": "alert_log",
+                "timeColumn": "time_logged",
+                "timeColumnType": "timestamp",
+                "where": [
+                    {
+                    "name": "$__timeFilter",
+                    "params": [],
+                    "type": "macro"
+                    }
+                ]
+                },
+                {
+                "format": "time_series",
+                "group": [],
+                "hide": true,
+                "metricColumn": "none",
+                "rawQuery": true,
+                "rawSql": "SELECT\n  DATE_SUB(a.timestamp, INTERVAL 8 HOUR) AS \"time\",\n  a.max,\n  a.min,\n  a.avg\nFROM $DataBase_Name.device_perf a, $DataBase_Name.devices b\nWHERE\n  a.device_id = b.device_id AND\n  b.sysName = '$Devices'\nORDER BY a.timestamp",
+                "refId": "B",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "value"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "timeColumn": "time",
+                "where": [
+                    {
+                    "name": "$__timeFilter",
+                    "params": [],
+                    "type": "macro"
+                    }
+                ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": "2h",
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "設備負載狀態",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+                },
+                {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+            },
+            {
+            "aliasColors": {},
+            "bars": true,
+            "cacheTimeout": null,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "librenms-cloud-mysql",
+            "fill": 2,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 8,
+                "w": 10,
+                "x": 10,
+                "y": 8
+            },
+            "hiddenSeries": false,
+            "hideTimeOverride": false,
+            "id": 30,
+            "interval": "",
+            "legend": {
+                "alignAsTable": false,
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "rightSide": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 0,
+            "links": [],
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": true,
+            "pluginVersion": "6.5.2",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                "format": "time_series",
+                "group": [],
+                "hide": false,
+                "metricColumn": "none",
+                "rawQuery": true,
+                "rawSql": "SELECT\n  DATE_SUB(a.time_logged, INTERVAL 8 hour) AS \"time_sec\",\n  a.status\nFROM $DataBase_Name.device_state_history a, $DataBase_Name.devices b\nwhere a.device_id = b.device_id and b.sysName = '$Devices'\nORDER BY a.time_logged",
+                "refId": "A",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "device_id"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "table": "$DataBases.device_state_history",
+                "timeColumn": "time_logged",
+                "timeColumnType": "timestamp",
+                "where": []
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": "1h",
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "設備開關歷史狀態",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                "decimals": null,
+                "format": "none",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+                },
+                {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+            },
+            {
+            "cacheTimeout": null,
+            "columns": [],
+            "datasource": "librenms-cloud-mysql",
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 8,
+                "w": 4,
+                "x": 20,
+                "y": 8
+            },
+            "id": 31,
+            "links": [],
+            "options": {},
+            "pageSize": null,
+            "pluginVersion": "6.5.2",
+            "showHeader": true,
+            "sort": {
+                "col": 0,
+                "desc": true
+            },
+            "styles": [
+                {
+                "alias": "Time",
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "pattern": "Time",
+                "type": "date"
+                },
+                {
+                "alias": "",
+                "colorMode": null,
+                "colors": [
+                    "rgba(245, 54, 54, 0.9)",
+                    "rgba(237, 129, 40, 0.89)",
+                    "rgba(50, 172, 45, 0.97)"
+                ],
+                "decimals": 2,
+                "pattern": "/.*/",
+                "thresholds": [],
+                "type": "number",
+                "unit": "short"
+                }
+            ],
+            "targets": [
+                {
+                "format": "table",
+                "group": [],
+                "hide": false,
+                "metricColumn": "none",
+                "rawQuery": true,
+                "rawSql": "SELECT\n  time_logged AS \"最後更新時間\",\n  if(a.status = 1, \"開機中\", \"關機\") AS \"目前狀態\"\nFROM $DataBase_Name.device_state_history a, $DataBase_Name.devices b\nwhere a.device_id = b.device_id and b.sysName = '$Devices'\ngroup by id desc limit 20",
+                "refId": "A",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "device_id"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "table": "$DataBases.device_state_history",
+                "timeColumn": "time_logged",
+                "timeColumnType": "timestamp",
+                "where": []
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "設備開關歷史狀態",
+            "transform": "table",
+            "type": "table"
+            },
+            {
+            "columns": [],
+            "datasource": "librenms-cloud-mysql",
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 9,
+                "w": 14,
+                "x": 0,
+                "y": 16
+            },
+            "id": 29,
+            "options": {},
+            "pageSize": 10,
+            "showHeader": true,
+            "sort": {
+                "col": 3,
+                "desc": false
+            },
+            "styles": [
+                {
+                "alias": "",
+                "colorMode": null,
+                "colors": [
+                    "rgba(245, 54, 54, 0.9)",
+                    "rgba(237, 129, 40, 0.89)",
+                    "rgba(50, 172, 45, 0.97)"
+                ],
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "decimals": 2,
+                "mappingType": 1,
+                "pattern": "Status",
+                "preserveFormat": false,
+                "rangeMaps": [
+                    {
+                    "from": "",
+                    "text": "",
+                    "to": ""
+                    }
+                ],
+                "sanitize": false,
+                "thresholds": [],
+                "type": "string",
+                "unit": "dtdurations",
+                "valueMaps": [
+                    {
+                    "text": "關機",
+                    "value": "0"
+                    },
+                    {
+                    "text": "開機中",
+                    "value": "1"
+                    }
+                ]
+                },
+                {
+                "alias": "",
+                "colorMode": null,
+                "colors": [
+                    "rgba(245, 54, 54, 0.9)",
+                    "rgba(237, 129, 40, 0.89)",
+                    "rgba(50, 172, 45, 0.97)"
+                ],
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "decimals": 2,
+                "mappingType": 1,
+                "pattern": "Uptime",
+                "thresholds": [],
+                "type": "number",
+                "unit": "dtdurations"
+                }
+            ],
+            "targets": [
+                {
+                "format": "table",
+                "group": [],
+                "metricColumn": "none",
+                "rawQuery": true,
+                "rawSql": "SELECT a.sysName AS Device,\r\n       a.status AS Status,\r\n       (CASE WHEN a.status = 0 THEN 'N/A' ELSE uptime END) AS Uptime,\r\n       b.timestamp AS \"Latest Update Time\",\r\n       b.max,\r\n       b.min,\r\n       b.avg\r\nFROM $DataBase_Name.devices a, $DataBase_Name.device_perf b\r\nWHERE a.device_id = b.device_id\r\nORDER BY b.timestamp desc limit $Device_Count\r\n",
+                "refId": "A",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "value"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "timeColumn": "time",
+                "where": [
+                    {
+                    "name": "$__timeFilter",
+                    "params": [],
+                    "type": "macro"
+                    }
+                ]
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "學校設備總列表(測試用)",
+            "transform": "table",
+            "type": "table"
+            },
+            {
+            "cacheTimeout": null,
+            "columns": [],
+            "datasource": "librenms-cloud-mysql",
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 9,
+                "w": 10,
+                "x": 14,
+                "y": 16
+            },
+            "id": 10,
+            "interval": "",
+            "links": [],
+            "options": {},
+            "pageSize": null,
+            "showHeader": true,
+            "sort": {
+                "col": 3,
+                "desc": true
+            },
+            "styles": [
+                {
+                "alias": "Time",
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "pattern": "time_logged",
+                "type": "date"
+                },
+                {
+                "alias": "Device",
+                "colorMode": null,
+                "colors": [
+                    "rgba(245, 54, 54, 0.9)",
+                    "rgba(237, 129, 40, 0.89)",
+                    "rgba(50, 172, 45, 0.97)"
+                ],
+                "decimals": 2,
+                "pattern": "sysName",
+                "thresholds": [],
+                "type": "string",
+                "unit": "short"
+                },
+                {
+                "alias": "Rule Name",
+                "colorMode": null,
+                "colors": [
+                    "rgba(245, 54, 54, 0.9)",
+                    "rgba(237, 129, 40, 0.89)",
+                    "rgba(50, 172, 45, 0.97)"
+                ],
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "decimals": 2,
+                "mappingType": 1,
+                "pattern": "details",
+                "rangeMaps": [
+                    {
+                    "from": "",
+                    "text": "",
+                    "to": ""
+                    }
+                ],
+                "thresholds": [],
+                "type": "string",
+                "unit": "short",
+                "valueMaps": []
+                },
+                {
+                "alias": "State",
+                "colorMode": null,
+                "colors": [
+                    "rgba(245, 54, 54, 0.9)",
+                    "rgba(237, 129, 40, 0.89)",
+                    "rgba(50, 172, 45, 0.97)"
+                ],
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "decimals": 2,
+                "mappingType": 1,
+                "pattern": "state",
+                "thresholds": [],
+                "type": "string",
+                "unit": "short",
+                "valueMaps": [
+                    {
+                    "text": "Normal",
+                    "value": "0"
+                    },
+                    {
+                    "text": "Critical",
+                    "value": "1"
+                    }
+                ]
+                }
+            ],
+            "targets": [
+                {
+                "format": "table",
+                "group": [],
+                "metricColumn": "none",
+                "rawQuery": true,
+                "rawSql": "SELECT b.sysName,\n       a.details, \n       a.state,\n       a.time_logged as \"alert_time\"\nFROM $DataBase_Name.alert_log a, $DataBase_Name.devices b\nWHERE a.device_id = b.device_id\nORDER BY alert_time desc",
+                "refId": "A",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "value"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "timeColumn": "time",
+                "where": [
+                    {
+                    "name": "$__timeFilter",
+                    "params": [],
+                    "type": "macro"
+                    }
+                ]
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Alert Log",
+            "transform": "table",
+            "type": "table"
+            },
+            {
+            "columns": [],
+            "datasource": "librenms-cloud-mysql",
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 9,
+                "w": 6,
+                "x": 0,
+                "y": 25
+            },
+            "id": 8,
+            "options": {},
+            "pageSize": 10,
+            "showHeader": true,
+            "sort": {
+                "col": 1,
+                "desc": true
+            },
+            "styles": [
+                {
+                "alias": "",
+                "colorMode": null,
+                "colors": [
+                    "rgba(245, 54, 54, 0.9)",
+                    "rgba(237, 129, 40, 0.89)",
+                    "rgba(50, 172, 45, 0.97)"
+                ],
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "decimals": 2,
+                "mappingType": 1,
+                "pattern": "Status",
+                "preserveFormat": false,
+                "rangeMaps": [
+                    {
+                    "from": "",
+                    "text": "",
+                    "to": ""
+                    }
+                ],
+                "sanitize": false,
+                "thresholds": [],
+                "type": "string",
+                "unit": "dtdurations",
+                "valueMaps": [
+                    {
+                    "text": "關機",
+                    "value": "0"
+                    },
+                    {
+                    "text": "開機中",
+                    "value": "1"
+                    }
+                ]
+                },
+                {
+                "alias": "",
+                "colorMode": null,
+                "colors": [
+                    "rgba(245, 54, 54, 0.9)",
+                    "rgba(237, 129, 40, 0.89)",
+                    "rgba(50, 172, 45, 0.97)"
+                ],
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "decimals": 2,
+                "mappingType": 1,
+                "pattern": "Uptime",
+                "thresholds": [],
+                "type": "number",
+                "unit": "dtdurations"
+                }
+            ],
+            "targets": [
+                {
+                "format": "table",
+                "group": [],
+                "metricColumn": "none",
+                "rawQuery": true,
+                "rawSql": "SELECT sysName AS Device,\n       status AS Status,\n       (CASE WHEN status = 0 THEN 'N/A' ELSE uptime END) AS Uptime \nFROM $DataBases.devices",
+                "refId": "A",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "value"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "timeColumn": "time",
+                "where": [
+                    {
+                    "name": "$__timeFilter",
+                    "params": [],
+                    "type": "macro"
+                    }
+                ]
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "學校設備總列表",
+            "transform": "table",
+            "type": "table"
+            },
+            {
+            "columns": [],
+            "datasource": "librenms-cloud-mysql",
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 9,
+                "w": 8,
+                "x": 6,
+                "y": 25
+            },
+            "id": 19,
+            "options": {},
+            "pageSize": null,
+            "showHeader": true,
+            "sort": {
+                "col": 0,
+                "desc": true
+            },
+            "styles": [
+                {
+                "alias": "Time",
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "pattern": "Time",
+                "type": "date"
+                },
+                {
+                "alias": "",
+                "colorMode": null,
+                "colors": [
+                    "rgba(245, 54, 54, 0.9)",
+                    "rgba(237, 129, 40, 0.89)",
+                    "rgba(50, 172, 45, 0.97)"
+                ],
+                "decimals": 2,
+                "pattern": "/.*/",
+                "thresholds": [],
+                "type": "number",
+                "unit": "short"
+                }
+            ],
+            "targets": [
+                {
+                "format": "time_series",
+                "group": [],
+                "metricColumn": "none",
+                "rawQuery": true,
+                "rawSql": "SELECT\n  timestamp AS \"time\",\n  $DataBases.device_perf.device_id as \"sysName\",\n  $DataBases.device_perf.max,\n  $DataBases.device_perf.avg,\n  $DataBases.device_perf.min\nFROM $DataBases.device_perf, $DataBases.devices\nWHERE\n  $DataBases.devices.device_id = $DataBases.device_perf.device_id \nORDER BY timestamp",
+                "refId": "A",
+                "select": [
+                    [
+                    {
+                        "params": [
+                        "$DataBases.device_perf.device_id"
+                        ],
+                        "type": "column"
+                    }
+                    ],
+                    [
+                    {
+                        "params": [
+                        "$DataBases.device_perf.max"
+                        ],
+                        "type": "column"
+                    }
+                    ],
+                    [
+                    {
+                        "params": [
+                        "$DataBases.device_perf.avg"
+                        ],
+                        "type": "column"
+                    }
+                    ],
+                    [
+                    {
+                        "params": [
+                        "$DataBases.device_perf.min"
+                        ],
+                        "type": "column"
+                    }
+                    ]
+                ],
+                "table": "$DataBases.device_perf, $DataBases.devices",
+                "timeColumn": "timestamp",
+                "timeColumnType": "timestamp",
+                "where": [
+                    {
+                    "name": "",
+                    "params": [
+                        "$DataBases.devices.device_id",
+                        "=",
+                        "$DataBases.device_perf.device_id"
+                    ],
+                    "type": "expression"
+                    }
+                ]
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "系統設備使用率列表",
+            "transform": "timeseries_to_columns",
+            "type": "table"
+            }
+        ],
+        "refresh": "10s",
+        "schemaVersion": 21,
+        "style": "dark",
+        "tags": [],
+        "templating": {
+            "list": [
+            {
+                "allValue": null,
+                "current": {
+                "text": "",
+                "value": ""
+                },
+                "datasource": "librenms-cloud-mysql",
+                "definition": "SELECT school_Name FROM information_schema.schemata, school_monitor_system.edge_list where schema_name like 'school_______' and schema_name = concat('school_', school_Id); ",
+                "hide": 0,
+                "includeAll": false,
+                "label": null,
+                "multi": false,
+                "name": "DataBases",
+                "options": [],
+                "query": "SELECT school_Name FROM information_schema.schemata, school_monitor_system.edge_list where schema_name like 'school_______' and schema_name = concat('school_', school_Id); ",
+                "refresh": 2,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 0,
+                "tagValuesQuery": "",
+                "tags": [],
+                "tagsQuery": "",
+                "type": "query",
+                "useTags": false
+            },
+            {
+                "allValue": null,
+                "current": {
+                "text": "",
+                "value": ""
+                },
+                "datasource": "librenms-cloud-mysql",
+                "definition": "select concat('school_', school_Id) from school_monitor_system.edge_list where school_Name = '$DataBases';",
+                "hide": 2,
+                "includeAll": false,
+                "label": null,
+                "multi": false,
+                "name": "DataBase_Name",
+                "options": [],
+                "query": "select concat('school_', school_Id) from school_monitor_system.edge_list where school_Name = '$DataBases';",
+                "refresh": 2,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 0,
+                "tagValuesQuery": "",
+                "tags": [],
+                "tagsQuery": "",
+                "type": "query",
+                "useTags": false
+            },
+            {
+                "allValue": null,
+                "current": {
+                "text": "",
+                "value": ""
+                },
+                "datasource": "librenms-cloud-mysql",
+                "definition": "select sysName from $DataBase_Name.devices;",
+                "hide": 0,
+                "includeAll": false,
+                "label": null,
+                "multi": false,
+                "name": "Devices",
+                "options": [],
+                "query": "select sysName from $DataBase_Name.devices;",
+                "refresh": 2,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 0,
+                "tagValuesQuery": "",
+                "tags": [],
+                "tagsQuery": "",
+                "type": "query",
+                "useTags": false
+            },
+            {
+                "allValue": null,
+                "current": {
+                "text": "",
+                "value": ""
+                },
+                "datasource": "librenms-cloud-mysql",
+                "definition": "select count(*) from $DataBase_Name.devices;",
+                "hide": 2,
+                "includeAll": false,
+                "label": null,
+                "multi": false,
+                "name": "Device_Count",
+                "options": [
+                {
+                    "selected": true,
+                    "text": "4",
+                    "value": "4"
+                }
+                ],
+                "query": "select count(*) from $DataBase_Name.devices;",
+                "refresh": 0,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 0,
+                "tagValuesQuery": "",
+                "tags": [],
+                "tagsQuery": "",
+                "type": "query",
+                "useTags": false
+            }
+            ]
+        },
+        "time": {
+            "from": "now-6h",
+            "to": "now"
+        },
+        "timepicker": {
+            "refresh_intervals": [
+            "5s",
+            "10s",
+            "30s",
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h",
+            "2h",
+            "1d"
+            ]
+        },
+        "timezone": "",
+        "title": "LibreNMS-Cloud-DashBoard",
+        "uid": null,
+        "version": 0
+    },
+    "folderId": 0,
+    "overwrite": false
+  }
