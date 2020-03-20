@@ -22,7 +22,7 @@ os.system("pip3 install speedtest-cli")
 
 # supervisor install
 os.system("apt-get install -y supervisor")
-os.system("cp /home/ubuntu/School_Monitor_System/Client/client.conf /etc/supervisor/conf.d")
+os.system("cp /home/ubuntu/School_Monitor_System/Client/x86_PC/client.conf /etc/supervisor/conf.d")
 os.system("service supervisor restart")
 while True:
     if (len(str(check_output(["pidof","python3"]).decode("utf-8")).split("\n")[0].split(" ")) == 2):
