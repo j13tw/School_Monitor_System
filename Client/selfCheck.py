@@ -79,14 +79,14 @@ def make_speedtest():
         except:
             return False
 
-    elif (str(datetime.datetime.now()).split(" ")[0] == speedtestData["speedtest"]['timestamp'] and spd_log_json["speedtest"]["submit"] == 0):
+    elif (str(datetime.datetime.now()).split(" ")[0] == speedtestData["speedtest"]['timestamp'] and speedtestData["speedtest"]["submit"] == 0):
         try:
             r = requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeSpeedtestUploadUrl, json=speedtestData)
             if (json.loads(r.text)["uploadSpeedtest"] == "ok"): 
                 speedtestData["speedtest"]['submit'] = 1
-                spd_log_w = open("./speedtest.log", "w")
-                spd_log_w.write(str(speedtestData))
-                spd_log_w.close()
+                # spd_log_w = open("./speedtest.log", "w")
+                # spd_log_w.write(str(speedtestData))
+                # spd_log_w.close()
                 return True
             else: False  
         except:
@@ -306,7 +306,7 @@ while edgeInitState:
             edgeNowState = 404
             print(str(datetime.datetime.now()) + " LibreNMS is Down")
             edgeStatusCode = edgeStatusCodeArray[1]
-    elif (edgeNowState == 404 and edgePreState == 200):
+    elif (edgeNowState == 200 and edgePreState == 404):
         print(str(datetime.datetime.now()) + " LibreNMS is Up")
         edgeStatusCode = edgeStatusCodeArray[0]
     else:
