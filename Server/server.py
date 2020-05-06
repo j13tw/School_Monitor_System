@@ -155,15 +155,17 @@ mysql_create_edge_speedtest_table = "CREATE TABLE speedtest (\
     end_time        datetime           NOT NULL, \
     PRIMARY KEY(id));"
 
-''' ports inpot/output value is Mbps'''
+''' ports inpot/output value is kbps'''
 mysql_create_ports_table = "CREATE TABLE ports (\
-    id              int(10) unsigned   NOT NULL, \
+    id              int(10) unsigned   NOT NULL AUTO_INCREMENT, \
     device_id       int(10) unsigned   NOT NULL, \
     hostname        varchar(128)       NOT NULL, \
     port_name       varchar(64)        NOT NULL, \
+    port_speed      int(10) unsigned   NULL, \
+    port_status     varchar(64)        NOT NULL, \
     input           float(10, 3)       NOT NULL, \
-    output          float(10, 3)      NOT NULL, \
-    time_logged     timestamp          NOT NULL, \
+    output          float(10, 3)       NOT NULL, \
+    time_logged     datetime           NOT NULL, \
     PRIMARY KEY(id));"
 
 mysql_push_edge_data = ""
@@ -638,23 +640,24 @@ def edgeNodeSqlUpload():
             print("Refresh ports tables")
             for x in range(0, len(edge_school_ports)):
                 y = json.loads(str(edge_school_ports[x]).replace("'", '"'))
-                y["id"] = str(y["id"])
-                y["time"] = "\'" + str(y["time"]) + "\'"
+                y["time"] = "\'" + str(y["time"]).replace("T", " ").split(".")[0] + "\'"
                 y["device_id"] = str(y["device_id"])
                 y["port_name"] = "\'" + str(y["port_name"]) + "\'"
+                if (y["port_speed"] != "NULL"): y["port_speed"] = str(y["port_speed"])
+                y["port_status"] = "\'" + str(y["port_status"]) + "\'"
                 y["hostname"] = "\'" + str(y["hostname"]) + "\'"
                 y["input"] = str(y["input"])
                 y["output"] = str(y["output"])
-                if (mysql_connection.execute("select * from ports where id = " + y["id"]) == 0):
+                if (mysql_connection.execute("select * from ports where device_id = " + y["device_id"] + " and port_name = " + y["port_name"] + " and time_logged = " + y["time"]) == 0):
                     try:
-                        mysql_connection.execute("INSERT INTO ports (id, time, device_id, hostname, port_name, input, output) \
+                        mysql_connection.execute("INSERT INTO ports (time_logged, device_id, hostname, port_name, port_speed, port_status, input, output) \
                             VALUE \
-                            (" + y["id"] + ", " + y["time"] + ", " + y["device_id"] + ", " + y["hostname"] + ", " + y["port_name"] + ", " + y["input"] + ", " + y["output"] + ")")
+                            (" + y["time"] + ", " + y["device_id"] + ", " + y["hostname"] + ", " + y["port_name"] + ", " + y["port_speed"] + ", " + y["port_status"] + ", " + y["input"] + ", " + y["output"] + ")")
                         print("ports insert new data !")
                         mysql_conn.commit() 
                     except:
                         return {"uploadSql": "ports_table_insert_Error"}
-                print("recive school_" + edge_school_id + " device_id " + y["device_id"] + "=> port_name = " + y["id"]) 
+                print("recive school_" + edge_school_id + " device_id " + y["device_id"] + "=> port_name = " + y["port_name"]) 
 
             # print(edge_device_list)
             edge_device_list_set = set(edge_device_list)
@@ -675,6 +678,8 @@ def edgeNodeSqlUpload():
                 mysql_connection.execute("DELETE from alert_log where device_id = " + str(x))
                 mysql_conn.commit()
                 mysql_connection.execute("DELETE from device_state_history where device_id = " + str(x))
+                mysql_conn.commit()
+                mysql_connection.execute("DELETE from ports where device_id = " + str(x))
                 mysql_conn.commit()
             print(str(datetime.datetime.now()) + "over")  
             return {"uploadSql": "ok"}
