@@ -20,6 +20,7 @@ os.system("pip3 install ipgetter2==1.1.9")
 # os.chdir("..")
 os.system("pip3 install requests")
 os.system("pip3 install speedtest-cli")
+os.system("pip3 install influxdb")
 
 # supervisor install
 os.system("apt-get install -y supervisor")

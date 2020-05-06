@@ -4,7 +4,7 @@
 from flask import Flask, request
 import MySQLdb
 import os, sys
-import datetime
+import datetime, time
 import json
 import xlrd
 
@@ -155,6 +155,17 @@ mysql_create_edge_speedtest_table = "CREATE TABLE speedtest (\
     end_time        datetime           NOT NULL, \
     PRIMARY KEY(id));"
 
+''' ports inpot/output value is Mbps'''
+mysql_create_ports_table = "CREATE TABLE ports (\
+    id              int(10) unsigned   NOT NULL, \
+    device_id       int(10) unsigned   NOT NULL, \
+    hostname        varchar(128)       NOT NULL, \
+    port_name       varchar(64)        NOT NULL, \
+    input           float(10, 3)       NOT NULL, \
+    output          float(10, 3)      NOT NULL, \
+    time_logged     timestamp          NOT NULL, \
+    PRIMARY KEY(id));"
+
 mysql_push_edge_data = ""
 
 def mysql_reconnect():
@@ -186,6 +197,7 @@ def mysql_creat_edge_table(dbName, tableName):
     elif tableName == "alert_log": tableInfo = mysql_create_edge_alert_log_table
     elif tableName == "device_state_history": tableInfo = mysql_create_edge_device_state_history_table
     elif tableName == "speedtest": tableInfo = mysql_create_edge_speedtest_table
+    elif tableName == "ports": tableInfo = mysql_create_ports_table
     # print(tableName, tableInfo)
     try:
         mysql_conn = MySQLdb.connect(host = mysql_host, \
@@ -392,6 +404,9 @@ def edgeNodeRegist():
             if (mysql_check_table("school_" + edge_school_id, "speedtest") == False):
                 if (mysql_creat_edge_table("school_" + edge_school_id, "speedtest") == False):
                     return {"regist": "fail", "info": "db_edgeTable_speedtest_Error"}
+            if (mysql_check_table("school_" + edge_school_id, "ports") == False):
+                if (mysql_creat_edge_table("school_" + edge_school_id, "ports") == False):
+                    return {"regist": "fail", "info": "db_edgeTable_ports_Error"}
             return {"regist": "ok"}
         else:
             return {"regist": "fail"}
@@ -454,10 +469,12 @@ def edgeNodeSqlUpload():
         edge_school_devices = edgeData["devices"]
         edge_school_device_perf = edgeData["device_perf"]
         edge_school_alert_log = edgeData["alert_log"]
+        edge_school_ports = edgeData["ports"]
         print("school_id", "\n", edge_school_id)
         print("edge_school_devices", "\n", edge_school_devices)
         print("edge_school_device_perf", "\n", edge_school_device_perf)
         print("edge_school_alert_log", "\n", edge_school_alert_log)
+        print("edge_school_ports", "\n", edge_school_ports)
         edge_device_list = []
 
         if (mysql_connect() == True):
@@ -614,9 +631,31 @@ def edgeNodeSqlUpload():
                         print("alert_log insert new data !")
                         mysql_conn.commit() 
                     except:
-                        return {"uploadSql": "device_perf_table_insert_Error"}
+                        return {"uploadSql": "alert_log_table_insert_Error"}
                 print("recive school_" + edge_school_id + " alert_log " + y["device_id"] + "=> alert_log_id = " + y["id"]) 
             
+            # edge ports table update
+            print("Refresh ports tables")
+            for x in range(0, len(edge_school_ports)):
+                y = json.loads(str(edge_school_ports[x]).replace("'", '"'))
+                y["id"] = str(y["id"])
+                y["time"] = "\'" + str(y["time"]) + "\'"
+                y["device_id"] = str(y["device_id"])
+                y["port_name"] = "\'" + str(y["port_name"]) + "\'"
+                y["hostname"] = "\'" + str(y["hostname"]) + "\'"
+                y["input"] = str(y["input"])
+                y["output"] = str(y["output"])
+                if (mysql_connection.execute("select * from ports where id = " + y["id"]) == 0):
+                    try:
+                        mysql_connection.execute("INSERT INTO ports (id, time, device_id, hostname, port_name, input, output) \
+                            VALUE \
+                            (" + y["id"] + ", " + y["time"] + ", " + y["device_id"] + ", " + y["hostname"] + ", " + y["port_name"] + ", " + y["input"] + ", " + y["output"] + ")")
+                        print("ports insert new data !")
+                        mysql_conn.commit() 
+                    except:
+                        return {"uploadSql": "ports_table_insert_Error"}
+                print("recive school_" + edge_school_id + " device_id " + y["device_id"] + "=> port_name = " + y["id"]) 
+
             # print(edge_device_list)
             edge_device_list_set = set(edge_device_list)
             cloud_device_list = []

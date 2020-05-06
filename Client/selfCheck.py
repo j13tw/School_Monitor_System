@@ -1,5 +1,6 @@
 #! /usr/bin/python3
 from ipgetter2 import ipgetter1 as ipgetter
+from influxdb import InfluxDBClient
 import os, sys
 import time, datetime
 import MySQLdb
@@ -20,7 +21,7 @@ edgeSpeedtestUploadUrl = "/edgeNodeSpeedtestUpload"
 
 registData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "status": ""}
 healthData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "status":""}
-searchSqlData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "devices": [], "device_perf": [], "alert_log": []}
+searchSqlData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "devices": [], "device_perf": [], "alert_log": [], "ports": []}
 speedtestData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "speedtest": {"timestamp": "2020-01-01 00:00:00"}}
 
 #print("argv = "+sys.argv[1])
@@ -28,6 +29,8 @@ speedtestData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": i
 #print(healthData)
 
 # [Mysql Setup]
+mysql_host = "127.0.0.1"
+mysql_port = 3306
 mysql_user = "lib" + str(sys.argv[1]) + "user"
 mysql_passwd = "lib" + str(sys.argv[1]) + "pass"
 mysql_db = "lib" + str(sys.argv[1]) + "name"
@@ -35,8 +38,17 @@ mysql_db = "lib" + str(sys.argv[1]) + "name"
 # mysql_user = "libeenms"
 # mysql_passwd = "librenms"
 # mysql_db = "librenms"
-mysql_host = "127.0.0.1"
-mysql_port = 3306
+
+# [InfluxDB Setup]
+influxdb_host = '127.0.0.1'
+influxdb_port = 8086
+influxdb_user = "lib" + str(sys.argv[1]) + "user"
+influxdb_passwd = "lib" + str(sys.argv[1]) + "pass"
+influxdb_db = "lib" + str(sys.argv[1]) + "name"
+
+# influxdb_user = 'lib313302user'
+# influxdb_passwd = 'lib313302pass'
+# influxdb_db = 'lib313302name'
 
 # [Edge Setup]
 edgeInitState = 0
@@ -46,6 +58,27 @@ edgeStatusCodeArray = ["running", "stop", "fail"]
 checkInterval = 10 # 鑑測輪詢秒數
 pushSqlDelay = 3  # 拋送 sql 查詢資料延遲次數
 pushSqlCount = checkInterval * pushSqlDelay  # 每次拋送 sql 查詢延時 (pushSqlCount*checkInterval=300s)
+
+def influxdb_search_ports_tables():
+    global mysql_conn
+    ports_data = {}
+    mysql_connect()
+    mysql_connection = mysql_conn.cursor()
+    influx_conn = InfluxDBClient(influxdb_host, 8086, influxdb_user, influxdb_passwd, influxdb_db)
+
+    mysql_connection = mysql_conn.cursor()
+    mysql_connection.execute("select b.hostname, a.ifName, b.device_id from ports as a natural join devices as b group by port_id;")
+    portList = mysql_connection.fetchall()
+    portDataList = []
+
+    for x in portList:
+        data = influx_conn.query('select ifName as port_name, ifInBits_rate/1000 as input, ifOutBits_rate/1000 as output, hostname from ports where hostname = \'' + x[0] + '\' and ifName = \'' + x[1] + '\' order by time desc limit 1;')
+        portData = list(data.get_points())[0]
+        portData["device_id"] = x[2]
+        portData["id"] = int(time.mktime(datetime.datetime.strptime(portData["time"], "%Y-%m-%dT%H:%M:%S.%fZ").timetuple()))
+        portDataList.append(portData)
+
+    return portDataList
 
 def make_speedtest():
     if (str(datetime.datetime.now()).split(" ")[0] != str(speedtestData["speedtest"]['timestamp']).split(" ")[0]):
@@ -332,6 +365,7 @@ while edgeInitState:
             searchSqlData["devices"] = mysql_search_devices_tables()
             searchSqlData["device_perf"] = mysql_search_device_perf_tables()
             searchSqlData["alert_log"] = mysql_search_alert_log_tables()
+            searchSqlData["ports"] = influxdb_search_ports_tables()
             print(searchSqlData)
             try:
                 requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeDatabaseFlashUrl, json=searchSqlData)
@@ -342,6 +376,6 @@ while edgeInitState:
         except:
             os.system("service mysql restart")
             print(str(datetime.datetime.now()) + " Fetch Sql to Cloud fail !")
-            
+
     edgePreState = edgeNowState
     time.sleep(checkInterval)
