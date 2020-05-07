@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1588843201663,
+  "iteration": 1588847772214,
   "links": [],
   "panels": [
     {
@@ -4487,7 +4487,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  distinct(port_name) AS \"埠口名稱\",\n  input AS \"流入\",\n  output AS \"流出\",\n  time_logged AS \"time\"\nFROM $DataBase_Name.ports\nWHERE hostname = '$Device_Hostname'",
+          "rawSql": "SELECT\n  distinct(port_name) AS \"埠口名稱\",\n  input AS \"流入\",\n  output AS \"流出\",\n  time_logged AS \"time\"\nFROM $DataBase_Name.ports\nWHERE hostname = '$Device_Hostname' and (output > 0 or input > 0)",
           "refId": "A",
           "select": [
             [
@@ -4542,7 +4542,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "網路設備埠口流量總覽",
+      "title": "已連接設備的網路設備埠口流量總覽",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -4641,8 +4641,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "nmc",
-          "value": "nmc"
+          "text": "dgs-1210-28 switch-a",
+          "value": "dgs-1210-28 switch-a"
         },
         "datasource": "librenms-cloud-mysql",
         "definition": "select sysName from $DataBase_Name.devices;",
@@ -4667,8 +4667,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "6",
-          "value": "6"
+          "text": "5",
+          "value": "5"
         },
         "datasource": "librenms-cloud-mysql",
         "definition": "select count(*) from $DataBase_Name.devices;",
@@ -4681,8 +4681,8 @@
         "options": [
           {
             "selected": true,
-            "text": "6",
-            "value": "6"
+            "text": "5",
+            "value": "5"
           }
         ],
         "query": "select count(*) from $DataBase_Name.devices;",
@@ -4699,8 +4699,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "10.0.0.176",
-          "value": "10.0.0.176"
+          "text": "10.0.0.196",
+          "value": "10.0.0.196"
         },
         "datasource": "librenms-cloud-mysql",
         "definition": "select hostname from $DataBase_Name.devices where sysName = '$Devices';",
@@ -4725,8 +4725,8 @@
       {
         "allValue": "N",
         "current": {
-          "text": "LOOPBACK",
-          "value": "LOOPBACK"
+          "text": "Slot0/1",
+          "value": "Slot0/1"
         },
         "datasource": "librenms-cloud-mysql",
         "definition": "select  port_name from  $DataBase_Name.ports where hostname = '$Device_Hostname'",
@@ -4751,8 +4751,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "2",
-          "value": "2"
+          "text": "28",
+          "value": "28"
         },
         "datasource": "librenms-cloud-mysql",
         "definition": "select  count(distinct(port_name)) from  $DataBase_Name.ports where hostname = '$Device_Hostname'",
@@ -4800,5 +4800,5 @@
   "variables": {
     "list": []
   },
-  "version": 113
+  "version": 115
 }
