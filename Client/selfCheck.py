@@ -67,7 +67,7 @@ def influxdb_search_ports_tables():
     influx_conn = InfluxDBClient(influxdb_host, 8086, influxdb_user, influxdb_passwd, influxdb_db)
 
     mysql_connection = mysql_conn.cursor()
-    mysql_connection.execute("select b.hostname, a.ifName, b.device_id, a.ifSpeed/1000, ifOperStatus from ports as a natural join devices as b group by port_id;")
+    mysql_connection.execute("select b.hostname, a.ifName, b.device_id, a.ifSpeed/1000, a.ifOperStatus from ports as a natural join devices as b group by port_id;")
     portList = mysql_connection.fetchall()
     portDataList = []
 
@@ -76,7 +76,7 @@ def influxdb_search_ports_tables():
         portData = list(data.get_points())[0]
         portData["device_id"] = x[2]
         if (x[3] == None): portData["port_speed"] = "NULL"
-        else: portData["port_speed"] = x[3]
+        else: portData["port_speed"] = int(x[3])
         portData["port_status"] = x[4]
         portDataList.append(portData)
 
