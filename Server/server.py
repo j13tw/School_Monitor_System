@@ -163,8 +163,8 @@ mysql_create_ports_table = "CREATE TABLE ports (\
     port_name       varchar(64)        NOT NULL, \
     port_speed      int(10) unsigned   NULL, \
     port_status     varchar(64)        NOT NULL, \
-    input           float(10, 3)       NOT NULL, \
-    output          float(10, 3)       NOT NULL, \
+    input           float(15, 3)       NOT NULL, \
+    output          float(15, 3)       NOT NULL, \
     time_logged     datetime           NOT NULL, \
     PRIMARY KEY(id));"
 
