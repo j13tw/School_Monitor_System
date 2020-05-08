@@ -312,11 +312,11 @@ def edgeNodeHealthCheck():
             edge_school_ip = str(edgeData["ip"])
             edge_school_mac = str(edgeData["mac"])
             edge_school_status = str(edgeData["status"])
-            print("healthCheck = ", edge_school_id, edge_school_status)
-            print("School_Id = " + edge_school_id)
-            print("School_Ip = " + edge_school_ip)
-            print("School_Status = " + str(edge_school_status))
-            print("School_MAC = " + edge_school_mac)
+            # print("healthCheck = ", edge_school_id, edge_school_status)
+            # print("School_Id = " + edge_school_id)
+            # print("School_Ip = " + edge_school_ip)
+            # print("School_Status = " + str(edge_school_status))
+            # print("School_MAC = " + edge_school_mac)
         except:
             return {"check": "fail"}
 
@@ -355,10 +355,10 @@ def edgeNodeRegist():
             edge_school_ip = str(edgeData["ip"])
             edge_school_mac = str(edgeData["mac"])
             edge_school_status = str(edgeData["status"])
-            print("School_Id = " + edge_school_id)
-            print("School_Ip = " + edge_school_ip)
-            print("School_Status = " + str(edge_school_status))
-            print("School_MAC = " + edge_school_mac)
+            # print("School_Id = " + edge_school_id)
+            # print("School_Ip = " + edge_school_ip)
+            # print("School_Status = " + str(edge_school_status))
+            # print("School_MAC = " + edge_school_mac)
         except:
             return {"regist": "fail", "info": "post_Error"}
         
@@ -431,18 +431,17 @@ def edgeNodeSpeedtestUpload():
         start_time = "'" + str(edge_school_speedtest["start_time"]) + "'"
         end_time = "'" + str(edge_school_speedtest["end_time"]) + "'"
 
-        print("school_id = ", edge_school_id)
-        print("edge_school_speedtest = ", edge_school_speedtest)
-        print("")
-        print("ping = ", ping)
-        print("download-Mbps = ", download)
-        print("upload-Mbps = ", upload)
-        print("timestamp = ", time_logged)
-        print("server-sponsor = ", server_sponsor)
-        print("server-name = ", server_name)
-        print("server-distance = ", server_distance)
-        print("start_time = ", start_time)
-        print("end_time = ", end_time)
+        # print("school_id = ", edge_school_id)
+        # print("edge_school_speedtest = ", edge_school_speedtest)
+        # print("ping = ", ping)
+        # print("download-Mbps = ", download)
+        # print("upload-Mbps = ", upload)
+        # print("timestamp = ", time_logged)
+        # print("server-sponsor = ", server_sponsor)
+        # print("server-name = ", server_name)
+        # print("server-distance = ", server_distance)
+        # print("start_time = ", start_time)
+        # print("end_time = ", end_time)
 
         if (mysql_connect() == True):
             if (mysql_check_db("school_" + edge_school_id) == False or mysql_check_table("school_" + edge_school_id, "speedtest") == False): 
