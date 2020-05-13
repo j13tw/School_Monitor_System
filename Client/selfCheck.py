@@ -77,7 +77,9 @@ def influxdb_search_ports_tables():
         portData["device_id"] = x[2]
         if (x[3] == None): portData["port_speed"] = "NULL"
         else: portData["port_speed"] = int(x[3])
-        portData["port_status"] = x[4]
+        if (x[4] == None): portData["port_status"] = "NULL"
+        else: portData["port_status"] = x[4]
+        
         portDataList.append(portData)
 
     return portDataList
