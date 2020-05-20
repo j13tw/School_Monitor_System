@@ -23,7 +23,7 @@ registData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipge
 healthData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "status":""}
 searchSqlData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "devices": [], "device_perf": [], "alert_log": [], "ports": []}
 speedtestData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "speedtest": {"timestamp": "2020-01-01 00:00:00"}}
-csip = sys.argv[2] #++
+
 #print("argv = "+sys.argv[1])
 #print(registData)
 #print(healthData)
@@ -67,7 +67,7 @@ def influxdb_search_ports_tables():
     influx_conn = InfluxDBClient(influxdb_host, 8086, influxdb_user, influxdb_passwd, influxdb_db)
 
     mysql_connection = mysql_conn.cursor()
-    mysql_connection.execute("select b.hostname, a.ifName, b.device_id, a.ifSpeed/1000, a.ifOperStatus from ports where hostname = '"+csip+"' as a natural join devices as b group by port_id;") #++
+    mysql_connection.execute("select b.hostname, a.ifName, b.device_id, a.ifSpeed/1000, a.ifOperStatus from ports as a natural join devices as b group by port_id;")
     portList = mysql_connection.fetchall()
     portDataList = []
 
