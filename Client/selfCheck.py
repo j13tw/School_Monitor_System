@@ -11,7 +11,7 @@ import speedtest
 
 # [Cloud Setup]
 cloudServerProtocol = "http"
-cloudServerIp = "10.0.0.194"
+cloudServerIp = "10.0.0.203"
 cloudServerPort = 5000
 cloudState = 0 # 0 is connected / 1 is connect fail
 edgeNodeRegistUrl = "/edgeNodeRegist"
@@ -19,32 +19,37 @@ edgeServiceCheckUrl = "/edgeNodeHealthCheck"
 edgeDatabaseFlashUrl = "/edgeNodeSqlUpload"
 edgeSpeedtestUploadUrl = "/edgeNodeSpeedtestUpload"
 
-registData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "status": ""}
-healthData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "status":""}
-searchSqlData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "devices": [], "device_perf": [], "alert_log": [], "ports": []}
-speedtestData = {"school": sys.argv[1], "mac": getmac.get_mac_address(), "ip": ipgetter.myip(), "speedtest": {"timestamp": "2020-01-01 00:00:00"}}
-csip = sys.argv[2] #++
-#print("argv = "+sys.argv[1])
+school_id = str(sys.argv[1])
+school_core_switch_ip = str(sys.argv[2])
+school_mac = getmac.get_mac_address()
+school_ip = ipgetter.myip()
+
+registData = {"school": school_id, "mac": school_mac, "ip": school_ip, "status": ""}
+healthData = {"school": school_id, "mac": school_mac, "ip": school_ip, "status":""}
+searchSqlData = {"school": school_id, "mac": school_mac, "ip": school_ip, "devices": [], "device_perf": [], "alert_log": [], "ports": []}
+speedtestData = {"school": school_id, "mac": school_mac, "ip": school_ip, "speedtest": {"timestamp": "2020-01-01 00:00:00"}}
+
+#print("argv = "+school_id)
 #print(registData)
 #print(healthData)
 
 # [Mysql Setup]
 mysql_host = "127.0.0.1"
 mysql_port = 3306
-mysql_user = "lib" + str(sys.argv[1]) + "user"
-mysql_passwd = "lib" + str(sys.argv[1]) + "pass"
-mysql_db = "lib" + str(sys.argv[1]) + "name"
+mysql_user = "lib" + school_id + "user"
+mysql_passwd = "lib" + school_id + "pass"
+mysql_db = "lib" + school_id + "name"
 
-# mysql_user = "libeenms"
+# mysql_user = "librenms"
 # mysql_passwd = "librenms"
 # mysql_db = "librenms"
 
 # [InfluxDB Setup]
 influxdb_host = '127.0.0.1'
 influxdb_port = 8086
-influxdb_user = "lib" + str(sys.argv[1]) + "user"
-influxdb_passwd = "lib" + str(sys.argv[1]) + "pass"
-influxdb_db = "lib" + str(sys.argv[1]) + "name"
+influxdb_user = "lib" + school_id + "user"
+influxdb_passwd = "lib" + school_id + "pass"
+influxdb_db = "lib" + school_id + "name"
 
 # influxdb_user = 'lib313302user'
 # influxdb_passwd = 'lib313302pass'
@@ -54,6 +59,7 @@ influxdb_db = "lib" + str(sys.argv[1]) + "name"
 edgeInitState = 0
 edgePreState = 200
 edgeNowState = 404
+edgeMysqlState = True
 edgeStatusCodeArray = ["running", "stop", "fail"]
 checkInterval = 10 # 鑑測輪詢秒數
 pushSqlDelay = 3  # 拋送 sql 查詢資料延遲次數
@@ -61,28 +67,39 @@ pushSqlCount = checkInterval * pushSqlDelay  # 每次拋送 sql 查詢延時 (pu
 
 def influxdb_search_ports_tables():
     global mysql_conn
-    ports_data = {}
-    mysql_connect()
-    mysql_connection = mysql_conn.cursor()
-    influx_conn = InfluxDBClient(influxdb_host, 8086, influxdb_user, influxdb_passwd, influxdb_db)
+    influxdbStatus = 0
+    for x in range(0, 3):
+        try:
+            influx_conn = InfluxDBClient(influxdb_host, 8086, influxdb_user, influxdb_passwd, influxdb_db)
+            break
+        except:
+            os.system("sudo service influxdb start")
+            time.sleep(10)
+        if (x == 2): influxdbStatus = 1
 
-    mysql_connection = mysql_conn.cursor()
-    mysql_connection.execute("select b.hostname, a.ifName, b.device_id, a.ifSpeed/1000, a.ifOperStatus from ports where hostname = '"+csip+"' as a natural join devices as b group by port_id;") #++
-    portList = mysql_connection.fetchall()
-    portDataList = []
+    if (mysql_connect() == True and influxdbStatus == 0):
+        mysql_connection = mysql_conn.cursor()
+        # print("select b.hostname, a.ifName, b.device_id, a.ifSpeed/1000, a.ifOperStatus from (select * from ports where device_id in (select device_id from devices where hostname=\"" + school_core_switch_ip + "\")) as a natural join devices as b group by port_id;")
+        mysql_connection.execute("select b.hostname, a.ifName, b.device_id, a.ifSpeed/1000, a.ifOperStatus from (select * from ports where device_id in (select device_id from devices where hostname=\"" + school_core_switch_ip + "\")) as a natural join devices as b group by port_id;")
+        portList = mysql_connection.fetchall()
+        if (len(portList) != 0):
+            portDataList = []
 
-    for x in portList:
-        data = influx_conn.query('select ifName as port_name, ifInBits_rate/1000 as input, ifOutBits_rate/1000 as output, hostname from ports where hostname = \'' + x[0] + '\' and ifName = \'' + x[1] + '\' order by time desc limit 1;')
-        portData = list(data.get_points())[0]
-        portData["device_id"] = x[2]
-        if (x[3] == None): portData["port_speed"] = "NULL"
-        else: portData["port_speed"] = int(x[3])
-        if (x[4] == None): portData["port_status"] = "NULL"
-        else: portData["port_status"] = x[4]
-        
-        portDataList.append(portData)
-
-    return portDataList
+            for x in portList:
+                data = influx_conn.query('select ifName as port_name, ifInBits_rate/1000 as input, ifOutBits_rate/1000 as output, hostname from ports where hostname = \'' + x[0] + '\' and ifName = \'' + x[1] + '\' order by time desc limit 1;')
+                portData = list(data.get_points())[0]
+                portData["device_id"] = x[2]
+                if (x[3] == None): portData["port_speed"] = "NULL"
+                else: portData["port_speed"] = int(x[3])
+                if (x[4] == None): portData["port_status"] = "NULL"
+                else: portData["port_status"] = x[4]
+                
+                portDataList.append(portData)
+            return portDataList
+        else:
+          return
+    else:
+      return
 
 def make_speedtest():
     if (str(datetime.datetime.now()).split(" ")[0] != str(speedtestData["speedtest"]['timestamp']).split(" ")[0]):
@@ -287,7 +304,7 @@ def mysql_search_alert_log_tables():
     return alert_log_data
 
 # [Edge Init]
-while edgeInitState != 1:
+for x in range(0, 3):
     edgeStatusCode = ""
     try:
         mysql_conn = MySQLdb.connect(host = mysql_host, \
@@ -299,29 +316,38 @@ while edgeInitState != 1:
         mysql_check_table("devices")
         mysql_check_table("device_perf")
         mysql_check_table("alert_log")
+        break
     except:
         print(str(datetime.datetime.now()) + " Connect MySQL Error !")
         edgeStatusCode = edgeStatusCodeArray[2]
-    if (edgeStatusCode == ""):
+        os.system("service mysql restart")
+        time.sleep(10)
+
+if (edgeStatusCode == ""):
+    for x in range(0, 3):
         try:
-            if (requests.get("http://127.0.0.1/login").status_code == requests.codes.ok): edgeStatusCode = edgeStatusCodeArray[0]
+            if (requests.get("http://127.0.0.1/login").status_code == requests.codes.ok): 
+                if (edgeStatusCode == ""): edgeStatusCode = edgeStatusCodeArray[0]
+                break
         except:
-            edgeStatusCode = edgeStatusCodeArray[1]
-        if (edgeStatusCode == edgeStatusCodeArray[0]):
-            registData["status"] = edgeStatusCode
-            try:
-                print(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeNodeRegistUrl)
-                print(registData)
-                r = requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeNodeRegistUrl, json=registData)
-                if (json.loads(r.text)["regist"] == "ok"):
-                    edgeInitState = 1
-                    print(str(datetime.datetime.now()) + " Edge Init Network to Cloud : Regist OK !")
-                else: 
-                    print(str(datetime.datetime.now()) + " Edge Init Network to Cloud : Regist Fail ! (" + json.loads(r.text)["info"] + ")")
-            except:
-                print(str(datetime.datetime.now()) + " Edge Init Network to Cloud : Error !")
-    else:
-        os.system("service mysql start")
+            if (edgeStatusCode == ""): edgeStatusCode = edgeStatusCodeArray[1]
+            os.system("service apache2 start")
+            time.sleep(10)
+   
+registData["status"] = edgeStatusCode
+
+while edgeInitState != 1:
+    try:
+        print(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeNodeRegistUrl)
+        print(registData)
+        r = requests.post(cloudServerProtocol + "://" + cloudServerIp + ":" + str(cloudServerPort) + edgeNodeRegistUrl, json=registData)
+        if (json.loads(r.text)["regist"] == "ok"):
+            edgeInitState = 1
+            print(str(datetime.datetime.now()) + " Edge Init Network to Cloud : Regist OK !")
+        else: 
+            print(str(datetime.datetime.now()) + " Edge Init Network to Cloud : Regist Fail ! (" + json.loads(r.text)["info"] + ")")
+    except:
+        print(str(datetime.datetime.now()) + " Edge Init Network to Cloud : Error !")
     time.sleep(checkInterval)
 
 # [Edge selfCheck]
@@ -334,7 +360,7 @@ while edgeInitState:
         edgeNowState = 404
     if (edgeNowState == 200 and edgePreState == 200): print(str(datetime.datetime.now()) + " LibreNMS is Running")
     elif (edgeNowState == 404 and edgePreState == 200):
-        print(str(datetime.datetime.now()) + " Service Fail, Retry Secure Service")
+        print(str(datetime.datetime.now()) + " LibreNMS Service Fail, Retry Secure Service")
         os.system("service apache2 restart")
         try:
             edgeNowState = requests.get("http://127.0.0.1/login").status_code
@@ -348,7 +374,26 @@ while edgeInitState:
         edgeStatusCode = edgeStatusCodeArray[0]
     else:
         print(str(datetime.datetime.now()) + " LibreNMS is Fail !")
-    if (mysql_connect() == False): os.system("service mysql restart")
+        os.system("service apache2 restart")
+
+    if (mysql_connect() == False): 
+        print(str(datetime.datetime.now()) + " Mysql Service Fail, Retry Secure Service")
+        os.system("service mysql restart")
+        time.sleep(10)
+        if (mysql_connect() == False and edgeMysqlState == True): 
+            print(str(datetime.datetime.now()) + " Mysql is Fail !")
+            edgeStatusCode = edgeStatusCodeArray[1]
+        else:
+            print(str(datetime.datetime.now()) + " Mysql is Down")
+            os.system("service apache2 restart")
+    else:
+        if (edgeMysqlState == False): 
+            edgeStatusCode = edgeStatusCodeArray[0]
+            print(str(datetime.datetime.now()) + " Mysql is Up")
+        else:
+            print(str(datetime.datetime.now()) + " Mysql is Running")
+
+    edgeMysqlState = mysql_connect()
     # HealthCheck Flash API     
     if (edgeStatusCode != ""):
         cloudState = 1
