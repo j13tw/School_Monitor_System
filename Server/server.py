@@ -308,7 +308,7 @@ def edgeNodeHealthCheck():
     if request.method == 'POST':
         try:
             edgeData = json.loads(str(request.json).replace("'", '"'))
-            edge_school_id = int(edgeData["school"])
+            edge_school_id = str(edgeData["school"])
             edge_school_ip = str(edgeData["ip"])
             edge_school_mac = str(edgeData["mac"])
             edge_school_status = str(edgeData["status"])
