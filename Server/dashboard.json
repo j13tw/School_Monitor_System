@@ -3792,7 +3792,7 @@
                 "group": [],
                 "metricColumn": "none",
                 "rawQuery": true,
-                "rawSql": "SELECT\n  time_logged AS \"time\",\n  port_speed\nFROM $DataBase_Name.ports\nWHERE\n  port_name = '$Device_Ports'\nORDER BY time_logged",
+                "rawSql": "SELECT\n  time_logged AS \"time\",\n  port_speed\nFROM $DataBase_Name.ports\nWHERE\n  port_name = '$Device_Ports' and hostname = '$Device_Hostname'\nORDER BY time_logged desc\nlimit 1",
                 "refId": "A",
                 "select": [
                 [
@@ -4027,7 +4027,7 @@
                 "group": [],
                 "metricColumn": "none",
                 "rawQuery": true,
-                "rawSql": "SELECT\n  time_logged AS \"time\",\n  IF(port_status=\"up\", 1, 0)\nFROM $DataBase_Name.ports\nWHERE port_name = '$Device_Ports'\nORDER BY time_logged",
+                "rawSql": "SELECT\n  time_logged AS \"time\",\n  IF(port_status=\"up\", 1, 0)\nFROM $DataBase_Name.ports\nWHERE port_name = '$Device_Ports' and hostname = '$Device_Hostname'\nORDER BY time_logged desc\nlimit 1",
                 "refId": "A",
                 "select": [
                 [

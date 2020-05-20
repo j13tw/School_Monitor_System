@@ -332,7 +332,7 @@ def edgeNodeHealthCheck():
             if (mysql_check_school == 0):
                 print("school.id not exist - Error")
                 return {"healthCheck": "fail", "info": "school_id_Error"}
-            check_school_status = mysql_connection.execute("Select * from " + mysql_school_table + " where School_Id = '" + edge_school_id + "' and School_Ip = '" + edge_school_ip + "' and School_MAC = '" + edge_school_mac + "'")
+            mysql_check_school = mysql_connection.execute("Select * from " + mysql_school_table + " where School_Id = '" + edge_school_id + "' and School_Ip = '" + edge_school_ip + "' and School_MAC = '" + edge_school_mac + "'")
             if (mysql_check_school == 0):
                 print("school.id not regist- Error")
                 return {"healthCheck": "fail", "info": "school_not_regist_Error"}
@@ -477,6 +477,7 @@ def edgeNodeSqlUpload():
         print("edge_school_alert_log", "\n", edge_school_alert_log)
         print("edge_school_ports", "\n", edge_school_ports)
         edge_device_list = []
+        edge_ports_device_list = []
 
         if (mysql_connect() == True):
             if (mysql_check_db("school_" + edge_school_id) == False): return {"uploadSql": "Mysql_DB_Not_Exist_Error"} 
@@ -647,6 +648,7 @@ def edgeNodeSqlUpload():
                 y["hostname"] = "\'" + str(y["hostname"]) + "\'"
                 y["input"] = str(y["input"])
                 y["output"] = str(y["output"])
+                if (x == 0): edge_ports_device_list.append(y["device_id"])
                 if (mysql_connection.execute("select * from ports where device_id = " + y["device_id"] + " and port_name = " + y["port_name"] + " and time_logged = " + y["time"]) == 0):
                     try:
                         mysql_connection.execute("INSERT INTO ports (time_logged, device_id, hostname, port_name, port_speed, port_status, input, output) \
@@ -661,6 +663,7 @@ def edgeNodeSqlUpload():
             # print(edge_device_list)
             edge_device_list_set = set(edge_device_list)
             cloud_device_list = []
+            cloud_ports_device_list = []
             mysql_connection.execute("select device_id from devices")
             for x in mysql_connection:
                 cloud_device_list.append(str(x[0]))
@@ -678,6 +681,16 @@ def edgeNodeSqlUpload():
                 mysql_conn.commit()
                 mysql_connection.execute("DELETE from device_state_history where device_id = " + str(x))
                 mysql_conn.commit()
+
+            edge_ports_device_list_set = set(edge_ports_device_list)
+            mysql_connection.execute("select distinct(device_id) from ports")
+            for x in mysql_connection:
+                cloud_ports_device_list.append(str(x[0]))
+            # print(cloud_ports_device_list)
+            cloud_ports_device_list_set = set(cloud_ports_device_list)
+            ports_device_difference_list = cloud_ports_device_list_set.difference(edge_ports_device_list_set)
+            # print(ports_device_difference_list)
+            for x in ports_device_difference_list:
                 mysql_connection.execute("DELETE from ports where device_id = " + str(x))
                 mysql_conn.commit()
             print(str(datetime.datetime.now()) + "over")  

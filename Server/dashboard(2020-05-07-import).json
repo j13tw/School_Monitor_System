@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1,
-  "iteration": 1588847772214,
+  "id": 2,
+  "iteration": 1589779703635,
   "links": [],
   "panels": [
     {
@@ -2854,7 +2854,7 @@
       "type": "row"
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "datasource": null,
       "gridPos": {
         "h": 1,
@@ -2863,338 +2863,337 @@
         "y": 7
       },
       "id": 47,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "librenms-cloud-mysql",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 10,
-            "x": 0,
-            "y": 8
-          },
-          "hiddenSeries": false,
-          "id": 12,
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "format": "time_series",
-              "group": [],
-              "hide": true,
-              "metricColumn": "none",
-              "rawQuery": true,
-              "rawSql": "SELECT\n  a.timestamp AS \"time\",\n  a.max,\n  a.min,\n  a.avg\nFROM $DataBase_Name.device_perf a, $DataBase_Name.devices b\nWHERE\n  a.device_id = b.device_id AND\n  b.sysName = '$Devices'\nORDER BY a.timestamp",
-              "refId": "A",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "id"
-                    ],
-                    "type": "column"
-                  }
-                ]
-              ],
-              "table": "alert_log",
-              "timeColumn": "time_logged",
-              "timeColumnType": "timestamp",
-              "where": [
-                {
-                  "name": "$__timeFilter",
-                  "params": [],
-                  "type": "macro"
-                }
-              ]
-            },
-            {
-              "format": "time_series",
-              "group": [],
-              "hide": false,
-              "metricColumn": "none",
-              "rawQuery": true,
-              "rawSql": "SELECT\n  DATE_SUB(a.timestamp, INTERVAL 8 HOUR) AS \"time\",\n  a.max,\n  a.min,\n  a.avg\nFROM $DataBase_Name.device_perf a, $DataBase_Name.devices b\nWHERE\n  a.device_id = b.device_id AND\n  b.sysName = '$Devices'\nORDER BY a.timestamp",
-              "refId": "B",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "column"
-                  }
-                ]
-              ],
-              "timeColumn": "time",
-              "where": [
-                {
-                  "name": "$__timeFilter",
-                  "params": [],
-                  "type": "macro"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": "2h",
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "設備負載狀態",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": true,
-          "cacheTimeout": null,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "librenms-cloud-mysql",
-          "fill": 2,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 10,
-            "x": 10,
-            "y": 8
-          },
-          "hiddenSeries": false,
-          "hideTimeOverride": false,
-          "id": 30,
-          "interval": "",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 0,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": true,
-          "pluginVersion": "6.5.2",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "format": "time_series",
-              "group": [],
-              "hide": false,
-              "metricColumn": "none",
-              "rawQuery": true,
-              "rawSql": "SELECT\n  DATE_SUB(a.time_logged, INTERVAL 8 hour) AS \"time_sec\",\n  a.status\nFROM $DataBase_Name.device_state_history a, $DataBase_Name.devices b\nwhere a.device_id = b.device_id and b.sysName = '$Devices'\nORDER BY a.time_logged",
-              "refId": "A",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "device_id"
-                    ],
-                    "type": "column"
-                  }
-                ]
-              ],
-              "table": "$DataBases.device_state_history",
-              "timeColumn": "time_logged",
-              "timeColumnType": "timestamp",
-              "where": []
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": "1h",
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "設備開關歷史狀態",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "decimals": null,
-              "format": "none",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "cacheTimeout": null,
-          "columns": [],
-          "datasource": "librenms-cloud-mysql",
-          "fontSize": "100%",
-          "gridPos": {
-            "h": 8,
-            "w": 4,
-            "x": 20,
-            "y": 8
-          },
-          "id": 31,
-          "links": [],
-          "pageSize": null,
-          "pluginVersion": "6.5.2",
-          "showHeader": true,
-          "sort": {
-            "col": 0,
-            "desc": true
-          },
-          "styles": [
-            {
-              "alias": "Time",
-              "align": "auto",
-              "dateFormat": "YYYY-MM-DD HH:mm:ss",
-              "pattern": "Time",
-              "type": "date"
-            },
-            {
-              "alias": "",
-              "align": "auto",
-              "colorMode": null,
-              "colors": [
-                "rgba(245, 54, 54, 0.9)",
-                "rgba(237, 129, 40, 0.89)",
-                "rgba(50, 172, 45, 0.97)"
-              ],
-              "decimals": 2,
-              "pattern": "/.*/",
-              "thresholds": [],
-              "type": "number",
-              "unit": "short"
-            }
-          ],
-          "targets": [
-            {
-              "format": "table",
-              "group": [],
-              "hide": false,
-              "metricColumn": "none",
-              "rawQuery": true,
-              "rawSql": "SELECT\n  time_logged AS \"最後更新時間\",\n  if(a.status = 1, \"開機中\", \"關機\") AS \"目前狀態\"\nFROM $DataBase_Name.device_state_history a, $DataBase_Name.devices b\nwhere a.device_id = b.device_id and b.sysName = '$Devices'\ngroup by id desc limit 20",
-              "refId": "A",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "device_id"
-                    ],
-                    "type": "column"
-                  }
-                ]
-              ],
-              "table": "$DataBases.device_state_history",
-              "timeColumn": "time_logged",
-              "timeColumnType": "timestamp",
-              "where": []
-            }
-          ],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "設備開關歷史狀態",
-          "transform": "table",
-          "type": "table"
-        }
-      ],
+      "panels": [],
       "title": "設備歷史圖表",
       "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "librenms-cloud-mysql",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 0,
+        "y": 8
+      },
+      "hiddenSeries": false,
+      "id": 12,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "hide": true,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  a.timestamp AS \"time\",\n  a.max,\n  a.min,\n  a.avg\nFROM $DataBase_Name.device_perf a, $DataBase_Name.devices b\nWHERE\n  a.device_id = b.device_id AND\n  b.sysName = '$Devices'\nORDER BY a.timestamp",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "alert_log",
+          "timeColumn": "time_logged",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  DATE_SUB(a.timestamp, INTERVAL 8 HOUR) AS \"time\",\n  a.max,\n  a.min,\n  a.avg\nFROM $DataBase_Name.device_perf a, $DataBase_Name.devices b\nWHERE\n  a.device_id = b.device_id AND\n  b.sysName = '$Devices'\nORDER BY a.timestamp",
+          "refId": "B",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": "2h",
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "設備負載狀態",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "librenms-cloud-mysql",
+      "fill": 2,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 10,
+        "y": 8
+      },
+      "hiddenSeries": false,
+      "hideTimeOverride": false,
+      "id": 30,
+      "interval": "",
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 0,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": true,
+      "pluginVersion": "6.5.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  DATE_SUB(a.time_logged, INTERVAL 8 hour) AS \"time_sec\",\n  a.status\nFROM $DataBase_Name.device_state_history a, $DataBase_Name.devices b\nwhere a.device_id = b.device_id and b.sysName = '$Devices'\nORDER BY a.time_logged",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "device_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "$DataBases.device_state_history",
+          "timeColumn": "time_logged",
+          "timeColumnType": "timestamp",
+          "where": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": "1h",
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "設備開關歷史狀態",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": null,
+          "format": "none",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "cacheTimeout": null,
+      "columns": [],
+      "datasource": "librenms-cloud-mysql",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 20,
+        "y": 8
+      },
+      "id": 31,
+      "links": [],
+      "pageSize": null,
+      "pluginVersion": "6.5.2",
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "align": "auto",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "date"
+        },
+        {
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  time_logged AS \"最後更新時間\",\n  if(a.status = 1, \"開機中\", \"關機\") AS \"目前狀態\"\nFROM $DataBase_Name.device_state_history a, $DataBase_Name.devices b\nwhere a.device_id = b.device_id and b.sysName = '$Devices'\ngroup by id desc limit 20",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "device_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "$DataBases.device_state_history",
+          "timeColumn": "time_logged",
+          "timeColumnType": "timestamp",
+          "where": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "設備開關歷史狀態",
+      "transform": "table",
+      "type": "table"
     },
     {
       "collapsed": false,
@@ -3203,7 +3202,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 16
       },
       "id": 58,
       "panels": [],
@@ -3232,7 +3231,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 9
+        "y": 17
       },
       "id": 62,
       "interval": null,
@@ -3333,7 +3332,7 @@
         "h": 11,
         "w": 11,
         "x": 4,
-        "y": 9
+        "y": 17
       },
       "hiddenSeries": false,
       "id": 60,
@@ -3427,7 +3426,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": "3h",
+      "timeFrom": "6h",
       "timeRegions": [],
       "timeShift": null,
       "title": "網路設備埠口流量",
@@ -3476,7 +3475,7 @@
         "h": 16,
         "w": 9,
         "x": 15,
-        "y": 9
+        "y": 17
       },
       "id": 63,
       "pageSize": null,
@@ -3562,7 +3561,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  time_logged AS \"time\",\n  IF(port_status=\"up\", 1, 0) as \"狀態\",\n  input AS \"流入\",\n  input AS \"流出\"\nFROM $DataBase_Name.ports\nWHERE port_name = '$Device_Ports' and hostname = '$Device_Hostname'\nORDER BY time_logged",
+          "rawSql": "SELECT\n  time_logged AS \"time\",\n  IF(port_status=\"up\", 1, 0) as \"狀態\",\n  input AS \"流入\",\n  input AS \"流出\"\nFROM $DataBase_Name.ports\nWHERE port_name = '$Device_Ports' and hostname = '$Device_Hostname'\nORDER BY time_logged\nlimit 20",
           "refId": "A",
           "select": [
             [
@@ -3638,7 +3637,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 13
+        "y": 21
       },
       "id": 71,
       "interval": null,
@@ -3749,7 +3748,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 17
+        "y": 25
       },
       "id": 67,
       "interval": null,
@@ -3795,7 +3794,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  time_logged AS \"time\",\n  port_speed\nFROM $DataBase_Name.ports\nWHERE\n  port_name = '$Device_Ports'\nORDER BY time_logged",
+          "rawSql": "SELECT\n  time_logged AS \"time\",\n  port_speed\nFROM $DataBase_Name.ports\nWHERE\n  port_name = '$Device_Ports' and hostname = '$Device_Hostname'\nORDER BY time_logged desc\nlimit 1",
           "refId": "A",
           "select": [
             [
@@ -3850,7 +3849,7 @@
         "h": 5,
         "w": 11,
         "x": 4,
-        "y": 20
+        "y": 28
       },
       "hiddenSeries": false,
       "id": 69,
@@ -3921,7 +3920,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": "4h",
+      "timeFrom": "6h",
       "timeRegions": [],
       "timeShift": null,
       "title": "網路設備埠口連接狀態",
@@ -3984,7 +3983,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 21
+        "y": 29
       },
       "id": 68,
       "interval": null,
@@ -4030,7 +4029,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  time_logged AS \"time\",\n  IF(port_status=\"up\", 1, 0)\nFROM $DataBase_Name.ports\nWHERE port_name = '$Device_Ports'\nORDER BY time_logged",
+          "rawSql": "SELECT\n  time_logged AS \"time\",\n  IF(port_status=\"up\", 1, 0)\nFROM $DataBase_Name.ports\nWHERE port_name = '$Device_Ports' and hostname = '$Device_Hostname'\nORDER BY time_logged desc\nlimit 1",
           "refId": "A",
           "select": [
             [
@@ -4084,7 +4083,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 25
+        "y": 33
       },
       "id": 65,
       "panels": [],
@@ -4094,10 +4093,10 @@
     {
       "datasource": "librenms-cloud-mysql",
       "gridPos": {
-        "h": 13,
+        "h": 18,
         "w": 19,
         "x": 0,
-        "y": 26
+        "y": 34
       },
       "id": 70,
       "options": {
@@ -4148,7 +4147,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  distinct(port_name) AS \"埠口名稱\",\n  input AS \"流入\",\n  time_logged AS \"time\"\nFROM $DataBase_Name.ports\nWHERE hostname = '$Device_Hostname'",
+          "rawSql": "select a.port_name as \"埠口名稱\", a.input as \"流入\", DATE_ADD(a.time_logged, Interval 8 hour) as \"time\"\nfrom (select port_name, input, time_logged from $DataBase_Name.ports where hostname = '$Device_Hostname') as a, (SELECT port_name, max(time_logged) as \"time_logged\" FROM $DataBase_Name.ports WHERE hostname = '$Device_Hostname' GROUP BY port_name) as b \nwhere a.port_name=b.port_name and a.time_logged=b.time_logged\norder by a.input desc;",
           "refId": "A",
           "select": [
             [
@@ -4201,7 +4200,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "網路設備埠口流量總覽",
+      "title": "網路設備埠口流量總覽  (流入)",
       "type": "bargauge"
     },
     {
@@ -4209,27 +4208,20 @@
       "datasource": "librenms-cloud-mysql",
       "fontSize": "100%",
       "gridPos": {
-        "h": 26,
+        "h": 35,
         "w": 5,
         "x": 19,
-        "y": 26
+        "y": 34
       },
       "id": 66,
       "interval": "",
       "pageSize": null,
       "showHeader": true,
       "sort": {
-        "col": null,
-        "desc": false
+        "col": 1,
+        "desc": true
       },
       "styles": [
-        {
-          "alias": "時間戳記",
-          "align": "auto",
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "pattern": "time",
-          "type": "date"
-        },
         {
           "alias": "",
           "align": "left",
@@ -4255,50 +4247,17 @@
               "value": "1"
             }
           ]
-        },
-        {
-          "alias": "",
-          "align": "auto",
-          "colorMode": null,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "decimals": 2,
-          "mappingType": 1,
-          "pattern": "流入",
-          "thresholds": [],
-          "type": "number",
-          "unit": "Kbits"
-        },
-        {
-          "alias": "",
-          "align": "auto",
-          "colorMode": null,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "decimals": 2,
-          "mappingType": 1,
-          "pattern": "流出",
-          "thresholds": [],
-          "type": "number",
-          "unit": "Kbits"
         }
       ],
       "targets": [
         {
           "format": "table",
           "group": [],
+          "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \n  distinct(port_name) AS \"埠口名稱\",\n  IF(port_status=\"up\", 1, 0) as \"狀態\",\n  DATE_ADD(time_logged, Interval 8 hour) AS \"最後檢查時間\"\nFROM $DataBase_Name.ports\nWHERE hostname = '$Device_Hostname'\nlimit $Device_Ports_Count",
-          "refId": "B",
+          "rawSql": "select a.port_name as \"埠口名稱\", if(a.port_status=\"up\", 1, 0) as \"狀態\", DATE_ADD(a.time_logged, Interval 8 hour) as \"最後更新時間戳記\"\nfrom (select port_name, port_status, time_logged from $DataBase_Name.ports where hostname = '$Device_Hostname') as a, (SELECT port_name, max(time_logged) as \"time_logged\" FROM $DataBase_Name.ports WHERE hostname = '$Device_Hostname' GROUP BY port_name) as b \nwhere a.port_name=b.port_name and a.time_logged=b.time_logged",
+          "refId": "A",
           "select": [
             [
               {
@@ -4328,10 +4287,10 @@
     {
       "datasource": "librenms-cloud-mysql",
       "gridPos": {
-        "h": 13,
+        "h": 17,
         "w": 19,
         "x": 0,
-        "y": 39
+        "y": 52
       },
       "id": 73,
       "options": {
@@ -4382,7 +4341,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  distinct(port_name) AS \"埠口名稱\",\n  output AS \"流出\",\n  time_logged AS \"time\"\nFROM $DataBase_Name.ports\nWHERE hostname = '$Device_Hostname'",
+          "rawSql": "select a.port_name as \"埠口名稱\", a.output as \"流出\", DATE_ADD(a.time_logged, Interval 8 hour) as \"time\"\nfrom (select port_name, output, time_logged from $DataBase_Name.ports where hostname = '$Device_Hostname') as a, (SELECT port_name, max(time_logged) as \"time_logged\" FROM $DataBase_Name.ports WHERE hostname = '$Device_Hostname' GROUP BY port_name) as b \nwhere a.port_name=b.port_name and a.time_logged=b.time_logged\norder by a.output desc;",
           "refId": "A",
           "select": [
             [
@@ -4435,7 +4394,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "網路設備埠口流量總覽",
+      "title": "網路設備埠口流量總覽 (流出)",
       "type": "bargauge"
     },
     {
@@ -4451,7 +4410,7 @@
         "h": 18,
         "w": 24,
         "x": 0,
-        "y": 52
+        "y": 69
       },
       "hiddenSeries": false,
       "id": 72,
@@ -4539,7 +4498,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
+      "timeFrom": "6h",
       "timeRegions": [],
       "timeShift": null,
       "title": "已連接設備的網路設備埠口流量總覽",
@@ -4681,8 +4640,8 @@
         "options": [
           {
             "selected": true,
-            "text": "5",
-            "value": "5"
+            "text": "4",
+            "value": "4"
           }
         ],
         "query": "select count(*) from $DataBase_Name.devices;",
@@ -4725,8 +4684,8 @@
       {
         "allValue": "N",
         "current": {
-          "text": "Slot0/1",
-          "value": "Slot0/1"
+          "text": "Slot0/8",
+          "value": "Slot0/8"
         },
         "datasource": "librenms-cloud-mysql",
         "definition": "select  port_name from  $DataBase_Name.ports where hostname = '$Device_Hostname'",
@@ -4795,10 +4754,10 @@
     ]
   },
   "timezone": "",
-  "title": "LibreNMS-Cloud-DashBoard",
+  "title": "LibreNMS-Cloud-DashBoard-(2020/05/07)",
   "uid": "Q9dGus6Zz",
   "variables": {
     "list": []
   },
-  "version": 115
+  "version": 11
 }
