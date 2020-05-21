@@ -82,24 +82,24 @@ def influxdb_search_ports_tables():
         # print("select b.hostname, a.ifName, b.device_id, a.ifSpeed/1000, a.ifOperStatus from (select * from ports where device_id in (select device_id from devices where hostname=\"" + school_core_switch_ip + "\")) as a natural join devices as b group by port_id;")
         mysql_connection.execute("select b.hostname, a.ifName, b.device_id, a.ifSpeed/1000, a.ifOperStatus from (select * from ports where device_id in (select device_id from devices where hostname=\"" + school_core_switch_ip + "\")) as a natural join devices as b group by port_id;")
         portList = mysql_connection.fetchall()
-        if (len(portList) != 0):
-            portDataList = []
+        portDataList = []
 
+        if (len(portList) != 0):
             for x in portList:
                 data = influx_conn.query('select ifName as port_name, ifInBits_rate/1000 as input, ifOutBits_rate/1000 as output, hostname from ports where hostname = \'' + x[0] + '\' and ifName = \'' + x[1] + '\' order by time desc limit 1;')
-                portData = list(data.get_points())[0]
-                portData["device_id"] = x[2]
-                if (x[3] == None): portData["port_speed"] = "NULL"
-                else: portData["port_speed"] = int(x[3])
-                if (x[4] == None): portData["port_status"] = "NULL"
-                else: portData["port_status"] = x[4]
-                
-                portDataList.append(portData)
+                if (len(list(data.get_points())) > 0):
+                    portData = list(data.get_points())[0]
+                    portData["device_id"] = x[2]
+                    if (x[3] == None): portData["port_speed"] = "NULL"
+                    else: portData["port_speed"] = int(x[3])
+                    if (x[4] == None): portData["port_status"] = "NULL"
+                    else: portData["port_status"] = x[4]
+                    portDataList.append(portData)
             return portDataList
         else:
-          return
+          return portDataList
     else:
-      return
+      return portDataList
 
 def make_speedtest():
     if (str(datetime.datetime.now()).split(" ")[0] != str(speedtestData["speedtest"]['timestamp']).split(" ")[0]):
