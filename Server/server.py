@@ -470,7 +470,10 @@ def edgeNodeSqlUpload():
         edge_school_devices = edgeData["devices"]
         edge_school_device_perf = edgeData["device_perf"]
         edge_school_alert_log = edgeData["alert_log"]
-        edge_school_ports = edgeData["ports"]
+        try:
+            edge_school_ports = edgeData["ports"]
+        except:
+            edge_school_ports = []
         print("school_id", "\n", edge_school_id)
         print("edge_school_devices", "\n", edge_school_devices)
         print("edge_school_device_perf", "\n", edge_school_device_perf)
@@ -682,17 +685,18 @@ def edgeNodeSqlUpload():
                 mysql_connection.execute("DELETE from device_state_history where device_id = " + str(x))
                 mysql_conn.commit()
 
-            edge_ports_device_list_set = set(edge_ports_device_list)
-            mysql_connection.execute("select distinct(device_id) from ports")
-            for x in mysql_connection:
-                cloud_ports_device_list.append(str(x[0]))
-            # print(cloud_ports_device_list)
-            cloud_ports_device_list_set = set(cloud_ports_device_list)
-            ports_device_difference_list = cloud_ports_device_list_set.difference(edge_ports_device_list_set)
-            # print(ports_device_difference_list)
-            for x in ports_device_difference_list:
-                mysql_connection.execute("DELETE from ports where device_id = " + str(x))
-                mysql_conn.commit()
+            if (len(edge_ports_device_list) > 0)
+                edge_ports_device_list_set = set(edge_ports_device_list)
+                mysql_connection.execute("select distinct(device_id) from ports")
+                for x in mysql_connection:
+                    cloud_ports_device_list.append(str(x[0]))
+                # print(cloud_ports_device_list)
+                cloud_ports_device_list_set = set(cloud_ports_device_list)
+                ports_device_difference_list = cloud_ports_device_list_set.difference(edge_ports_device_list_set)
+                # print(ports_device_difference_list)
+                for x in ports_device_difference_list:
+                    mysql_connection.execute("DELETE from ports where device_id = " + str(x))
+                    mysql_conn.commit()
             print(str(datetime.datetime.now()) + "over")  
             return {"uploadSql": "ok"}
         else:

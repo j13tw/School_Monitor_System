@@ -28,10 +28,10 @@ os.system("apt-get install -y software-properties-common wget")
 os.system('add-apt-repository "deb https://packages.grafana.com/oss/deb stable main"')
 os.system("wget -q -O - https://packages.grafana.com/gpg.key | apt-key add -")
 os.system("apt-get update")
-os.system("apt-get install -y grafana")
-# os.system("systemctl daemon-reload")
-# os.system("systemctl start grafana-server")
-# os.system("systemctl enable grafana-server")
+os.system("apt-get install -y grafana=6.7.3")
+os.system("systemctl daemon-reload")
+os.system("systemctl start grafana-server")
+os.system("systemctl enable grafana-server")
 os.system("service grafana-server start")
 os.system("grafana-cli plugins install grafana-clock-panel")
 os.system("service grafana-server restart")
@@ -101,7 +101,7 @@ os.system("cp ./server.conf /etc/supervisor/conf.d")
 os.system("service supervisor restart")
 while True:
     print(str(check_output(["pidof","python3"]).decode("utf-8")).split("\n")[0].split(" "))
-    if (len(str(check_output(["pidof","python3"]).decode("utf-8")).split("\n")[0].split(" ")) == 2):
+    if (len(str(check_output(["pidof","python3"]).decode("utf-8")).split("\n")[0].split(" ")) >= 2):
         print("supervisor is on")
         break;
     else:

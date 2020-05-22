@@ -9,20 +9,22 @@ import getmac
 import json
 import speedtest
 
+# [School Setup]
+school_id = str(sys.argv[1])
+school_core_switch_ip = str(sys.argv[2])
+school_mac = getmac.get_mac_address()
+school_ip = ipgetter.myip()
+
 # [Cloud Setup]
 cloudServerProtocol = "http"
-cloudServerIp = "10.0.0.203"
+# cloudServerIp = "10.0.0.203"
+cloudServerIp = str(sys.argv[3])
 cloudServerPort = 5000
 cloudState = 0 # 0 is connected / 1 is connect fail
 edgeNodeRegistUrl = "/edgeNodeRegist"
 edgeServiceCheckUrl = "/edgeNodeHealthCheck"
 edgeDatabaseFlashUrl = "/edgeNodeSqlUpload"
 edgeSpeedtestUploadUrl = "/edgeNodeSpeedtestUpload"
-
-school_id = str(sys.argv[1])
-school_core_switch_ip = str(sys.argv[2])
-school_mac = getmac.get_mac_address()
-school_ip = ipgetter.myip()
 
 registData = {"school": school_id, "mac": school_mac, "ip": school_ip, "status": ""}
 healthData = {"school": school_id, "mac": school_mac, "ip": school_ip, "status":""}
