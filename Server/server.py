@@ -685,7 +685,7 @@ def edgeNodeSqlUpload():
                 mysql_connection.execute("DELETE from device_state_history where device_id = " + str(x))
                 mysql_conn.commit()
 
-            if (len(edge_ports_device_list) > 0)
+            if (len(edge_ports_device_list) > 0):
                 edge_ports_device_list_set = set(edge_ports_device_list)
                 mysql_connection.execute("select distinct(device_id) from ports")
                 for x in mysql_connection:
