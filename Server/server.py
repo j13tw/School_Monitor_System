@@ -474,7 +474,7 @@ def edgeNodeSqlUpload():
             edge_school_ports = edgeData["ports"]
         except:
             edge_school_ports = []
-        print("school_id", "\n", edge_school_id)
+        print("school_id", edge_school_id)
         print("edge_school_devices", "\n", edge_school_devices)
         print("edge_school_device_perf", "\n", edge_school_device_perf)
         print("edge_school_alert_log", "\n", edge_school_alert_log)
@@ -545,9 +545,8 @@ def edgeNodeSqlUpload():
                 if (y["max_depth"] != "NULL"): y["max_depth"] = str(y["max_depth"])
                 edge_device_list.append(y["device_id"])
 
-                print(mysql_connection.execute("select * from devices where device_id = " + y["device_id"]))
+                # print(mysql_connection.execute("select * from devices where device_id = " + y["device_id"]))
                 if (mysql_connection.execute("select * from devices where device_id = " + y["device_id"]) == 1):
-                    print("a")
                     try:
                         mysql_connection.execute("UPDATE devices SET \
                             device_id = " + y["device_id"] + ", hostname = " + y["hostname"] + ", sysName = " + y["sysName"] + ", ip = " + y["ip"] + ", community = " + y["community"] + ", \
@@ -565,7 +564,6 @@ def edgeNodeSqlUpload():
                     except:
                         return {"uploadSql": "devices_table_update_Error"} 
                 else:
-                    print("b")
                     try:
                         mysql_connection.execute("INSERT INTO devices (device_id, hostname, sysName, ip, community, authlevel, authname, authpass, authalgo, cryptopass, cryptoalgo, \
                             snmpver, port, transport, timeout, retries, snmp_disable, bgpLocalAs, sysObjectID, sysDescr, sysContact, version, hardware, features, location_id, os, \
