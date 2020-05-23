@@ -4,7 +4,7 @@ import time
 from subprocess import check_output
 
 
-os.system("/opt/librenms/daily.sh"")
+os.system("/opt/librenms/daily.sh")
 os.system("apt-get install -y python3 python3-dev python3-pip")
 # os.system("apt-get install -y gcc libssl-dev")
 os.system("apt-get install -y libmysqlclient-dev")
