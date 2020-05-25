@@ -3,6 +3,9 @@ import os, sys
 import time
 from subprocess import check_output
 
+os.system("chown -R librenms:librenms /opt/librenms")
+os.system("setfacl -d -m g::rwx /opt/librenms/rrd /opt/librenms/logs /opt/librenms/bootstrap/cache/ /opt/librenms/storage/")
+os.system("chmod -R ug=rwX /opt/librenms/rrd /opt/librenms/logs /opt/librenms/bootstrap/cache/ /opt/librenms/storage/")
 os.system("/opt/librenms/daily.sh")
 os.system("apt-get install -y python3 python3-dev python3-pip")
 # os.system("apt-get install -y gcc libssl-dev")
