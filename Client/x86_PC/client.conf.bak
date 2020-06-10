@@ -1,16 +1,16 @@
 [program:Edge-Heartbeat]
-directory=/home/pi/School_Monitor_System/Client/
-command=python3 selfCheck.py 014356 10.0.0.196
+directory=/home/ubuntu/School_Monitor_System/Client/
+command=python3 selfCheck.py
 autostart=true
 autorestart=true
 startretries=10
 redirect_stderr=true
 user=root
-stdout_logfile_maxbytes=4096MB
-stdout_logfile=/home/pi/client.log
+stdout_logfile_maxbytes=10240MB
+stdout_logfile=/home/ubuntu/client.log
 
 [program:Edge-UpdateCheck]
-directory=/home/pi/School_Monitor_System/Client/
+directory=/home/ubuntu/School_Monitor_System/Client/x86_PC
 command=python3 updateCheck.py
 autostart=true
 autorestart=true
@@ -18,4 +18,4 @@ startretries=10
 redirect_stderr=true
 user=root
 stdout_logfile_maxbytes=1024MB
-stdout_logfile=/home/pi/update.log
+stdout_logfile=/home/ubuntu/update.log

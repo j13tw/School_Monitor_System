@@ -30,6 +30,7 @@ os.system("pip3 install influxdb")
 os.system("apt-get install -y supervisor")
 if (not os.path.exists("/etc/supervisor/conf.d/client.conf")):
     os.system("cp /home/pi/School_Monitor_System/Client/client.conf /etc/supervisor/conf.d")
+    os.system("cp /home/pi/School_Monitor_System/Client/client.conf.bak /home/pi/School_Monitor_System/Client/client.conf")
 os.system("service supervisor restart")
 while True:
     if (len(str(check_output(["pidof","python3"]).decode("utf-8")).split("\n")[0].split(" ")) == 2):
