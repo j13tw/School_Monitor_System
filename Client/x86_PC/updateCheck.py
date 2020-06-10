@@ -15,12 +15,12 @@ while (True):
     if (timeInfo.split("-")[1] == "6" and updateCheck == 0):
         print(str(datetime.datetime.now()), "checking github online code ...")
         updateCheck = 1
-        os.chdir("/home/pi/School_Monitor_System/")
+        os.chdir("/home/ubuntu/School_Monitor_System/")
         updateInfo = subprocess.Popen(["sudo", "git", "pull"],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         updateStatus, stderr = updateInfo.communicate()
         if not (updateStatus.decode("utf-8") == "Already up to date.\n"):
             print(str(datetime.datetime.now()), "updating online code ...")
-            os.system("python3 /home/pi/School_Monitor_System/Client/x86_PC/environment.py")
+            os.system("python3 /home/ubuntu/School_Monitor_System/Client/x86_PC/environment.py")
         else:
             print(str(datetime.datetime.now()), "nothing update ...")
     time.sleep(60)
