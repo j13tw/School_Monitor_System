@@ -12,7 +12,7 @@ while (True):
     if (preDate != timeInfo.split("-")[0]):
         preDate = timeInfo.split("-")[0]
         updateCheck = 0
-    if (timeInfo.split("-")[1] == "6" and updateCheck == 0):
+    if (timeInfo.split("-")[1] == "17" and updateCheck == 0):
         print(str(datetime.datetime.now()), "checking github online code ...")
         updateCheck = 1
         os.chdir("/home/pi/School_Monitor_System/")
