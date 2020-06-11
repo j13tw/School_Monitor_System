@@ -23,5 +23,5 @@ while (True):
             os.system("python3 /home/ubuntu/School_Monitor_System/Client/x86_PC/environment.py")
         else:
             print(str(datetime.datetime.now()), "nothing update ...")
-    time.sleep(15)
+    time.sleep(300)
     
