@@ -9,10 +9,10 @@ preDate = 0
 while (True):
     print(str(datetime.datetime.now()), "check wating time ...")
     timeInfo = datetime.datetime.strftime(datetime.datetime.now(), "%d-%H")
-    if (preDate != timeInfo.split("-")[0]):
-        preDate = timeInfo.split("-")[0]
+    if (preDate != int(timeInfo.split("-")[0])):
+        preDate = int(timeInfo.split("-")[0])
         updateCheck = 0
-    if (timeInfo.split("-")[1] == "6" and updateCheck == 0):
+    if (int(timeInfo.split("-")[1]) == 6 and updateCheck == 0):
         print(str(datetime.datetime.now()), "checking github online code ...")
         updateCheck = 1
         os.chdir("/home/pi/School_Monitor_System/")
@@ -23,5 +23,5 @@ while (True):
             os.system("python3 /home/pi/School_Monitor_System/Client/environment.py")
         else:
             print(str(datetime.datetime.now()), "nothing update ...")
-    time.sleep(60)
+    time.sleep(15)
     
