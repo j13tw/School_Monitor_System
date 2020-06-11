@@ -63,8 +63,8 @@ edgePreState = 200
 edgeNowState = 404
 edgeMysqlState = True
 edgeStatusCodeArray = ["running", "stop", "fail"]
-checkInterval = 20 # 鑑測輪詢秒數
-pushSqlDelay = 3  # 拋送 sql 查詢資料延遲次數
+checkInterval = 10 # 鑑測輪詢秒數
+pushSqlDelay = 6  # 拋送 sql 查詢資料延遲次數
 pushSqlCount = checkInterval * pushSqlDelay  # 每次拋送 sql 查詢延時 (pushSqlCount*checkInterval=300s)
 
 def influxdb_search_ports_tables():
