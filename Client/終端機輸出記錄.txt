@@ -1,0 +1,1731 @@
+Last login: Fri Jun 26 16:45:10 on ttys008
+zhengzhongxiangde-MacBook-Pro-4:Desktop zhengzhongxiang$ sudo ssh ../Downloads/id_rsa ubuntu@10.0.0.227
+Password:
+ssh: Could not resolve hostname ../downloads/id_rsa: -65540
+zhengzhongxiangde-MacBook-Pro-4:Desktop zhengzhongxiang$ sudo ssh -i ../Downloads/id_rsa ubuntu@10.0.0.227
+Welcome to Ubuntu 18.04.4 LTS (GNU/Linux 4.15.0-99-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Sun Jun 28 11:19:55 UTC 2020
+
+  System load:  0.41                Processes:           161
+  Usage of /:   20.4% of 109.53GB   Users logged in:     0
+  Memory usage: 9%                  IP address for eno1: 10.0.0.227
+  Swap usage:   0%
+
+ * "If you've been waiting for the perfect Kubernetes dev solution for
+   macOS, the wait is over. Learn how to install Microk8s on macOS."
+
+   https://www.techrepublic.com/article/how-to-install-microk8s-on-macos/
+
+ * Canonical Livepatch is available for installation.
+   - Reduce system reboots and improve kernel security. Activate at:
+     https://ubuntu.com/livepatch
+
+32 packages can be updated.
+0 updates are security updates.
+
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+
+*** System restart required ***
+Last login: Thu Jun 25 03:12:03 2020 from 10.0.0.135
+ubuntu@sdn-k8s-b2-4:~$ sudo -i
+root@sdn-k8s-b2-4:~# ls
+curtin-install-cfg.yaml  curtin-install.log
+root@sdn-k8s-b2-4:~# cd /home/ubuntu/
+root@sdn-k8s-b2-4:/home/ubuntu# ls
+Grafana_DashBoard  api-server.log.3     dataTransport.log.10  dataTransport.log.6  mqtt_2_request.log    school_080308.sql          ups_split_mqtt.log.1
+IMAC_TelegramBot   config.ini           dataTransport.log.2   dataTransport.log.7  mqtt_2_request.log.1  school_193302.sql          ups_split_mqtt.log.2
+api-server.log     dailyReport.log      dataTransport.log.3   dataTransport.log.8  mqtt_2_request.log.2  school_194315.sql          ups_split_mqtt.log.3
+api-server.log.1   dataTransport.log    dataTransport.log.4   dataTransport.log.9  nctu-B09              school_monitor_system.sql  ups_split_mqtt.log.4
+api-server.log.2   dataTransport.log.1  dataTransport.log.5   dl303_tc.csv         nctu-B09.log          ups_split_mqtt.log
+root@sdn-k8s-b2-4:/home/ubuntu# nano IMAC_TelegramBot/dailyReport.py 
+root@sdn-k8s-b2-4:/home/ubuntu# supervisorctl update
+root@sdn-k8s-b2-4:/home/ubuntu# supervisorctl status
+api-server                       RUNNING   pid 1363, uptime 42 days, 0:01:49
+dailyReport                      RUNNING   pid 14628, uptime 3 days, 11:08:27
+dataTransport                    RUNNING   pid 1360, uptime 42 days, 0:01:49
+mqtt_2_request                   RUNNING   pid 1362, uptime 42 days, 0:01:49
+nctu-B09                         RUNNING   pid 1361, uptime 42 days, 0:01:49
+ups_split_mqtt                   RUNNING   pid 1358, uptime 42 days, 0:01:49
+root@sdn-k8s-b2-4:/home/ubuntu# supervisorctl dailyReport restart
+*** Unknown syntax: dailyReport restart
+root@sdn-k8s-b2-4:/home/ubuntu# supervisorctl restart dailyReport
+dailyReport: stopped
+dailyReport: started
+root@sdn-k8s-b2-4:/home/ubuntu# exit
+logout
+ubuntu@sdn-k8s-b2-4:~$ exit
+logout
+Connection to 10.0.0.227 closed.
+zhengzhongxiangde-MacBook-Pro-4:Desktop zhengzhongxiang$ pip install flask-restplus
+-bash: pip: command not found
+zhengzhongxiangde-MacBook-Pro-4:Desktop zhengzhongxiang$ pip3 install flask-restplus
+Collecting flask-restplus
+  Downloading https://files.pythonhosted.org/packages/c2/a6/b17c848771f96ad039ad9e3ea275e842a16c39c4f3eb9f60ee330b20b6c2/flask_restplus-0.13.0-py2.py3-none-any.whl (2.5MB)
+     |████████████████████████████████| 2.5MB 943kB/s 
+Collecting jsonschema (from flask-restplus)
+  Downloading https://files.pythonhosted.org/packages/c5/8f/51e89ce52a085483359217bc72cdbf6e75ee595d5b1d4b5ade40c7e018b8/jsonschema-3.2.0-py2.py3-none-any.whl (56kB)
+     |████████████████████████████████| 61kB 14.2MB/s 
+Collecting aniso8601>=0.82 (from flask-restplus)
+  Downloading https://files.pythonhosted.org/packages/eb/e4/787e104b58eadc1a710738d4e418d7e599e4e778e52cb8e5d5ef6ddd5833/aniso8601-8.0.0-py2.py3-none-any.whl (43kB)
+     |████████████████████████████████| 51kB 11.1MB/s 
+Requirement already satisfied: pytz in /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages (from flask-restplus) (2019.3)
+Requirement already satisfied: Flask>=0.8 in /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages (from flask-restplus) (1.1.1)
+Requirement already satisfied: six>=1.3.0 in /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages (from flask-restplus) (1.13.0)
+Requirement already satisfied: setuptools in /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages (from jsonschema->flask-restplus) (41.2.0)
+Collecting pyrsistent>=0.14.0 (from jsonschema->flask-restplus)
+  Downloading https://files.pythonhosted.org/packages/9f/0d/cbca4d0bbc5671822a59f270e4ce3f2195f8a899c97d0d5abb81b191efb5/pyrsistent-0.16.0.tar.gz (108kB)
+     |████████████████████████████████| 112kB 10.3MB/s 
+Requirement already satisfied: attrs>=17.4.0 in /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages (from jsonschema->flask-restplus) (19.3.0)
+Requirement already satisfied: Jinja2>=2.10.1 in /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages (from Flask>=0.8->flask-restplus) (2.10.3)
+Requirement already satisfied: itsdangerous>=0.24 in /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages (from Flask>=0.8->flask-restplus) (1.1.0)
+Requirement already satisfied: click>=5.1 in /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages (from Flask>=0.8->flask-restplus) (7.0)
+Requirement already satisfied: Werkzeug>=0.15 in /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages (from Flask>=0.8->flask-restplus) (0.16.0)
+Requirement already satisfied: MarkupSafe>=0.23 in /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages (from Jinja2>=2.10.1->Flask>=0.8->flask-restplus) (1.1.1)
+Installing collected packages: pyrsistent, jsonschema, aniso8601, flask-restplus
+  Running setup.py install for pyrsistent ... done
+Successfully installed aniso8601-8.0.0 flask-restplus-0.13.0 jsonschema-3.2.0 pyrsistent-0.16.0
+WARNING: You are using pip version 19.2.3, however version 20.1.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+zhengzhongxiangde-MacBook-Pro-4:Desktop zhengzhongxiang$ python3
+Python 3.8.0 (v3.8.0:fa919fdf25, Oct 14 2019, 10:23:27) 
+[Clang 6.0 (clang-600.0.57)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> exit
+Use exit() or Ctrl-D (i.e. EOF) to exit
+>>> exit()
+zhengzhongxiangde-MacBook-Pro-4:Desktop zhengzhongxiang$ pip3 install flask
+Requirement already satisfied: flask in /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages (1.1.1)
+Requirement already satisfied: Werkzeug>=0.15 in /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages (from flask) (0.16.0)
+Requirement already satisfied: click>=5.1 in /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages (from flask) (7.0)
+Requirement already satisfied: Jinja2>=2.10.1 in /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages (from flask) (2.10.3)
+Requirement already satisfied: itsdangerous>=0.24 in /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages (from flask) (1.1.0)
+Requirement already satisfied: MarkupSafe>=0.23 in /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages (from Jinja2>=2.10.1->flask) (1.1.1)
+WARNING: You are using pip version 19.2.3, however version 20.1.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+zhengzhongxiangde-MacBook-Pro-4:Desktop zhengzhongxiang$ ls
+0619.pkt
+1810832019鄭鍾翔(0501).docx
+1810832019鄭鍾翔(mininet).docx
+1810832019鄭鍾翔.docx
+2019-10-01~2019-10-06.jpeg
+2019-10-07~2019-10-13.jpeg
+2019-10-14~2019-10-20.jpeg
+2019-10-21~2019-10-27.jpeg
+2019-10-28~2019-11-03.jpeg
+2019-11-04~2019-11-10.jpeg
+2019-11-11~2019-11-17.jpeg
+2019-11-18~2019-11-24.jpeg
+2019-11-25~2019-12-01.jpeg
+2019-12-02~2019-12-08.jpeg
+2706-fan-single.py
+7688-duo_test
+AproposalforbridgingapplicationlayerprotocolstoHTTPonIoTsolutions.pdf
+Brunei-Hackson_Hardware
+CypressTest
+DHT11+Light.png
+DHT11+Light_bb.pdf
+Delta_UPS_Control
+Figure 4.1-1_The NFV-MANO architectural framework with reference points .png
+Figure 6.2.1.1-1_Architectural option with a generic VNFM. .png
+Figure 6.2.2.1-1_Architectural option with multiple VNFMs. .png
+Figure 6.3.1.1-1_Architectural option with resource management done by VNFM .png
+Figure 6.3.2.1-1_Architectural option with resource management done by NFVO .png
+Figure 6.4.1.1-1_Infrastructure provided using multiple administrative domains .png
+Figure 6.4.2.1-1_Virtual Network Platform as one or more Datacentres, VIMs and VNFMs .png
+Figure 6.4.2.1-2_Virtual Network Platforms located in different countries providing customer services .png
+Figure 6.4.3.1-1_Network services provided using multiple administrative domains .png
+Figure 6.6.1.1-1_Architectural option with bulk granting .png
+Figure A.1.1-1_Operational flow where resource management is done by VNFM .png
+Figure A.1.2-1_Operational flow where resource management is done by NFVO .png
+Figure A.2.1-1_Call flow of management of bulk granting in Pull mode .png
+Figure A.2.2-1_Call flow of management of bulk granting in push mode .png
+Grafana_DashBoard
+IMAC_TelegramBot
+ITRI-project
+Kext Utility.app
+LibreNMS監控
+May-13-2020 12-35-02.gif
+May-13-2020 17-21-42.gif
+May-13-2020 20-35-19.gif
+ONOS
+RehabMan-Generic-USB3-2015-1215
+School_Monitor_System
+WiFiTest
+airs
+cht-cypress
+config.ini
+django-test
+hackson
+json_test
+kapua
+kisan_sdcard
+kubeedge
+librenms
+mongodb.zip
+nctu-B09
+school_080308.sql
+school_monitor_system.sql
+tmp.json
+yunyun-telegram-bot
+掃描 2.jpeg
+掃描.jpeg
+封存.zip
+鄭鍾翔.zip
+螢幕快照 2019-12-26 下午9.52.00.png
+螢幕快照 2019-12-26 下午9.52.15.png
+螢幕快照 2019-12-26 下午9.52.25.png
+螢幕快照 2019-12-31 下午3.06.00.png
+螢幕快照 2020-01-28 上午6.42.48.png
+螢幕快照 2020-01-30 下午1.53.59.png
+螢幕快照 2020-01-30 下午5.50.59.png
+螢幕快照 2020-02-02 下午2.54.26.png
+螢幕快照 2020-02-02 下午2.54.58.png
+螢幕快照 2020-02-02 下午2.55.17.png
+螢幕快照 2020-02-04 下午3.16.56.png
+螢幕快照 2020-02-04 下午3.18.44.png
+螢幕快照 2020-03-06 下午1.55.32.png
+螢幕快照 2020-03-07 上午11.45.09.png
+螢幕快照 2020-03-14 上午12.29.58.png
+螢幕快照 2020-03-15 下午9.17.15.png
+螢幕快照 2020-03-23 上午11.15.43.png
+螢幕快照 2020-03-24 上午11.11.17.png
+螢幕快照 2020-03-24 上午11.15.53.png
+螢幕快照 2020-03-24 下午9.51.33.png
+螢幕快照 2020-03-26 下午10.27.51.png
+螢幕快照 2020-03-26 下午10.57.15.png
+螢幕快照 2020-03-26 下午10.58.27.png
+螢幕快照 2020-03-26 下午11.33.08.png
+螢幕快照 2020-03-26 下午8.54.38.png
+螢幕快照 2020-03-27 上午1.42.21.png
+螢幕快照 2020-03-27 上午1.50.26.png
+螢幕快照 2020-03-27 上午11.40.41.png
+螢幕快照 2020-03-27 上午11.41.55.png
+螢幕快照 2020-03-27 上午2.00.36.png
+螢幕快照 2020-03-27 下午2.14.53.png
+螢幕快照 2020-03-27 上午2.19.48.png
+螢幕快照 2020-03-27 下午2.20.55.png
+螢幕快照 2020-03-27 上午2.27.50.png
+螢幕快照 2020-03-27 下午2.33.48.png
+螢幕快照 2020-03-27 下午2.34.03.png
+螢幕快照 2020-03-27 下午2.52.18.png
+螢幕快照 2020-03-27 下午2.54.51.png
+螢幕快照 2020-03-27 下午2.57.42.png
+螢幕快照 2020-03-27 下午2.58.49.png
+螢幕快照 2020-03-27 下午3.02.11.png
+螢幕快照 2020-03-27 上午3.18.04.png
+螢幕快照 2020-03-29 下午5.02.54.png
+螢幕快照 2020-03-29 下午5.03.11.png
+螢幕快照 2020-03-30 上午11.15.43.png
+螢幕快照 2020-03-30 下午12.58.31.png
+螢幕快照 2020-04-01 上午1.32.53.png
+螢幕快照 2020-04-02 下午9.35.03.png
+螢幕快照 2020-04-03 上午1.07.15.png
+螢幕快照 2020-04-03 下午5.44.57.png
+螢幕快照 2020-04-05 下午9.00.51.png
+螢幕快照 2020-04-06 下午1.55.36.png
+螢幕快照 2020-04-07 下午3.20.59.png
+螢幕快照 2020-04-07 下午3.48.17.png
+螢幕快照 2020-04-09 上午2.52.29.png
+螢幕快照 2020-04-09 上午2.54.27.png
+螢幕快照 2020-04-09 上午2.56.09.png
+螢幕快照 2020-04-09 上午2.57.48.png
+螢幕快照 2020-04-09 上午3.09.15.png
+螢幕快照 2020-04-09 上午3.09.51.png
+螢幕快照 2020-04-09 上午3.16.06.png
+螢幕快照 2020-04-09 上午3.17.11.png
+螢幕快照 2020-04-09 上午9.53.56.png
+螢幕快照 2020-04-10 上午10.19.33.png
+螢幕快照 2020-04-10 下午3.54.36.png
+螢幕快照 2020-04-10 下午3.54.47.png
+螢幕快照 2020-04-10 下午3.55.30.png
+螢幕快照 2020-04-10 下午5.21.57.png
+螢幕快照 2020-04-10 下午5.22.40.png
+螢幕快照 2020-04-11 下午1.36.42.png
+螢幕快照 2020-04-11 下午1.50.29.png
+螢幕快照 2020-04-11 下午1.53.41.png
+螢幕快照 2020-04-11 下午1.53.50.png
+螢幕快照 2020-04-11 下午2.04.33.png
+螢幕快照 2020-04-11 下午2.14.19.png
+螢幕快照 2020-04-11 下午2.20.40.png
+螢幕快照 2020-04-11 下午2.21.11.png
+螢幕快照 2020-04-11 下午2.21.21.png
+螢幕快照 2020-04-11 下午2.22.33.png
+螢幕快照 2020-04-11 下午2.28.56.png
+螢幕快照 2020-04-11 下午2.35.09.png
+螢幕快照 2020-04-11 下午2.39.16.png
+螢幕快照 2020-04-11 下午2.39.44.png
+螢幕快照 2020-04-11 下午2.39.53.png
+螢幕快照 2020-04-11 下午2.43.19.png
+螢幕快照 2020-04-11 下午2.43.25.png
+螢幕快照 2020-04-11 下午3.28.13.png
+螢幕快照 2020-04-11 下午3.28.20.png
+螢幕快照 2020-04-11 下午4.05.01.png
+螢幕快照 2020-04-11 下午4.22.22.png
+螢幕快照 2020-04-11 下午4.24.04.png
+螢幕快照 2020-04-11 下午4.24.11.png
+螢幕快照 2020-04-11 下午4.24.25.png
+螢幕快照 2020-04-11 下午4.24.48.png
+螢幕快照 2020-04-11 下午4.24.51.png
+螢幕快照 2020-04-11 下午4.25.44.png
+螢幕快照 2020-04-11 下午4.28.12.png
+螢幕快照 2020-04-11 下午4.30.43.png
+螢幕快照 2020-04-11 下午4.32.31.png
+螢幕快照 2020-04-11 下午4.37.52.png
+螢幕快照 2020-04-11 下午4.38.02.png
+螢幕快照 2020-04-11 下午4.38.06.png
+螢幕快照 2020-04-11 下午4.38.17.png
+螢幕快照 2020-04-11 下午4.38.41.png
+螢幕快照 2020-04-11 下午4.40.19.png
+螢幕快照 2020-04-11 下午4.41.06.png
+螢幕快照 2020-04-11 下午4.41.14.png
+螢幕快照 2020-04-11 下午4.41.26.png
+螢幕快照 2020-04-11 下午4.43.50.png
+螢幕快照 2020-04-11 下午4.44.06.png
+螢幕快照 2020-04-11 下午4.48.39.png
+螢幕快照 2020-04-11 下午4.49.09.png
+螢幕快照 2020-04-11 下午4.49.17.png
+螢幕快照 2020-04-11 下午4.49.22.png
+螢幕快照 2020-04-11 下午4.53.26.png
+螢幕快照 2020-04-11 下午6.59.19.png
+螢幕快照 2020-04-12 下午6.51.51.png
+螢幕快照 2020-04-12 下午9.37.23.png
+螢幕快照 2020-04-12 下午9.38.40.png
+螢幕快照 2020-04-13 下午1.40.01.png
+螢幕快照 2020-04-13 下午10.00.46.png
+螢幕快照 2020-04-13 上午11.28.45.png
+螢幕快照 2020-04-13 上午11.42.04.png
+螢幕快照 2020-04-13 下午2.14.01.png
+螢幕快照 2020-04-13 下午2.14.13.png
+螢幕快照 2020-04-13 下午2.15.29.png
+螢幕快照 2020-04-13 下午4.45.59.png
+螢幕快照 2020-04-13 下午4.50.36.png
+螢幕快照 2020-04-13 下午5.14.21.png
+螢幕快照 2020-04-13 下午7.59.12.png
+螢幕快照 2020-04-13 下午8.20.23.png
+螢幕快照 2020-04-13 下午9.25.54.png
+螢幕快照 2020-04-14 下午1.47.51.png
+螢幕快照 2020-04-14 下午4.27.13.png
+螢幕快照 2020-04-14 下午4.27.35.png
+螢幕快照 2020-04-14 下午5.33.13.png
+螢幕快照 2020-04-14 下午5.44.32.png
+螢幕快照 2020-04-15 上午10.44.53.png
+螢幕快照 2020-04-15 下午7.47.48.png
+螢幕快照 2020-04-19 下午9.46.35.png
+螢幕快照 2020-04-19 下午9.50.13.png
+螢幕快照 2020-04-19 下午9.51.55.png
+螢幕快照 2020-04-19 下午9.54.53.png
+螢幕快照 2020-04-19 下午9.57.03.png
+螢幕快照 2020-04-26 下午8.21.21.png
+螢幕快照 2020-04-26 下午8.23.25.png
+螢幕快照 2020-04-29 下午8.36.30.png
+螢幕快照 2020-05-07 上午10.53.20.png
+螢幕快照 2020-05-08 下午1.37.26.png
+螢幕快照 2020-05-08 下午11.59.39.png
+螢幕快照 2020-05-11 下午10.18.12.png
+螢幕快照 2020-05-11 下午5.54.45.png
+螢幕快照 2020-05-11 下午5.55.02.png
+螢幕快照 2020-05-13 下午12.14.12.png
+螢幕快照 2020-05-13 下午12.14.41.png
+螢幕快照 2020-05-13 下午12.24.43.png
+螢幕快照 2020-05-13 下午12.25.09.png
+螢幕快照 2020-05-13 下午2.42.13.png
+螢幕快照 2020-05-13 下午6.52.05.png
+螢幕快照 2020-05-13 下午6.59.43.png
+螢幕快照 2020-05-16 下午10.51.55.png
+螢幕快照 2020-05-16 下午10.52.11.png
+螢幕快照 2020-05-16 下午10.52.28.png
+螢幕快照 2020-05-16 下午10.52.41.png
+螢幕快照 2020-05-16 下午10.52.52.png
+螢幕快照 2020-05-16 下午10.53.02.png
+螢幕快照 2020-05-16 下午10.53.12.png
+螢幕快照 2020-05-16 下午10.53.24.png
+螢幕快照 2020-05-16 下午10.53.33 1.png
+螢幕快照 2020-05-16 下午10.53.33.png
+螢幕快照 2020-05-16 下午10.53.45.png
+螢幕快照 2020-05-16 下午7.20.52.png
+螢幕快照 2020-05-16 下午8.51.30.png
+螢幕快照 2020-05-16 下午8.51.39.png
+螢幕快照 2020-05-16 下午8.58.08.png
+螢幕快照 2020-05-16 下午8.59.03.png
+螢幕快照 2020-05-17 下午8.19.30.png
+螢幕快照 2020-05-25 下午3.14.39.png
+螢幕快照 2020-05-30 下午7.52.18.png
+螢幕快照 2020-05-30 下午7.52.39.png
+螢幕快照 2020-05-30 下午7.52.55.png
+螢幕快照 2020-05-30 下午7.53.25.png
+螢幕快照 2020-05-30 下午7.53.39.png
+螢幕快照 2020-05-30 下午7.53.58.png
+螢幕快照 2020-05-30 下午7.54.11.png
+螢幕快照 2020-05-30 下午7.54.25.png
+螢幕快照 2020-05-30 下午7.54.43.png
+螢幕快照 2020-05-30 下午7.54.59.png
+螢幕快照 2020-05-30 下午7.55.12.png
+螢幕快照 2020-05-30 下午7.55.50.png
+螢幕快照 2020-05-30 下午7.56.01.png
+螢幕快照 2020-05-30 下午7.56.26.png
+螢幕快照 2020-05-30 下午8.57.28.png
+螢幕快照 2020-05-31 上午1.03.12.png
+螢幕快照 2020-05-31 上午1.03.43.png
+螢幕快照 2020-05-31 上午1.04.07.png
+螢幕快照 2020-05-31 上午1.06.41.png
+螢幕快照 2020-05-31 下午10.04.48.png
+螢幕快照 2020-05-31 下午10.11.22.png
+螢幕快照 2020-05-31 下午10.21.06.png
+螢幕快照 2020-05-31 下午10.21.15.png
+螢幕快照 2020-05-31 下午11.54.10.png
+螢幕快照 2020-05-31 下午6.13.08.png
+螢幕快照 2020-05-31 下午6.13.49.png
+螢幕快照 2020-05-31 下午6.14.33.png
+螢幕快照 2020-05-31 下午7.22.53.png
+螢幕快照 2020-05-31 下午7.23.18.png
+螢幕快照 2020-05-31 下午7.23.59.png
+螢幕快照 2020-05-31 下午7.33.37.png
+螢幕快照 2020-05-31 下午7.33.50.png
+螢幕快照 2020-05-31 下午8.28.42.png
+螢幕快照 2020-05-31 下午8.29.04.png
+螢幕快照 2020-05-31 下午8.29.08.png
+螢幕快照 2020-05-31 下午8.46.50.png
+螢幕快照 2020-05-31 下午9.36.59.png
+螢幕快照 2020-05-31 下午9.37.33.png
+螢幕快照 2020-05-31 下午9.58.37.png
+螢幕快照 2020-06-01 上午12.14.20.png
+螢幕快照 2020-06-01 上午12.26.43.png
+螢幕快照 2020-06-01 下午7.44.50.png
+螢幕快照 2020-06-03 下午2.18.48.png
+螢幕快照 2020-06-04 下午8.44.09.png
+螢幕快照 2020-06-05 下午1.21.48 1.png
+螢幕快照 2020-06-05 下午1.21.48.png
+螢幕快照 2020-06-05 下午1.21.58.png
+螢幕快照 2020-06-05 下午2.58.32.png
+螢幕快照 2020-06-05 下午3.04.36.png
+螢幕快照 2020-06-05 下午3.08.10.png
+螢幕快照 2020-06-05 下午3.23.13.png
+螢幕快照 2020-06-05 下午3.27.25.png
+螢幕快照 2020-06-05 下午3.27.47.png
+螢幕快照 2020-06-05 下午3.28.16.png
+螢幕快照 2020-06-05 下午3.29.14.png
+螢幕快照 2020-06-05 下午4.25.19.png
+螢幕快照 2020-06-05 下午6.05.09.png
+螢幕快照 2020-06-05 下午7.08.12.png
+螢幕快照 2020-06-06 下午11.05.53.png
+螢幕快照 2020-06-06 下午11.06.58.png
+螢幕快照 2020-06-06 下午11.07.13.png
+螢幕快照 2020-06-07 上午1.01.37.png
+螢幕快照 2020-06-07 上午12.12.50.png
+螢幕快照 2020-06-07 上午12.18.29.png
+螢幕快照 2020-06-07 上午12.19.02.png
+螢幕快照 2020-06-07 上午12.20.26.png
+螢幕快照 2020-06-07 上午12.21.02.png
+螢幕快照 2020-06-07 上午12.24.32.png
+螢幕快照 2020-06-07 上午12.24.56.png
+螢幕快照 2020-06-07 下午5.47.54.png
+螢幕快照 2020-06-07 下午5.50.23.png
+螢幕快照 2020-06-07 下午5.53.52.png
+螢幕快照 2020-06-07 下午5.55.02.png
+螢幕快照 2020-06-07 下午5.58.28.png
+螢幕快照 2020-06-07 下午5.58.52.png
+螢幕快照 2020-06-07 下午9.28.02.png
+螢幕快照 2020-06-08 下午1.31.57.png
+螢幕快照 2020-06-08 上午10.29.21.png
+螢幕快照 2020-06-08 上午11.43.31.png
+螢幕快照 2020-06-08 上午11.43.47.png
+螢幕快照 2020-06-08 上午11.52.24.png
+螢幕快照 2020-06-08 上午11.52.43.png
+螢幕快照 2020-06-08 下午2.33.13.png
+螢幕快照 2020-06-08 下午3.15.03.png
+螢幕快照 2020-06-08 下午3.35.30.png
+螢幕快照 2020-06-09 下午2.26.16.png
+螢幕快照 2020-06-09 下午2.28.07.png
+螢幕快照 2020-06-09 下午2.39.23.png
+螢幕快照 2020-06-09 下午2.42.48.png
+螢幕快照 2020-06-09 下午3.07.04.png
+螢幕快照 2020-06-09 下午8.15.20.png
+螢幕快照 2020-06-09 下午9.47.14.png
+螢幕快照 2020-06-09 下午9.48.01.png
+螢幕快照 2020-06-09 下午9.48.32.png
+螢幕快照 2020-06-09 下午9.48.53.png
+螢幕快照 2020-06-09 下午9.49.52.png
+螢幕快照 2020-06-09 下午9.50.02.png
+螢幕快照 2020-06-10 下午1.54.49.png
+螢幕快照 2020-06-10 下午1.55.34.png
+螢幕快照 2020-06-10 下午11.53.47.png
+螢幕快照 2020-06-10 下午9.18.03.png
+螢幕快照 2020-06-10 下午9.56.34.png
+螢幕快照 2020-06-11 上午1.45.58.png
+螢幕快照 2020-06-11 上午1.47.00.png
+螢幕快照 2020-06-11 上午1.47.16.png
+螢幕快照 2020-06-11 上午1.47.47.png
+螢幕快照 2020-06-11 上午1.48.01.png
+螢幕快照 2020-06-11 上午1.51.13.png
+螢幕快照 2020-06-11 上午2.12.15.png
+螢幕快照 2020-06-11 下午3.57.19.png
+螢幕快照 2020-06-14 下午11.58.20.png
+螢幕快照 2020-06-15 上午1.00.16.png
+螢幕快照 2020-06-15 上午1.15.49.png
+螢幕快照 2020-06-15 上午1.30.44.png
+螢幕快照 2020-06-15 上午12.03.59.png
+螢幕快照 2020-06-15 上午12.42.38.png
+螢幕快照 2020-06-15 上午12.56.05.png
+螢幕快照 2020-06-15 上午12.58.02.png
+螢幕快照 2020-06-15 下午2.54.06.png
+螢幕快照 2020-06-15 下午2.54.24.png
+螢幕快照 2020-06-15 下午2.55.15.png
+螢幕快照 2020-06-15 下午3.01.16.png
+螢幕快照 2020-06-15 下午4.20.59.png
+螢幕快照 2020-06-15 下午5.23.43.png
+螢幕快照 2020-06-15 下午5.23.56.png
+螢幕快照 2020-06-15 下午6.34.07.png
+螢幕快照 2020-06-15 下午7.12.04.png
+螢幕快照 2020-06-15 下午7.17.03.png
+螢幕快照 2020-06-15 下午7.27.55.png
+螢幕快照 2020-06-15 下午7.51.47.png
+螢幕快照 2020-06-15 下午7.57.54.png
+螢幕快照 2020-06-15 下午8.01.00.png
+螢幕快照 2020-06-16 下午12.34.29.png
+螢幕快照 2020-06-17 下午10.24.55.png
+螢幕快照 2020-06-17 下午10.26.51.png
+螢幕快照 2020-06-17 上午11.33.07.png
+螢幕快照 2020-06-17 上午11.34.38.png
+螢幕快照 2020-06-17 上午11.37.59.png
+螢幕快照 2020-06-17 上午11.39.24.png
+螢幕快照 2020-06-17 上午11.40.50.png
+螢幕快照 2020-06-17 下午2.42.24.png
+螢幕快照 2020-06-17 下午2.44.00.png
+螢幕快照 2020-06-17 下午3.36.38.png
+螢幕快照 2020-06-18 上午10.26.41.png
+螢幕快照 2020-06-18 上午2.07.25.png
+螢幕快照 2020-06-18 下午2.12.36.png
+螢幕快照 2020-06-18 上午2.26.39.png
+螢幕快照 2020-06-18 上午3.07.27.png
+螢幕快照 2020-06-18 上午3.18.25.png
+螢幕快照 2020-06-18 上午3.22.00.png
+螢幕快照 2020-06-18 上午3.26.01.png
+螢幕快照 2020-06-18 下午5.34.42.png
+螢幕快照 2020-06-18 上午9.34.56.png
+螢幕快照 2020-06-19 下午4.08.10.png
+螢幕快照 2020-06-19 下午4.10.18.png
+螢幕快照 2020-06-19 下午4.10.30.png
+螢幕快照 2020-06-19 下午4.11.10.png
+螢幕快照 2020-06-19 下午4.11.14.png
+螢幕快照 2020-06-19 下午4.11.18.png
+螢幕快照 2020-06-19 下午4.11.22.png
+螢幕快照 2020-06-19 下午4.11.37.png
+螢幕快照 2020-06-19 下午4.11.44.png
+螢幕快照 2020-06-19 下午4.11.46.png
+螢幕快照 2020-06-19 下午4.11.48.png
+螢幕快照 2020-06-19 下午4.11.56.png
+螢幕快照 2020-06-19 下午4.12.09.png
+螢幕快照 2020-06-19 下午4.12.48.png
+螢幕快照 2020-06-19 下午4.12.58.png
+螢幕快照 2020-06-19 下午4.16.57.png
+螢幕快照 2020-06-19 下午4.20.07.png
+螢幕快照 2020-06-19 下午4.20.11.png
+螢幕快照 2020-06-19 下午4.20.54.png
+螢幕快照 2020-06-19 下午4.37.49.png
+螢幕快照 2020-06-19 下午4.48.05.png
+螢幕快照 2020-06-19 下午4.48.41.png
+螢幕快照 2020-06-19 下午4.49.10.png
+螢幕快照 2020-06-19 下午4.49.42.png
+螢幕快照 2020-06-19 下午4.49.59.png
+螢幕快照 2020-06-19 下午4.50.09.png
+螢幕快照 2020-06-19 下午4.50.38.png
+螢幕快照 2020-06-19 下午4.51.06.png
+螢幕快照 2020-06-19 下午5.08.09.png
+螢幕快照 2020-06-19 下午5.08.19.png
+螢幕快照 2020-06-19 下午5.08.24.png
+螢幕快照 2020-06-19 下午5.08.27.png
+螢幕快照 2020-06-19 下午5.08.35.png
+螢幕快照 2020-06-19 下午5.08.41.png
+螢幕快照 2020-06-19 下午5.08.44.png
+螢幕快照 2020-06-19 下午5.20.45.png
+螢幕快照 2020-06-19 下午5.21.47.png
+螢幕快照 2020-06-19 下午5.23.05.png
+螢幕快照 2020-06-19 下午5.44.22.png
+螢幕快照 2020-06-19 下午5.44.50.png
+螢幕快照 2020-06-19 下午5.47.59.png
+螢幕快照 2020-06-19 下午5.57.03.png
+螢幕快照 2020-06-19 下午5.57.19.png
+螢幕快照 2020-06-19 下午9.27.29.png
+螢幕快照 2020-06-19 下午9.29.52.png
+螢幕快照 2020-06-19 下午9.38.19.png
+螢幕快照 2020-06-19 下午9.38.53.png
+螢幕快照 2020-06-19 下午9.39.04.png
+螢幕快照 2020-06-19 下午9.45.17.png
+螢幕快照 2020-06-19 下午9.45.33.png
+螢幕快照 2020-06-19 下午9.47.35.png
+螢幕快照 2020-06-19 下午9.48.03.png
+螢幕快照 2020-06-19 下午9.48.09.png
+螢幕快照 2020-06-21 上午1.02.42.png
+螢幕快照 2020-06-21 上午1.10.18.png
+螢幕快照 2020-06-21 上午1.19.40.png
+螢幕快照 2020-06-21 上午1.24.34.png
+螢幕快照 2020-06-21 下午11.07.30.png
+螢幕快照 2020-06-21 下午11.17.02.png
+螢幕快照 2020-06-21 下午11.21.46.png
+螢幕快照 2020-06-21 下午4.38.15.png
+螢幕快照 2020-06-21 下午4.45.50.png
+螢幕快照 2020-06-21 下午4.54.52.png
+螢幕快照 2020-06-22 下午1.52.18.png
+螢幕快照 2020-06-22 下午1.58.53.png
+螢幕快照 2020-06-22 下午1.59.26.png
+螢幕快照 2020-06-22 下午2.11.23.png
+螢幕快照 2020-06-22 下午2.36.27.png
+螢幕快照 2020-06-22 下午2.41.46.png
+螢幕快照 2020-06-22 下午3.34.44.png
+螢幕快照 2020-06-22 下午3.35.07.png
+螢幕快照 2020-06-22 下午3.42.22.png
+螢幕快照 2020-06-22 下午3.42.42.png
+螢幕快照 2020-06-22 下午3.43.04.png
+螢幕快照 2020-06-22 上午3.54.44.png
+螢幕快照 2020-06-22 下午4.04.07.png
+螢幕快照 2020-06-22 下午4.17.08.png
+螢幕快照 2020-06-22 下午4.26.06.png
+螢幕快照 2020-06-22 下午4.26.25.png
+螢幕快照 2020-06-22 上午4.46.22.png
+螢幕快照 2020-06-22 下午4.49.52.png
+螢幕快照 2020-06-22 下午4.50.02.png
+螢幕快照 2020-06-22 下午5.07.48.png
+螢幕快照 2020-06-22 下午5.09.31.png
+螢幕快照 2020-06-22 上午5.12.58.png
+螢幕快照 2020-06-22 上午5.45.23.png
+螢幕快照 2020-06-22 下午6.09.53.png
+螢幕快照 2020-06-22 下午8.00.27.png
+螢幕快照 2020-06-23 下午8.28.45.png
+螢幕快照 2020-06-27 下午11.04.02.png
+螢幕快照 2020-06-27 下午11.09.24.png
+室設系專案
+運動觀光第17週報告.pdf
+運動觀光第17週報告.pptx
+交大掛號封面.docx
+交大研究紀錄簿
+產學合作申請書(碩成).pdf
+產學合作申請書(紘嘉).pdf
+額溫槍套件報價單.pdf
+麥克風擴大機匯款單.pdf
+麥克風擴大機報價單.pdf
+工研院廠商資安聲明書-1.pdf
+工研院廠商資安聲明書.pdf
+加值創作分項計畫申請書.pdf
+zhengzhongxiangde-MacBook-Pro-4:Desktop zhengzhongxiang$ cd ITRI-project/
+zhengzhongxiangde-MacBook-Pro-4:ITRI-project zhengzhongxiang$ ls
+GCP-CloudRun		GCP-Pub:Sub		KEDA-EventTrigger
+zhengzhongxiangde-MacBook-Pro-4:ITRI-project zhengzhongxiang$ cd GCP-CloudRun/auto-api-doc/
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ ls
+app.py
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ python3 app.py 
+app.py:9: DeprecationWarning: 'werkzeug.contrib.fixers.ProxyFix' has moved to 'werkzeug.middleware.proxy_fix.ProxyFix'. This import is deprecated as of version 0.15 and will be removed in 1.0.
+  app.wsgi_app = ProxyFix(app.wsgi_app)
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+127.0.0.1 - - [28/Jun/2020 19:39:31] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 19:39:32] "GET /swaggerui/droid-sans.css HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 19:39:32] "GET /swaggerui/swagger-ui.css HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 19:39:32] "GET /swaggerui/swagger-ui-bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 19:39:32] "GET /swaggerui/swagger-ui-standalone-preset.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 19:39:32] "GET /swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 19:39:32] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+^Czhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ 
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ ssh ubuntu@10.0.0.225
+The authenticity of host '10.0.0.225 (10.0.0.225)' can't be established.
+ECDSA key fingerprint is SHA256:PS8IxETh7oHaFJiAshDX2TtLgcCjYDV5RMiK6+5ElME.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '10.0.0.225' (ECDSA) to the list of known hosts.
+ubuntu@10.0.0.225: Permission denied (publickey).
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ sudo ssh -i ../../../Dubuntu@10.0.0.225
+DHT11+Light.png     DHT11+Light_bb.pdf  Delta_UPS_Control/  
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ sudo ssh -i ../../../../Downloads/id_rsa ubuntu@10.0.0.225
+Password:
+Welcome to Ubuntu 18.04.4 LTS (GNU/Linux 4.15.0-99-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Sun Jun 28 11:44:46 UTC 2020
+
+  System load:  1.96                Users logged in:        0
+  Usage of /:   15.7% of 109.53GB   IP address for eno1:    10.0.0.225
+  Memory usage: 70%                 IP address for docker0: 172.17.0.1
+  Swap usage:   0%                  IP address for cni0:    10.244.1.1
+  Processes:    268
+
+ * "If you've been waiting for the perfect Kubernetes dev solution for
+   macOS, the wait is over. Learn how to install Microk8s on macOS."
+
+   https://www.techrepublic.com/article/how-to-install-microk8s-on-macos/
+
+ * Canonical Livepatch is available for installation.
+   - Reduce system reboots and improve kernel security. Activate at:
+     https://ubuntu.com/livepatch
+
+40 packages can be updated.
+0 updates are security updates.
+
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+
+*** System restart required ***
+Last login: Sun Jun  7 15:09:52 2020 from 10.0.0.135
+ubuntu@sdn-k8s-b2-2:~$ ls
+ubuntu@sdn-k8s-b2-2:~$ nano app.py
+ubuntu@sdn-k8s-b2-2:~$ pip3 install flask
+
+Command 'pip3' not found, but can be installed with:
+
+sudo apt install python3-pip
+
+ubuntu@sdn-k8s-b2-2:~$ sudo apt install python3-pip
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  binutils binutils-common binutils-x86-64-linux-gnu build-essential cpp cpp-7 dh-python dpkg-dev fakeroot g++ g++-7 gcc gcc-7 gcc-7-base libalgorithm-diff-perl
+  libalgorithm-diff-xs-perl libalgorithm-merge-perl libasan4 libatomic1 libbinutils libc-dev-bin libc6-dev libcc1-0 libcilkrts5 libdpkg-perl libexpat1-dev libfakeroot
+  libfile-fcntllock-perl libgcc-7-dev libgomp1 libisl19 libitm1 liblsan0 libmpc3 libmpx2 libpython3-dev libpython3.6-dev libquadmath0 libstdc++-7-dev libtsan0 libubsan0
+  linux-libc-dev make manpages-dev python-pip-whl python3-crypto python3-dev python3-distutils python3-keyring python3-keyrings.alt python3-lib2to3 python3-secretstorage
+  python3-setuptools python3-wheel python3-xdg python3.6-dev
+Suggested packages:
+  binutils-doc cpp-doc gcc-7-locales debian-keyring g++-multilib g++-7-multilib gcc-7-doc libstdc++6-7-dbg gcc-multilib autoconf automake libtool flex bison gdb gcc-doc
+  gcc-7-multilib libgcc1-dbg libgomp1-dbg libitm1-dbg libatomic1-dbg libasan4-dbg liblsan0-dbg libtsan0-dbg libubsan0-dbg libcilkrts5-dbg libmpx2-dbg libquadmath0-dbg
+  glibc-doc bzr libstdc++-7-doc make-doc python-crypto-doc gnome-keyring libkf5wallet-bin gir1.2-gnomekeyring-1.0 python-secretstorage-doc python-setuptools-doc
+The following NEW packages will be installed:
+  binutils binutils-common binutils-x86-64-linux-gnu build-essential cpp cpp-7 dh-python dpkg-dev fakeroot g++ g++-7 gcc gcc-7 gcc-7-base libalgorithm-diff-perl
+  libalgorithm-diff-xs-perl libalgorithm-merge-perl libasan4 libatomic1 libbinutils libc-dev-bin libc6-dev libcc1-0 libcilkrts5 libdpkg-perl libexpat1-dev libfakeroot
+  libfile-fcntllock-perl libgcc-7-dev libgomp1 libisl19 libitm1 liblsan0 libmpc3 libmpx2 libpython3-dev libpython3.6-dev libquadmath0 libstdc++-7-dev libtsan0 libubsan0
+  linux-libc-dev make manpages-dev python-pip-whl python3-crypto python3-dev python3-distutils python3-keyring python3-keyrings.alt python3-lib2to3 python3-pip
+  python3-secretstorage python3-setuptools python3-wheel python3-xdg python3.6-dev
+0 upgraded, 57 newly installed, 0 to remove and 39 not upgraded.
+Need to get 91.2 MB of archives.
+After this operation, 252 MB of additional disk space will be used.
+Do you want to continue? [Y/n] Y
+Get:1 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 binutils-common amd64 2.30-21ubuntu1~18.04.3 [196 kB]
+Get:2 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libbinutils amd64 2.30-21ubuntu1~18.04.3 [488 kB]
+Get:3 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 binutils-x86-64-linux-gnu amd64 2.30-21ubuntu1~18.04.3 [1839 kB]
+Get:4 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 binutils amd64 2.30-21ubuntu1~18.04.3 [3388 B]
+Get:5 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 libc-dev-bin amd64 2.27-3ubuntu1 [71.8 kB]
+Get:6 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 linux-libc-dev amd64 4.15.0-108.109 [991 kB]
+Get:7 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 libc6-dev amd64 2.27-3ubuntu1 [2587 kB]
+Get:8 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 gcc-7-base amd64 7.5.0-3ubuntu1~18.04 [18.3 kB]
+Get:9 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 libisl19 amd64 0.19-1 [551 kB]
+Get:10 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 libmpc3 amd64 1.1.0-1 [40.8 kB]
+Get:11 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 cpp-7 amd64 7.5.0-3ubuntu1~18.04 [8591 kB]
+Get:12 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 cpp amd64 4:7.4.0-1ubuntu2.3 [27.7 kB]
+Get:13 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libcc1-0 amd64 8.4.0-1ubuntu1~18.04 [39.4 kB]
+Get:14 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libgomp1 amd64 8.4.0-1ubuntu1~18.04 [76.5 kB]
+Get:15 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libitm1 amd64 8.4.0-1ubuntu1~18.04 [27.9 kB]
+Get:16 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libatomic1 amd64 8.4.0-1ubuntu1~18.04 [9192 B]
+Get:17 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libasan4 amd64 7.5.0-3ubuntu1~18.04 [358 kB]
+Get:18 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 liblsan0 amd64 8.4.0-1ubuntu1~18.04 [133 kB]
+Get:19 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libtsan0 amd64 8.4.0-1ubuntu1~18.04 [288 kB]
+Get:20 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libubsan0 amd64 7.5.0-3ubuntu1~18.04 [126 kB]
+Get:21 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libcilkrts5 amd64 7.5.0-3ubuntu1~18.04 [42.5 kB]
+Get:22 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libmpx2 amd64 8.4.0-1ubuntu1~18.04 [11.6 kB]
+Get:23 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libquadmath0 amd64 8.4.0-1ubuntu1~18.04 [134 kB]
+Get:24 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libgcc-7-dev amd64 7.5.0-3ubuntu1~18.04 [2378 kB]
+Get:25 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 gcc-7 amd64 7.5.0-3ubuntu1~18.04 [9381 kB]
+Get:26 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 gcc amd64 4:7.4.0-1ubuntu2.3 [5184 B]
+Get:27 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libstdc++-7-dev amd64 7.5.0-3ubuntu1~18.04 [1471 kB]
+Get:28 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 g++-7 amd64 7.5.0-3ubuntu1~18.04 [9697 kB]
+Get:29 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 g++ amd64 4:7.4.0-1ubuntu2.3 [1568 B]
+Get:30 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 make amd64 4.1-9.1ubuntu1 [154 kB]
+Get:31 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libdpkg-perl all 1.19.0.5ubuntu2.3 [211 kB]
+Get:32 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 dpkg-dev all 1.19.0.5ubuntu2.3 [607 kB]
+Get:33 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 build-essential amd64 12.4ubuntu1 [4758 B]
+Get:34 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 python3-lib2to3 all 3.6.9-1~18.04 [77.4 kB]
+Get:35 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 python3-distutils all 3.6.9-1~18.04 [144 kB]
+Get:36 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 dh-python all 3.20180325ubuntu2 [89.2 kB]
+Get:37 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 libfakeroot amd64 1.22-2ubuntu1 [25.9 kB]
+Get:38 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 fakeroot amd64 1.22-2ubuntu1 [62.3 kB]
+Get:39 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 libalgorithm-diff-perl all 1.19.03-1 [47.6 kB]
+Get:40 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 libalgorithm-diff-xs-perl amd64 0.04-5 [11.1 kB]
+Get:41 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 libalgorithm-merge-perl all 0.08-3 [12.0 kB]
+Get:42 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libexpat1-dev amd64 2.2.5-3ubuntu0.2 [122 kB]
+Get:43 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 libfile-fcntllock-perl amd64 0.22-3build2 [33.2 kB]
+Get:44 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libpython3.6-dev amd64 3.6.9-1~18.04ubuntu1 [44.9 MB]
+Get:45 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libpython3-dev amd64 3.6.7-1~18.04 [7328 B]                                                            
+Get:46 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 manpages-dev all 4.15-1 [2217 kB]                                                                              
+Get:47 http://tw.archive.ubuntu.com/ubuntu bionic-updates/universe amd64 python-pip-whl all 9.0.1-2.3~ubuntu1.18.04.1 [1653 kB]                                             
+Get:48 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 python3-crypto amd64 2.6.1-8ubuntu2 [244 kB]                                                                   
+Get:49 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 python3.6-dev amd64 3.6.9-1~18.04ubuntu1 [508 kB]                                                      
+Get:50 http://tw.archive.ubuntu.com/ubuntu bionic-updates/main amd64 python3-dev amd64 3.6.7-1~18.04 [1288 B]                                                               
+Get:51 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 python3-secretstorage all 2.3.1-2 [12.1 kB]                                                                    
+Get:52 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 python3-keyring all 10.6.0-1 [26.7 kB]                                                                         
+Get:53 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 python3-keyrings.alt all 3.0-1 [16.6 kB]                                                                       
+Get:54 http://tw.archive.ubuntu.com/ubuntu bionic-updates/universe amd64 python3-pip all 9.0.1-2.3~ubuntu1.18.04.1 [114 kB]                                                 
+Get:55 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 python3-setuptools all 39.0.1-2 [248 kB]                                                                       
+Get:56 http://tw.archive.ubuntu.com/ubuntu bionic/universe amd64 python3-wheel all 0.30.0-0.2 [36.5 kB]                                                                     
+Get:57 http://tw.archive.ubuntu.com/ubuntu bionic/main amd64 python3-xdg all 0.25-4ubuntu1 [31.4 kB]                                                                        
+Fetched 91.2 MB in 8s (11.7 MB/s)                                                                                                                                           
+Extracting templates from packages: 100%
+Selecting previously unselected package binutils-common:amd64.
+(Reading database ... 141314 files and directories currently installed.)
+Preparing to unpack .../00-binutils-common_2.30-21ubuntu1~18.04.3_amd64.deb ...
+Unpacking binutils-common:amd64 (2.30-21ubuntu1~18.04.3) ...
+Selecting previously unselected package libbinutils:amd64.
+Preparing to unpack .../01-libbinutils_2.30-21ubuntu1~18.04.3_amd64.deb ...
+Unpacking libbinutils:amd64 (2.30-21ubuntu1~18.04.3) ...
+Selecting previously unselected package binutils-x86-64-linux-gnu.
+Preparing to unpack .../02-binutils-x86-64-linux-gnu_2.30-21ubuntu1~18.04.3_amd64.deb ...
+Unpacking binutils-x86-64-linux-gnu (2.30-21ubuntu1~18.04.3) ...
+Selecting previously unselected package binutils.
+Preparing to unpack .../03-binutils_2.30-21ubuntu1~18.04.3_amd64.deb ...
+Unpacking binutils (2.30-21ubuntu1~18.04.3) ...
+Selecting previously unselected package libc-dev-bin.
+Preparing to unpack .../04-libc-dev-bin_2.27-3ubuntu1_amd64.deb ...
+Unpacking libc-dev-bin (2.27-3ubuntu1) ...
+Selecting previously unselected package linux-libc-dev:amd64.
+Preparing to unpack .../05-linux-libc-dev_4.15.0-108.109_amd64.deb ...
+Unpacking linux-libc-dev:amd64 (4.15.0-108.109) ...
+Selecting previously unselected package libc6-dev:amd64.
+Preparing to unpack .../06-libc6-dev_2.27-3ubuntu1_amd64.deb ...
+Unpacking libc6-dev:amd64 (2.27-3ubuntu1) ...
+Selecting previously unselected package gcc-7-base:amd64.
+Preparing to unpack .../07-gcc-7-base_7.5.0-3ubuntu1~18.04_amd64.deb ...
+Unpacking gcc-7-base:amd64 (7.5.0-3ubuntu1~18.04) ...
+Selecting previously unselected package libisl19:amd64.
+Preparing to unpack .../08-libisl19_0.19-1_amd64.deb ...
+Unpacking libisl19:amd64 (0.19-1) ...
+Selecting previously unselected package libmpc3:amd64.
+Preparing to unpack .../09-libmpc3_1.1.0-1_amd64.deb ...
+Unpacking libmpc3:amd64 (1.1.0-1) ...
+Selecting previously unselected package cpp-7.
+Preparing to unpack .../10-cpp-7_7.5.0-3ubuntu1~18.04_amd64.deb ...
+Unpacking cpp-7 (7.5.0-3ubuntu1~18.04) ...
+Selecting previously unselected package cpp.
+Preparing to unpack .../11-cpp_4%3a7.4.0-1ubuntu2.3_amd64.deb ...
+Unpacking cpp (4:7.4.0-1ubuntu2.3) ...
+Selecting previously unselected package libcc1-0:amd64.
+Preparing to unpack .../12-libcc1-0_8.4.0-1ubuntu1~18.04_amd64.deb ...
+Unpacking libcc1-0:amd64 (8.4.0-1ubuntu1~18.04) ...
+Selecting previously unselected package libgomp1:amd64.
+Preparing to unpack .../13-libgomp1_8.4.0-1ubuntu1~18.04_amd64.deb ...
+Unpacking libgomp1:amd64 (8.4.0-1ubuntu1~18.04) ...
+Selecting previously unselected package libitm1:amd64.
+Preparing to unpack .../14-libitm1_8.4.0-1ubuntu1~18.04_amd64.deb ...
+Unpacking libitm1:amd64 (8.4.0-1ubuntu1~18.04) ...
+Selecting previously unselected package libatomic1:amd64.
+Preparing to unpack .../15-libatomic1_8.4.0-1ubuntu1~18.04_amd64.deb ...
+Unpacking libatomic1:amd64 (8.4.0-1ubuntu1~18.04) ...
+Selecting previously unselected package libasan4:amd64.
+Preparing to unpack .../16-libasan4_7.5.0-3ubuntu1~18.04_amd64.deb ...
+Unpacking libasan4:amd64 (7.5.0-3ubuntu1~18.04) ...
+Selecting previously unselected package liblsan0:amd64.
+Preparing to unpack .../17-liblsan0_8.4.0-1ubuntu1~18.04_amd64.deb ...
+Unpacking liblsan0:amd64 (8.4.0-1ubuntu1~18.04) ...
+Selecting previously unselected package libtsan0:amd64.
+Preparing to unpack .../18-libtsan0_8.4.0-1ubuntu1~18.04_amd64.deb ...
+Unpacking libtsan0:amd64 (8.4.0-1ubuntu1~18.04) ...
+Selecting previously unselected package libubsan0:amd64.
+Preparing to unpack .../19-libubsan0_7.5.0-3ubuntu1~18.04_amd64.deb ...
+Unpacking libubsan0:amd64 (7.5.0-3ubuntu1~18.04) ...
+Selecting previously unselected package libcilkrts5:amd64.
+Preparing to unpack .../20-libcilkrts5_7.5.0-3ubuntu1~18.04_amd64.deb ...
+Unpacking libcilkrts5:amd64 (7.5.0-3ubuntu1~18.04) ...
+Selecting previously unselected package libmpx2:amd64.
+Preparing to unpack .../21-libmpx2_8.4.0-1ubuntu1~18.04_amd64.deb ...
+Unpacking libmpx2:amd64 (8.4.0-1ubuntu1~18.04) ...
+Selecting previously unselected package libquadmath0:amd64.
+Preparing to unpack .../22-libquadmath0_8.4.0-1ubuntu1~18.04_amd64.deb ...
+Unpacking libquadmath0:amd64 (8.4.0-1ubuntu1~18.04) ...
+Selecting previously unselected package libgcc-7-dev:amd64.
+Preparing to unpack .../23-libgcc-7-dev_7.5.0-3ubuntu1~18.04_amd64.deb ...
+Unpacking libgcc-7-dev:amd64 (7.5.0-3ubuntu1~18.04) ...
+Selecting previously unselected package gcc-7.
+Preparing to unpack .../24-gcc-7_7.5.0-3ubuntu1~18.04_amd64.deb ...
+Unpacking gcc-7 (7.5.0-3ubuntu1~18.04) ...
+Selecting previously unselected package gcc.
+Preparing to unpack .../25-gcc_4%3a7.4.0-1ubuntu2.3_amd64.deb ...
+Unpacking gcc (4:7.4.0-1ubuntu2.3) ...
+Selecting previously unselected package libstdc++-7-dev:amd64.
+Preparing to unpack .../26-libstdc++-7-dev_7.5.0-3ubuntu1~18.04_amd64.deb ...
+Unpacking libstdc++-7-dev:amd64 (7.5.0-3ubuntu1~18.04) ...
+Selecting previously unselected package g++-7.
+Preparing to unpack .../27-g++-7_7.5.0-3ubuntu1~18.04_amd64.deb ...
+Unpacking g++-7 (7.5.0-3ubuntu1~18.04) ...
+Selecting previously unselected package g++.
+Preparing to unpack .../28-g++_4%3a7.4.0-1ubuntu2.3_amd64.deb ...
+Unpacking g++ (4:7.4.0-1ubuntu2.3) ...
+Selecting previously unselected package make.
+Preparing to unpack .../29-make_4.1-9.1ubuntu1_amd64.deb ...
+Unpacking make (4.1-9.1ubuntu1) ...
+Selecting previously unselected package libdpkg-perl.
+Preparing to unpack .../30-libdpkg-perl_1.19.0.5ubuntu2.3_all.deb ...
+Unpacking libdpkg-perl (1.19.0.5ubuntu2.3) ...
+Selecting previously unselected package dpkg-dev.
+Preparing to unpack .../31-dpkg-dev_1.19.0.5ubuntu2.3_all.deb ...
+Unpacking dpkg-dev (1.19.0.5ubuntu2.3) ...
+Selecting previously unselected package build-essential.
+Preparing to unpack .../32-build-essential_12.4ubuntu1_amd64.deb ...
+Unpacking build-essential (12.4ubuntu1) ...
+Selecting previously unselected package python3-lib2to3.
+Preparing to unpack .../33-python3-lib2to3_3.6.9-1~18.04_all.deb ...
+Unpacking python3-lib2to3 (3.6.9-1~18.04) ...
+Selecting previously unselected package python3-distutils.
+Preparing to unpack .../34-python3-distutils_3.6.9-1~18.04_all.deb ...
+Unpacking python3-distutils (3.6.9-1~18.04) ...
+Selecting previously unselected package dh-python.
+Preparing to unpack .../35-dh-python_3.20180325ubuntu2_all.deb ...
+Unpacking dh-python (3.20180325ubuntu2) ...
+Selecting previously unselected package libfakeroot:amd64.
+Preparing to unpack .../36-libfakeroot_1.22-2ubuntu1_amd64.deb ...
+Unpacking libfakeroot:amd64 (1.22-2ubuntu1) ...
+Selecting previously unselected package fakeroot.
+Preparing to unpack .../37-fakeroot_1.22-2ubuntu1_amd64.deb ...
+Unpacking fakeroot (1.22-2ubuntu1) ...
+Selecting previously unselected package libalgorithm-diff-perl.
+Preparing to unpack .../38-libalgorithm-diff-perl_1.19.03-1_all.deb ...
+Unpacking libalgorithm-diff-perl (1.19.03-1) ...
+Selecting previously unselected package libalgorithm-diff-xs-perl.
+Preparing to unpack .../39-libalgorithm-diff-xs-perl_0.04-5_amd64.deb ...
+Unpacking libalgorithm-diff-xs-perl (0.04-5) ...
+Selecting previously unselected package libalgorithm-merge-perl.
+Preparing to unpack .../40-libalgorithm-merge-perl_0.08-3_all.deb ...
+Unpacking libalgorithm-merge-perl (0.08-3) ...
+Selecting previously unselected package libexpat1-dev:amd64.
+Preparing to unpack .../41-libexpat1-dev_2.2.5-3ubuntu0.2_amd64.deb ...
+Unpacking libexpat1-dev:amd64 (2.2.5-3ubuntu0.2) ...
+Selecting previously unselected package libfile-fcntllock-perl.
+Preparing to unpack .../42-libfile-fcntllock-perl_0.22-3build2_amd64.deb ...
+Unpacking libfile-fcntllock-perl (0.22-3build2) ...
+Selecting previously unselected package libpython3.6-dev:amd64.
+Preparing to unpack .../43-libpython3.6-dev_3.6.9-1~18.04ubuntu1_amd64.deb ...
+Unpacking libpython3.6-dev:amd64 (3.6.9-1~18.04ubuntu1) ...
+Selecting previously unselected package libpython3-dev:amd64.
+Preparing to unpack .../44-libpython3-dev_3.6.7-1~18.04_amd64.deb ...
+Unpacking libpython3-dev:amd64 (3.6.7-1~18.04) ...
+Selecting previously unselected package manpages-dev.
+Preparing to unpack .../45-manpages-dev_4.15-1_all.deb ...
+Unpacking manpages-dev (4.15-1) ...
+Selecting previously unselected package python-pip-whl.
+Preparing to unpack .../46-python-pip-whl_9.0.1-2.3~ubuntu1.18.04.1_all.deb ...
+Unpacking python-pip-whl (9.0.1-2.3~ubuntu1.18.04.1) ...
+Selecting previously unselected package python3-crypto.
+Preparing to unpack .../47-python3-crypto_2.6.1-8ubuntu2_amd64.deb ...
+Unpacking python3-crypto (2.6.1-8ubuntu2) ...
+Selecting previously unselected package python3.6-dev.
+Preparing to unpack .../48-python3.6-dev_3.6.9-1~18.04ubuntu1_amd64.deb ...
+Unpacking python3.6-dev (3.6.9-1~18.04ubuntu1) ...
+Selecting previously unselected package python3-dev.
+Preparing to unpack .../49-python3-dev_3.6.7-1~18.04_amd64.deb ...
+Unpacking python3-dev (3.6.7-1~18.04) ...
+Selecting previously unselected package python3-secretstorage.
+Preparing to unpack .../50-python3-secretstorage_2.3.1-2_all.deb ...
+Unpacking python3-secretstorage (2.3.1-2) ...
+Selecting previously unselected package python3-keyring.
+Preparing to unpack .../51-python3-keyring_10.6.0-1_all.deb ...
+Unpacking python3-keyring (10.6.0-1) ...
+Selecting previously unselected package python3-keyrings.alt.
+Preparing to unpack .../52-python3-keyrings.alt_3.0-1_all.deb ...
+Unpacking python3-keyrings.alt (3.0-1) ...
+Selecting previously unselected package python3-pip.
+Preparing to unpack .../53-python3-pip_9.0.1-2.3~ubuntu1.18.04.1_all.deb ...
+Unpacking python3-pip (9.0.1-2.3~ubuntu1.18.04.1) ...
+Selecting previously unselected package python3-setuptools.
+Preparing to unpack .../54-python3-setuptools_39.0.1-2_all.deb ...
+Unpacking python3-setuptools (39.0.1-2) ...
+Selecting previously unselected package python3-wheel.
+Preparing to unpack .../55-python3-wheel_0.30.0-0.2_all.deb ...
+Unpacking python3-wheel (0.30.0-0.2) ...
+Selecting previously unselected package python3-xdg.
+Preparing to unpack .../56-python3-xdg_0.25-4ubuntu1_all.deb ...
+Unpacking python3-xdg (0.25-4ubuntu1) ...
+Setting up libquadmath0:amd64 (8.4.0-1ubuntu1~18.04) ...
+Setting up libgomp1:amd64 (8.4.0-1ubuntu1~18.04) ...
+Setting up libatomic1:amd64 (8.4.0-1ubuntu1~18.04) ...
+Setting up python-pip-whl (9.0.1-2.3~ubuntu1.18.04.1) ...
+Setting up libcc1-0:amd64 (8.4.0-1ubuntu1~18.04) ...
+Setting up make (4.1-9.1ubuntu1) ...
+Setting up python3-crypto (2.6.1-8ubuntu2) ...
+Setting up libtsan0:amd64 (8.4.0-1ubuntu1~18.04) ...
+Setting up python3-xdg (0.25-4ubuntu1) ...
+Setting up python3-keyrings.alt (3.0-1) ...
+Setting up linux-libc-dev:amd64 (4.15.0-108.109) ...
+Setting up libdpkg-perl (1.19.0.5ubuntu2.3) ...
+Setting up python3-wheel (0.30.0-0.2) ...
+Setting up liblsan0:amd64 (8.4.0-1ubuntu1~18.04) ...
+Setting up gcc-7-base:amd64 (7.5.0-3ubuntu1~18.04) ...
+Setting up binutils-common:amd64 (2.30-21ubuntu1~18.04.3) ...
+Setting up libfile-fcntllock-perl (0.22-3build2) ...
+Setting up libmpx2:amd64 (8.4.0-1ubuntu1~18.04) ...
+Setting up libfakeroot:amd64 (1.22-2ubuntu1) ...
+Setting up libalgorithm-diff-perl (1.19.03-1) ...
+Setting up libmpc3:amd64 (1.1.0-1) ...
+Setting up libc-dev-bin (2.27-3ubuntu1) ...
+Setting up python3-lib2to3 (3.6.9-1~18.04) ...
+Setting up python3-secretstorage (2.3.1-2) ...
+Setting up manpages-dev (4.15-1) ...
+Setting up libc6-dev:amd64 (2.27-3ubuntu1) ...
+Setting up python3-distutils (3.6.9-1~18.04) ...
+Setting up libitm1:amd64 (8.4.0-1ubuntu1~18.04) ...
+Setting up libisl19:amd64 (0.19-1) ...
+Setting up libasan4:amd64 (7.5.0-3ubuntu1~18.04) ...
+Setting up python3-keyring (10.6.0-1) ...
+Setting up libbinutils:amd64 (2.30-21ubuntu1~18.04.3) ...
+Setting up libcilkrts5:amd64 (7.5.0-3ubuntu1~18.04) ...
+Setting up libubsan0:amd64 (7.5.0-3ubuntu1~18.04) ...
+Setting up fakeroot (1.22-2ubuntu1) ...
+update-alternatives: using /usr/bin/fakeroot-sysv to provide /usr/bin/fakeroot (fakeroot) in auto mode
+Setting up libgcc-7-dev:amd64 (7.5.0-3ubuntu1~18.04) ...
+Setting up cpp-7 (7.5.0-3ubuntu1~18.04) ...
+Setting up libstdc++-7-dev:amd64 (7.5.0-3ubuntu1~18.04) ...
+Setting up libalgorithm-merge-perl (0.08-3) ...
+Setting up libalgorithm-diff-xs-perl (0.04-5) ...
+Setting up python3-pip (9.0.1-2.3~ubuntu1.18.04.1) ...
+Setting up libexpat1-dev:amd64 (2.2.5-3ubuntu0.2) ...
+Setting up python3-setuptools (39.0.1-2) ...
+Setting up dh-python (3.20180325ubuntu2) ...
+Setting up binutils-x86-64-linux-gnu (2.30-21ubuntu1~18.04.3) ...
+Setting up cpp (4:7.4.0-1ubuntu2.3) ...
+Setting up libpython3.6-dev:amd64 (3.6.9-1~18.04ubuntu1) ...
+Setting up binutils (2.30-21ubuntu1~18.04.3) ...
+Setting up python3.6-dev (3.6.9-1~18.04ubuntu1) ...
+Setting up libpython3-dev:amd64 (3.6.7-1~18.04) ...
+Setting up gcc-7 (7.5.0-3ubuntu1~18.04) ...
+Setting up g++-7 (7.5.0-3ubuntu1~18.04) ...
+Setting up python3-dev (3.6.7-1~18.04) ...
+Setting up gcc (4:7.4.0-1ubuntu2.3) ...
+Setting up dpkg-dev (1.19.0.5ubuntu2.3) ...
+Setting up g++ (4:7.4.0-1ubuntu2.3) ...
+update-alternatives: using /usr/bin/g++ to provide /usr/bin/c++ (c++) in auto mode
+Setting up build-essential (12.4ubuntu1) ...
+Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+Processing triggers for libc-bin (2.27-3ubuntu1) ...
+ubuntu@sdn-k8s-b2-2:~$ python3 app.py 
+Traceback (most recent call last):
+  File "app.py", line 3, in <module>
+    from flask import Flask
+ModuleNotFoundError: No module named 'flask'
+ubuntu@sdn-k8s-b2-2:~$ pip3 install flask
+Collecting flask
+  Downloading https://files.pythonhosted.org/packages/f2/28/2a03252dfb9ebf377f40fba6a7841b47083260bf8bd8e737b0c6952df83f/Flask-1.1.2-py2.py3-none-any.whl (94kB)
+    100% |████████████████████████████████| 102kB 1.1MB/s 
+Collecting Werkzeug>=0.15 (from flask)
+  Downloading https://files.pythonhosted.org/packages/cc/94/5f7079a0e00bd6863ef8f1da638721e9da21e5bacee597595b318f71d62e/Werkzeug-1.0.1-py2.py3-none-any.whl (298kB)
+    100% |████████████████████████████████| 307kB 2.2MB/s 
+Collecting click>=5.1 (from flask)
+  Downloading https://files.pythonhosted.org/packages/d2/3d/fa76db83bf75c4f8d338c2fd15c8d33fdd7ad23a9b5e57eb6c5de26b430e/click-7.1.2-py2.py3-none-any.whl (82kB)
+    100% |████████████████████████████████| 92kB 3.8MB/s 
+Collecting Jinja2>=2.10.1 (from flask)
+  Downloading https://files.pythonhosted.org/packages/30/9e/f663a2aa66a09d838042ae1a2c5659828bb9b41ea3a6efa20a20fd92b121/Jinja2-2.11.2-py2.py3-none-any.whl (125kB)
+    100% |████████████████████████████████| 133kB 2.3MB/s 
+Collecting itsdangerous>=0.24 (from flask)
+  Downloading https://files.pythonhosted.org/packages/76/ae/44b03b253d6fade317f32c24d100b3b35c2239807046a4c953c7b89fa49e/itsdangerous-1.1.0-py2.py3-none-any.whl
+Collecting MarkupSafe>=0.23 (from Jinja2>=2.10.1->flask)
+  Downloading https://files.pythonhosted.org/packages/b2/5f/23e0023be6bb885d00ffbefad2942bc51a620328ee910f64abe5a8d18dd1/MarkupSafe-1.1.1-cp36-cp36m-manylinux1_x86_64.whl
+Installing collected packages: Werkzeug, click, MarkupSafe, Jinja2, itsdangerous, flask
+Successfully installed Jinja2-2.11.2 MarkupSafe-1.1.1 Werkzeug-1.0.1 click-7.1.2 flask-1.1.2 itsdangerous-1.1.0
+ubuntu@sdn-k8s-b2-2:~$ python3 app.py 
+Traceback (most recent call last):
+  File "app.py", line 4, in <module>
+    from flask_restplus import Resource, Api, fields
+ModuleNotFoundError: No module named 'flask_restplus'
+ubuntu@sdn-k8s-b2-2:~$ pip3 install flask_restplus
+Collecting flask_restplus
+  Downloading https://files.pythonhosted.org/packages/c2/a6/b17c848771f96ad039ad9e3ea275e842a16c39c4f3eb9f60ee330b20b6c2/flask_restplus-0.13.0-py2.py3-none-any.whl (2.5MB)
+    100% |████████████████████████████████| 2.5MB 647kB/s 
+Collecting six>=1.3.0 (from flask_restplus)
+  Downloading https://files.pythonhosted.org/packages/ee/ff/48bde5c0f013094d729fe4b0316ba2a24774b3ff1c52d924a8a4cb04078a/six-1.15.0-py2.py3-none-any.whl
+Collecting jsonschema (from flask_restplus)
+  Downloading https://files.pythonhosted.org/packages/c5/8f/51e89ce52a085483359217bc72cdbf6e75ee595d5b1d4b5ade40c7e018b8/jsonschema-3.2.0-py2.py3-none-any.whl (56kB)
+    100% |████████████████████████████████| 61kB 11.3MB/s 
+Collecting pytz (from flask_restplus)
+  Downloading https://files.pythonhosted.org/packages/4f/a4/879454d49688e2fad93e59d7d4efda580b783c745fd2ec2a3adf87b0808d/pytz-2020.1-py2.py3-none-any.whl (510kB)
+    100% |████████████████████████████████| 512kB 2.4MB/s 
+Collecting Flask>=0.8 (from flask_restplus)
+  Using cached https://files.pythonhosted.org/packages/f2/28/2a03252dfb9ebf377f40fba6a7841b47083260bf8bd8e737b0c6952df83f/Flask-1.1.2-py2.py3-none-any.whl
+Collecting aniso8601>=0.82 (from flask_restplus)
+  Downloading https://files.pythonhosted.org/packages/eb/e4/787e104b58eadc1a710738d4e418d7e599e4e778e52cb8e5d5ef6ddd5833/aniso8601-8.0.0-py2.py3-none-any.whl (43kB)
+    100% |████████████████████████████████| 51kB 11.5MB/s 
+Collecting importlib-metadata; python_version < "3.8" (from jsonschema->flask_restplus)
+  Downloading https://files.pythonhosted.org/packages/8e/58/cdea07eb51fc2b906db0968a94700866fc46249bdc75cac23f9d13168929/importlib_metadata-1.7.0-py2.py3-none-any.whl
+Collecting attrs>=17.4.0 (from jsonschema->flask_restplus)
+  Downloading https://files.pythonhosted.org/packages/a2/db/4313ab3be961f7a763066401fb77f7748373b6094076ae2bda2806988af6/attrs-19.3.0-py2.py3-none-any.whl
+Collecting pyrsistent>=0.14.0 (from jsonschema->flask_restplus)
+  Downloading https://files.pythonhosted.org/packages/9f/0d/cbca4d0bbc5671822a59f270e4ce3f2195f8a899c97d0d5abb81b191efb5/pyrsistent-0.16.0.tar.gz (108kB)
+    100% |████████████████████████████████| 112kB 7.7MB/s 
+Collecting setuptools (from jsonschema->flask_restplus)
+  Downloading https://files.pythonhosted.org/packages/e9/93/4860cebd5ad3ff2664ad3c966490ccb46e3b88458b2095145bca11727ca4/setuptools-47.3.1-py3-none-any.whl (582kB)
+    100% |████████████████████████████████| 583kB 2.4MB/s 
+Collecting itsdangerous>=0.24 (from Flask>=0.8->flask_restplus)
+  Using cached https://files.pythonhosted.org/packages/76/ae/44b03b253d6fade317f32c24d100b3b35c2239807046a4c953c7b89fa49e/itsdangerous-1.1.0-py2.py3-none-any.whl
+Collecting click>=5.1 (from Flask>=0.8->flask_restplus)
+  Using cached https://files.pythonhosted.org/packages/d2/3d/fa76db83bf75c4f8d338c2fd15c8d33fdd7ad23a9b5e57eb6c5de26b430e/click-7.1.2-py2.py3-none-any.whl
+Collecting Werkzeug>=0.15 (from Flask>=0.8->flask_restplus)
+  Using cached https://files.pythonhosted.org/packages/cc/94/5f7079a0e00bd6863ef8f1da638721e9da21e5bacee597595b318f71d62e/Werkzeug-1.0.1-py2.py3-none-any.whl
+Collecting Jinja2>=2.10.1 (from Flask>=0.8->flask_restplus)
+  Using cached https://files.pythonhosted.org/packages/30/9e/f663a2aa66a09d838042ae1a2c5659828bb9b41ea3a6efa20a20fd92b121/Jinja2-2.11.2-py2.py3-none-any.whl
+Collecting zipp>=0.5 (from importlib-metadata; python_version < "3.8"->jsonschema->flask_restplus)
+  Downloading https://files.pythonhosted.org/packages/b2/34/bfcb43cc0ba81f527bc4f40ef41ba2ff4080e047acb0586b56b3d017ace4/zipp-3.1.0-py3-none-any.whl
+Collecting MarkupSafe>=0.23 (from Jinja2>=2.10.1->Flask>=0.8->flask_restplus)
+  Using cached https://files.pythonhosted.org/packages/b2/5f/23e0023be6bb885d00ffbefad2942bc51a620328ee910f64abe5a8d18dd1/MarkupSafe-1.1.1-cp36-cp36m-manylinux1_x86_64.whl
+Building wheels for collected packages: pyrsistent
+  Running setup.py bdist_wheel for pyrsistent ... done
+  Stored in directory: /home/ubuntu/.cache/pip/wheels/c2/85/ad/bc6d41e2c4b35c9fdfed48f0fcd411ffc4164e67755ddf9ebb
+Successfully built pyrsistent
+Installing collected packages: six, zipp, importlib-metadata, attrs, pyrsistent, setuptools, jsonschema, pytz, itsdangerous, click, Werkzeug, MarkupSafe, Jinja2, Flask, aniso8601, flask-restplus
+Successfully installed Flask-1.1.2 Jinja2-2.11.2 MarkupSafe-1.1.1 Werkzeug-1.0.1 aniso8601-8.0.0 attrs-19.3.0 click-7.1.2 flask-restplus-0.13.0 importlib-metadata-1.7.0 itsdangerous-1.1.0 jsonschema-3.2.0 pyrsistent-0.16.0 pytz-2020.1 setuptools-47.3.1 six-1.15.0 zipp-3.1.0
+ubuntu@sdn-k8s-b2-2:~$ python3 app.py 
+Traceback (most recent call last):
+  File "app.py", line 4, in <module>
+    from flask_restplus import Resource, Api, fields
+  File "/home/ubuntu/.local/lib/python3.6/site-packages/flask_restplus/__init__.py", line 4, in <module>
+    from . import fields, reqparse, apidoc, inputs, cors
+  File "/home/ubuntu/.local/lib/python3.6/site-packages/flask_restplus/fields.py", line 17, in <module>
+    from werkzeug import cached_property
+ImportError: cannot import name 'cached_property'
+ubuntu@sdn-k8s-b2-2:~$ pip3 uninstall Werkzeug
+Uninstalling Werkzeug-1.0.1:
+  /home/ubuntu/.local/lib/python3.6/site-packages/Werkzeug-1.0.1.dist-info/INSTALLER
+  /home/ubuntu/.local/lib/python3.6/site-packages/Werkzeug-1.0.1.dist-info/LICENSE.rst
+  /home/ubuntu/.local/lib/python3.6/site-packages/Werkzeug-1.0.1.dist-info/METADATA
+  /home/ubuntu/.local/lib/python3.6/site-packages/Werkzeug-1.0.1.dist-info/RECORD
+  /home/ubuntu/.local/lib/python3.6/site-packages/Werkzeug-1.0.1.dist-info/WHEEL
+  /home/ubuntu/.local/lib/python3.6/site-packages/Werkzeug-1.0.1.dist-info/top_level.txt
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__init__.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/__init__.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/_compat.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/_internal.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/_reloader.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/datastructures.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/exceptions.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/filesystem.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/formparser.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/http.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/local.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/posixemulation.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/routing.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/security.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/serving.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/test.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/testapp.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/urls.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/useragents.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/utils.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/__pycache__/wsgi.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/_compat.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/_internal.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/_reloader.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/datastructures.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/debug/__init__.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/debug/__pycache__/__init__.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/debug/__pycache__/console.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/debug/__pycache__/repr.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/debug/__pycache__/tbtools.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/debug/console.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/debug/repr.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/debug/shared/FONT_LICENSE
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/debug/shared/console.png
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/debug/shared/debugger.js
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/debug/shared/jquery.js
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/debug/shared/less.png
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/debug/shared/more.png
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/debug/shared/source.png
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/debug/shared/style.css
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/debug/shared/ubuntu.ttf
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/debug/tbtools.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/exceptions.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/filesystem.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/formparser.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/http.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/local.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/middleware/__init__.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/middleware/__pycache__/__init__.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/middleware/__pycache__/dispatcher.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/middleware/__pycache__/http_proxy.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/middleware/__pycache__/lint.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/middleware/__pycache__/profiler.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/middleware/__pycache__/proxy_fix.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/middleware/__pycache__/shared_data.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/middleware/dispatcher.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/middleware/http_proxy.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/middleware/lint.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/middleware/profiler.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/middleware/proxy_fix.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/middleware/shared_data.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/posixemulation.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/routing.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/security.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/serving.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/test.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/testapp.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/urls.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/useragents.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/utils.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/__init__.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/__pycache__/__init__.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/__pycache__/accept.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/__pycache__/auth.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/__pycache__/base_request.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/__pycache__/base_response.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/__pycache__/common_descriptors.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/__pycache__/cors.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/__pycache__/etag.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/__pycache__/json.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/__pycache__/request.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/__pycache__/response.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/__pycache__/user_agent.cpython-36.pyc
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/accept.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/auth.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/base_request.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/base_response.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/common_descriptors.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/cors.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/etag.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/json.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/request.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/response.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wrappers/user_agent.py
+  /home/ubuntu/.local/lib/python3.6/site-packages/werkzeug/wsgi.py
+Proceed (y/n)? y
+  Successfully uninstalled Werkzeug-1.0.1
+ubuntu@sdn-k8s-b2-2:~$ pip3 install Werkzeug=0.16.0
+Invalid requirement: 'Werkzeug=0.16.0'
+= is not a valid operator. Did you mean == ?
+ubuntu@sdn-k8s-b2-2:~$ pip3 install Werkzeug==0.16.0
+Collecting Werkzeug==0.16.0
+  Downloading https://files.pythonhosted.org/packages/ce/42/3aeda98f96e85fd26180534d36570e4d18108d62ae36f87694b476b83d6f/Werkzeug-0.16.0-py2.py3-none-any.whl (327kB)
+    100% |████████████████████████████████| 327kB 1.8MB/s 
+Installing collected packages: Werkzeug
+Successfully installed Werkzeug-0.16.0
+ubuntu@sdn-k8s-b2-2:~$ python3 app.py 
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+10.0.0.45 - - [28/Jun/2020 11:56:27] "GET / HTTP/1.1" 200 -
+10.0.0.45 - - [28/Jun/2020 11:56:27] "GET /swaggerui/droid-sans.css HTTP/1.1" 200 -
+10.0.0.45 - - [28/Jun/2020 11:56:27] "GET /swaggerui/swagger-ui.css HTTP/1.1" 200 -
+10.0.0.45 - - [28/Jun/2020 11:56:27] "GET /swaggerui/swagger-ui-standalone-preset.js HTTP/1.1" 200 -
+10.0.0.45 - - [28/Jun/2020 11:56:27] "GET /swaggerui/swagger-ui-bundle.js HTTP/1.1" 200 -
+10.0.0.45 - - [28/Jun/2020 11:56:27] "GET /swagger.json HTTP/1.1" 200 -
+10.0.0.45 - - [28/Jun/2020 11:56:27] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+^Cubuntu@sdn-k8s-b2-2:~$ ^C
+ubuntu@sdn-k8s-b2-2:~$ python3
+Python 3.6.9 (default, Apr 18 2020, 01:56:04) 
+[GCC 8.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> exit()
+ubuntu@sdn-k8s-b2-2:~$ exit
+logout
+Connection to 10.0.0.225 closed.
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ python3 app.py 
+app.py:9: DeprecationWarning: 'werkzeug.contrib.fixers.ProxyFix' has moved to 'werkzeug.middleware.proxy_fix.ProxyFix'. This import is deprecated as of version 0.15 and will be removed in 1.0.
+  app.wsgi_app = ProxyFix(app.wsgi_app)
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+^Czhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ python3 app.py 
+app.py:9: DeprecationWarning: 'werkzeug.contrib.fixers.ProxyFix' has moved to 'werkzeug.middleware.proxy_fix.ProxyFix'. This import is deprecated as of version 0.15 and will be removed in 1.0.
+  app.wsgi_app = ProxyFix(app.wsgi_app)
+Traceback (most recent call last):
+  File "app.py", line 42, in <module>
+    app.run(debug=true, host='0.0.0.0',port=8080)
+NameError: name 'true' is not defined
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ python3 app.py 
+app.py:9: DeprecationWarning: 'werkzeug.contrib.fixers.ProxyFix' has moved to 'werkzeug.middleware.proxy_fix.ProxyFix'. This import is deprecated as of version 0.15 and will be removed in 1.0.
+  app.wsgi_app = ProxyFix(app.wsgi_app)
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py:9: DeprecationWarning: 'werkzeug.contrib.fixers.ProxyFix' has moved to 'werkzeug.middleware.proxy_fix.ProxyFix'. This import is deprecated as of version 0.15 and will be removed in 1.0.
+  app.wsgi_app = ProxyFix(app.wsgi_app)
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 20:08:18] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:08:18] "GET /swaggerui/swagger-ui-bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:08:18] "GET /swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:08:18] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+^Czhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ 
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ pytho3 minium-test.py 
+-bash: pytho3: command not found
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ python3 minium-test.py 
+ * Serving Flask app "minium-test" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 20:09:39] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:09:39] "GET /swaggerui/droid-sans.css HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:09:39] "GET /swaggerui/swagger-ui.css HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:09:39] "GET /swaggerui/swagger-ui-bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:09:39] "GET /swaggerui/swagger-ui-standalone-preset.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:09:40] "GET /swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:09:40] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:13:21] "GET /hello HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:13:21] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jun/2020 20:13:52] "GET /swagger.json HTTP/1.1" 200 -
+^Czhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ 
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ cat minium-test.py 
+from flask import Flask
+from flask_restplus import Resource, Api
+
+app = Flask(__name__)
+api = Api(app)
+
+@api.route('/hello')
+class HelloWorld(Resource):
+    def get(self):
+        return {'hello': 'world'}
+
+if __name__ == '__main__':
+    app.run(debug=True)zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ python3 minium-test.py 
+ * Serving Flask app "minium-test" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 20:23:46] "GET /doc HTTP/1.1" 308 -
+127.0.0.1 - - [28/Jun/2020 20:23:46] "GET /doc/ HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:23:46] "GET /swagger.json HTTP/1.1" 200 -
+^Czhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ cat minium-test.py 
+from flask import Flask
+from flask_restplus import Resource, Api
+
+app = Flask(__name__)
+api = Api(app, doc='/doc/')
+
+@api.route('/hello')
+class HelloWorld(Resource):
+    def get(self):
+        return {'hello': 'world'}
+
+if __name__ == '__main__':
+    app.run(debug=True)zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ python3 app.py 
+app.py:9: DeprecationWarning: 'werkzeug.contrib.fixers.ProxyFix' has moved to 'werkzeug.middleware.proxy_fix.ProxyFix'. This import is deprecated as of version 0.15 and will be removed in 1.0.
+  app.wsgi_app = ProxyFix(app.wsgi_app)
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py:9: DeprecationWarning: 'werkzeug.contrib.fixers.ProxyFix' has moved to 'werkzeug.middleware.proxy_fix.ProxyFix'. This import is deprecated as of version 0.15 and will be removed in 1.0.
+  app.wsgi_app = ProxyFix(app.wsgi_app)
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+^Czhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ 
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ 
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ pip3 uninstall werkzueg
+WARNING: Skipping werkzueg as it is not installed.
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ pip3 uninstall werkzeug
+Uninstalling Werkzeug-0.16.0:
+  Would remove:
+    /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/Werkzeug-0.16.0.dist-info/*
+    /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/werkzeug/*
+Proceed (y/n)? y
+  Successfully uninstalled Werkzeug-0.16.0
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ pip3 install werkzeug==0.16.0
+Collecting werkzeug==0.16.0
+  Using cached https://files.pythonhosted.org/packages/ce/42/3aeda98f96e85fd26180534d36570e4d18108d62ae36f87694b476b83d6f/Werkzeug-0.16.0-py2.py3-none-any.whl
+Installing collected packages: werkzeug
+Successfully installed werkzeug-0.16.0
+WARNING: You are using pip version 19.2.3, however version 20.1.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ python3 app.py 
+app.py:9: DeprecationWarning: 'werkzeug.contrib.fixers.ProxyFix' has moved to 'werkzeug.middleware.proxy_fix.ProxyFix'. This import is deprecated as of version 0.15 and will be removed in 1.0.
+  app.wsgi_app = ProxyFix(app.wsgi_app)
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py:9: DeprecationWarning: 'werkzeug.contrib.fixers.ProxyFix' has moved to 'werkzeug.middleware.proxy_fix.ProxyFix'. This import is deprecated as of version 0.15 and will be removed in 1.0.
+  app.wsgi_app = ProxyFix(app.wsgi_app)
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 20:30:59] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:31:00] "GET /swagger.json HTTP/1.1" 200 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 20:36:42] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:36:42] "GET /swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:36:46] "GET /test HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jun/2020 20:36:46] "GET /favicon.ico HTTP/1.1" 404 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 20:37:19] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:37:19] "GET /swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:37:19] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:37:22] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:37:22] "GET /swaggerui/droid-sans.css HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:37:22] "GET /swaggerui/swagger-ui.css HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:37:22] "GET /swaggerui/swagger-ui-standalone-preset.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:37:22] "GET /swaggerui/swagger-ui-bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:37:22] "GET /swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:37:22] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:37:23] "GET /swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:37:23] "GET /favicon.ico HTTP/1.1" 404 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 20:38:57] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:38:58] "GET /api/swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:38:58] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:39:06] "GET /api/partA HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jun/2020 20:39:13] "GET /api HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jun/2020 20:39:20] "GET /partA/hello/ HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jun/2020 20:39:25] "GET /api/partA/hello/ HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jun/2020 20:39:38] "GET /partA/hello HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jun/2020 20:39:50] "GET /hello HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jun/2020 20:39:55] "GET /api/hello HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jun/2020 20:40:05] "GET /partA/hello/ HTTP/1.1" 404 -
+^Czhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ python3 app.py 
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 20:40:31] "GET /partA/hello/1 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jun/2020 20:40:36] "GET /hello/1 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jun/2020 20:40:42] "GET /api/hello/1 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jun/2020 20:40:48] "GET /api/partA/hello/1 HTTP/1.1" 200 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 20:47:46] "GET /doc HTTP/1.1" 404 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+  File "/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py", line 13
+    title='ITRI Flask Tester API',
+    ^
+SyntaxError: invalid syntax
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ python3 app.py 
+  File "app.py", line 13
+    title='ITRI Flask Tester API',
+    ^
+SyntaxError: invalid syntax
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ python3 app.py 
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 20:48:23] "GET /doc HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:48:23] "GET /api/swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:48:54] "GET /doc/partA HTTP/1.1" 404 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 20:49:53] "GET /doc HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:49:54] "GET /api/swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:49:54] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:51:35] "GET /api/partA/my-resource/1234567 HTTP/1.1" 200 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 20:51:55] "GET /doc HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:51:55] "GET /api/swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:51:55] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 20:52:02] "POST /api/partA/my-resource/12345678 HTTP/1.1" 403 -
+127.0.0.1 - - [28/Jun/2020 21:01:36] "GET /api/partA/my-resource/12345678 HTTP/1.1" 200 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 21:01:48] "GET /doc HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:01:49] "GET /api/swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:01:49] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:01:56] "POST /api/partA/hello/12345 HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:02:54] "POST /api/partA/my-resource/123456 HTTP/1.1" 403 -
+127.0.0.1 - - [28/Jun/2020 21:02:58] "POST /api/partA/my-resource/123456 HTTP/1.1" 403 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 21:03:05] "POST /api/partA/my-resource/123456 HTTP/1.1" 403 -
+127.0.0.1 - - [28/Jun/2020 21:03:17] "GET /api/partA/my-resource/12345 HTTP/1.1" 200 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 21:03:28] "GET /api/partA/my-resource/12345 HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:03:29] "GET /api/partA/my-resource/12345 HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:03:30] "GET /doc HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:03:30] "GET /api/swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:03:30] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:03:37] "GET /api/partA/my-resource/213456 HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:03:45] "GET /api/partA/my-resource/213456 HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:03:55] "POST /api/partA/my-resource/123456 HTTP/1.1" 403 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 21:05:04] "GET /doc HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:05:04] "GET /api/swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:05:04] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:05:24] "POST /api/partA/my-resource/123 HTTP/1.1" 500 -
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 2463, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 2449, in wsgi_app
+    response = self.handle_exception(e)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask_restplus/api.py", line 584, in error_router
+    return original_handler(e)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 1866, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/_compat.py", line 38, in reraise
+    raise value.with_traceback(tb)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 2446, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 1951, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask_restplus/api.py", line 584, in error_router
+    return original_handler(e)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 1820, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/_compat.py", line 38, in reraise
+    raise value.with_traceback(tb)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask_restplus/api.py", line 325, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask_restplus/resource.py", line 44, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py", line 43, in post
+    api.abort(200)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask_restplus/namespace.py", line 141, in abort
+    abort(*args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask_restplus/errors.py", line 31, in abort
+    flask.abort(code)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/werkzeug/exceptions.py", line 772, in abort
+    return _aborter(status, *args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/werkzeug/exceptions.py", line 752, in __call__
+    raise LookupError("no exception for %r" % code)
+LookupError: no exception for 200
+127.0.0.1 - - [28/Jun/2020 21:05:35] "POST /api/partA/my-resource/1 HTTP/1.1" 500 -
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 2463, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 2449, in wsgi_app
+    response = self.handle_exception(e)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask_restplus/api.py", line 584, in error_router
+    return original_handler(e)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 1866, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/_compat.py", line 38, in reraise
+    raise value.with_traceback(tb)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 2446, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 1951, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask_restplus/api.py", line 584, in error_router
+    return original_handler(e)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 1820, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/_compat.py", line 38, in reraise
+    raise value.with_traceback(tb)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask_restplus/api.py", line 325, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask_restplus/resource.py", line 44, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py", line 43, in post
+    api.abort(200)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask_restplus/namespace.py", line 141, in abort
+    abort(*args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask_restplus/errors.py", line 31, in abort
+    flask.abort(code)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/werkzeug/exceptions.py", line 772, in abort
+    return _aborter(status, *args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/werkzeug/exceptions.py", line 752, in __call__
+    raise LookupError("no exception for %r" % code)
+LookupError: no exception for 200
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 21:06:08] "GET /doc HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:06:08] "GET /api/swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:06:08] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 21:06:22] "GET /doc HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:06:22] "GET /api/swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:06:22] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 21:06:36] "GET /doc HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:06:36] "GET /api/swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:06:36] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:06:43] "POST /api/partA/my-resource/123 HTTP/1.1" 401 -
+127.0.0.1 - - [28/Jun/2020 21:06:51] "POST /api/partA/my-resource/111 HTTP/1.1" 401 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 21:08:16] "POST /api/partA/my-resource/111 HTTP/1.1" 401 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattr__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__schema__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_add_specs', '_blueprint_setup_add_url_rule_patch', '_complete_url', '_default_error_handler', '_deferred_blueprint_init', '_doc', '_doc_view', '_has_fr_route', '_help_on_404', '_init_app', '_own_and_child_error_handlers', '_refresolver', '_register_apidoc', '_register_doc', '_register_specs', '_register_view', '_schema', '_should_use_fr_error_handler', '_validate', 'add_namespace', 'app', 'as_postman', 'authorizations', 'base_path', 'base_url', 'blueprint', 'blueprint_setup', 'catch_all_404s', 'contact', 'contact_email', 'contact_url', 'decorators', 'default_endpoint', 'default_id', 'default_mediatype', 'default_namespace', 'description', 'documentation', 'endpoint', 'endpoints', 'error_handlers', 'error_router', 'errorhandler', 'format_checker', 'get_ns_path', 'handle_error', 'init_app', 'license', 'license_url', 'make_response', 'mediatypes', 'mediatypes_method', 'models', 'namespace', 'namespaces', 'ns_paths', 'ns_urls', 'ordered', 'output', 'owns_endpoint', 'payload', 'prefix', 'refresolver', 'register_resource', 'render_doc', 'render_root', 'representation', 'representations', 'resources', 'security', 'serve_challenge_on_401', 'specs_url', 'tags', 'terms_url', 'title', 'unauthorized', 'url_for', 'urls', 'version']
+127.0.0.1 - - [28/Jun/2020 21:08:36] "POST /api/partA/my-resource/111 HTTP/1.1" 401 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 21:10:11] "GET /doc HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:10:12] "GET /api/swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:10:12] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:10:22] "GET /doc HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:10:22] "GET /api/swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:10:22] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:10:51] "GET /api/partA/my-resource/1323 HTTP/1.1" 200 -
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattr__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__schema__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_add_specs', '_blueprint_setup_add_url_rule_patch', '_complete_url', '_default_error_handler', '_deferred_blueprint_init', '_doc', '_doc_view', '_has_fr_route', '_help_on_404', '_init_app', '_own_and_child_error_handlers', '_refresolver', '_register_apidoc', '_register_doc', '_register_specs', '_register_view', '_schema', '_should_use_fr_error_handler', '_validate', 'add_namespace', 'app', 'as_postman', 'authorizations', 'base_path', 'base_url', 'blueprint', 'blueprint_setup', 'catch_all_404s', 'contact', 'contact_email', 'contact_url', 'decorators', 'default_endpoint', 'default_id', 'default_mediatype', 'default_namespace', 'description', 'documentation', 'endpoint', 'endpoints', 'error_handlers', 'error_router', 'errorhandler', 'format_checker', 'get_ns_path', 'handle_error', 'init_app', 'license', 'license_url', 'make_response', 'mediatypes', 'mediatypes_method', 'models', 'namespace', 'namespaces', 'ns_paths', 'ns_urls', 'ordered', 'output', 'owns_endpoint', 'payload', 'prefix', 'refresolver', 'register_resource', 'render_doc', 'render_root', 'representation', 'representations', 'resources', 'security', 'serve_challenge_on_401', 'specs_url', 'tags', 'terms_url', 'title', 'unauthorized', 'url_for', 'urls', 'version']
+127.0.0.1 - - [28/Jun/2020 21:10:59] "POST /api/partA/my-resource/123 HTTP/1.1" 401 -
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattr__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__schema__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_add_specs', '_blueprint_setup_add_url_rule_patch', '_complete_url', '_default_error_handler', '_deferred_blueprint_init', '_doc', '_doc_view', '_has_fr_route', '_help_on_404', '_init_app', '_own_and_child_error_handlers', '_refresolver', '_register_apidoc', '_register_doc', '_register_specs', '_register_view', '_schema', '_should_use_fr_error_handler', '_validate', 'add_namespace', 'app', 'as_postman', 'authorizations', 'base_path', 'base_url', 'blueprint', 'blueprint_setup', 'catch_all_404s', 'contact', 'contact_email', 'contact_url', 'decorators', 'default_endpoint', 'default_id', 'default_mediatype', 'default_namespace', 'description', 'documentation', 'endpoint', 'endpoints', 'error_handlers', 'error_router', 'errorhandler', 'format_checker', 'get_ns_path', 'handle_error', 'init_app', 'license', 'license_url', 'make_response', 'mediatypes', 'mediatypes_method', 'models', 'namespace', 'namespaces', 'ns_paths', 'ns_urls', 'ordered', 'output', 'owns_endpoint', 'payload', 'prefix', 'refresolver', 'register_resource', 'render_doc', 'render_root', 'representation', 'representations', 'resources', 'security', 'serve_challenge_on_401', 'specs_url', 'tags', 'terms_url', 'title', 'unauthorized', 'url_for', 'urls', 'version']
+127.0.0.1 - - [28/Jun/2020 21:11:08] "POST /api/partA/my-resource/111111 HTTP/1.1" 401 -
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattr__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__schema__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_add_specs', '_blueprint_setup_add_url_rule_patch', '_complete_url', '_default_error_handler', '_deferred_blueprint_init', '_doc', '_doc_view', '_has_fr_route', '_help_on_404', '_init_app', '_own_and_child_error_handlers', '_refresolver', '_register_apidoc', '_register_doc', '_register_specs', '_register_view', '_schema', '_should_use_fr_error_handler', '_validate', 'add_namespace', 'app', 'as_postman', 'authorizations', 'base_path', 'base_url', 'blueprint', 'blueprint_setup', 'catch_all_404s', 'contact', 'contact_email', 'contact_url', 'decorators', 'default_endpoint', 'default_id', 'default_mediatype', 'default_namespace', 'description', 'documentation', 'endpoint', 'endpoints', 'error_handlers', 'error_router', 'errorhandler', 'format_checker', 'get_ns_path', 'handle_error', 'init_app', 'license', 'license_url', 'make_response', 'mediatypes', 'mediatypes_method', 'models', 'namespace', 'namespaces', 'ns_paths', 'ns_urls', 'ordered', 'output', 'owns_endpoint', 'payload', 'prefix', 'refresolver', 'register_resource', 'render_doc', 'render_root', 'representation', 'representations', 'resources', 'security', 'serve_challenge_on_401', 'specs_url', 'tags', 'terms_url', 'title', 'unauthorized', 'url_for', 'urls', 'version']
+127.0.0.1 - - [28/Jun/2020 21:11:11] "POST /api/partA/my-resource/123 HTTP/1.1" 401 -
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattr__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__schema__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_add_specs', '_blueprint_setup_add_url_rule_patch', '_complete_url', '_default_error_handler', '_deferred_blueprint_init', '_doc', '_doc_view', '_has_fr_route', '_help_on_404', '_init_app', '_own_and_child_error_handlers', '_refresolver', '_register_apidoc', '_register_doc', '_register_specs', '_register_view', '_schema', '_should_use_fr_error_handler', '_validate', 'add_namespace', 'app', 'as_postman', 'authorizations', 'base_path', 'base_url', 'blueprint', 'blueprint_setup', 'catch_all_404s', 'contact', 'contact_email', 'contact_url', 'decorators', 'default_endpoint', 'default_id', 'default_mediatype', 'default_namespace', 'description', 'documentation', 'endpoint', 'endpoints', 'error_handlers', 'error_router', 'errorhandler', 'format_checker', 'get_ns_path', 'handle_error', 'init_app', 'license', 'license_url', 'make_response', 'mediatypes', 'mediatypes_method', 'models', 'namespace', 'namespaces', 'ns_paths', 'ns_urls', 'ordered', 'output', 'owns_endpoint', 'payload', 'prefix', 'refresolver', 'register_resource', 'render_doc', 'render_root', 'representation', 'representations', 'resources', 'security', 'serve_challenge_on_401', 'specs_url', 'tags', 'terms_url', 'title', 'unauthorized', 'url_for', 'urls', 'version']
+127.0.0.1 - - [28/Jun/2020 21:11:17] "POST /api/partA/my-resource/123 HTTP/1.1" 401 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+123
+127.0.0.1 - - [28/Jun/2020 21:11:37] "POST /api/partA/my-resource/123 HTTP/1.1" 401 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 21:12:26] "GET /doc HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:12:26] "GET /api/swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:12:26] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:12:35] "GET /api/partA/my-resource/123 HTTP/1.1" 200 -
+123
+127.0.0.1 - - [28/Jun/2020 21:12:44] "POST /api/partA/my-resource/123 HTTP/1.1" 403 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 21:13:25] "GET /doc HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:13:25] "GET /api/swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:13:25] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 21:14:17] "GET /doc HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:14:17] "GET /api/swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:14:17] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 21:14:37] "GET /doc HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:14:38] "GET /api/swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:14:38] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 21:15:00] "GET /doc HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:15:00] "GET /api/swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:15:00] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 21:15:35] "GET /doc HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:15:35] "GET /api/swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:15:35] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 189-351-061
+127.0.0.1 - - [28/Jun/2020 21:16:07] "GET /doc HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:16:07] "GET /api/swagger.json HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jun/2020 21:16:07] "GET /swaggerui/favicon-32x32.png HTTP/1.1" 200 -
+ * Detected change in '/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py', reloading
+ * Restarting with stat
+  File "/Users/zhengzhongxiang/Desktop/ITRI-project/GCP-CloudRun/auto-api-doc/app.py", line 32
+    @api.doc(params={'id': 'An ID', pass: 'An User Password'})
+                                    ^
+SyntaxError: invalid syntax
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ python3 app.py 
+  File "app.py", line 32
+    @api.doc(params={"id": "An ID", description="My resource"})
+                                               ^
+SyntaxError: invalid syntax
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ python3 app.py 
+  File "app.py", line 32
+    @api.doc(params={"id": "An ID", description="My resource"})
+                                               ^
+SyntaxError: invalid syntax
+zhengzhongxiangde-MacBook-Pro-4:auto-api-doc zhengzhongxiang$ 
