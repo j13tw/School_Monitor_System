@@ -73,6 +73,10 @@ os.system("sudo systemctl enable prometheus")
 os.system("sudo systemctl start node")
 os.system("sudo systemctl start prometheus")
 
+# remove update notifier
+os.system("sudo rm /usr/bin/update-manager")
+os.system("sudo rm /usr/bin/update-notifier")
+os.system("sudo echo update-manager hold | sudo dpkg --set-selections")
 
 while (not (create_grafana_datasource and create_grafana_dashboard)):
     try: 
