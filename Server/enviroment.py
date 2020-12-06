@@ -55,6 +55,25 @@ datasources_info = json.dumps(datasources_info_json)
 # print(datasources_info)
 # print(dashboard_info)
 
+# prometheus setup
+os.system("curl -OL https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-amd64.tar.gz")
+os.system("tar -zxvf node_exporter-1.0.1.linux-amd64.tar.gz")
+os.system("sudo cp node_exporter-1.0.1.linux-amd64/node_exporter /usr/local/bin/")
+os.system("sudo cp node.service /etc/systemd/system/node.service")
+os.system("curl -OL https://github.com/prometheus/prometheus/releases/download/v2.22.0/prometheus-2.22.0.linux-amd64.tar.gz")
+os.system("tar -zxvf prometheus-2.22.0.linux-amd64.tar.gz")
+os.system("sudo cp -r prometheus-2.22.0.linux-amd64 /usr/local/bin/")
+os.system("sudo mkdir /etc/prometheus")
+os.system("sudo cp prometheus.yml /etc/prometheus/prometheus.yml")
+os.system("sudo cp prometheus.service /etc/systemd/system/prometheus.service")
+
+os.system("sudo systemctl daemon-reload")
+os.system("sudo systemctl enable node")
+os.system("sudo systemctl enable prometheus")
+os.system("sudo systemctl start node")
+os.system("sudo systemctl start prometheus")
+
+
 while (not (create_grafana_datasource and create_grafana_dashboard)):
     try: 
         if (requests.get("http://127.0.0.1:3000/login").status_code == 200):
