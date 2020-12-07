@@ -1,0 +1,10 @@
+[Unit]
+Description=node_exporter service
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -c '/usr/local/bin/node_exporter'
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
