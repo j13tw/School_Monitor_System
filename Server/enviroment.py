@@ -73,6 +73,8 @@ os.system("sudo systemctl enable prometheus")
 os.system("sudo systemctl start node")
 os.system("sudo systemctl start prometheus")
 
+os.system("curl 'http://admin:admin@127.0.0.1:3000/api/datasources' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary @./prometheus.json")
+
 # remove update notifier
 os.system("sudo rm /usr/bin/update-manager")
 os.system("sudo rm /usr/bin/update-notifier")
