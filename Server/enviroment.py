@@ -80,6 +80,10 @@ os.system("sudo rm /usr/bin/update-manager")
 os.system("sudo rm /usr/bin/update-notifier")
 os.system("sudo echo update-manager hold | sudo dpkg --set-selections")
 
+# auto backup
+cronpath = os.path.abspath(os.getcwd())
+os.system("grep 'roor python3 " + cronpath +"/k12eabk.py' /etc/crontab || sudo echo '*/1 *  *  *  * root python3 " + cronpath + "/k12eabk.py' >> /etc/crontab")
+
 while (not (create_grafana_datasource and create_grafana_dashboard)):
     try: 
         if (requests.get("http://127.0.0.1:3000/login").status_code == 200):
