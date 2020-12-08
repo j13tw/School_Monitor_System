@@ -81,7 +81,7 @@ os.system("sudo echo update-manager hold | sudo dpkg --set-selections")
 
 # auto backup
 cronpath = os.path.abspath(os.getcwd())
-os.system("grep 'roor python3 " + cronpath +"/k12eabk.py' /etc/crontab || sudo echo '*/1 *  *  *  * root python3 " + cronpath + "/k12eabk.py' >> /etc/crontab")
+os.system("grep 'roor python3 " + cronpath +"/k12eabk.py' /etc/crontab || sudo echo '0 0 1 * * root python3 " + cronpath + "/k12eabk.py' >> /etc/crontab")
 
 while (not (create_grafana_datasource and create_grafana_dashboard)):
     try: 
