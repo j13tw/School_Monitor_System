@@ -74,17 +74,6 @@ os.system("sudo systemctl start node")
 os.system("sudo systemctl start prometheus")
 os.system("curl 'http://admin:admin@127.0.0.1:3000/api/datasources' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary @./prometheus.json")
 
-
-#Preprocess
-os.system('sed -i \'0,/"id": .*/{s/"id": .*/"id": null,/}\' *.json')
-# dashboards
-os.system('curl --user admin:admin "http://127.0.0.1:3000/api/dashboards/db" -X POST -H "Content-Type:application/json" --data @$(pwd)/librenms-cloud-dashboard-v1.1\(2020-05\)-1607310113421.json')
-os.system('curl --user admin:admin "http://127.0.0.1:3000/api/dashboards/db" -X POST -H "Content-Type:application/json" --data @$(pwd)/Prometheus\ Node\ Exporter\ Dashboard-1607310144755.json')
-os.system('curl --user admin:admin "http://127.0.0.1:3000/api/dashboards/db" -X POST -H "Content-Type:application/json" --data @$(pwd)/librenms-cloud-dashboard-v1.1\(2020-05\)\ for\ school-1607310121646.json')
-os.system('')
-os.system('')
-os.system('')
-
 # remove update notifier
 os.system("sudo rm /usr/bin/update-manager")
 os.system("sudo rm /usr/bin/update-notifier")
@@ -133,6 +122,16 @@ while (not (create_grafana_datasource and create_grafana_dashboard)):
     except:
         print("grafana_service error")
         time.sleep(10)
+        
+#Preprocess
+os.system('sed -i \'0,/"id": .*/{s/"id": .*/"id": null,/}\' *.json')
+# dashboards
+os.system('curl --user admin:admin "http://127.0.0.1:3000/api/dashboards/db" -X POST -H "Content-Type:application/json" --data @$(pwd)/librenms-cloud-dashboard-v1.1\(2020-05\)-1607310113421.json')
+os.system('curl --user admin:admin "http://127.0.0.1:3000/api/dashboards/db" -X POST -H "Content-Type:application/json" --data @$(pwd)/Prometheus\ Node\ Exporter\ Dashboard-1607310144755.json')
+os.system('curl --user admin:admin "http://127.0.0.1:3000/api/dashboards/db" -X POST -H "Content-Type:application/json" --data @$(pwd)/librenms-cloud-dashboard-v1.1\(2020-05\)\ for\ school-1607310121646.json')
+os.system('')
+os.system('')
+os.system('')
 
 # supervisor install 
 os.system("apt-get -y install supervisor")
