@@ -15,8 +15,9 @@ os.system("apt-get install -y libmysqlclient-dev")
 os.system("service mysql start")
 
 # python3-install
-os.system("apt-get install -y python3-dev python3-pip libmysqlclient-dev")
-os.system("apt-get install -y build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev")
+os.system("apt install -y python3-dev python3-pip libmysqlclient-dev")
+os.system("apt install -y build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev")
+os.system("apt install -y curl")
 os.system("pip3 install flask")
 os.system("pip3 install requests")
 os.system("pip3 install mysqlclient")
