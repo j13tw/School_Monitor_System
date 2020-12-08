@@ -2937,8 +2937,8 @@
         {
           "allValue": null,
           "current": {
-            "text": "國立華僑高級中等學校",
-            "value": "國立華僑高級中等學校"
+            "text": "",
+            "value": ""
           },
           "datasource": "librenms-cloud-mysql",
           "definition": "SELECT school_Name FROM information_schema.schemata, school_monitor_system.edge_list where schema_name like 'school_______' and schema_name = concat('school_', school_Id); ",
@@ -3176,7 +3176,7 @@
     },
     "timezone": "",
     "title": "librenms-cloud-dashboard-v1.1(2020-05) for school",
-    "uid": "kojNZOoMk",
+    "uid": null,
     "variables": {
       "list": [
         
@@ -3184,5 +3184,6 @@
     },
     "version": 5
   },
-  
+  "folderId": 0,
+  "overwrite": false
 }

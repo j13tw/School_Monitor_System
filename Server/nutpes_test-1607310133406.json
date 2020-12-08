@@ -674,8 +674,8 @@
         {
           "allValue": null,
           "current": {
-            "text": "school_190406",
-            "value": "school_190406"
+            "text": "",
+            "value": ""
           },
           "datasource": "librenms-cloud-mysql",
           "definition": "show databases",
@@ -923,7 +923,7 @@
     },
     "timezone": "",
     "title": "nutpes_test",
-    "uid": "7UP6KjRMz",
+    "uid": null,
     "variables": {
       "list": [
         
@@ -931,5 +931,6 @@
     },
     "version": 31
   },
-  
+  "folderId": 0,
+  "overwrite": false
 }

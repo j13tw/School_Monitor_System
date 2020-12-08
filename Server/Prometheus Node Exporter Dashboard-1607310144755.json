@@ -4194,7 +4194,7 @@
           "current": {
             "isNone": true,
             "selected": false,
-            "text": "None",
+            "text": "",
             "value": ""
           },
           "datasource": "Prometheus",
@@ -4523,7 +4523,7 @@
     },
     "timezone": "browser",
     "title": "Prometheus Node Exporter Dashboard",
-    "uid": "xfpJB9FGz",
+    "uid": null,
     "variables": {
       "list": [
         
@@ -4531,5 +4531,6 @@
     },
     "version": 21
   },
-  
+  "folderId": 0,
+  "overwrite": false
 }

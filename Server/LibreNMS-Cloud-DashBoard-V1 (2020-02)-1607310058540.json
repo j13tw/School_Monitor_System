@@ -3440,8 +3440,8 @@
         {
           "allValue": null,
           "current": {
-            "text": "新北市立樟樹國際實創高級中等學校",
-            "value": "新北市立樟樹國際實創高級中等學校"
+            "text": "",
+            "value": ""
           },
           "datasource": "librenms-cloud-mysql",
           "definition": "SELECT school_Name FROM information_schema.schemata, school_monitor_system.edge_list where schema_name like 'school_______' and schema_name = concat('school_', school_Id); ",
@@ -3585,7 +3585,7 @@
     },
     "timezone": "",
     "title": "LibreNMS-Cloud-DashBoard-V1 (2020-02)",
-    "uid": "nutcimac-1",
+    "uid": null,
     "variables": {
       "list": [
         
@@ -3593,5 +3593,6 @@
     },
     "version": 5
   },
-  
+  "folderId": 0,
+  "overwrite": false
 }
