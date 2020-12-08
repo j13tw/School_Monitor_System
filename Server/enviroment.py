@@ -124,14 +124,14 @@ while (not (create_grafana_datasource and create_grafana_dashboard)):
         time.sleep(10)
         
 #Preprocess
-os.system('sed -i \'0,/"id": .*/{s/"id": .*/"id": null,/}\' *.json')
+#os.system('sed -i \'0,/"id": .*/{s/"id": .*/"id": null,/}\' *.json')
 # dashboards
 os.system('curl --user admin:admin "http://127.0.0.1:3000/api/dashboards/db" -X POST -H "Content-Type:application/json" --data @$(pwd)/librenms-cloud-dashboard-v1.1\(2020-05\)-1607310113421.json')
 os.system('curl --user admin:admin "http://127.0.0.1:3000/api/dashboards/db" -X POST -H "Content-Type:application/json" --data @$(pwd)/Prometheus\ Node\ Exporter\ Dashboard-1607310144755.json')
 os.system('curl --user admin:admin "http://127.0.0.1:3000/api/dashboards/db" -X POST -H "Content-Type:application/json" --data @$(pwd)/librenms-cloud-dashboard-v1.1\(2020-05\)\ for\ school-1607310121646.json')
-os.system('')
-os.system('')
-os.system('')
+os.system('curl --user admin:admin "http://127.0.0.1:3000/api/dashboards/db" -X POST -H "Content-Type:application/json" --data @$(pwd)/LibreNMS-Cloud-DashBoard-V1\ \(2020-02\)-1607310058540.json')
+os.system('curl --user admin:admin "http://127.0.0.1:3000/api/dashboards/db" -X POST -H "Content-Type:application/json" --data @$(pwd)/LibreNMS-Cloud-DashBoard-V1\ \(2020-02\)\ for\ school-1607310087189.json')
+os.system('curl --user admin:admin "http://127.0.0.1:3000/api/dashboards/db" -X POST -H "Content-Type:application/json" --data @$(pwd)/nutpes_test-1607310133406.json')
 
 # supervisor install 
 os.system("apt-get -y install supervisor")
