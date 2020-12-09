@@ -15,8 +15,9 @@ os.system("apt-get install -y libmysqlclient-dev")
 os.system("service mysql start")
 
 # python3-install
-os.system("apt-get install -y python3-dev python3-pip libmysqlclient-dev")
-os.system("apt-get install -y build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev")
+os.system("apt install -y python3-dev python3-pip libmysqlclient-dev")
+os.system("apt install -y build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev")
+os.system("apt install -y curl")
 os.system("pip3 install flask")
 os.system("pip3 install requests")
 os.system("pip3 install mysqlclient")
@@ -66,17 +67,21 @@ os.system("sudo cp -r prometheus-2.22.0.linux-amd64 /usr/local/bin/")
 os.system("sudo mkdir /etc/prometheus")
 os.system("sudo cp prometheus.yml /etc/prometheus/prometheus.yml")
 os.system("sudo cp prometheus.service /etc/systemd/system/prometheus.service")
-
 os.system("sudo systemctl daemon-reload")
 os.system("sudo systemctl enable node")
 os.system("sudo systemctl enable prometheus")
 os.system("sudo systemctl start node")
 os.system("sudo systemctl start prometheus")
+os.system("curl 'http://admin:admin@127.0.0.1:3000/api/datasources' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary @./prometheus.json")
 
 # remove update notifier
 os.system("sudo rm /usr/bin/update-manager")
 os.system("sudo rm /usr/bin/update-notifier")
 os.system("sudo echo update-manager hold | sudo dpkg --set-selections")
+
+# auto backup
+cronpath = os.path.abspath(os.getcwd())
+os.system("grep 'roor python3 " + cronpath +"/k12eabk.py' /etc/crontab || sudo echo '0 0 1 * * root python3 " + cronpath + "/k12eabk.py' >> /etc/crontab")
 
 while (not (create_grafana_datasource and create_grafana_dashboard)):
     try: 
@@ -117,6 +122,16 @@ while (not (create_grafana_datasource and create_grafana_dashboard)):
     except:
         print("grafana_service error")
         time.sleep(10)
+        
+#Preprocess
+#os.system('sed -i \'0,/"id": .*/{s/"id": .*/"id": null,/}\' *.json')
+# dashboards
+os.system('curl --user admin:admin "http://127.0.0.1:3000/api/dashboards/db" -X POST -H "Content-Type:application/json" --data @$(pwd)/librenms-cloud-dashboard-v1.1\(2020-05\)-1607310113421.json')
+os.system('curl --user admin:admin "http://127.0.0.1:3000/api/dashboards/db" -X POST -H "Content-Type:application/json" --data @$(pwd)/Prometheus\ Node\ Exporter\ Dashboard-1607310144755.json')
+os.system('curl --user admin:admin "http://127.0.0.1:3000/api/dashboards/db" -X POST -H "Content-Type:application/json" --data @$(pwd)/librenms-cloud-dashboard-v1.1\(2020-05\)\ for\ school-1607310121646.json')
+os.system('curl --user admin:admin "http://127.0.0.1:3000/api/dashboards/db" -X POST -H "Content-Type:application/json" --data @$(pwd)/LibreNMS-Cloud-DashBoard-V1\ \(2020-02\)-1607310058540.json')
+os.system('curl --user admin:admin "http://127.0.0.1:3000/api/dashboards/db" -X POST -H "Content-Type:application/json" --data @$(pwd)/LibreNMS-Cloud-DashBoard-V1\ \(2020-02\)\ for\ school-1607310087189.json')
+os.system('curl --user admin:admin "http://127.0.0.1:3000/api/dashboards/db" -X POST -H "Content-Type:application/json" --data @$(pwd)/nutpes_test-1607310133406.json')
 
 # supervisor install 
 os.system("apt-get -y install supervisor")

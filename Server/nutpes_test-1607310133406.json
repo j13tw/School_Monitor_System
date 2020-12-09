@@ -1,0 +1,936 @@
+{
+  "dashboard": {
+    "annotations": {
+      "list": [
+        {
+          "$$hashKey": "object:2044",
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 0,
+    "id": null,
+    "iteration": 1607310128683,
+    "links": [
+      
+    ],
+    "panels": [
+      {
+        "columns": [
+          
+        ],
+        "datasource": "librenms-cloud-mysql",
+        "fontSize": "100%",
+        "gridPos": {
+          "h": 7,
+          "w": 6,
+          "x": 0,
+          "y": 0
+        },
+        "id": 10,
+        "pageSize": null,
+        "showHeader": true,
+        "sort": {
+          "col": 0,
+          "desc": true
+        },
+        "styles": [
+          {
+            "$$hashKey": "object:4201",
+            "alias": "Time",
+            "align": "auto",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "pattern": "Time",
+            "type": "date"
+          },
+          {
+            "$$hashKey": "object:4202",
+            "alias": "",
+            "align": "right",
+            "colorMode": null,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "decimals": 2,
+            "pattern": "/.*/",
+            "thresholds": [
+              
+            ],
+            "type": "number",
+            "unit": "short"
+          }
+        ],
+        "targets": [
+          {
+            "format": "table",
+            "group": [
+              
+            ],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "show variables like '%timeout%'",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "value"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "timeColumn": "time",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [
+                  
+                ],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Panel Title",
+        "transform": "table",
+        "type": "table"
+      },
+      {
+        "aliasColors": {
+          
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "librenms-cloud-mysql",
+        "fill": 2,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 7,
+          "w": 5,
+          "x": 6,
+          "y": 0
+        },
+        "hiddenSeries": false,
+        "id": 14,
+        "interval": "",
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": true,
+          "max": true,
+          "min": true,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 2,
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": [
+            
+          ]
+        },
+        "percentage": false,
+        "pointradius": 3,
+        "points": true,
+        "renderer": "flot",
+        "seriesOverrides": [
+          
+        ],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "format": "time_series",
+            "group": [
+              
+            ],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "SELECT \nDATE_SUB(NOW(3), INTERVAL 8 HOUR) AS \"time_sec\",\n  COUNT(*) as 'value'\nFROM information_schema.PROCESSLIST;",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "value"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "timeColumn": "time",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [
+                  
+                ],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "thresholds": [
+          
+        ],
+        "timeFrom": "1w",
+        "timeRegions": [
+          
+        ],
+        "timeShift": null,
+        "title": "Panel Title",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": [
+            
+          ]
+        },
+        "yaxes": [
+          {
+            "$$hashKey": "object:3199",
+            "decimals": 2,
+            "format": "none",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "$$hashKey": "object:3200",
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "columns": [
+          
+        ],
+        "datasource": "librenms-cloud-mysql",
+        "fontSize": "100%",
+        "gridPos": {
+          "h": 7,
+          "w": 13,
+          "x": 11,
+          "y": 0
+        },
+        "id": 12,
+        "pageSize": null,
+        "showHeader": true,
+        "sort": {
+          "col": 0,
+          "desc": true
+        },
+        "styles": [
+          {
+            "$$hashKey": "object:4719",
+            "alias": "Time",
+            "align": "auto",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "pattern": "Time",
+            "type": "date"
+          },
+          {
+            "$$hashKey": "object:4720",
+            "alias": "",
+            "align": "right",
+            "colorMode": null,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "decimals": 2,
+            "pattern": "/.*/",
+            "thresholds": [
+              
+            ],
+            "type": "number",
+            "unit": "short"
+          }
+        ],
+        "targets": [
+          {
+            "format": "table",
+            "group": [
+              
+            ],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "show processlist; ",
+            "refId": "B",
+            "select": [
+              [
+                {
+                  "params": [
+                    "value"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "timeColumn": "time",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [
+                  
+                ],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Panel Title",
+        "transform": "table",
+        "type": "table"
+      },
+      {
+        "cacheTimeout": null,
+        "colorBackground": false,
+        "colorValue": false,
+        "colors": [
+          "#299c46",
+          "rgba(237, 129, 40, 0.89)",
+          "#d44a3a"
+        ],
+        "datasource": "librenms-cloud-mysql",
+        "format": "none",
+        "gauge": {
+          "maxValue": 100,
+          "minValue": 0,
+          "show": false,
+          "thresholdLabels": false,
+          "thresholdMarkers": true
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 0,
+          "y": 7
+        },
+        "id": 8,
+        "interval": null,
+        "links": [
+          
+        ],
+        "mappingType": 1,
+        "mappingTypes": [
+          {
+            "$$hashKey": "object:8507",
+            "name": "value to text",
+            "value": 1
+          },
+          {
+            "$$hashKey": "object:8508",
+            "name": "range to text",
+            "value": 2
+          }
+        ],
+        "maxDataPoints": 100,
+        "nullPointMode": "connected",
+        "nullText": null,
+        "postfix": "",
+        "postfixFontSize": "50%",
+        "prefix": "",
+        "prefixFontSize": "50%",
+        "rangeMaps": [
+          {
+            "from": "null",
+            "text": "N/A",
+            "to": "null"
+          }
+        ],
+        "sparkline": {
+          "fillColor": "rgba(31, 118, 189, 0.18)",
+          "full": false,
+          "lineColor": "rgb(31, 120, 193)",
+          "show": false,
+          "ymax": null,
+          "ymin": null
+        },
+        "tableColumn": "",
+        "targets": [
+          {
+            "format": "table",
+            "group": [
+              
+            ],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "SELECT\n   School_Name\nFROM school_monitor_system.edge_list\nWHERE\n  school_Id =RIGHT('$ntupes_test_dataBases', 6);\n",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "value"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "timeColumn": "time",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [
+                  
+                ],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "thresholds": "",
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "$test",
+        "type": "singlestat",
+        "valueFontSize": "80%",
+        "valueMaps": [
+          {
+            "$$hashKey": "object:8510",
+            "op": "=",
+            "text": "N/A",
+            "value": "null"
+          }
+        ],
+        "valueName": "first"
+      },
+      {
+        "columns": [
+          
+        ],
+        "datasource": "librenms-cloud-mysql",
+        "description": "",
+        "fontSize": "100%",
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 6,
+          "y": 7
+        },
+        "id": 2,
+        "pageSize": null,
+        "showHeader": true,
+        "sort": {
+          "col": 0,
+          "desc": true
+        },
+        "styles": [
+          {
+            "$$hashKey": "object:2911",
+            "alias": "Time",
+            "align": "auto",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "pattern": "Time",
+            "type": "date"
+          },
+          {
+            "$$hashKey": "object:2912",
+            "alias": "",
+            "align": "right",
+            "colorMode": null,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "decimals": 2,
+            "pattern": "/.*/",
+            "thresholds": [
+              
+            ],
+            "type": "number",
+            "unit": "short"
+          }
+        ],
+        "targets": [
+          {
+            "format": "table",
+            "group": [
+              
+            ],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "show databases;",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "value"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "timeColumn": "time",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [
+                  
+                ],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "database",
+        "transform": "table",
+        "type": "table"
+      },
+      {
+        "columns": [
+          
+        ],
+        "datasource": "librenms-cloud-mysql",
+        "fontSize": "100%",
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 7
+        },
+        "id": 4,
+        "pageSize": null,
+        "showHeader": true,
+        "sort": {
+          "col": 0,
+          "desc": true
+        },
+        "styles": [
+          {
+            "$$hashKey": "object:1291",
+            "alias": "Time",
+            "align": "auto",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "pattern": "Time",
+            "type": "date"
+          },
+          {
+            "$$hashKey": "object:1292",
+            "alias": "",
+            "align": "right",
+            "colorMode": null,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "decimals": 2,
+            "pattern": "/.*/",
+            "thresholds": [
+              
+            ],
+            "type": "number",
+            "unit": "short"
+          }
+        ],
+        "targets": [
+          {
+            "format": "table",
+            "group": [
+              
+            ],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "SELECT TABLE_NAME\nFROM information_schema.tables\nwhere TABLE_SCHEMA='$ntupes_test_dataBases';",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "School_Serial_Id"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "table": "information_schema.table",
+            "timeColumn": "School_Serial_Id",
+            "where": [
+              
+            ]
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "tables",
+        "transform": "table",
+        "type": "table"
+      },
+      {
+        "columns": [
+          
+        ],
+        "datasource": "librenms-cloud-mysql",
+        "fontSize": "100%",
+        "gridPos": {
+          "h": 9,
+          "w": 24,
+          "x": 0,
+          "y": 15
+        },
+        "id": 6,
+        "pageSize": 100,
+        "showHeader": true,
+        "sort": {
+          "col": 5,
+          "desc": true
+        },
+        "styles": [
+          
+        ],
+        "targets": [
+          {
+            "format": "table",
+            "group": [
+              
+            ],
+            "hide": false,
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "SELECT *\nFROM $ntupes_test_dataBases.$ntupes_test_tables\n\n",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "value"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "timeColumn": "time",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [
+                  
+                ],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "data",
+        "transform": "table",
+        "type": "table"
+      }
+    ],
+    "refresh": false,
+    "schemaVersion": 22,
+    "style": "dark",
+    "tags": [
+      
+    ],
+    "templating": {
+      "list": [
+        {
+          "allValue": null,
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "datasource": "librenms-cloud-mysql",
+          "definition": "show databases",
+          "hide": 0,
+          "includeAll": false,
+          "index": -1,
+          "label": null,
+          "multi": false,
+          "name": "ntupes_test_dataBases",
+          "options": [
+            
+          ],
+          "query": "show databases",
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tags": [
+            
+          ],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        },
+        {
+          "allValue": null,
+          "current": {
+            "text": "device_state_history",
+            "value": "device_state_history"
+          },
+          "datasource": "librenms-cloud-mysql",
+          "definition": "SELECT TABLE_NAME\nFROM information_schema.tables\nwhere TABLE_SCHEMA='$ntupes_test_dataBases';",
+          "hide": 0,
+          "includeAll": false,
+          "index": -1,
+          "label": null,
+          "multi": false,
+          "name": "ntupes_test_tables",
+          "options": [
+            
+          ],
+          "query": "SELECT TABLE_NAME\nFROM information_schema.tables\nwhere TABLE_SCHEMA='$ntupes_test_dataBases';",
+          "refresh": 2,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tags": [
+            
+          ],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        },
+        {
+          "allValue": null,
+          "current": {
+            "tags": [
+              
+            ],
+            "text": "YES",
+            "value": "YES"
+          },
+          "datasource": "librenms-cloud-mysql",
+          "definition": "show variables like '%timeout%'",
+          "hide": 0,
+          "includeAll": false,
+          "index": -1,
+          "label": null,
+          "multi": false,
+          "name": "timeout",
+          "options": [
+            {
+              "$$hashKey": "object:4401",
+              "selected": false,
+              "text": "connect_timeout",
+              "value": "connect_timeout"
+            },
+            {
+              "$$hashKey": "object:4402",
+              "selected": true,
+              "text": "10",
+              "value": "10"
+            },
+            {
+              "$$hashKey": "object:4403",
+              "selected": false,
+              "text": "delayed_insert_timeout",
+              "value": "delayed_insert_timeout"
+            },
+            {
+              "$$hashKey": "object:4404",
+              "selected": false,
+              "text": "300",
+              "value": "300"
+            },
+            {
+              "$$hashKey": "object:4405",
+              "selected": false,
+              "text": "have_statement_timeout",
+              "value": "have_statement_timeout"
+            },
+            {
+              "$$hashKey": "object:4406",
+              "selected": false,
+              "text": "YES",
+              "value": "YES"
+            },
+            {
+              "$$hashKey": "object:4407",
+              "selected": false,
+              "text": "innodb_flush_log_at_timeout",
+              "value": "innodb_flush_log_at_timeout"
+            },
+            {
+              "$$hashKey": "object:4408",
+              "selected": false,
+              "text": "1",
+              "value": "1"
+            },
+            {
+              "$$hashKey": "object:4409",
+              "selected": false,
+              "text": "innodb_lock_wait_timeout",
+              "value": "innodb_lock_wait_timeout"
+            },
+            {
+              "$$hashKey": "object:4410",
+              "selected": false,
+              "text": "50",
+              "value": "50"
+            },
+            {
+              "$$hashKey": "object:4411",
+              "selected": false,
+              "text": "innodb_rollback_on_timeout",
+              "value": "innodb_rollback_on_timeout"
+            },
+            {
+              "$$hashKey": "object:4412",
+              "selected": false,
+              "text": "OFF",
+              "value": "OFF"
+            },
+            {
+              "$$hashKey": "object:4413",
+              "selected": false,
+              "text": "interactive_timeout",
+              "value": "interactive_timeout"
+            },
+            {
+              "$$hashKey": "object:4414",
+              "selected": false,
+              "text": "28800",
+              "value": "28800"
+            },
+            {
+              "$$hashKey": "object:4415",
+              "selected": false,
+              "text": "lock_wait_timeout",
+              "value": "lock_wait_timeout"
+            },
+            {
+              "$$hashKey": "object:4416",
+              "selected": false,
+              "text": "31536000",
+              "value": "31536000"
+            },
+            {
+              "$$hashKey": "object:4417",
+              "selected": false,
+              "text": "net_read_timeout",
+              "value": "net_read_timeout"
+            },
+            {
+              "$$hashKey": "object:4418",
+              "selected": false,
+              "text": "30",
+              "value": "30"
+            },
+            {
+              "$$hashKey": "object:4419",
+              "selected": false,
+              "text": "net_write_timeout",
+              "value": "net_write_timeout"
+            },
+            {
+              "$$hashKey": "object:4420",
+              "selected": false,
+              "text": "60",
+              "value": "60"
+            },
+            {
+              "$$hashKey": "object:2008",
+              "selected": false,
+              "text": "rpl_stop_slave_timeout",
+              "value": "rpl_stop_slave_timeout"
+            },
+            {
+              "$$hashKey": "object:2009",
+              "selected": false,
+              "text": "slave_net_timeout",
+              "value": "slave_net_timeout"
+            },
+            {
+              "$$hashKey": "object:2010",
+              "selected": false,
+              "text": "wait_timeout",
+              "value": "wait_timeout"
+            }
+          ],
+          "query": "show variables like '%timeout%'",
+          "refresh": 0,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tags": [
+            
+          ],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        }
+      ]
+    },
+    "time": {
+      "from": "2020-05-20T23:33:20.225Z",
+      "to": "2020-05-21T00:23:50.250Z"
+    },
+    "timepicker": {
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ]
+    },
+    "timezone": "",
+    "title": "nutpes_test",
+    "uid": null,
+    "variables": {
+      "list": [
+        
+      ]
+    },
+    "version": 31
+  },
+  "folderId": 0,
+  "overwrite": false
+}
