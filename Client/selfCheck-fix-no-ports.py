@@ -88,9 +88,9 @@ def influxdb_search_ports_tables():
 
         if (len(portList) != 0):
             for x in portList:
-                y = x[1].split("")
+                y = x[1].split(" ")
                 if (len(y) > 1): z = y[0] + "\\\\ " + y[1]
-                else: z = x[0]
+                else: z = x[1]
                 data = influx_conn.query('select ifName as port_name, ifInBits_rate/1000 as input, ifOutBits_rate/1000 as output, hostname from ports where hostname = \'' + x[0] + '\' and ifName = \'' + z + '\' order by time desc limit 1;')
                 if (len(list(data.get_points())) > 0):
                     portData = list(data.get_points())[0]
