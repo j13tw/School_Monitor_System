@@ -13,13 +13,9 @@ db = MySQLdb.connect(host="localhost",user="root",passwd="kiss5891",charset="utf
 cursor = db.cursor()
 
 #exe
-cursor.execute("SELECT schema_name from INFORMATION_SCHEMA.SCHEMATA WHERE schema_name NOT IN('information_schema', 'mysql', 'performance_schema', 'sys', 'test', 'school_monitor_system', 'vp' , 'vp_cmd_test', 'vp_school_1234', 'factory', 'lib800003name')")
+cursor.execute("SELECT concat(\'school_\', school_Id), school_Name FROM information_schema.schemata, school_monitor_system.edge_list  where schema_name like \'school_______\' and schema_name = concat(\'school_\', school_Id);")
 #store results
 result = cursor.fetchall()
-
-#讀excel
-school_list = xlrd.open_workbook("315校名單.xlsx")
-school_sheet = school_list.sheets()[0]
 
 #close connection
 db.close()
@@ -69,7 +65,10 @@ print(curry)
 
 #DB loop
 for x in result:
- code = str(x).replace("(",'').replace(")",'').replace(",",'').replace("'",'').replace("school_",'')
+ print(x[0])
+ code = str(x[0]).split("school_")[1].replace("f","F")
+ print(code)
+
 #skip school for testing
  if code == "800001":
    continue
@@ -83,11 +82,8 @@ for x in result:
    continue
  if code == "900003":
    continue
- #find the shcool name using school number
- #excel loop
- for y in range(1, school_sheet.nrows):
-    if str(school_sheet.row_values(y)[3]) == code:
-        schoolchname = str(school_sheet.row_values(y)[2])
+ #get shcool name in chinese
+ schoolchname = x[1]
 
 #if the folder does not exist
  if not os.path.exists('/home/ubuntu/k12ea/' + schoolchname + "/" + curry + "-" + currm):
