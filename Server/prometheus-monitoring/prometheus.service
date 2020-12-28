@@ -1,0 +1,11 @@
+[Unit]
+Description=prometheus service
+User=root
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/sudo /usr/local/bin/prometheus '--config.file=/etc/prometheus/prometheus.yml'
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
