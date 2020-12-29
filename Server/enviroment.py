@@ -37,7 +37,7 @@ print(str(datetime.datetime.now()).split(".")[0] + "\tpython3 package install st
 os.system("pip3 install flask >> " + logPath)
 os.system("pip3 install requests >> " + logPath)
 os.system("pip3 install mysqlclient >> " + logPath)
-os.system("pip3 install xlrd ==1.2.0 >> " + logPath)
+os.system("pip3 install xlrd==1.2.0 >> " + logPath)
 
 # grafana-install
 os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [grafana install step] \t--- >> " + logPath)
