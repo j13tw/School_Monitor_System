@@ -47,9 +47,9 @@ os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [grafa
 print(str(datetime.datetime.now()).split(".")[0] + "\tgrafana dashboard install")
 os.system("apt-get install -y apt-transport-https >> " + logPath)
 os.system("apt-get install -y software-properties-common wget >> " + logPath)
-os.system('add-apt-repository "deb https://packages.grafana.com/oss/deb stable main" >>' + logPath)
 os.system("wget -q https://packages.grafana.com/gpg.key")
 os.system("apt-key add ./gpg.key > /dev/null 2>&1")
+os.system('add-apt-repository "deb https://packages.grafana.com/oss/deb stable main" >>' + logPath)
 os.system("apt-get update >> " + logPath)
 os.system("apt-get install -y grafana=6.7.3 >> " + logPath)
 
