@@ -8,25 +8,28 @@ print("[School Monitoring System Installer]")
 
 # setup install log placement
 logPath = "/tmp/server.log"
+print("--> Installation export to >> " + logPath)
+print("--> Get install log >> \"tail -f " + logPath + "\"")
+print("------------------------------------------------------")
 
 # system time setup
 os.system("timedatectl set-timezone Asia/Taipei")
 
-# system update
-os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [system update step] \t--- >> " + logPath)
-print(str(datetime.datetime.now()).split(".")[0] + "\tsystem update step:")
+# operation system update
+os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [operation system update] \t--- >> " + logPath)
+print(str(datetime.datetime.now()).split(".")[0] + "\toperation system update")
 
 # mysql install
-os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [mysql service install step] \t--- >> " + logPath)
-print(str(datetime.datetime.now()).split(".")[0] + "\tmysql service install step:")
+os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [mysql service install] \t--- >> " + logPath)
+print(str(datetime.datetime.now()).split(".")[0] + "\tmysql service install")
 os.system("apt-get install -y mysql-server >> " + logPath)
 os.system("apt-get install -y mysql-client >> " + logPath)
 os.system("apt-get install -y libmysqlclient-dev >> " + logPath)
 os.system("service mysql start")
 
 # python3-install
-os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [python3 install step] \t--- >> " + logPath)
-print(str(datetime.datetime.now()).split(".")[0] + "\tpython3 install step:")
+os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [python3 dependency install] \t--- >> " + logPath)
+print(str(datetime.datetime.now()).split(".")[0] + "\tpython3 dependency install")
 os.system("apt-get install -y python3-dev python3-pip libmysqlclient-dev >> " + logPath)
 os.system("apt-get install -y build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev >> " + logPath)
 os.system("apt-get install -y curl >> " + logPath)
@@ -79,30 +82,38 @@ mysql_datasources_info = json.dumps(mysql_datasources_info_json)
 # prometheus setup
 os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [prometheus monitoring service initial step:] \t--- >> " + logPath)
 print(str(datetime.datetime.now()).split(".")[0] + "\tprometheus monitoring service initial step:")
-os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [download prometheus node-exporter and inject service] \t--- >> " + logPath)
-print("\tdownload prometheus node-exporter and inject service")
+
+# install prometheus node-exporter
+os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [download prometheus node-exporter] \t--- >> " + logPath)
+print("\tdownload prometheus node-exporter")
 os.system("curl -OL -s https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-amd64.tar.gz >> " + logPath)
 os.system("tar -zxvf node_exporter-1.0.1.linux-amd64.tar.gz >> " + logPath)
 os.system("cp node_exporter-1.0.1.linux-amd64/node_exporter /usr/local/bin/")
-os.system("cp ./prometheus-monitoring/node-exporter.service /etc/systemd/system/node.service")
-os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [download prometheus database and inject service] \t--- >> " + logPath)
-print("\tdownload prometheus database and inject service")
+os.system("cp ./prometheus-monitoring/node-exporter.service /etc/systemd/system/node-exporter.service")
+
+# install prometheus TSDB
+os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [download prometheus TSDB] \t--- >> " + logPath)
+print("\tdownload prometheus TSDB")
 os.system("curl -OL -s https://github.com/prometheus/prometheus/releases/download/v2.22.0/prometheus-2.22.0.linux-amd64.tar.gz >> " + logPath)
 os.system("tar -zxvf prometheus-2.22.0.linux-amd64.tar.gz >> " + logPath)
 os.system("cp -r prometheus-2.22.0.linux-amd64/prometheus /usr/local/bin/")
+
+# inject node-exporter && prometheus service to systemd
+os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [inject node-exporter && prometheus service] \t--- >> " + logPath)
+print("\tinject node-exporter && prometheus service")
 os.system("mkdir /etc/prometheus")
 os.system("cp ./prometheus-monitoring/prometheus.yml /etc/prometheus/prometheus.yml")
 os.system("cp ./prometheus-monitoring/prometheus.service /etc/systemd/system/prometheus.service")
 os.system("systemctl daemon-reload")
-os.system("systemctl enable node")
-os.system("systemctl enable prometheus")
-os.system("systemctl start node")
+os.system("systemctl enable node-exporter >> " + logPath)
+os.system("systemctl enable prometheus >> " + logPath)
+os.system("systemctl start node-exporter")
 os.system("systemctl start prometheus")
 
-# remove update notifier
-os.system("rm /usr/bin/update-manager")
-os.system("rm /usr/bin/update-notifier")
-os.system("echo update-manager hold | dpkg --set-selections")
+# remove update notifier (close system update)
+# os.system("rm /usr/bin/update-manager")
+# os.system("rm /usr/bin/update-notifier")
+# os.system("echo update-manager hold | dpkg --set-selections")
 
 # auto backup
 os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [inject auto_backup_db service] \t--- >> " + logPath)
@@ -189,8 +200,8 @@ while (not (create_grafana_datasource == 1 and create_grafana_dashboard == 1)):
                 print("grafana_service error")
     except:
         print("grafana_service error")
-    print("create_grafana_datasource", create_grafana_datasource)
-    print("create_grafana_dashboard", create_grafana_dashboard)
+    # print("create_grafana_datasource", create_grafana_datasource)
+    # print("create_grafana_dashboard", create_grafana_dashboard)
     if (create_grafana_dashboard * create_grafana_datasource == 0): time.sleep(10)
         
 #Preprocess
