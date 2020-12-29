@@ -98,13 +98,13 @@ os.system("curl -OL -s https://github.com/prometheus/prometheus/releases/downloa
 os.system("tar -zxvf prometheus-2.22.0.linux-amd64.tar.gz >> " + logPath)
 os.system("cp -r prometheus-2.22.0.linux-amd64/prometheus /usr/local/bin/")
 
-# inject node-exporter && prometheus service to systemd
-os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [inject node-exporter && prometheus service] \t--- >> " + logPath)
-print("\tinject node-exporter && prometheus service")
+# inject node-exporter and prometheus service to systemd
+os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [inject node-exporter and prometheus service] \t--- >> " + logPath)
+print("\tinject node-exporter and prometheus service")
 os.system("mkdir /etc/prometheus")
 os.system("cp ./prometheus-monitoring/prometheus.yml /etc/prometheus/prometheus.yml")
 os.system("cp ./prometheus-monitoring/prometheus.service /etc/systemd/system/prometheus.service")
-os.system("systemctl daemon-reload")
+os.system("systemctl daemon-reload >> " + logPath)
 os.system("systemctl enable node-exporter >> " + logPath)
 os.system("systemctl enable prometheus >> " + logPath)
 os.system("systemctl start node-exporter")
