@@ -40,8 +40,8 @@ os.system("pip3 install mysqlclient >> " + logPath)
 os.system("pip3 install xlrd==1.2.0 >> " + logPath)
 
 # grafana-install
-os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [grafana install step] \t--- >> " + logPath)
-print(str(datetime.datetime.now()).split(".")[0] + "\tgrafana install step:")
+os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [grafana dashboard install] \t--- >> " + logPath)
+print(str(datetime.datetime.now()).split(".")[0] + "\tgrafana dashboard install")
 os.system("apt-get install -y apt-transport-https >> " + logPath)
 os.system("apt-get install -y software-properties-common wget >> " + logPath)
 os.system('add-apt-repository "deb https://packages.grafana.com/oss/deb stable main" >>' + logPath)
@@ -50,8 +50,8 @@ os.system("apt-get update >> " + logPath)
 os.system("apt-get install -y grafana=6.7.3 >> " + logPath)
 
 # grafana initial
-os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [grafana initial step] \t--- >> " + logPath)
-print(str(datetime.datetime.now()).split(".")[0] + "\tgrafana initial step:")
+os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [grafana service initial] \t--- >> " + logPath)
+print(str(datetime.datetime.now()).split(".")[0] + "\tgrafana service initial")
 os.system("systemctl daemon-reload")
 os.system("systemctl start grafana-server")
 os.system("systemctl enable grafana-server")
@@ -77,17 +77,21 @@ mysql_datasources_info = json.dumps(mysql_datasources_info_json)
 # print(mysql_datasources_info)
 
 # prometheus setup
-os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [prometheus monitoring service initial step] \t--- >> " + logPath)
+os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [prometheus monitoring service initial step:] \t--- >> " + logPath)
 print(str(datetime.datetime.now()).split(".")[0] + "\tprometheus monitoring service initial step:")
+os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [download prometheus node-exporter and inject service] \t--- >> " + logPath)
+print("\tdownload prometheus node-exporter and inject service")
 os.system("curl -OL -s https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-amd64.tar.gz >> " + logPath)
 os.system("tar -zxvf node_exporter-1.0.1.linux-amd64.tar.gz >> " + logPath)
 os.system("cp node_exporter-1.0.1.linux-amd64/node_exporter /usr/local/bin/")
-os.system("cp ./prometheus-monitoring/node.service /etc/systemd/system/node.service")
+os.system("cp ./prometheus-monitoring/node-exporter.service /etc/systemd/system/node.service")
+os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [download prometheus database and inject service] \t--- >> " + logPath)
+print("\tdownload prometheus database and inject service")
 os.system("curl -OL -s https://github.com/prometheus/prometheus/releases/download/v2.22.0/prometheus-2.22.0.linux-amd64.tar.gz >> " + logPath)
 os.system("tar -zxvf prometheus-2.22.0.linux-amd64.tar.gz >> " + logPath)
 os.system("cp -r prometheus-2.22.0.linux-amd64/prometheus /usr/local/bin/")
 os.system("mkdir /etc/prometheus")
-os.system("cp ./prometheus-2.22.0.linux-amd64/prometheus.yml /etc/prometheus/prometheus.yml")
+os.system("cp ./prometheus-monitoring/prometheus.yml /etc/prometheus/prometheus.yml")
 os.system("cp ./prometheus-monitoring/prometheus.service /etc/systemd/system/prometheus.service")
 os.system("systemctl daemon-reload")
 os.system("systemctl enable node")
@@ -101,15 +105,15 @@ os.system("rm /usr/bin/update-notifier")
 os.system("echo update-manager hold | dpkg --set-selections")
 
 # auto backup
-os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [inject auto_backup_db service step] \t--- >> " + logPath)
-print(str(datetime.datetime.now()).split(".")[0] + "\tinject auto_backup_db service step:")
+os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [inject auto_backup_db service] \t--- >> " + logPath)
+print(str(datetime.datetime.now()).split(".")[0] + "\tinject auto_backup_db service")
 cronpath = os.path.abspath(os.getcwd())
 os.system("grep 'roor python3 " + cronpath +"/k12eabk.py' /etc/crontab || echo '0 0 1 * * root python3 " + cronpath + "/k12eabk.py' >> /etc/crontab")
 
 # grafana initial step
 os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [grafana initial step] \t--- >> " + logPath)
 print(str(datetime.datetime.now()).split(".")[0] + "\tgrafana initial step:")
-while (not (create_grafana_datasource == 0 and create_grafana_dashboard == 0)):
+while (not (create_grafana_datasource == 1 and create_grafana_dashboard == 1)):
     try: 
         if (requests.get("http://127.0.0.1:3000/login").status_code == 200):
             if (create_grafana_datasource == 0):
@@ -204,15 +208,15 @@ while (not (create_grafana_datasource == 0 and create_grafana_dashboard == 0)):
 # os.system('curl --user admin:admin "http://127.0.0.1:3000/api/dashboards/db" -X POST -H "Content-Type:application/json" --data @$(pwd)/nutpes_test-1607310133406.json')
 
 # supervisor install 
-os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [inject supervisor daemon service step] \t--- >> " + logPath)
-print(str(datetime.datetime.now()).split(".")[0] + "\tinject supervisor daemon service step:")
+os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [inject supervisor daemon service] \t--- >> " + logPath)
+print(str(datetime.datetime.now()).split(".")[0] + "\tinject supervisor daemon service")
 os.system("apt-get -y install supervisor >> " + logPath)
 os.system("cp ./supervisor-daemon/server.conf /etc/supervisor/conf.d")
 os.system("service supervisor restart")
 
 # supervisor check startup 
-os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [supervisor check startup ] \t--- >> " + logPath)
-print(str(datetime.datetime.now()).split(".")[0] + "\tsupervisor check startup step:")
+os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [supervisor check startup] \t--- >> " + logPath)
+print(str(datetime.datetime.now()).split(".")[0] + "\tsupervisor check startup")
 while True:
     # print(str(check_output(["pidof","python3"]).decode("utf-8")).split("\n")[0].split(" "))
     if (len(str(check_output(["pidof","python3"]).decode("utf-8")).split("\n")[0].split(" ")) >= 2):
@@ -222,6 +226,6 @@ while True:
         print("\tsupervisor is dead")
     time.sleep(5)
 
-os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [wait for system check] \t--- >> " + logPath)
-print(str(datetime.datetime.now()).split(".")[0] + "\tInstall Success !")
+os.system("echo ---\t" + str(datetime.datetime.now()).split(".")[0] + "\t [Server Install Success !] \t--- >> " + logPath)
+print(str(datetime.datetime.now()).split(".")[0] + "\tServer Install Success !")
 time.sleep(10)
